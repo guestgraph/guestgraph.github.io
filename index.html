@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GuestGraph — the open-source guest identity graph</title>
-<meta name="description" content="One explainable, reversible guest profile derived from records scattered across the PMS, POS, booking engine, wifi portal and review platforms. Apache 2.0.">
+<meta name="description" content="One explainable guest profile, from data scattered across every system in the hotel. Open source, Apache 2.0.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="GuestGraph — the open-source guest identity graph">
-<meta property="og:description" content="A returning guest looks like five strangers. GuestGraph resolves them into one explainable, reversible profile.">
+<meta property="og:title" content="GuestGraph">
+<meta property="og:description" content="One explainable guest profile, from data scattered across every system in the hotel.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://guestgraph.io/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,57 +16,59 @@
 <style>
   :root{
     --paper:#0f1013; --paper2:#191b20; --ink:#f1ede4; --muted:#9a9384;
-    --cobalt:#7aa0ff; --amber:#e0a75e; --line:#282a30;
+    --cobalt:#7aa0ff; --line:#282a30;
   }
   *{box-sizing:border-box; margin:0; padding:0}
-  html{scroll-behavior:smooth}
   body{
     font-family:"IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
-    background:var(--paper); color:var(--ink); line-height:1.5;
+    background:var(--paper); color:var(--ink); line-height:1.5; min-height:100vh;
     background-image:radial-gradient(120% 60% at 50% -10%, #17191f 0%, var(--paper) 60%);
     -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column;
   }
   .mono{font-family:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace}
   a{color:inherit}
-  .shell{max-width:1180px; margin:0 auto; padding:0 7vw}
+  .shell{width:100%; max-width:1180px; margin:0 auto; padding:0 7vw}
 
-  /* ---------- header ---------- */
-  header{padding:2.4rem 0 0}
+  header{padding:2rem 0}
   .bar{display:flex; align-items:center; justify-content:space-between; gap:2rem}
   .brand{display:flex; align-items:center; gap:.7rem; text-decoration:none}
   .brand svg{width:28px; height:28px; color:var(--cobalt); flex:0 0 auto}
   .brand b{font-weight:600; font-size:1.06rem; letter-spacing:-.01em}
   .brand b span{color:var(--cobalt)}
-  nav{display:flex; gap:1.8rem; font-family:"IBM Plex Mono",monospace; font-size:.8rem;
+  nav{display:flex; gap:1.9rem; font-family:"IBM Plex Mono",monospace; font-size:.8rem;
       letter-spacing:.1em; text-transform:uppercase}
   nav a{color:var(--muted); text-decoration:none; padding-bottom:.2rem; border-bottom:1px solid transparent}
   nav a:hover, nav a:focus-visible{color:var(--ink); border-color:var(--cobalt)}
 
-  /* ---------- hero ---------- */
-  .hero{display:grid; grid-template-columns:1fr 1.04fr; gap:4vw; align-items:center;
-        padding:9vh 0 10vh}
-  .eyebrow{font-family:"IBM Plex Mono",monospace; font-size:.78rem; letter-spacing:.22em;
-           text-transform:uppercase; color:var(--cobalt); display:flex; align-items:center; gap:1em}
-  .eyebrow::after{content:""; flex:0 0 4rem; height:2px; background:var(--cobalt); opacity:.45}
-  h1{margin-top:1.8rem; font-weight:600; letter-spacing:-.028em; line-height:1.04;
-     font-size:clamp(2.6rem,6.4vw,4.6rem)}
-  h1 em{font-style:normal; color:var(--cobalt)}
-  .lede{margin-top:1.9rem; font-size:clamp(1.05rem,1.5vw,1.28rem); color:var(--muted); max-width:40ch}
-  .cta{margin-top:2.6rem; display:flex; flex-wrap:wrap; gap:1rem}
+  main{flex:1; display:flex; align-items:center; padding:2vh 0 5vh}
+
+  /* the title, as the talk opens */
+  .title h1{font-weight:600; letter-spacing:-.03em; line-height:1.02;
+            font-size:clamp(3rem,8vw,6.2rem)}
+  .title h1 span{color:var(--cobalt)}
+  .tagline{margin-top:1.6rem; font-size:clamp(1.15rem,2.1vw,1.62rem); color:var(--muted);
+           max-width:34ch; line-height:1.38}
+
+  .split{display:grid; grid-template-columns:1fr 1.04fr; gap:4vw; align-items:center;
+         margin-top:clamp(2.5rem,5vh,4.6rem)}
+  h2{font-weight:600; letter-spacing:-.025em; line-height:1.06; font-size:clamp(1.9rem,3.7vw,3rem)}
+  h2 em{font-style:normal; color:var(--cobalt)}
+  .lede{margin-top:1.5rem; font-size:clamp(1rem,1.35vw,1.18rem); color:var(--muted); max-width:44ch}
+
+  .cta{margin-top:2.3rem; display:flex; flex-wrap:wrap; gap:1rem}
   .btn{
     font-family:"IBM Plex Mono",monospace; font-size:.85rem; letter-spacing:.06em;
     text-decoration:none; padding:.9rem 1.25rem; border-radius:7px; border:1.5px solid var(--line);
     color:var(--ink); background:var(--paper2); transition:border-color .18s ease, color .18s ease;
-    display:inline-flex; align-items:center; gap:.6rem;
   }
   .btn:hover, .btn:focus-visible{border-color:var(--cobalt); color:var(--cobalt)}
   .btn.primary{border-color:var(--cobalt); color:var(--cobalt)}
   .btn.primary:hover, .btn.primary:focus-visible{background:#1b2233}
   .ctameta{margin-top:1.1rem; font-size:.78rem; color:var(--muted); letter-spacing:.05em}
 
-  /* ---------- the signature: records resolving ---------- */
+  /* records resolving into one profile */
   .figure svg{width:100%; height:auto; display:block; overflow:visible}
-  .figure{max-width:none}
   .chip rect{fill:var(--paper2); stroke:var(--line); stroke-width:1.5}
   .chip text{font-family:"IBM Plex Mono",monospace; font-size:14px; fill:var(--muted); dominant-baseline:middle}
   .wire{stroke:var(--cobalt); stroke-width:1.5; fill:none; opacity:.55}
@@ -75,71 +77,33 @@
          text-anchor:middle; dominant-baseline:middle}
   .pmeta{font-family:"IBM Plex Mono",monospace; font-size:12.5px; fill:var(--muted);
          text-anchor:middle; dominant-baseline:middle; letter-spacing:.06em}
-  .figcap{margin-top:1.5rem; font-family:"IBM Plex Mono",monospace; font-size:.78rem;
-          color:var(--muted); letter-spacing:.04em; line-height:1.6}
-  .figcap b{color:var(--cobalt); font-weight:600}
 
   .chip{opacity:0; animation:pop .5s ease forwards}
-  .chip:nth-of-type(1){animation-delay:.15s} .chip:nth-of-type(2){animation-delay:.28s}
-  .chip:nth-of-type(3){animation-delay:.41s} .chip:nth-of-type(4){animation-delay:.54s}
-  .chip:nth-of-type(5){animation-delay:.67s}
+  .chip:nth-of-type(1){animation-delay:.2s} .chip:nth-of-type(2){animation-delay:.33s}
+  .chip:nth-of-type(3){animation-delay:.46s} .chip:nth-of-type(4){animation-delay:.59s}
+  .chip:nth-of-type(5){animation-delay:.72s}
   @keyframes pop{from{opacity:0; transform:translateY(9px)} to{opacity:1; transform:none}}
-  .wire{stroke-dasharray:340; stroke-dashoffset:340; animation:draw .9s ease forwards .85s}
+  .wire{stroke-dasharray:340; stroke-dashoffset:340; animation:draw .9s ease forwards .9s}
   @keyframes draw{to{stroke-dashoffset:0}}
-  .profile{opacity:0; animation:pop .6s cubic-bezier(.2,.7,.2,1) forwards 1.5s}
+  .profile{opacity:0; animation:pop .6s cubic-bezier(.2,.7,.2,1) forwards 1.55s}
 
-  /* ---------- sections ---------- */
-  section{padding:9vh 0; border-top:1px solid var(--line)}
-  .stitle{font-family:"IBM Plex Mono",monospace; font-size:.78rem; letter-spacing:.22em;
-          text-transform:uppercase; color:var(--muted)}
-  h2{margin-top:1.5rem; font-weight:600; letter-spacing:-.02em; line-height:1.12;
-     font-size:clamp(1.7rem,3.2vw,2.6rem); max-width:22ch}
-  h2 em{font-style:normal; color:var(--cobalt)}
-  .sublede{margin-top:1.4rem; color:var(--muted); max-width:56ch; font-size:1.04rem}
-
-  /* layers — numbered because escalation order is the content */
-  .layers{margin-top:4rem; display:grid; gap:0}
-  .layer{display:grid; grid-template-columns:3.2rem 1fr; gap:0 2rem; align-items:start;
-         padding:2rem 0 2rem 1.8rem; border-top:1px solid var(--line); border-left:3px solid var(--line)}
-  .layer:last-child{border-bottom:1px solid var(--line)}
-  .layer.c{border-left-color:var(--cobalt)}
-  .layer.h{border-left-color:var(--amber)}
-  .layer .n{font-family:"IBM Plex Mono",monospace; font-size:.95rem; color:var(--muted); padding-top:.25rem}
-  .layer.c .n{color:var(--cobalt)} .layer.h .n{color:var(--amber)}
-  .layer h3{font-size:1.22rem; font-weight:600; letter-spacing:-.01em}
-  .layer p{margin-top:.55rem; color:var(--muted); max-width:58ch}
-  .verdict{margin-top:3rem; font-size:clamp(1.1rem,2vw,1.45rem); font-weight:500}
-  .verdict em{font-style:normal; color:var(--cobalt)}
-
-  /* status — the honest bit, deliberately on the landing page */
-  .status{margin-top:3.4rem; display:grid; gap:.15rem; max-width:66ch}
-  .row{display:grid; grid-template-columns:1.6rem 1fr; gap:1.2rem; align-items:baseline;
-       padding:.8rem 0; border-top:1px solid var(--line)}
-  .row .m{font-family:"IBM Plex Mono",monospace; font-weight:600}
-  .row.yes .m{color:var(--cobalt)} .row.no .m{color:var(--muted)}
-  .row b{font-weight:600} .row span{color:var(--muted)}
-
-  footer{padding:5vh 0 7vh; border-top:1px solid var(--line);
-         display:flex; flex-wrap:wrap; gap:.9rem 2.6rem; align-items:center;
-         font-family:"IBM Plex Mono",monospace; font-size:.79rem; letter-spacing:.08em; color:var(--muted)}
+  footer{padding:0 0 2rem; display:flex; flex-wrap:wrap; gap:.9rem 2.6rem; align-items:center;
+         font-family:"IBM Plex Mono",monospace; font-size:.76rem; letter-spacing:.08em; color:var(--muted)}
   footer a{color:var(--cobalt); text-decoration:none}
   footer a:hover, footer a:focus-visible{text-decoration:underline}
 
   :focus-visible{outline:2px solid var(--cobalt); outline-offset:3px; border-radius:3px}
 
   @media (max-width:900px){
-    .hero{grid-template-columns:1fr; gap:3.5rem; padding:6vh 0 7vh}
+    main{padding:2vh 0 6vh}
+    .split{grid-template-columns:1fr; gap:3rem; margin-top:3rem}
     .figure{order:2}
-    h2{max-width:100%}
+    .tagline{max-width:100%}
     nav{gap:1.4rem}
-    /* the in-page anchor is redundant on a page this short to scroll */
-    nav a[href^="#"]{display:none}
-    /* the figure scales down, so its internal type has to scale up to stay legible */
     .chip text{font-size:18px} .pname{font-size:25px} .pmeta{font-size:13.5px}
     .chip rect{stroke-width:2}
   }
   @media (prefers-reduced-motion:reduce){
-    html{scroll-behavior:auto}
     .chip,.profile{opacity:1; animation:none}
     .wire{stroke-dashoffset:0; animation:none}
   }
@@ -164,126 +128,70 @@
       </a>
       <nav>
         <a href="https://guestgraph.io/talks/intro/">Talk</a>
-        <a href="#how">How it decides</a>
         <a href="https://github.com/guestgraph/guestgraph">Code</a>
       </nav>
     </div>
   </header>
-
-  <div class="hero">
-    <div>
-      <div class="eyebrow mono">Open source · Apache 2.0</div>
-      <h1>Five strangers.<br><em>One guest.</em></h1>
-      <p class="lede">
-        The same person books, checks in, eats, joins the wifi and leaves a review — and every
-        system stores someone different. GuestGraph resolves those records into one profile,
-        and can always tell you why.
-      </p>
-      <div class="cta">
-        <a class="btn primary" href="https://guestgraph.io/talks/intro/">Watch the talk</a>
-        <a class="btn" href="https://github.com/guestgraph/guestgraph">Read the code</a>
-      </div>
-      <p class="ctameta mono">10 minutes · German or English</p>
-    </div>
-
-    <div class="figure">
-      <svg viewBox="0 0 620 420" role="img"
-           aria-label="Five differently-formatted records from five systems, all connected to one derived profile for Anna Müller">
-        <g class="wires">
-          <path class="wire" d="M206,64 C258,64 258,166 292,184"/>
-          <path class="wire" d="M214,196 C252,196 262,196 292,199"/>
-          <path class="wire" d="M196,348 C254,348 258,244 292,218"/>
-          <path class="wire" d="M414,86 C382,86 378,164 348,184"/>
-          <path class="wire" d="M396,342 C372,342 370,242 348,218"/>
-        </g>
-
-        <g class="chip"><rect x="26" y="47" width="180" height="34" rx="7"/>
-          <text x="42" y="65">MÜLLER/ANNA MRS</text></g>
-        <g class="chip"><rect x="2" y="179" width="212" height="34" rx="7"/>
-          <text x="18" y="197">a.mueller@bluewin.ch</text></g>
-        <g class="chip"><rect x="30" y="331" width="166" height="34" rx="7"/>
-          <text x="46" y="349">+41 79 ••• 12</text></g>
-        <g class="chip"><rect x="414" y="69" width="118" height="34" rx="7"/>
-          <text x="430" y="87">„A. M."</text></g>
-        <g class="chip"><rect x="396" y="325" width="208" height="34" rx="7"/>
-          <text x="411" y="343">xy7k2@guest.booking.com</text></g>
-
-        <g class="profile">
-          <rect x="230" y="162" width="180" height="78" rx="14"/>
-          <text class="pname" x="320" y="192">Anna Müller</text>
-          <text class="pmeta" x="320" y="219">one derived profile</text>
-        </g>
-      </svg>
-      <p class="figcap mono">
-        Five systems, five formats, one person. The records stay exactly as they arrived —
-        <b>the profile is a conclusion</b>, not a row someone overwrote.
-      </p>
-    </div>
-  </div>
 </div>
 
+<main>
+  <div class="shell">
+    <div class="title">
+      <h1>Guest<span>Graph</span>.</h1>
+      <p class="tagline">One explainable guest profile, from data scattered across every system in the hotel.</p>
+    </div>
+
+    <div class="split">
+      <div>
+        <h2>Five strangers.<br><em>One guest.</em></h2>
+        <p class="lede">
+          The same person books, checks in, eats, joins the wifi and leaves a review — and every
+          system stores someone different. GuestGraph resolves those records into one profile,
+          and can always tell you why.
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="https://guestgraph.io/talks/intro/">Watch the talk</a>
+          <a class="btn" href="https://github.com/guestgraph/guestgraph">Read the code</a>
+        </div>
+        <p class="ctameta mono">10 minutes · German or English</p>
+      </div>
+
+      <div class="figure">
+        <svg viewBox="0 0 620 420" role="img"
+             aria-label="Five differently-formatted records from five systems, all connected to one derived profile for Anna Müller">
+          <g class="wires">
+            <path class="wire" d="M206,64 C258,64 258,166 292,184"/>
+            <path class="wire" d="M214,196 C252,196 262,196 292,199"/>
+            <path class="wire" d="M196,348 C254,348 258,244 292,218"/>
+            <path class="wire" d="M414,86 C382,86 378,164 348,184"/>
+            <path class="wire" d="M396,342 C372,342 370,242 348,218"/>
+          </g>
+
+          <g class="chip"><rect x="26" y="47" width="180" height="34" rx="7"/>
+            <text x="42" y="65">MÜLLER/ANNA MRS</text></g>
+          <g class="chip"><rect x="2" y="179" width="212" height="34" rx="7"/>
+            <text x="18" y="197">a.mueller@bluewin.ch</text></g>
+          <g class="chip"><rect x="30" y="331" width="166" height="34" rx="7"/>
+            <text x="46" y="349">+41 79 ••• 12</text></g>
+          <g class="chip"><rect x="414" y="69" width="118" height="34" rx="7"/>
+            <text x="430" y="87">„A. M."</text></g>
+          <g class="chip"><rect x="396" y="325" width="208" height="34" rx="7"/>
+            <text x="411" y="343">xy7k2@guest.booking.com</text></g>
+
+          <g class="profile">
+            <rect x="230" y="162" width="180" height="78" rx="14"/>
+            <text class="pname" x="320" y="192">Anna Müller</text>
+            <text class="pmeta" x="320" y="219">one derived profile</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</main>
+
 <div class="shell">
-  <section id="how">
-    <div class="stitle mono">How it decides</div>
-    <h2>Matching is easy. Being <em>wrong</em> is expensive.</h2>
-    <p class="sublede">
-      Merge two guests wrongly and one person sees another's stays and invoices. That is a data
-      protection incident, not a cosmetic flaw — so nothing merges on a hunch. Each layer decides
-      only what it can justify and hands the rest upward.
-    </p>
-
-    <div class="layers">
-      <div class="layer c">
-        <span class="n mono">01</span>
-        <div>
-          <h3>A shared strong identifier</h3>
-          <p>The same email, phone, loyalty id or ID document. Merges outright, at full confidence.</p>
-        </div>
-      </div>
-      <div class="layer c">
-        <span class="n mono">02</span>
-        <div>
-          <h3>A probabilistic score</h3>
-          <p>Similar names, matching birthdate, the same last seven phone digits. Merges only above a
-             threshold you chose — and automatic merging ships switched off.</p>
-        </div>
-      </div>
-      <div class="layer h">
-        <span class="n mono">03</span>
-        <div>
-          <h3>A person</h3>
-          <p>Everything else queues for a human, with a per-signal breakdown of why it scored what it
-             scored. Their decision sticks: an undo writes a rule that new evidence cannot quietly cross.</p>
-        </div>
-      </div>
-    </div>
-
-    <p class="verdict">
-      Every merge can be <em>explained</em> and <em>undone</em> — that shipped before any uncertain
-      decision was possible.
-    </p>
-  </section>
-
-  <section>
-    <div class="stitle mono">Where it stands</div>
-    <h2>The engine is built. <em>Almost nothing else</em> is.</h2>
-    <p class="sublede">
-      This is a foundation, not a product. Worth knowing before you spend ten minutes on the talk.
-    </p>
-    <div class="status">
-      <div class="row yes"><span class="m">✓</span><div><b>Identity resolution</b> <span>— deterministic and probabilistic, with a human review queue</span></div></div>
-      <div class="row yes"><span class="m">✓</span><div><b>Explain, undo, audit trail</b> <span>— every decision, including who made it</span></div></div>
-      <div class="row yes"><span class="m">✓</span><div><b>Guest timeline</b> <span>— what a guest currently has, not only what was observed</span></div></div>
-      <div class="row no"><span class="m">○</span><div><b>Connectors</b> <span>— real PMS, POS and booking systems. Next, and the part that decides usability.</span></div></div>
-      <div class="row no"><span class="m">○</span><div><b>Agent steward, MCP</b> <span>— designed for, not built</span></div></div>
-      <div class="row no"><span class="m">○</span><div><b>ML-based matching</b> <span>— no model, no training pipeline. Today the matcher is hand-written rules.</span></div></div>
-      <div class="row no"><span class="m">○</span><div><b>Production use</b> <span>— none yet. No customers.</span></div></div>
-    </div>
-  </section>
-
   <footer>
     <span><a href="https://github.com/guestgraph/guestgraph">github.com/guestgraph</a></span>
-    <span><a href="https://guestgraph.io/talks/">Talks</a></span>
     <span>Apache 2.0</span>
     <span>Robert Blust</span>
   </footer>

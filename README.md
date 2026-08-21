@@ -32,10 +32,14 @@ No build step. Open `index.html`, or serve it:
 python3 -m http.server 8000    # → http://localhost:8000
 ```
 
-## What it claims
+## What it says, and what it deliberately does not
 
-Every claim on the page is backed by the core repository, and the "where it stands" section
-deliberately lists what is *not* built — connectors, agent steward, ML matching, production use.
-Matching behaviour links to
-[`docs/matching.md`](https://github.com/guestgraph/guestgraph/blob/main/docs/matching.md) rather
-than restating any of its values, per that repo's documentation rules.
+One screen, one job: say what GuestGraph is and send the visitor to the talk or the code. The
+page carries the title, the hook, and two links — nothing else. Everything a visitor would ask
+next is answered in the [10-minute talk](https://guestgraph.io/talks/intro/), which is a better
+medium for it than a scrolling page of claims.
+
+That is also why the page makes no claim about matching behaviour, roadmap, or status. Those
+live where they are maintained — in the core repository and in
+[`docs/matching.md`](https://github.com/guestgraph/guestgraph/blob/main/docs/matching.md) — so a
+change there cannot leave this page quietly wrong.
