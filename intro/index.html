@@ -336,28 +336,84 @@
     <p class="verdict" data-en="This shipped <em>before</em> any uncertain decision was possible. That order was the point.">Das gab es, <em>bevor</em> eine unsichere Entscheidung überhaupt möglich war. Diese Reihenfolge war der Punkt.</p>
   </section>
 
-  <!-- 06 · Stand -->
+  <!-- 06 · Wo KI hingehört -->
+  <section class="slide"
+    data-time="6:40"
+    data-notes="<em>Hier kommt die Frage, die heute jeder stellt — und ich beantworte sie mit der Maschinerie, nicht mit dem Wort KI.</em> Ein Agent, der Gastdaten nutzt, muss zuerst wissen, <em>welcher</em> Gast. Ohne aufgelöste Identität beantwortet er Fragen über fünf Fremde. <em>Der eigentliche Punkt, langsam:</em> Ein Agent ist strukturell nur ein weiterer unsicherer Matcher. Genau dieselbe Maschinerie, die einen Fuzzy-Score absichert, sichert auch ihn ab — Schwellen, Review-Queue, Umkehrbarkeit. Seit Kurzem hält die Audit-Spur zusätzlich fest, <em>ob</em> ein Mensch oder ein benannter Agent entschieden hat. Damit wird die Regel „ein Agent hebt die Trennung eines Menschen nie auf“ zu einem einzigen Vergleich."
+    data-notes-en="<em>Here comes the question everyone asks today — and I answer it with the machinery, not with the word AI.</em> An agent acting on guest data first has to know <em>which</em> guest. Without resolved identity it is answering questions about five strangers. <em>The actual point, slowly:</em> an agent is structurally just another uncertain matcher. The very same machinery that gates a fuzzy score gates it — thresholds, review queue, reversibility. Recently the audit trail also records <em>whether</em> a human or a named agent decided. That turns the rule &#8220;an agent never lifts a human&#8217;s split&#8221; into a single comparison.">
+    <div class="kicker mono" data-n="06" data-en="Where AI fits">Wo KI hingehört</div>
+    <h1 data-en="An agent is just <em>another uncertain matcher</em>.">Ein Agent ist nur <em>ein weiterer unsicherer Matcher</em>.</h1>
+    <div class="split">
+      <ul class="blist">
+        <li><b data-en="Identity comes first">Identität kommt zuerst</b><span data-en="An agent acting on guest data has to know which guest. Without that it answers questions about five strangers.">Ein Agent, der Gastdaten nutzt, muss wissen, welcher Gast. Ohne das beantwortet er Fragen über fünf Fremde.</span></li>
+        <li><b data-en="Gated by machinery that exists">Abgesichert durch vorhandene Maschinerie</b><span data-en="Thresholds, review queue, reversibility — the agent gets no exemption a fuzzy score would not get.">Schwellen, Review-Queue, Umkehrbarkeit — der Agent bekommt keine Ausnahme, die ein Fuzzy-Score nicht auch bekäme.</span></li>
+        <li><b data-en="The audit trail names it">Die Audit-Spur benennt ihn</b><span data-en="Every decision records whether the system, a person, or a named agent made it.">Jede Entscheidung hält fest, ob das System, ein Mensch oder ein benannter Agent sie getroffen hat.</span></li>
+      </ul>
+      <div class="diagram">
+        <svg viewBox="0 0 420 220" role="img" aria-label="Three-tier stewardship: rules, agent, human">
+          <rect class="flowbox" x="10" y="14" width="400" height="52" rx="9"/>
+          <text class="flowlabel" x="210" y="34" style="font-size:13px" data-en="Rules">Regeln</text>
+          <text class="flowlabel" x="210" y="52" style="font-size:11.5px; fill:var(--muted)" data-en="decide the clear cases">entscheiden die klaren Fälle</text>
+          <path class="arrow" d="M210,68 L210,84"/>
+          <rect class="flowbox hot" x="10" y="86" width="400" height="52" rx="9"/>
+          <text class="flowlabel" x="210" y="106" style="font-size:13px; fill:var(--cobalt)">Agent · MCP</text>
+          <text class="flowlabel" x="210" y="124" style="font-size:11.5px; fill:var(--muted)" data-en="decides what it can evidence">entscheidet, was er sicher belegen kann</text>
+          <path class="arrow" d="M210,140 L210,156"/>
+          <rect class="gate" x="10" y="158" width="400" height="52" rx="9" style="stroke:var(--amber)"/>
+          <text class="flowlabel" x="210" y="178" style="font-size:13px; fill:var(--amber)" data-en="Human">Mensch</text>
+          <text class="flowlabel" x="210" y="196" style="font-size:11.5px; fill:var(--muted)" data-en="gets the rest, with a recommendation">bekommt den Rest, mit Empfehlung</text>
+        </svg>
+        <p class="caption" data-en="Each tier hands upward what it cannot justify. <b>Escalation is the default</b>, not the exception.">Jede Stufe gibt nach oben, was sie nicht belegen kann. <b>Eskalation ist der Normalfall</b>, nicht die Ausnahme.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 · Das Schwungrad -->
+  <section class="slide"
+    data-time="7:40"
+    data-notes="<em>Das ist der Teil, bei dem technische Zuhörer aufhorchen.</em> Jede Entscheidung speichert schon heute ihren vollständigen Merkmalsvektor, und jede Review trägt ein Bestätigt oder Abgelehnt. Das heisst: Stewards erzeugen im normalen Arbeiten beschriftete Trainingsdaten — auf den eigenen Daten des Betriebs, nicht auf einem generischen Korpus. <em>Ehrlich bleiben:</em> Es gibt kein Modell und keine Pipeline. Aber die Daten fallen in der richtigen Form an, und der Matcher hängt hinter genau einer Methode: Kandidaten rein, bewertete Entscheidungen raus. Ein Modell wäre die dritte Implementierung davon, nicht ein Umbau."
+    data-notes-en="<em>This is the part where technical listeners lean in.</em> Every decision already stores its full feature vector, and every review carries a confirmed or rejected. Which means stewards produce labelled training data as a side effect of ordinary work — on the operation&#8217;s own data, not a generic corpus. <em>Stay honest:</em> there is no model and no pipeline. But the data accrues in the right shape, and the matcher sits behind exactly one method: candidates in, scored decisions out. A model would be its third implementation, not a rebuild.">
+    <div class="kicker mono" data-n="07" data-en="The flywheel">Das Schwungrad</div>
+    <h1 data-en="Every human decision is a <em>labelled example</em>.">Jede menschliche Entscheidung ist ein <em>beschriftetes Beispiel</em>.</h1>
+    <div class="thennow">
+      <div class="col now">
+        <h4 data-en="What already accrues">Was schon anfällt</h4>
+        <p data-en="Feature vector + human verdict.">Merkmalsvektor + menschliches Urteil.</p>
+        <p class="small" data-en="Every decision stores why it scored what it scored. Every review says confirmed or rejected. On the operation&#8217;s own data.">Jede Entscheidung speichert, warum sie so bewertet wurde. Jede Review sagt bestätigt oder abgelehnt. Auf den eigenen Daten des Betriebs.</p>
+      </div>
+      <div class="col">
+        <h4 data-en="What it enables">Was daraus wird</h4>
+        <p data-en="Rules today, a model later.">Heute Regeln, später ein Modell.</p>
+        <p class="small" data-en="The matcher sits behind one method — candidates in, scored decisions out. A model is its third implementation, not a rebuild.">Der Matcher hängt hinter einer Methode — Kandidaten rein, bewertete Entscheidungen raus. Ein Modell ist die dritte Implementierung, kein Umbau.</p>
+      </div>
+    </div>
+    <p class="verdict" data-en="No model yet, and no pipeline. But the data is accruing <em>in the right shape</em>.">Noch kein Modell, keine Pipeline. Aber die Daten fallen <em>in der richtigen Form</em> an.</p>
+  </section>
+
+  <!-- 08 · Stand -->
   <section class="slide"
     data-time="7:00"
     data-notes="<em>Ehrlich bleiben — das ist der Teil, der Glaubwürdigkeit schafft.</em> Die Engine steht: deterministisch, wahrscheinlichkeitsbasiert, Review-Queue, Timeline. Was fehlt, sind die Konnektoren zu echten Systemen — und das ist genau der Teil, der über Nutzbarkeit entscheidet. <em>Klar sagen:</em> Es läuft noch nirgends produktiv. Es gibt keine Kunden. Ich zeige eine Grundlage, kein Produkt."
     data-notes-en="<em>Stay honest — this is the part that earns credibility.</em> The engine is there: deterministic, probabilistic, review queue, timeline. What is missing are the connectors to real systems — and that is exactly the part that decides whether it is usable. <em>Say it plainly:</em> it runs nowhere in production. There are no customers. I am showing a foundation, not a product.">
-    <div class="kicker mono" data-n="06" data-en="Where it stands">Stand der Dinge</div>
-    <h1 data-en="The engine is built. The <em>connectors</em> are not.">Die Engine steht. Die <em>Konnektoren</em> nicht.</h1>
+    <div class="kicker mono" data-n="08" data-en="Where it stands">Stand der Dinge</div>
+    <h1 data-en="The engine is built. <em>Almost nothing else</em> is.">Die Engine steht. <em>Fast nichts sonst</em>.</h1>
     <div class="status">
       <span class="tick">✓</span><span class="lbl"><b data-en="Identity resolution">Identitätsauflösung</b> <span data-en="— deterministic and probabilistic, with a human review queue">— deterministisch und wahrscheinlichkeitsbasiert, mit Review-Queue</span></span>
       <span class="tick">✓</span><span class="lbl"><b data-en="Explain, undo, audit trail">Erklären, Umkehren, Audit-Spur</b> <span data-en="— every decision, including who made it">— jede Entscheidung, inklusive wer sie getroffen hat</span></span>
       <span class="tick">✓</span><span class="lbl"><b data-en="Guest timeline">Gast-Timeline</b> <span data-en="— what a guest currently has, not just what was observed">— was ein Gast aktuell hat, nicht nur was beobachtet wurde</span></span>
       <span class="todo">○</span><span class="lbl"><b data-en="Connectors">Konnektoren</b> <span data-en="— real PMS, POS, booking systems. Next, and the part that decides usability.">— echte PMS-, POS-, Buchungssysteme. Als Nächstes, und der Teil, der über Nutzbarkeit entscheidet.</span></span>
+      <span class="todo">○</span><span class="lbl"><b data-en="Agent steward, MCP">Agent als Steward, MCP</b> <span data-en="— designed for, not built. The audit trail already names an agent; nothing acts as one yet.">— vorgesehen, nicht gebaut. Die Audit-Spur benennt bereits einen Agenten; noch handelt keiner.</span></span>
+      <span class="todo">○</span><span class="lbl"><b data-en="ML-based matching">ML-basiertes Matching</b> <span data-en="— no model, no training pipeline. Today the matcher is hand-written rules, and says so in its name.">— kein Modell, keine Trainings-Pipeline. Heute sind es handgeschriebene Regeln, und der Matcher heisst auch so.</span></span>
       <span class="todo">○</span><span class="lbl"><b data-en="Production use">Produktivbetrieb</b> <span data-en="— none yet. No customers. This is a foundation, not a product.">— noch keiner. Keine Kunden. Das ist eine Grundlage, kein Produkt.</span></span>
     </div>
   </section>
 
-  <!-- 07 · Das Modell -->
+  <!-- 09 · Das Modell -->
   <section class="slide"
     data-time="8:00"
     data-notes="<em>Kurz halten — das ist Kontext, keine Pointe.</em> Der Kern ist Apache 2.0 und bleibt es. Wer ihn selbst betreiben will, kann das. Kommerziell wären gehostetes Angebot, Konsole, MCP-Zugang für KI-Agenten. <em>Der Grund, den ich nenne:</em> Bei einem Identitätsgraphen muss man nachvollziehen können, wie entschieden wurde. Eine Blackbox, die Gäste zusammenführt, würde ich selbst nicht einsetzen."
     data-notes-en="<em>Keep this short — it is context, not the punchline.</em> The core is Apache 2.0 and stays that way. Anyone who wants to run it themselves can. Commercially: hosting, a console, MCP access for AI agents. <em>The reason I give:</em> with an identity graph you have to be able to follow how it decided. A black box that merges guests is not something I would deploy myself.">
-    <div class="kicker mono" data-n="07" data-en="The model">Das Modell</div>
+    <div class="kicker mono" data-n="09" data-en="The model">Das Modell</div>
     <h1 data-en="Open core — because <em>you have to be able to check it</em>.">Offener Kern — weil man <em>nachprüfen können muss</em>.</h1>
     <div class="thennow">
       <div class="col now">
@@ -374,17 +430,18 @@
     <p class="verdict" data-en="A black box that merges guests is not something <em>I</em> would deploy.">Eine Blackbox, die Gäste zusammenführt, würde <em>ich</em> nicht einsetzen.</p>
   </section>
 
-  <!-- 08 · Die Bitte -->
+  <!-- 10 · Die Bitte -->
   <section class="slide"
     data-time="8:50"
     data-notes="<em>Das ist der eigentliche Zweck des Gesprächs — hier nicht hetzen.</em> Ich zeige das nicht, um zu verkaufen, sondern um herauszufinden, ob ich das Richtige baue. Drei Fragen, und bei jeder ist ein Nein für mich mehr wert als ein höfliches Ja. <em>Danach: Pause. Zuhören, nicht verteidigen.</em>"
     data-notes-en="<em>This is the actual purpose of the conversation — do not rush it.</em> I am not showing this to sell, but to find out whether I am building the right thing. Three questions, and on each one a no is worth more to me than a polite yes. <em>Then: pause. Listen, do not defend.</em>">
-    <div class="kicker mono" data-n="08" data-en="What I am asking">Worum ich bitte</div>
+    <div class="kicker mono" data-n="10" data-en="What I am asking">Worum ich bitte</div>
     <h1 data-en="Tell me where this is <em>wrong</em>.">Sagen Sie mir, wo das <em>falsch</em> ist.</h1>
     <ul class="ask">
       <li><b>1 ·</b> <span data-en="Is the scattered-guest problem real enough in your operation that someone would pay to fix it?">Ist das Problem der verstreuten Gastdaten in Ihrem Betrieb real genug, dass jemand für die Lösung zahlen würde?</span></li>
       <li><b>2 ·</b> <span data-en="Would a review queue be used — or ignored, like every other queue?">Würde eine Review-Queue tatsächlich benutzt — oder ignoriert, wie jede andere Warteschlange?</span></li>
       <li><b>3 ·</b> <span data-en="Which system would have to be connected first for this to be worth anything at all?">Welches System müsste zuerst angebunden sein, damit das überhaupt etwas wert ist?</span></li>
+      <li><b>4 ·</b> <span data-en="Would you let an agent decide a merge — and what would it have to show you first?">Würden Sie einen Agenten über eine Zusammenführung entscheiden lassen — und was müsste er Ihnen vorher zeigen?</span></li>
     </ul>
     <p class="stamp" data-en="<b>github.com/guestgraph</b> · a no is worth more to me than a polite yes">
       <b>github.com/guestgraph</b> · ein Nein ist mir mehr wert als ein höfliches Ja</p>
@@ -395,7 +452,7 @@
 <div class="langind mono"><span id="lde">DE</span> · <span id="len">EN</span></div>
 <div class="hint mono" id="hint">← →  blättern · N  Notizen · L  Sprache · F  Vollbild</div>
 <div class="name">Robert Blust</div>
-<div class="counter mono"><b id="cur">1</b> / <span id="tot">9</span></div>
+<div class="counter mono"><b id="cur">1</b> / <span id="tot">11</span></div>
 
 <div class="bar" id="bar"></div>
 
