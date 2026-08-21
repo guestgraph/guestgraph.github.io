@@ -20,7 +20,7 @@ await page.goto(src, { waitUntil: "networkidle" });
 await page.keyboard.press("l");
 await page.waitForTimeout(300);
 // hide on-screen chrome (navigation hints, counter, name, progress bar, notes)
-await page.addStyleTag({ content: `.hint,.counter,.name,.langind,.bar,.notes,.play,.speaking{display:none!important}` });
+await page.addStyleTag({ content: `.hint,.counter,.name,.langind,.bar,.notes,.play{display:none!important}` });
 
 const count = await page.evaluate(() => document.querySelectorAll(".slide").length);
 

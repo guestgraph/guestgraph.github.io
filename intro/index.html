@@ -185,13 +185,6 @@
   .play.on .picon{display:none}
   .play.on .pause{display:block}
   .play[hidden]{display:none}
-  /* what is being said, for anyone who cannot hear it */
-  .speaking{
-    position:fixed; left:50%; transform:translateX(-50%); bottom:7.4vmin; z-index:6;
-    max-width:74ch; text-align:center; font-size:.76rem; line-height:1.5; color:var(--muted);
-    opacity:0; transition:opacity .25s ease; pointer-events:none; padding:0 4vmin;
-  }
-  .speaking.show{opacity:1}
 
   .notes{position:fixed; inset:auto 0 0 0; background:#17181c; color:#f1ede4; border-top:2px solid var(--cobalt); padding:3vmin 4vmin 4vmin; transform:translateY(101%); transition:transform .3s ease; z-index:20; max-height:52vh; overflow:auto}
   .notes.show{transform:none}
@@ -204,7 +197,7 @@
   .notes .time{float:right; color:#9db0ff; font-family:"IBM Plex Mono",monospace}
   .notes small{display:block; margin-top:1.6vmin; color:#b7b0a2; opacity:.7; font-family:"IBM Plex Mono",monospace; letter-spacing:.1em}
   /* notes open: JS scales the active slide to fit above the panel */
-  .deck.notes-open ~ .play, .deck.notes-open ~ .speaking{display:none}
+  .deck.notes-open ~ .play{display:none}
   .deck.notes-open .slide.active{justify-content:flex-start; padding:4vmin 10vmin; transform-origin:top center}
   .deck.notes-open .split{align-items:start; margin-top:1.6vmin}
 
@@ -217,12 +210,6 @@
     /* stack the narration controls clear of the bottom chrome row, which a centred
        pill would otherwise sit on top of at this width */
     .play{bottom:9vmin}
-    .speaking{
-      bottom:17vmin; font-size:.7rem; line-height:1.45; padding:0 6vmin;
-      max-height:7.2em; overflow:hidden;
-      -webkit-mask-image:linear-gradient(#000 72%, transparent);
-      mask-image:linear-gradient(#000 72%, transparent);
-    }
     .slide{justify-content:flex-start; overflow-y:auto; padding:14vmin 7vw 10vh}
     h1{font-size:clamp(1.7rem,7.5vw,3rem); max-width:100%}
     .big-punch{font-size:clamp(1.8rem,8vw,3.2rem); max-width:100%}
@@ -246,11 +233,13 @@
 
 <div class="deck" id="deck">
 
-  <!-- 00 · Titel -->
+  <!-- 00 · Titel — data-say-title="no": the greeting is the opening, so the headline
+       is not read out on top of it -->
   <section class="slide title-slide"
+    data-say-title="no"
     data-time="0:00"
-    data-notes="<em class='cue'>Der Titel liegt an, während ich begrüsse.</em> Ich sage kurz wer ich bin, und dass ich heute nicht ein fertiges Produkt zeige, sondern eine Idee zur Prüfung stelle. <em class='cue'>Wichtig im Ton:</em> ich will Gegenwind, nicht Applaus."
-    data-notes-en="<em class='cue'>The title stays up while I greet.</em> I say briefly who I am, and that today I am not showing a finished product but putting an idea up for scrutiny. <em class='cue'>Important in tone:</em> I want pushback, not applause.">
+    data-notes="<em class='cue'>Der Titel liegt an, während ich begrüsse.</em> Ich bin Robert Blust. Ich baue Software, und ich zeige heute kein fertiges Produkt. Ich stelle eine Idee zur Prüfung. <em class='cue'>Wichtig im Ton — kurze Pause davor:</em> Ich will Gegenwind, nicht Applaus."
+    data-notes-en="<em class='cue'>The title stays up while I greet.</em> I'm Robert Blust. I build software, and today I'm not showing you a finished product. I'm putting an idea up for scrutiny. <em class='cue'>Important in tone — a short pause first:</em> I want pushback, not applause.">
     <div class="kicker mono" data-n="00" data-en="An idea, put up for scrutiny">Eine Idee, zur Prüfung gestellt</div>
     <div class="titlelock rise">
       <span class="titlemark"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/><circle cx="6" cy="7.2" r="2.6" fill="#0f1013"/><circle cx="6" cy="16" r="2.6" fill="#0f1013"/><circle cx="6" cy="24.8" r="2.6" fill="#0f1013"/></g><circle cx="24" cy="16" r="5.4" fill="currentColor"/></svg></span>
@@ -349,8 +338,8 @@
   <!-- 04 · Wie entschieden wird -->
   <section class="slide"
     data-time="4:10"
-    data-notes="<em class='cue'>Das ist die wichtigste Folie — hier langsam werden.</em> Die Frage ist nie „passen die zusammen?“, sondern „wie sicher sind wir?“. Also entscheidet jede Schicht nur das, wozu sie berechtigt ist, und gibt den Rest nach oben. Geteilte starke Merkmale — E-Mail, Telefon, Ausweis — führen sofort zusammen. Wahrscheinlichkeitsbasiertes Scoring führt nur zusammen, wenn der Betrieb die Schwelle selbst gesetzt hat. Alles andere landet bei einem Menschen. <em class='cue'>Der Satz, den ich hängen lassen will:</em> Ab Werk ist das automatische Zusammenführen ausgeschaltet."
-    data-notes-en="<em class='cue'>This is the most important slide — slow down here.</em> The question is never &#8220;do these match?&#8221; but &#8220;how certain are we?&#8221;. So each layer decides only what it is entitled to decide, and hands the rest upward. Shared strong identifiers — email, phone, ID document — merge outright. Probabilistic scoring merges only if the operator set the threshold themselves. Everything else goes to a human. <em class='cue'>The sentence I want to leave hanging:</em> out of the box, automatic merging is switched off.">
+    data-notes="<em class='cue' data-tag='[slowly]'>Das ist die wichtigste Folie — hier langsam werden.</em> Aus dieser Frage folgt der ganze Aufbau: Jede Schicht entscheidet nur das, wozu sie berechtigt ist, und gibt den Rest nach oben. Geteilte starke Merkmale — E-Mail, Telefon, Ausweis — führen sofort zusammen. Wahrscheinlichkeitsbasiertes Scoring führt nur zusammen, wenn der Betrieb die Schwelle selbst gesetzt hat. Alles andere landet bei einem Menschen. <em class='cue' data-tag='[deliberate]'>Der Satz, den ich hängen lassen will:</em> Ab Werk ist das automatische Zusammenführen ausgeschaltet."
+    data-notes-en="<em class='cue' data-tag='[slowly]'>This is the most important slide — slow down here.</em> Everything about the design follows from that question: each layer decides only what it is entitled to decide, and hands the rest upward. Shared strong identifiers — email, phone, ID document — merge outright. Probabilistic scoring merges only if the operator set the threshold themselves. Everything else goes to a human. <em class='cue' data-tag='[deliberate]'>The sentence I want to leave hanging:</em> Out of the box, automatic merging is switched off.">
     <div class="kicker mono" data-n="04" data-en="How it decides">Wie entschieden wird</div>
     <h1 data-en="Not <em>&#8220;is it a match?&#8221;</em> — but <em>&#8220;how sure are we?&#8221;</em>">Nicht <em>„passt das?“</em> — sondern <em>„wie sicher sind wir?“</em></h1>
     <div class="layers">
@@ -374,7 +363,7 @@
   <section class="slide"
     data-time="5:40"
     data-notes="<em class='cue'>Hier geht es um Vertrauen, nicht um Technik.</em> Zwei Eigenschaften gelten für jede Entscheidung, egal welche Schicht sie getroffen hat. Erstens: man kann fragen, warum zwei Datensätze eine Person sind, und bekommt die vollständige Kette — welcher Matcher, wie sicher, aufgrund welcher Hinweise, wann, und seit kurzem auch: wer. Zweitens: jede Zusammenführung lässt sich rückgängig machen, und diese Korrektur hält. <em class='cue'>Wichtig:</em> Das ist keine Zusatzfunktion. Das war zuerst da, bevor überhaupt eine unsichere Entscheidung möglich war."
-    data-notes-en="<em class='cue'>This is about trust, not technology.</em> Two properties hold for every decision, whichever layer made it. First: you can ask why two records are one person and get the full chain — which matcher, how confident, on what evidence, when, and recently also: who. Second: every merge can be undone, and that correction sticks. <em class='cue'>Important:</em> this is not an add-on. It came first, before any uncertain decision was possible at all.">
+    data-notes-en="<em class='cue'>This is about trust, not technology.</em> Two properties hold for every decision, whichever layer made it. First: you can ask why two records are one person and get the full chain — which matcher, how confident, on what evidence, when, and recently also: who. Second: every merge can be undone, and that correction sticks. <em class='cue'>Important:</em> This is not an add-on. It came first, before any uncertain decision was possible at all.">
     <div class="kicker mono" data-n="05" data-en="The two guarantees">Die zwei Garantien</div>
     <h1 data-en="Every decision can be <em>explained</em> and <em>undone</em>.">Jede Entscheidung ist <em>erklärbar</em> und <em>umkehrbar</em>.</h1>
     <div class="thennow">
@@ -395,8 +384,8 @@
   <!-- 06 · Wo KI hingehört -->
   <section class="slide"
     data-time="6:40"
-    data-notes="<em class='cue'>Hier kommt die Frage, die heute jeder stellt — und ich beantworte sie mit der Maschinerie, nicht mit dem Wort KI.</em> Ein Agent, der Gastdaten nutzt, muss zuerst wissen, <em>welcher</em> Gast. Ohne aufgelöste Identität beantwortet er Fragen über fünf Fremde. <em class='cue'>Der eigentliche Punkt, langsam:</em> Ein Agent ist strukturell nur ein weiterer unsicherer Matcher. Genau dieselbe Maschinerie, die einen Fuzzy-Score absichert, sichert auch ihn ab — Schwellen, Review-Queue, Umkehrbarkeit. Seit Kurzem hält die Audit-Spur zusätzlich fest, <em>ob</em> ein Mensch oder ein benannter Agent entschieden hat. Damit wird die Regel „ein Agent hebt die Trennung eines Menschen nie auf“ zu einem einzigen Vergleich."
-    data-notes-en="<em class='cue'>Here comes the question everyone asks today — and I answer it with the machinery, not with the word AI.</em> An agent acting on guest data first has to know <em>which</em> guest. Without resolved identity it is answering questions about five strangers. <em class='cue'>The actual point, slowly:</em> an agent is structurally just another uncertain matcher. The very same machinery that gates a fuzzy score gates it — thresholds, review queue, reversibility. Recently the audit trail also records <em>whether</em> a human or a named agent decided. That turns the rule &#8220;an agent never lifts a human&#8217;s split&#8221; into a single comparison.">
+    data-notes="<em class='cue'>Hier kommt die Frage, die heute jeder stellt — und ich beantworte sie mit der Maschinerie, nicht mit dem Wort KI.</em> Ein Agent, der Gastdaten nutzt, muss zuerst wissen, <em>welcher</em> Gast. Ohne aufgelöste Identität beantwortet er Fragen über fünf Fremde. <em class='cue'>Der eigentliche Punkt, langsam:</em> Strukturell ist das nichts Neues. Genau dieselbe Maschinerie, die einen Fuzzy-Score absichert, sichert auch ihn ab — Schwellen, Review-Queue, Umkehrbarkeit. Seit Kurzem hält die Audit-Spur zusätzlich fest, <em>ob</em> ein Mensch oder ein benannter Agent entschieden hat. Damit wird die Regel „ein Agent hebt die Trennung eines Menschen nie auf“ zu einem einzigen Vergleich."
+    data-notes-en="<em class='cue'>Here comes the question everyone asks today — and I answer it with the machinery, not with the word AI.</em> An agent acting on guest data first has to know <em>which</em> guest. Without resolved identity it is answering questions about five strangers. <em class='cue'>The actual point, slowly:</em> Structurally it is nothing new. The very same machinery that gates a fuzzy score gates it — thresholds, review queue, reversibility. Recently the audit trail also records <em>whether</em> a human or a named agent decided. That turns the rule &#8220;an agent never lifts a human&#8217;s split&#8221; into a single comparison.">
     <div class="kicker mono" data-n="06" data-en="Where AI fits">Wo KI hingehört</div>
     <h1 data-en="An agent is just <em>another uncertain matcher</em>.">Ein Agent ist nur <em>ein weiterer unsicherer Matcher</em>.</h1>
     <div class="split">
@@ -428,7 +417,7 @@
   <section class="slide"
     data-time="7:40"
     data-notes="<em class='cue'>Das ist der Teil, bei dem technische Zuhörer aufhorchen.</em> Jede Entscheidung speichert schon heute ihren vollständigen Merkmalsvektor, und jede Review trägt ein Bestätigt oder Abgelehnt. Das heisst: Stewards erzeugen im normalen Arbeiten beschriftete Trainingsdaten — auf den eigenen Daten des Betriebs, nicht auf einem generischen Korpus. <em class='cue'>Ehrlich bleiben:</em> Es gibt kein Modell und keine Pipeline. Aber die Daten fallen in der richtigen Form an, und der Matcher hängt hinter genau einer Methode: Kandidaten rein, bewertete Entscheidungen raus. Ein Modell wäre die dritte Implementierung davon, nicht ein Umbau."
-    data-notes-en="<em class='cue'>This is the part where technical listeners lean in.</em> Every decision already stores its full feature vector, and every review carries a confirmed or rejected. Which means stewards produce labelled training data as a side effect of ordinary work — on the operation&#8217;s own data, not a generic corpus. <em class='cue'>Stay honest:</em> there is no model and no pipeline. But the data accrues in the right shape, and the matcher sits behind exactly one method: candidates in, scored decisions out. A model would be its third implementation, not a rebuild.">
+    data-notes-en="<em class='cue'>This is the part where technical listeners lean in.</em> Every decision already stores its full feature vector, and every review carries a confirmed or rejected. Which means stewards produce labelled training data as a side effect of ordinary work — on the operation&#8217;s own data, not a generic corpus. <em class='cue'>Stay honest:</em> There is no model and no pipeline. But the data accrues in the right shape, and the matcher sits behind exactly one method: candidates in, scored decisions out. A model would be its third implementation, not a rebuild.">
     <div class="kicker mono" data-n="07" data-en="The flywheel">Das Schwungrad</div>
     <h1 data-en="Every human decision is a <em>labelled example</em>.">Jede menschliche Entscheidung ist ein <em>beschriftetes Beispiel</em>.</h1>
     <div class="thennow">
@@ -450,7 +439,7 @@
   <section class="slide"
     data-time="8:40"
     data-notes="<em class='cue'>Ehrlich bleiben — das ist der Teil, der Glaubwürdigkeit schafft.</em> Die Engine steht: deterministisch, wahrscheinlichkeitsbasiert, Review-Queue, Timeline. Was fehlt, sind die Konnektoren zu echten Systemen — und das ist genau der Teil, der über Nutzbarkeit entscheidet. <em class='cue'>Klar sagen:</em> Es läuft noch nirgends produktiv. Es gibt keine Kunden. Ich zeige eine Grundlage, kein Produkt."
-    data-notes-en="<em class='cue'>Stay honest — this is the part that earns credibility.</em> The engine is there: deterministic, probabilistic, review queue, timeline. What is missing are the connectors to real systems — and that is exactly the part that decides whether it is usable. <em class='cue'>Say it plainly:</em> it runs nowhere in production. There are no customers. I am showing a foundation, not a product.">
+    data-notes-en="<em class='cue'>Stay honest — this is the part that earns credibility.</em> The engine is there: deterministic, probabilistic, review queue, timeline. What is missing are the connectors to real systems — and that is exactly the part that decides whether it is usable. <em class='cue'>Say it plainly:</em> It runs nowhere in production. There are no customers. I am showing a foundation, not a product.">
     <div class="kicker mono" data-n="08" data-en="Where it stands">Stand der Dinge</div>
     <h1 data-en="The engine is built. <em>Almost nothing else</em> is.">Die Engine steht. <em>Fast nichts sonst</em>.</h1>
     <div class="status">
@@ -468,7 +457,7 @@
   <section class="slide"
     data-time="9:40"
     data-notes="<em class='cue'>Kurz halten — das ist Kontext, keine Pointe.</em> Der Kern ist Apache 2.0 und bleibt es. Wer ihn selbst betreiben will, kann das. Kommerziell wären gehostetes Angebot, Konsole, MCP-Zugang für KI-Agenten. <em class='cue'>Der Grund, den ich nenne:</em> Bei einem Identitätsgraphen muss man nachvollziehen können, wie entschieden wurde. Eine Blackbox, die Gäste zusammenführt, würde ich selbst nicht einsetzen."
-    data-notes-en="<em class='cue'>Keep this short — it is context, not the punchline.</em> The core is Apache 2.0 and stays that way. Anyone who wants to run it themselves can. Commercially: hosting, a console, MCP access for AI agents. <em class='cue'>The reason I give:</em> with an identity graph you have to be able to follow how it decided. A black box that merges guests is not something I would deploy myself.">
+    data-notes-en="<em class='cue'>Keep this short — it is context, not the punchline.</em> The core is Apache 2.0 and stays that way. Anyone who wants to run it themselves can. Commercially: hosting, a console, MCP access for AI agents. <em class='cue'>The reason I give:</em> With an identity graph, you have to be able to follow how it decided. A black box that merges guests is not something I would deploy myself.">
     <div class="kicker mono" data-n="09" data-en="The model">Das Modell</div>
     <h1 data-en="Open core — because <em>you have to be able to check it</em>.">Offener Kern — weil man <em>nachprüfen können muss</em>.</h1>
     <div class="thennow">
@@ -508,14 +497,13 @@
 <div class="langind mono"><span id="lde">DE</span> · <span id="len">EN</span></div>
 <div class="hint mono" id="hint">← →  blättern · N  Notizen · L  Sprache · F  Vollbild</div>
 <div class="name"><span class="namemark"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/><circle cx="6" cy="7.2" r="2.6" fill="#0f1013"/><circle cx="6" cy="16" r="2.6" fill="#0f1013"/><circle cx="6" cy="24.8" r="2.6" fill="#0f1013"/></g><circle cx="24" cy="16" r="5.4" fill="currentColor"/></svg></span><b>GuestGraph</b> · Robert Blust</div>
-<div class="counter mono"><b id="cur">1</b> / <span id="tot">11</span></div>
+<div class="counter mono"><b id="cur">00</b> / <span id="tot">10</span></div>
 
 <button class="play mono" id="play" aria-label="Play narration" title="P">
   <svg viewBox="0 0 12 14" aria-hidden="true" class="picon"><path d="M1 1 L11 7 L1 13 Z"/></svg>
   <svg viewBox="0 0 12 14" aria-hidden="true" class="pause"><rect x="1" y="1" width="3.4" height="12"/><rect x="7.6" y="1" width="3.4" height="12"/></svg>
   <span id="playlabel">Play</span>
 </button>
-<div class="speaking mono" id="speaking" aria-live="polite"></div>
 
 <div class="bar" id="bar"></div>
 
@@ -527,10 +515,13 @@
 
 <script>
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  // slide numbering is zero-based everywhere the viewer can see it: the kicker on each
+  // slide, the counter, and the audio filenames all say the same number.
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
   var i = 0, notesOpen = false, lang = 'en';
   var bar = document.getElementById('bar'), cur = document.getElementById('cur');
   var notes = document.getElementById('notes'), ntext = document.getElementById('ntext'), ntime = document.getElementById('ntime');
-  document.getElementById('tot').textContent = slides.length;
+  document.getElementById('tot').textContent = pad(slides.length - 1);
 
   var i18n = Array.prototype.slice.call(document.querySelectorAll('[data-en]'));
   i18n.forEach(function(el){ el.setAttribute('data-de', el.innerHTML); });
@@ -549,7 +540,11 @@
     document.getElementById('lde').classList.toggle('on', lang === 'de');
     document.getElementById('len').classList.toggle('on', lang === 'en');
     document.documentElement.lang = lang;
-    if (typeof playing !== 'undefined' && playing) { synth.cancel(); setTimeout(narrateCurrent, 120); }
+    if (typeof playing !== 'undefined' && playing) {
+      if (synth) synth.cancel();
+      if (typeof clip !== 'undefined') { clip.pause(); }
+      setTimeout(narrateCurrent, 120);
+    }
     if (typeof playLabel !== 'undefined' && playLabel) playLabel.textContent = playing ? UI[lang].pause : UI[lang].play;
     render();
   }
@@ -566,7 +561,7 @@
   function render(){
     slides.forEach(function(s,n){ if(n!==i) s.style.transform=''; s.classList.toggle('active', n===i); });
     bar.style.width = ((i+1)/slides.length*100) + '%';
-    cur.textContent = i+1;
+    cur.textContent = pad(i);
     if(notesOpen){
       var d = slides[i].dataset;
       ntext.innerHTML = (lang === 'en' && d.notesEn) ? d.notesEn : d.notes;
@@ -597,17 +592,33 @@
      Regie-Instruktionen ("the title stays up while I greet"), the rest is Sprechtext. Only the
      latter is spoken.
 
-     Nothing is timed. Each slide advances on the speech-end event, so the deck follows the voice
-     rather than a clock — which means it stays in sync when a note is edited, when a voice reads
-     at a different rate, and across the two languages. The data-time cues remain what they always
-     were: the presenter's own pacing for the live talk. */
+     A recorded clip is played when one exists (audio/<lang>/<nn>.mp3), and the browser's own
+     voice reads the note when one does not — so a half-recorded deck still plays end to end.
+
+     Nothing is timed either way. Each slide advances on the end event of whichever source spoke,
+     so the deck follows the voice rather than a clock, and stays correct when a note is edited or
+     a clip is re-recorded. The data-time cues are untouched: they are the presenter's pacing for
+     the live talk, which runs about three times longer than the narration and is a different
+     timeline entirely. */
   var synth = window.speechSynthesis;
+  var clip = new Audio();
+  clip.preload = 'auto';
   var playBtn = document.getElementById('play');
   var playLabel = document.getElementById('playlabel');
-  var caption = document.getElementById('speaking');
-  var playing = false, utter = null;
+  var playing = false, utter = null, gapTimer = null;
 
-  if (!synth) { playBtn.hidden = true; }
+  // audio needs no speech synthesis, so the control stays even where synthesis is missing
+
+  /* The headline, read as the spoken lead-in. On screen it is the thing the eye lands on
+     first; in audio nothing announced it, so the argument arrived before its own point. */
+  function slideTitle(slide){
+    if (slide.dataset.sayTitle === 'no') return '';
+    var h = slide.querySelector('h1');
+    if (!h) return '';
+    var raw = (lang === 'en' && h.dataset.en) ? h.dataset.en : h.innerHTML;
+    var d = document.createElement('div'); d.innerHTML = raw;
+    return (d.textContent || '').replace(/\s+/g, ' ').trim();
+  }
 
   function spokenText(slide){
     var raw = (lang === 'en' && slide.dataset.notesEn) ? slide.dataset.notesEn : slide.dataset.notes;
@@ -617,7 +628,9 @@
     // only the directions: a bare <em> is emphasis inside the sentence and must be spoken,
     // or the voice says "muss zuerst wissen, Gast" and loses the word the line turns on
     d.querySelectorAll('em.cue').forEach(function(e){ e.remove(); });
-    return (d.textContent || '').replace(/\s+/g, ' ').trim();
+    var body = (d.textContent || '').replace(/\s+/g, ' ').trim();
+    var title = slideTitle(slide);
+    return title ? title + '\n\n' + body : body;
   }
 
   function pickVoice(){
@@ -642,31 +655,64 @@
     try { synth.speak(utter); } catch (e) { stopNarration(); }
   }
 
+  function clipUrl(n){
+    var k = slides[n].querySelector('.kicker');
+    var id = k && k.dataset.n ? k.dataset.n : ('0' + n).slice(-2);
+    return 'audio/' + lang + '/' + id + '.mp3';
+  }
+
+  /* Fetch the next clip while this one plays, so the gap between slides is the pause we
+     intended rather than a download. */
+  function preloadNext(){
+    if (i + 1 >= slides.length) return;
+    var a = new Audio(); a.preload = 'auto'; a.src = clipUrl(i + 1);
+  }
+
   function narrateCurrent(){
     if (!playing) return;
     var text = spokenText(slides[i]);
-    caption.textContent = text;
-    caption.classList.toggle('show', !!text);
     if (!text) { advanceOrStop(); return; }
-    say(text, advanceOrStop);
+
+    clip.onended = function(){ if (playing) advanceOrStop(); };
+    clip.onerror = function(){
+      // no recording for this slide or this language — read the note instead
+      if (playing) say(text, advanceOrStop);
+    };
+    clip.src = clipUrl(i);
+    var started = clip.play();
+    if (started && started.catch) {
+      started.then(preloadNext).catch(function(){ if (playing) say(text, advanceOrStop); });
+    } else {
+      preloadNext();
+    }
   }
+
+  /* Two pauses, doing different jobs. SETTLE sits on the slide that was just narrated, so the
+     point has a moment to land before it is taken away. READ sits on the new slide before the
+     voice starts, so it can be read first — a listener has no presenter to watch, and a slide
+     talked over from the first frame is a slide nobody reads. */
+  var SETTLE_MS = 5000;
+  var READ_MS   = 2000;
 
   function advanceOrStop(){
     if (!playing) return;
     if (i >= slides.length - 1) { stopNarration(); return; }
-    go(i + 1);
-    // a beat between slides, so the next line does not start on top of the transition
-    setTimeout(narrateCurrent, 550);
+    gapTimer = setTimeout(function(){
+      if (!playing) return;
+      go(i + 1);
+      gapTimer = setTimeout(function(){ if (playing) narrateCurrent(); }, READ_MS);
+    }, SETTLE_MS);
   }
 
   function startNarration(){
-    if (!synth) return;
-    if (!pickVoice()) {
-      caption.textContent = lang === 'de'
-        ? 'Keine Stimme für diese Sprache auf diesem Gerät installiert.'
-        : 'No voice for this language is installed on this device.';
-      caption.classList.add('show');
-      setTimeout(function(){ caption.classList.remove('show'); }, 4000);
+    // synthesis is only the fallback now, so its absence is not a reason to refuse
+    if (!synth) { playing = true; playBtn.classList.add('on');
+                  playLabel.textContent = UI[lang].pause; narrateCurrent(); return; }
+    if (!pickVoice() && !hasClips()) {
+      // no recording and no installed voice: say so on the control itself rather than
+      // failing silently, then put the label back
+      playLabel.textContent = lang === 'de' ? 'Keine Stimme' : 'No voice';
+      setTimeout(function(){ playLabel.textContent = UI[lang].play; }, 2600);
       return;
     }
     playing = true;
@@ -678,11 +724,22 @@
 
   function stopNarration(){
     playing = false;
-    synth.cancel();
+    clearTimeout(gapTimer);
+    clip.pause();
+    clip.onended = clip.onerror = null;
+    if (synth) synth.cancel();
     playBtn.classList.remove('on');
     playLabel.textContent = UI[lang].play;
     playBtn.setAttribute('aria-label', UI[lang].play);
-    caption.classList.remove('show');
+  }
+
+  /* Optimistic: if a clip exists we never need a voice installed. Checked lazily so the
+     deck makes no network request until someone actually presses play. */
+  var clipsSeen = null;
+  function hasClips(){
+    if (clipsSeen !== null) return clipsSeen;
+    clipsSeen = true;                       // assume yes; clip.onerror handles the truth
+    return clipsSeen;
   }
 
   function toggleNarration(){ playing ? stopNarration() : startNarration(); }
