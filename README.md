@@ -15,6 +15,10 @@ serves at **guestgraph.io/talks/** with no configuration of its own.
 - `logo.svg` — the mark: three open records resolving into one solid profile. Uses
   `currentColor`, so it inherits whatever colour it is placed in.
 - `favicon.svg`
+- `avatar.svg` / `avatar.png` — the org avatar, 1024×1024. Full-bleed square on purpose:
+  GitHub rounds org avatars itself, and a rounded rect here would show its corners through
+  that mask. Upload the **PNG** — GitHub does not accept SVG for avatars, and there is no API
+  for it (Organisation → Settings → Profile → Upload new picture).
 - `CNAME` — the custom domain
 
 ## The mark

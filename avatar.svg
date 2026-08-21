@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Org avatar. Full-bleed square on purpose: GitHub applies its own rounding to org
+       avatars, and a rounded rect here would show its corners through that mask. -->
+  <rect width="1024" height="1024" fill="#0f1013"/>
+  <g fill="none" stroke="#7aa0ff" stroke-width="46" stroke-linecap="round">
+    <path d="M300 268 L636 460"/>
+    <path d="M300 512 L620 512"/>
+    <path d="M300 756 L636 564"/>
+    <circle cx="252" cy="268" r="62" fill="#0f1013"/>
+    <circle cx="252" cy="512" r="62" fill="#0f1013"/>
+    <circle cx="252" cy="756" r="62" fill="#0f1013"/>
+  </g>
+  <circle cx="716" cy="512" r="132" fill="#7aa0ff"/>
+</svg>
