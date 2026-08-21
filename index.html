@@ -21,12 +21,14 @@
   /* same rhythm as the deck: full-bleed, vmin padding — not a centred column */
   .wrap{padding:11vmin 10vmin 9vmin}
 
-  .kicker{
-    font-family:"IBM Plex Mono", ui-monospace, monospace;
-    font-size:clamp(.82rem,1.6vmin,1.15rem); letter-spacing:.22em; text-transform:uppercase;
-    color:var(--cobalt); display:flex; align-items:center; gap:1.1em; margin-bottom:3.2vmin;
-  }
-  .kicker::after{content:""; flex:0 0 8vmin; height:2px; background:var(--cobalt); opacity:.5}
+  /* the same lockup the landing page opens with, and a way back to it */
+  .brand{display:inline-flex; align-items:center; gap:.65em; text-decoration:none;
+         margin-bottom:3.4vmin; color:var(--cobalt)}
+  .brand svg{width:clamp(26px,3.4vmin,38px); height:clamp(26px,3.4vmin,38px); flex:0 0 auto}
+  .brand b{font-weight:600; letter-spacing:-.01em; color:var(--ink);
+           font-size:clamp(1.02rem,2.1vmin,1.5rem)}
+  .brand b span{color:var(--cobalt)}
+  .brand:hover b, .brand:focus-visible b{color:var(--cobalt)}
 
   h1{font-weight:600; line-height:1.07; letter-spacing:-.02em; font-size:clamp(2.3rem,6.6vmin,5.6rem); max-width:21ch}
   h1 em{font-style:normal; color:var(--cobalt)}
@@ -81,7 +83,7 @@
 <div class="hint mono" id="hint">L  Sprache</div>
 
 <main class="wrap">
-  <div class="kicker mono">GuestGraph</div>
+  <a class="brand" href="https://guestgraph.io"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/><circle cx="6" cy="7.2" r="2.6" fill="#0f1013"/><circle cx="6" cy="16" r="2.6" fill="#0f1013"/><circle cx="6" cy="24.8" r="2.6" fill="#0f1013"/></g><circle cx="24" cy="16" r="5.4" fill="currentColor"/></svg><b>Guest<span>Graph</span></b></a>
   <h1 data-en="Talks on <em>guest identity</em>.">Vorträge über <em>Gast-Identität</em>.</h1>
   <p class="lede" data-en="GuestGraph is an open-source guest identity graph for hospitality: one explainable, reversible guest profile derived from records scattered across every system in the hotel.">GuestGraph ist ein Open-Source-Identitätsgraph für Gäste in der Hotellerie: ein erklärbares, umkehrbares Gastprofil, abgeleitet aus Datensätzen, die über jedes System im Hotel verstreut liegen.</p>
 

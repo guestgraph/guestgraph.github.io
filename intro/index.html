@@ -103,6 +103,14 @@
   .big-punch{font-size:clamp(2.3rem,7.2vmin,5.8rem)}
 
   /* title slide */
+  /* the mark, so the opening slide is the same lockup the site opens with */
+  .titlemark{color:var(--cobalt); margin-bottom:2.6vmin}
+  .titlemark svg{width:clamp(38px,7vmin,84px); height:clamp(38px,7vmin,84px); display:block}
+  .name{display:flex; align-items:center; gap:.6em}
+  .name .namemark{color:var(--cobalt); display:flex}
+  .name .namemark svg{width:15px; height:15px; display:block}
+  .name b{color:var(--ink); font-weight:600; letter-spacing:.14em}
+
   .title-slide{justify-content:center}
   .title-slide h1{font-size:clamp(2.8rem,9.5vmin,7.2rem); max-width:18ch; line-height:1.02}
   .title-slide .sub{margin-top:4.2vmin; max-width:42ch; font-size:clamp(1.3rem,3.4vmin,2.6rem); color:var(--muted)}
@@ -199,6 +207,7 @@
     data-notes="<em>Der Titel liegt an, während ich begrüsse.</em> Ich sage kurz wer ich bin, und dass ich heute nicht ein fertiges Produkt zeige, sondern eine Idee zur Prüfung stelle. <em>Wichtig im Ton:</em> ich will Gegenwind, nicht Applaus."
     data-notes-en="<em>The title stays up while I greet.</em> I say briefly who I am, and that today I am not showing a finished product but putting an idea up for scrutiny. <em>Important in tone:</em> I want pushback, not applause.">
     <div class="kicker mono" data-n="00" data-en="An idea, put up for scrutiny">Eine Idee, zur Prüfung gestellt</div>
+    <div class="titlemark rise"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/><circle cx="6" cy="7.2" r="2.6" fill="#0f1013"/><circle cx="6" cy="16" r="2.6" fill="#0f1013"/><circle cx="6" cy="24.8" r="2.6" fill="#0f1013"/></g><circle cx="24" cy="16" r="5.4" fill="currentColor"/></svg></div>
     <h1 data-en="Guest<em>Graph</em>.">Guest<em>Graph</em>.</h1>
     <p class="sub" data-en="One explainable guest profile, from data scattered across every system in the hotel.">Ein erklärbares Gastprofil — aus Daten, die über jedes System im Hotel verstreut liegen.</p>
     <p class="byline rise" data-en="Robert Blust · <span>Software Engineer &amp; Architect</span>">Robert Blust · <span>Software Engineer &amp; Architekt</span></p>
@@ -451,7 +460,7 @@
 
 <div class="langind mono"><span id="lde">DE</span> · <span id="len">EN</span></div>
 <div class="hint mono" id="hint">← →  blättern · N  Notizen · L  Sprache · F  Vollbild</div>
-<div class="name">Robert Blust</div>
+<div class="name"><span class="namemark"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/><circle cx="6" cy="7.2" r="2.6" fill="#0f1013"/><circle cx="6" cy="16" r="2.6" fill="#0f1013"/><circle cx="6" cy="24.8" r="2.6" fill="#0f1013"/></g><circle cx="24" cy="16" r="5.4" fill="currentColor"/></svg></span><b>GuestGraph</b> · Robert Blust</div>
 <div class="counter mono"><b id="cur">1</b> / <span id="tot">11</span></div>
 
 <div class="bar" id="bar"></div>
