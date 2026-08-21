@@ -14,7 +14,7 @@ and [essential-complexity](https://github.com/robertblust/essential-complexity).
 
 | | Talk | Length | Languages |
 |---|---|---|---|
-| 01 | [**GuestGraph — an introduction**](intro/) · [live](https://guestgraph.github.io/talks/intro/) | 10 min | DE · EN |
+| 01 | [**GuestGraph — an introduction**](intro/) · [live](https://guestgraph.io/talks/intro/) | 12 min | DE · EN |
 
 ### Controls
 - **← →** – navigate
