@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GuestGraph – Robert Blust</title>
+<style>
+  :root{
+    --paper:#0f1013; --ink:#f1ede4; --muted:#9a9384; --cobalt:#7aa0ff;
+    --line:#282a30; --paper2:#191b20; --amber:#e0a75e; --warn:#e0705e;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%}
+  body{
+    font-family:"IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background:var(--paper); color:var(--ink);
+    -webkit-font-smoothing:antialiased; overflow:hidden;
+  }
+  .mono{font-family:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace}
+
+  .deck{
+    position:fixed; inset:0;
+    background:radial-gradient(130% 85% at 50% 0%, #17191f 0%, var(--paper) 62%);
+  }
+
+  .slide{
+    position:absolute; inset:0;
+    display:none; flex-direction:column; justify-content:center;
+    padding:6.5vmin 10vmin;
+    opacity:0; transition:opacity .35s ease;
+  }
+  .slide.active{display:flex; opacity:1}
+  .slide.active .rise{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+  .slide.active .rise:nth-child(1){animation-delay:.05s}
+  .slide.active .rise:nth-child(2){animation-delay:.14s}
+  .slide.active .rise:nth-child(3){animation-delay:.24s}
+  .slide.active .rise:nth-child(4){animation-delay:.34s}
+  @keyframes rise{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
+
+  .kicker{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:clamp(.82rem,1.6vmin,1.15rem); letter-spacing:.22em; text-transform:uppercase;
+    color:var(--cobalt); margin-bottom:3.2vmin; display:flex; align-items:center; gap:1.1em;
+  }
+  .kicker::before{content:attr(data-n); color:var(--muted)}
+  .kicker::after{content:""; flex:0 0 8vmin; height:2px; background:var(--cobalt); opacity:.5}
+
+  h1{
+    font-weight:600; line-height:1.07; letter-spacing:-.02em;
+    font-size:clamp(2.3rem,6.6vmin,5.6rem); max-width:21ch;
+  }
+  h1 em{font-style:normal; color:var(--cobalt)}
+  .sub{
+    margin-top:3.4vmin; font-size:clamp(1.25rem,3.1vmin,2.5rem);
+    color:var(--muted); max-width:36ch; line-height:1.4; font-weight:400;
+  }
+  .note{
+    margin-top:4.4vmin; font-size:clamp(1.05rem,2.3vmin,1.7rem); color:var(--ink);
+    padding-left:1.4vmin; border-left:3px solid var(--cobalt); max-width:44ch; line-height:1.45;
+  }
+
+  /* people / agents split */
+  .thennow{display:grid; grid-template-columns:1fr 1fr; gap:6vmin; margin-top:3vmin; max-width:60ch}
+  .col h4{
+    font-family:"IBM Plex Mono",monospace; font-size:clamp(.9rem,1.7vmin,1.25rem);
+    letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:2vmin;
+    padding-bottom:1.2vmin; border-bottom:2px solid var(--line);
+  }
+  .col.now h4{color:var(--cobalt); border-color:var(--cobalt)}
+  .col p{font-size:clamp(1.25rem,2.9vmin,2rem); line-height:1.3; font-weight:500}
+  .col .small{font-size:clamp(1rem,2.1vmin,1.45rem); color:var(--muted); font-weight:400; margin-top:1.4vmin; line-height:1.4}
+  .verdict{margin-top:4vmin; font-size:clamp(1.25rem,2.9vmin,2.1rem); font-weight:600}
+  .verdict em{font-style:normal; color:var(--cobalt)}
+
+  /* breadth left, example diagram right */
+  .split{display:grid; grid-template-columns:0.9fr 1.1fr; gap:5vmin; align-items:center; margin-top:2.4vmin; max-width:82ch}
+  .blist{list-style:none; display:flex; flex-direction:column; gap:1.8vmin}
+  .blist li{border-top:2px solid var(--line); padding-top:1.2vmin}
+  .blist b{display:block; font-size:clamp(1.2rem,2.6vmin,1.85rem); font-weight:600}
+  .blist span{font-size:clamp(.98rem,1.85vmin,1.35rem); color:var(--muted)}
+  .diagram svg{width:100%; height:auto; display:block}
+  .caption{margin-top:1.6vmin; font-family:"IBM Plex Mono",monospace; font-size:clamp(.82rem,1.6vmin,1.15rem); color:var(--muted); letter-spacing:.02em}
+  .caption b{color:var(--cobalt); font-weight:600}
+  .stamp{
+    margin-top:3.4vmin; font-family:"IBM Plex Mono",monospace; font-size:clamp(.9rem,1.7vmin,1.25rem);
+    color:var(--muted); letter-spacing:.02em;
+  }
+  .stamp b{color:var(--cobalt); font-weight:600}
+
+  /* breadth grid (domains overview) */
+  .grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:2.4vmin 5vmin; margin-top:4.4vmin; max-width:74ch}
+  .cell{border-top:2px solid var(--line); padding-top:1.4vmin}
+  .cell b{display:block; font-size:clamp(1.1rem,2.3vmin,1.65rem); font-weight:600}
+  .cell span{font-size:clamp(.88rem,1.6vmin,1.15rem); color:var(--muted)}
+
+  /* example – diagram + list */
+  .split.even{grid-template-columns:1fr 1.05fr; gap:6vmin}
+  .glossary{display:flex; flex-direction:column; gap:1.5vmin; margin:0}
+  .glossary div{border-top:2px solid var(--line); padding-top:1.1vmin}
+  .glossary dt{font-family:"IBM Plex Mono",monospace; color:var(--cobalt); font-weight:600; font-size:clamp(1.05rem,2.1vmin,1.5rem)}
+  .glossary dd{color:var(--muted); font-size:clamp(1rem,1.9vmin,1.4rem); line-height:1.34; margin:.3vmin 0 0}
+
+  .big-punch{font-size:clamp(2.3rem,7.2vmin,5.8rem)}
+
+  /* title slide */
+  .title-slide{justify-content:center}
+  .title-slide h1{font-size:clamp(2.8rem,9.5vmin,7.2rem); max-width:18ch; line-height:1.02}
+  .title-slide .sub{margin-top:4.2vmin; max-width:42ch; font-size:clamp(1.3rem,3.4vmin,2.6rem); color:var(--muted)}
+  .title-slide .byline{margin-top:6vmin; font-family:"IBM Plex Mono",monospace; font-size:clamp(.85rem,1.8vmin,1.25rem); letter-spacing:.14em; color:var(--ink)}
+  .title-slide .byline span{color:var(--muted)}
+
+  /* SVG diagram tokens */
+  .node{fill:var(--paper2); stroke:var(--cobalt); stroke-width:1.5}
+  .node.center{fill:#1c2130; stroke-width:2.2}
+  .edge{stroke:var(--line); stroke-width:1.5; fill:none}
+  .edge.live{stroke:var(--cobalt); stroke-width:1.5; opacity:.7}
+  .nlabel{fill:var(--ink); font-family:"IBM Plex Mono",monospace; font-size:13px; text-anchor:middle; dominant-baseline:middle}
+  .nlabel.c{fill:var(--cobalt); font-weight:700; font-size:14px}
+  .flowbox{fill:var(--paper2); stroke:var(--line); stroke-width:1.5}
+  .flowbox.hot{stroke:var(--cobalt)}
+  .flowlabel{fill:var(--ink); font-family:"IBM Plex Mono",monospace; font-size:14px; text-anchor:middle; dominant-baseline:middle}
+  .gate{fill:#1c2130; stroke:var(--cobalt); stroke-width:2}
+  .arrow{stroke:var(--cobalt); stroke-width:1.6; fill:none; marker-end:url(#ah)}
+  .arrow.dim{stroke:var(--line); marker-end:url(#ahd)}
+  .node.warm{stroke:var(--amber)}
+  .node.bad{stroke:var(--warn)}
+  .nlabel.dim{fill:var(--muted); font-size:12px}
+  .nlabel.warm{fill:var(--amber)}
+  .band{fill:var(--paper2); stroke:var(--line); stroke-width:1.5}
+  .band.merge{stroke:var(--cobalt)}
+  .band.review{stroke:var(--amber)}
+  .bandlabel{font-family:"IBM Plex Mono",monospace; font-size:12.5px; dominant-baseline:middle}
+  .layers{display:flex; flex-direction:column; gap:1.5vmin; margin-top:3vmin; max-width:56ch}
+  .layer{display:grid; grid-template-columns:auto 1fr; gap:1.6vmin 2.2vmin; align-items:baseline;
+         border-left:3px solid var(--line); padding:1.1vmin 0 1.1vmin 2vmin}
+  .layer.on{border-color:var(--cobalt)}
+  .layer.human{border-color:var(--amber)}
+  .layer .who{font-family:"IBM Plex Mono",monospace; font-size:clamp(1rem,2vmin,1.4rem); font-weight:600}
+  .layer.on .who{color:var(--cobalt)} .layer.human .who{color:var(--amber)}
+  .layer .what{font-size:clamp(.98rem,1.95vmin,1.38rem); color:var(--muted); line-height:1.35}
+  .ask{display:flex; flex-direction:column; gap:2vmin; margin-top:3.4vmin; max-width:52ch}
+  .ask li{list-style:none; border-top:2px solid var(--line); padding-top:1.4vmin;
+          font-size:clamp(1.1rem,2.4vmin,1.7rem); line-height:1.35}
+  .ask li b{color:var(--cobalt)}
+  .status{display:grid; grid-template-columns:auto 1fr; gap:1.4vmin 2.4vmin; margin-top:3.2vmin; max-width:54ch;
+          font-size:clamp(1rem,2.1vmin,1.45rem); line-height:1.4}
+  .status .tick{font-family:"IBM Plex Mono",monospace; color:var(--cobalt); font-weight:700}
+  .status .todo{font-family:"IBM Plex Mono",monospace; color:var(--muted)}
+  .status .lbl b{font-weight:600}
+  .status .lbl span{color:var(--muted)}
+
+  .bar{position:fixed; left:0; bottom:0; height:4px; background:var(--cobalt); width:0; transition:width .35s ease; z-index:5}
+  .counter{position:fixed; right:4vmin; bottom:3.4vmin; font-family:"IBM Plex Mono",monospace; font-size:.85rem; color:var(--muted); letter-spacing:.1em; z-index:5}
+  .counter b{color:var(--ink)}
+  .name{position:fixed; left:4vmin; bottom:3.2vmin; font-family:"IBM Plex Mono",monospace; font-size:.72rem; color:var(--muted); letter-spacing:.14em; text-transform:uppercase; z-index:5}
+  .hint{position:fixed; top:3vmin; right:4vmin; font-family:"IBM Plex Mono",monospace; font-size:.68rem; color:var(--muted); letter-spacing:.1em; z-index:5; opacity:.7}
+  .langind{position:fixed; top:3vmin; left:4vmin; font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.15em; color:var(--muted); z-index:5}
+  .langind .on{color:var(--cobalt); font-weight:700}
+
+  .notes{position:fixed; inset:auto 0 0 0; background:#17181c; color:#f1ede4; border-top:2px solid var(--cobalt); padding:3vmin 4vmin 4vmin; transform:translateY(101%); transition:transform .3s ease; z-index:20; max-height:52vh; overflow:auto}
+  .notes.show{transform:none}
+  .notes h3{font-family:"IBM Plex Mono",monospace; font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; color:#9db0ff; margin-bottom:1.4vmin}
+  .notes p{font-size:clamp(.95rem,2vmin,1.3rem); line-height:1.5; max-width:82ch}
+  .notes em{font-style:italic; color:#9a9dab}   /* Regie-Instruktionen gedämpft kursiv; Sprechtext normal/hell */
+  .notes .time{float:right; color:#9db0ff; font-family:"IBM Plex Mono",monospace}
+  .notes small{display:block; margin-top:1.6vmin; color:#b7b0a2; opacity:.7; font-family:"IBM Plex Mono",monospace; letter-spacing:.1em}
+  /* notes open: JS scales the active slide to fit above the panel */
+  .deck.notes-open .slide.active{justify-content:flex-start; padding:4vmin 10vmin; transform-origin:top center}
+  .deck.notes-open .split{align-items:start; margin-top:1.6vmin}
+
+  /* mobile / portrait */
+  @media (max-width: 860px), (max-aspect-ratio: 4/5){
+    .slide{justify-content:flex-start; overflow-y:auto; padding:14vmin 7vw 10vh}
+    h1{font-size:clamp(1.7rem,7.5vw,3rem); max-width:100%}
+    .big-punch{font-size:clamp(1.8rem,8vw,3.2rem); max-width:100%}
+    .sub{font-size:clamp(1rem,4.4vw,1.5rem); max-width:100%}
+    .note{font-size:clamp(.9rem,3.6vw,1.2rem); max-width:100%}
+    .thennow, .split, .split.even, .grid{grid-template-columns:1fr; gap:5vw; max-width:100%}
+    .kicker{margin-bottom:5vw}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute"><defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#7aa0ff"></path>
+  </marker>
+  <marker id="ahd" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#282a30"></path>
+  </marker>
+</defs></svg>
+
+<div class="deck" id="deck">
+
+  <!-- 00 · Titel -->
+  <section class="slide title-slide"
+    data-time="0:00"
+    data-notes="<em>Der Titel liegt an, während ich begrüsse.</em> Ich sage kurz wer ich bin, und dass ich heute nicht ein fertiges Produkt zeige, sondern eine Idee zur Prüfung stelle. <em>Wichtig im Ton:</em> ich will Gegenwind, nicht Applaus."
+    data-notes-en="<em>The title stays up while I greet.</em> I say briefly who I am, and that today I am not showing a finished product but putting an idea up for scrutiny. <em>Important in tone:</em> I want pushback, not applause.">
+    <div class="kicker mono" data-n="00" data-en="An idea, put up for scrutiny">Eine Idee, zur Prüfung gestellt</div>
+    <h1 data-en="Guest<em>Graph</em>.">Guest<em>Graph</em>.</h1>
+    <p class="sub" data-en="One explainable guest profile, from data scattered across every system in the hotel.">Ein erklärbares Gastprofil — aus Daten, die über jedes System im Hotel verstreut liegen.</p>
+    <p class="byline rise" data-en="Robert Blust · <span>Software Engineer &amp; Architect</span>">Robert Blust · <span>Software Engineer &amp; Architekt</span></p>
+  </section>
+
+  <!-- 01 · Das Problem -->
+  <section class="slide"
+    data-time="0:40"
+    data-notes="<em>Konkret einsteigen, nicht abstrakt.</em> Anna bucht über Booking.com, checkt im PMS ein, isst im Restaurant, loggt sich ins WLAN ein, schreibt eine Bewertung. Fünf Systeme, fünf Datensätze, fünf verschiedene Schlüssel. <em>Kurze Pause.</em> Das Hotel hat keinen einzigen Gast namens Anna — es hat fünf Fremde. Und niemand im Haus merkt es."
+    data-notes-en="<em>Start concrete, not abstract.</em> Anna books via Booking.com, checks in through the PMS, eats in the restaurant, logs into the wifi, writes a review. Five systems, five records, five different keys. <em>Short pause.</em> The hotel does not have one guest called Anna — it has five strangers. And nobody in the building notices.">
+    <div class="kicker mono" data-n="01" data-en="The problem">Das Problem</div>
+    <h1 data-en="A returning guest looks like <em>five strangers</em>.">Ein Stammgast sieht aus wie <em>fünf Fremde</em>.</h1>
+    <div class="diagram" style="margin-top:4vmin; max-width:70ch">
+      <svg viewBox="0 0 640 150" role="img" aria-label="Five systems, five separate records">
+        <g class="nlabel">
+          <rect class="node" x="6"   y="34" width="108" height="46" rx="8"/><text x="60"  y="57">Booking.com</text>
+          <rect class="node" x="138" y="34" width="108" height="46" rx="8"/><text x="192" y="57">PMS</text>
+          <rect class="node" x="270" y="34" width="108" height="46" rx="8"/><text x="324" y="57">POS</text>
+          <rect class="node" x="402" y="34" width="108" height="46" rx="8"/><text x="456" y="57">WLAN</text>
+          <rect class="node" x="534" y="34" width="100" height="46" rx="8"/><text x="584" y="57">Reviews</text>
+        </g>
+        <g class="nlabel dim">
+          <text x="60"  y="104">a.mueller@…</text>
+          <text x="192" y="104">Müller, Anna</text>
+          <text x="324" y="104" data-en="Table 12">Tisch 12</text>
+          <text x="456" y="104">+41 79 …</text>
+          <text x="584" y="104">„A. M.“</text>
+        </g>
+        <text class="nlabel dim" x="320" y="136" style="font-size:12px" data-en="— no shared key —">— kein gemeinsamer Schlüssel —</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 02 · Warum es nicht gelöst ist -->
+  <section class="slide"
+    data-time="1:40"
+    data-notes="<em>Den naheliegenden Einwand selbst vorwegnehmen.</em> Die erste Antwort ist immer: dann gleicht doch über die E-Mail ab. Das funktioniert genau so lange, bis eine Familie sich eine Adresse teilt, bis Booking.com eine Relay-Adresse schickt, bis jemand die Adresse wechselt. <em>Betonen:</em> Und wenn man falsch zusammenführt, ist das kein Schönheitsfehler — dann sieht ein Gast die Rechnungen und Aufenthalte eines anderen. Das ist ein Datenschutzvorfall. Deshalb trauen sich die meisten gar nicht erst."
+    data-notes-en="<em>Pre-empt the obvious objection myself.</em> The first answer is always: just match on email. That works exactly until a family shares an address, until Booking.com sends a relay address, until someone changes provider. <em>Stress this:</em> And if you merge wrongly, that is not a cosmetic flaw — one guest sees another's invoices and stays. That is a data protection incident. Which is why most people do not dare try.">
+    <div class="kicker mono" data-n="02" data-en="Why it is not solved">Warum es nicht gelöst ist</div>
+    <h1 data-en="Matching is easy. Being <em>wrong</em> is expensive.">Zusammenführen ist einfach. <em>Falsch</em> liegen ist teuer.</h1>
+    <div class="thennow">
+      <div class="col">
+        <h4 data-en="The naive fix">Die naheliegende Lösung</h4>
+        <p data-en="Match on email.">Über die E-Mail abgleichen.</p>
+        <p class="small" data-en="Breaks on shared family addresses, OTA relay addresses, and anyone who changes provider.">Scheitert an geteilten Familienadressen, an OTA-Relay-Adressen, und an jedem, der den Anbieter wechselt.</p>
+      </div>
+      <div class="col now">
+        <h4 data-en="What it costs">Was es kostet</h4>
+        <p data-en="One guest sees another's stays and invoices.">Ein Gast sieht die Aufenthalte und Rechnungen eines anderen.</p>
+        <p class="small" data-en="A wrong merge is a data protection incident — not a cosmetic flaw. So most hotels never try.">Eine falsche Zusammenführung ist ein Datenschutzvorfall — kein Schönheitsfehler. Also versuchen es die meisten gar nicht.</p>
+      </div>
+    </div>
+    <p class="verdict" data-en="The hard part is not finding matches. It is <em>knowing when not to trust one</em>.">Das Schwierige ist nicht, Treffer zu finden. Sondern <em>zu wissen, wann man einem nicht traut</em>.</p>
+  </section>
+
+  <!-- 03 · Die Idee -->
+  <section class="slide"
+    data-time="2:50"
+    data-notes="<em>Die Kernidee, ruhig.</em> GuestGraph nimmt die Rohdaten aus allen Systemen, lässt sie unangetastet liegen, und leitet daraus ab, welche Datensätze zur selben Person gehören. <em>Zwei Dinge betonen:</em> Erstens, das Original wird nie verändert — Korrekturen kommen als neuer Datensatz, nie als Überschreiben. Zweitens, das goldene Profil ist berechnet, nicht gespeichert: man kann es jederzeit neu herleiten. Das klingt nach einem Detail, ist aber die Grundlage für alles Weitere."
+    data-notes-en="<em>The core idea, calmly.</em> GuestGraph takes the raw records from every system, leaves them untouched, and derives which of them belong to the same person. <em>Stress two things:</em> First, the original is never altered — corrections arrive as a new record, never as an overwrite. Second, the golden profile is computed, not stored: it can be re-derived at any time. That sounds like a detail, but it is the foundation for everything that follows.">
+    <div class="kicker mono" data-n="03" data-en="The idea">Die Idee</div>
+    <h1 data-en="Store what happened. <em>Derive</em> who it was.">Speichern, was passiert ist. <em>Herleiten</em>, wer es war.</h1>
+    <div class="split">
+      <ul class="blist">
+        <li><b data-en="Records are immutable">Datensätze sind unveränderlich</b><span data-en="Corrections arrive as new records, never as edits. The original is always what the source actually sent.">Korrekturen kommen als neue Datensätze, nie als Änderung. Das Original ist immer das, was die Quelle wirklich geschickt hat.</span></li>
+        <li><b data-en="The profile is derived">Das Profil ist abgeleitet</b><span data-en="A computation over the records, not a row someone edits. It can always be recomputed.">Eine Berechnung über die Datensätze, keine Zeile, die jemand ändert. Jederzeit neu herleitbar.</span></li>
+        <li><b data-en="Tenant-scoped from day one">Mandantengetrennt von Tag eins</b><span data-en="One instance serves many brands or properties, with no path between them.">Eine Instanz für viele Marken oder Häuser, ohne Weg dazwischen.</span></li>
+      </ul>
+      <div class="diagram">
+        <svg viewBox="0 0 420 210" role="img" aria-label="Records resolve into one derived guest profile">
+          <g class="nlabel dim" style="font-size:11.5px">
+            <rect class="node" x="4"  y="10"  width="104" height="30" rx="6"/><text x="56" y="26">Booking.com</text>
+            <rect class="node" x="4"  y="52"  width="104" height="30" rx="6"/><text x="56" y="68">PMS</text>
+            <rect class="node" x="4"  y="94"  width="104" height="30" rx="6"/><text x="56" y="110">POS</text>
+            <rect class="node" x="4"  y="136" width="104" height="30" rx="6"/><text x="56" y="152">WLAN</text>
+            <rect class="node" x="4"  y="178" width="104" height="26" rx="6"/><text x="56" y="192">Reviews</text>
+          </g>
+          <path class="arrow" d="M112,25 C165,25 165,100 208,104"/>
+          <path class="arrow" d="M112,67 C165,67 175,100 208,104"/>
+          <path class="arrow" d="M112,109 L208,106"/>
+          <path class="arrow" d="M112,151 C165,151 175,112 208,108"/>
+          <path class="arrow" d="M112,191 C165,191 165,115 208,110"/>
+          <rect class="node center" x="214" y="76" width="196" height="62" rx="10"/>
+          <text class="nlabel c" x="312" y="99">Anna Müller</text>
+          <text class="nlabel dim" x="312" y="120" style="font-size:11px" data-en="one derived profile">ein abgeleitetes Profil</text>
+        </svg>
+        <p class="caption" data-en="Sources stay untouched. <b>Identity is a conclusion</b>, not a field.">Quellen bleiben unangetastet. <b>Identität ist eine Schlussfolgerung</b>, kein Feld.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · Wie entschieden wird -->
+  <section class="slide"
+    data-time="4:10"
+    data-notes="<em>Das ist die wichtigste Folie — hier langsam werden.</em> Die Frage ist nie „passen die zusammen?“, sondern „wie sicher sind wir?“. Also entscheidet jede Schicht nur das, wozu sie berechtigt ist, und gibt den Rest nach oben. Geteilte starke Merkmale — E-Mail, Telefon, Ausweis — führen sofort zusammen. Wahrscheinlichkeitsbasiertes Scoring führt nur zusammen, wenn der Betrieb die Schwelle selbst gesetzt hat. Alles andere landet bei einem Menschen. <em>Der Satz, den ich hängen lassen will:</em> Ab Werk ist das automatische Zusammenführen ausgeschaltet."
+    data-notes-en="<em>This is the most important slide — slow down here.</em> The question is never &#8220;do these match?&#8221; but &#8220;how certain are we?&#8221;. So each layer decides only what it is entitled to decide, and hands the rest upward. Shared strong identifiers — email, phone, ID document — merge outright. Probabilistic scoring merges only if the operator set the threshold themselves. Everything else goes to a human. <em>The sentence I want to leave hanging:</em> out of the box, automatic merging is switched off.">
+    <div class="kicker mono" data-n="04" data-en="How it decides">Wie entschieden wird</div>
+    <h1 data-en="Not <em>&#8220;is it a match?&#8221;</em> — but <em>&#8220;how sure are we?&#8221;</em>">Nicht <em>„passt das?“</em> — sondern <em>„wie sicher sind wir?“</em></h1>
+    <div class="layers">
+      <div class="layer on">
+        <span class="who">1 ·</span>
+        <span class="what"><b style="color:var(--ink)" data-en="Shared strong identifier">Geteiltes starkes Merkmal</b><br><span data-en="Email, phone, loyalty id, ID document → merges outright.">E-Mail, Telefon, Kundennummer, Ausweis → führt direkt zusammen.</span></span>
+      </div>
+      <div class="layer on">
+        <span class="who">2 ·</span>
+        <span class="what"><b style="color:var(--ink)" data-en="Probabilistic score">Wahrscheinlichkeits-Score</b><br><span data-en="Merges only above a threshold the operator chose. Otherwise it queues.">Führt nur über einer Schwelle zusammen, die der Betrieb selbst gesetzt hat. Sonst: Warteschlange.</span></span>
+      </div>
+      <div class="layer human">
+        <span class="who">3 ·</span>
+        <span class="what"><b style="color:var(--ink)" data-en="A human decides">Ein Mensch entscheidet</b><br><span data-en="The final word — and their decision sticks against future evidence.">Das letzte Wort — und die Entscheidung hält auch gegen neue Hinweise.</span></span>
+      </div>
+    </div>
+    <p class="stamp" data-en="Out of the box, automatic probabilistic merging is <b>off</b>. It suggests; a human decides.">Ab Werk ist automatisches Zusammenführen <b>ausgeschaltet</b>. Es schlägt vor; ein Mensch entscheidet.</p>
+  </section>
+
+  <!-- 05 · Die zwei Garantien -->
+  <section class="slide"
+    data-time="5:40"
+    data-notes="<em>Hier geht es um Vertrauen, nicht um Technik.</em> Zwei Eigenschaften gelten für jede Entscheidung, egal welche Schicht sie getroffen hat. Erstens: man kann fragen, warum zwei Datensätze eine Person sind, und bekommt die vollständige Kette — welcher Matcher, wie sicher, aufgrund welcher Hinweise, wann, und seit kurzem auch: wer. Zweitens: jede Zusammenführung lässt sich rückgängig machen, und diese Korrektur hält. <em>Wichtig:</em> Das ist keine Zusatzfunktion. Das war zuerst da, bevor überhaupt eine unsichere Entscheidung möglich war."
+    data-notes-en="<em>This is about trust, not technology.</em> Two properties hold for every decision, whichever layer made it. First: you can ask why two records are one person and get the full chain — which matcher, how confident, on what evidence, when, and recently also: who. Second: every merge can be undone, and that correction sticks. <em>Important:</em> this is not an add-on. It came first, before any uncertain decision was possible at all.">
+    <div class="kicker mono" data-n="05" data-en="The two guarantees">Die zwei Garantien</div>
+    <h1 data-en="Every decision can be <em>explained</em> and <em>undone</em>.">Jede Entscheidung ist <em>erklärbar</em> und <em>umkehrbar</em>.</h1>
+    <div class="thennow">
+      <div class="col now">
+        <h4 data-en="Explain">Erklären</h4>
+        <p data-en="&quot;Why are these one guest?&quot;">„Warum sind das ein Gast?“</p>
+        <p class="small" data-en="The full chain: which matcher, how confident, on what evidence, when — and who, if a person or an agent decided it.">Die vollständige Kette: welcher Matcher, wie sicher, aufgrund welcher Hinweise, wann — und wer, wenn ein Mensch oder ein Agent entschieden hat.</p>
+      </div>
+      <div class="col now">
+        <h4 data-en="Undo">Umkehren</h4>
+        <p data-en="Split them again — and it holds.">Wieder trennen — und es hält.</p>
+        <p class="small" data-en="An undo writes a permanent do-not-merge rule, so new evidence cannot silently put them back together.">Eine Trennung schreibt eine dauerhafte Regel, damit neue Hinweise die beiden nicht stillschweigend wieder zusammenführen.</p>
+      </div>
+    </div>
+    <p class="verdict" data-en="This shipped <em>before</em> any uncertain decision was possible. That order was the point.">Das gab es, <em>bevor</em> eine unsichere Entscheidung überhaupt möglich war. Diese Reihenfolge war der Punkt.</p>
+  </section>
+
+  <!-- 06 · Stand -->
+  <section class="slide"
+    data-time="7:00"
+    data-notes="<em>Ehrlich bleiben — das ist der Teil, der Glaubwürdigkeit schafft.</em> Die Engine steht: deterministisch, wahrscheinlichkeitsbasiert, Review-Queue, Timeline. Was fehlt, sind die Konnektoren zu echten Systemen — und das ist genau der Teil, der über Nutzbarkeit entscheidet. <em>Klar sagen:</em> Es läuft noch nirgends produktiv. Es gibt keine Kunden. Ich zeige eine Grundlage, kein Produkt."
+    data-notes-en="<em>Stay honest — this is the part that earns credibility.</em> The engine is there: deterministic, probabilistic, review queue, timeline. What is missing are the connectors to real systems — and that is exactly the part that decides whether it is usable. <em>Say it plainly:</em> it runs nowhere in production. There are no customers. I am showing a foundation, not a product.">
+    <div class="kicker mono" data-n="06" data-en="Where it stands">Stand der Dinge</div>
+    <h1 data-en="The engine is built. The <em>connectors</em> are not.">Die Engine steht. Die <em>Konnektoren</em> nicht.</h1>
+    <div class="status">
+      <span class="tick">✓</span><span class="lbl"><b data-en="Identity resolution">Identitätsauflösung</b> <span data-en="— deterministic and probabilistic, with a human review queue">— deterministisch und wahrscheinlichkeitsbasiert, mit Review-Queue</span></span>
+      <span class="tick">✓</span><span class="lbl"><b data-en="Explain, undo, audit trail">Erklären, Umkehren, Audit-Spur</b> <span data-en="— every decision, including who made it">— jede Entscheidung, inklusive wer sie getroffen hat</span></span>
+      <span class="tick">✓</span><span class="lbl"><b data-en="Guest timeline">Gast-Timeline</b> <span data-en="— what a guest currently has, not just what was observed">— was ein Gast aktuell hat, nicht nur was beobachtet wurde</span></span>
+      <span class="todo">○</span><span class="lbl"><b data-en="Connectors">Konnektoren</b> <span data-en="— real PMS, POS, booking systems. Next, and the part that decides usability.">— echte PMS-, POS-, Buchungssysteme. Als Nächstes, und der Teil, der über Nutzbarkeit entscheidet.</span></span>
+      <span class="todo">○</span><span class="lbl"><b data-en="Production use">Produktivbetrieb</b> <span data-en="— none yet. No customers. This is a foundation, not a product.">— noch keiner. Keine Kunden. Das ist eine Grundlage, kein Produkt.</span></span>
+    </div>
+  </section>
+
+  <!-- 07 · Das Modell -->
+  <section class="slide"
+    data-time="8:00"
+    data-notes="<em>Kurz halten — das ist Kontext, keine Pointe.</em> Der Kern ist Apache 2.0 und bleibt es. Wer ihn selbst betreiben will, kann das. Kommerziell wären gehostetes Angebot, Konsole, MCP-Zugang für KI-Agenten. <em>Der Grund, den ich nenne:</em> Bei einem Identitätsgraphen muss man nachvollziehen können, wie entschieden wurde. Eine Blackbox, die Gäste zusammenführt, würde ich selbst nicht einsetzen."
+    data-notes-en="<em>Keep this short — it is context, not the punchline.</em> The core is Apache 2.0 and stays that way. Anyone who wants to run it themselves can. Commercially: hosting, a console, MCP access for AI agents. <em>The reason I give:</em> with an identity graph you have to be able to follow how it decided. A black box that merges guests is not something I would deploy myself.">
+    <div class="kicker mono" data-n="07" data-en="The model">Das Modell</div>
+    <h1 data-en="Open core — because <em>you have to be able to check it</em>.">Offener Kern — weil man <em>nachprüfen können muss</em>.</h1>
+    <div class="thennow">
+      <div class="col now">
+        <h4 data-en="Open source · Apache 2.0">Open Source · Apache 2.0</h4>
+        <p data-en="Engine, graph, API, connectors.">Engine, Graph, API, Konnektoren.</p>
+        <p class="small" data-en="Run it yourself. Read exactly how it decided to merge two of your guests.">Selbst betreiben. Genau nachlesen, wie entschieden wurde, zwei Ihrer Gäste zusammenzuführen.</p>
+      </div>
+      <div class="col">
+        <h4 data-en="Commercial (planned)">Kommerziell (geplant)</h4>
+        <p data-en="Hosting, console, MCP for AI agents.">Hosting, Konsole, MCP für KI-Agenten.</p>
+        <p class="small" data-en="The core never depends on it, and is never degraded to sell it.">Der Kern hängt nie davon ab und wird nie beschnitten, um es zu verkaufen.</p>
+      </div>
+    </div>
+    <p class="verdict" data-en="A black box that merges guests is not something <em>I</em> would deploy.">Eine Blackbox, die Gäste zusammenführt, würde <em>ich</em> nicht einsetzen.</p>
+  </section>
+
+  <!-- 08 · Die Bitte -->
+  <section class="slide"
+    data-time="8:50"
+    data-notes="<em>Das ist der eigentliche Zweck des Gesprächs — hier nicht hetzen.</em> Ich zeige das nicht, um zu verkaufen, sondern um herauszufinden, ob ich das Richtige baue. Drei Fragen, und bei jeder ist ein Nein für mich mehr wert als ein höfliches Ja. <em>Danach: Pause. Zuhören, nicht verteidigen.</em>"
+    data-notes-en="<em>This is the actual purpose of the conversation — do not rush it.</em> I am not showing this to sell, but to find out whether I am building the right thing. Three questions, and on each one a no is worth more to me than a polite yes. <em>Then: pause. Listen, do not defend.</em>">
+    <div class="kicker mono" data-n="08" data-en="What I am asking">Worum ich bitte</div>
+    <h1 data-en="Tell me where this is <em>wrong</em>.">Sagen Sie mir, wo das <em>falsch</em> ist.</h1>
+    <ul class="ask">
+      <li><b>1 ·</b> <span data-en="Is the scattered-guest problem real enough in your operation that someone would pay to fix it?">Ist das Problem der verstreuten Gastdaten in Ihrem Betrieb real genug, dass jemand für die Lösung zahlen würde?</span></li>
+      <li><b>2 ·</b> <span data-en="Would a review queue be used — or ignored, like every other queue?">Würde eine Review-Queue tatsächlich benutzt — oder ignoriert, wie jede andere Warteschlange?</span></li>
+      <li><b>3 ·</b> <span data-en="Which system would have to be connected first for this to be worth anything at all?">Welches System müsste zuerst angebunden sein, damit das überhaupt etwas wert ist?</span></li>
+    </ul>
+    <p class="stamp" data-en="<b>github.com/guestgraph</b> · a no is worth more to me than a polite yes">
+      <b>github.com/guestgraph</b> · ein Nein ist mir mehr wert als ein höfliches Ja</p>
+  </section>
+
+</div>
+
+<div class="langind mono"><span id="lde">DE</span> · <span id="len">EN</span></div>
+<div class="hint mono" id="hint">← →  blättern · N  Notizen · L  Sprache · F  Vollbild</div>
+<div class="name">Robert Blust</div>
+<div class="counter mono"><b id="cur">1</b> / <span id="tot">9</span></div>
+
+<div class="bar" id="bar"></div>
+
+<div class="notes" id="notes">
+  <h3><span id="noteslabel">Sprecher-Notiz</span> <span class="time" id="ntime"></span></h3>
+  <p id="ntext"></p>
+  <small id="notesclose">N schliesst die Notizen</small>
+</div>
+
+<script>
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var i = 0, notesOpen = false, lang = 'en';
+  var bar = document.getElementById('bar'), cur = document.getElementById('cur');
+  var notes = document.getElementById('notes'), ntext = document.getElementById('ntext'), ntime = document.getElementById('ntime');
+  document.getElementById('tot').textContent = slides.length;
+
+  var i18n = Array.prototype.slice.call(document.querySelectorAll('[data-en]'));
+  i18n.forEach(function(el){ el.setAttribute('data-de', el.innerHTML); });
+
+  var UI = {
+    de:{ hint:'← →  blättern · N  Notizen · L  Sprache · F  Vollbild', label:'Sprecher-Notiz', close:'N schliesst die Notizen', title:'Das Mental Model – Robert Blust' },
+    en:{ hint:'← →  navigate · N  notes · L  language · F  fullscreen', label:'Speaker note', close:'N closes the notes', title:'GuestGraph – Robert Blust' }
+  };
+
+  function applyLang(){
+    i18n.forEach(function(el){ el.innerHTML = el.getAttribute('data-' + lang); });
+    document.getElementById('hint').textContent = UI[lang].hint;
+    document.title = UI[lang].title;
+    document.getElementById('noteslabel').textContent = UI[lang].label;
+    document.getElementById('notesclose').textContent = UI[lang].close;
+    document.getElementById('lde').classList.toggle('on', lang === 'de');
+    document.getElementById('len').classList.toggle('on', lang === 'en');
+    document.documentElement.lang = lang;
+    render();
+  }
+
+  function fitNotes(){
+    var s = slides[i];
+    s.style.transform = '';
+    if(!notesOpen) return;
+    var avail = window.innerHeight - notes.offsetHeight - 20;
+    var need  = s.scrollHeight;
+    if(need > avail){ s.style.transform = 'scale(' + Math.max(0.5, avail/need) + ')'; }
+  }
+
+  function render(){
+    slides.forEach(function(s,n){ if(n!==i) s.style.transform=''; s.classList.toggle('active', n===i); });
+    bar.style.width = ((i+1)/slides.length*100) + '%';
+    cur.textContent = i+1;
+    if(notesOpen){
+      var d = slides[i].dataset;
+      ntext.innerHTML = (lang === 'en' && d.notesEn) ? d.notesEn : d.notes;
+      ntime.textContent = d.time || '';
+    }
+    fitNotes();
+  }
+  window.addEventListener('resize', fitNotes);
+  function go(n){ i = Math.max(0, Math.min(slides.length-1, n)); render(); }
+
+  document.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){ go(i+1); e.preventDefault(); }
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){ go(i-1); e.preventDefault(); }
+    else if(e.key==='Home'){ go(0); }
+    else if(e.key==='End'){ go(slides.length-1); }
+    else if(e.key==='n'||e.key==='N'){ notesOpen=!notesOpen; notes.classList.toggle('show',notesOpen); document.getElementById('deck').classList.toggle('notes-open',notesOpen); render(); }
+    else if(e.key==='l'||e.key==='L'){ lang = (lang==='de') ? 'en' : 'de'; applyLang(); }
+    else if(e.key==='f'||e.key==='F'){ if(!document.fullscreenElement){ document.documentElement.requestFullscreen(); } else { document.exitFullscreen(); } }
+  });
+  document.getElementById('deck').addEventListener('click', function(e){
+    if(e.clientX > window.innerWidth/2){ go(i+1); } else { go(i-1); }
+  });
+  applyLang();
+</script>
+</body>
+</html>

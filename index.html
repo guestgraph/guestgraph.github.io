@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GuestGraph – Talks</title>
+<meta name="description" content="Talks on GuestGraph, the open-source guest identity graph for hospitality.">
+<style>
+  :root{
+    --paper:#0f1013; --ink:#f1ede4; --muted:#9a9384; --cobalt:#7aa0ff;
+    --line:#282a30; --paper2:#191b20;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{
+    font-family:"IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background:var(--paper); color:var(--ink); min-height:100vh;
+    background-image:radial-gradient(130% 70% at 50% 0%, #17191f 0%, var(--paper) 62%);
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace}
+  .wrap{max-width:64rem; margin:0 auto; padding:14vmin 7vw 12vh}
+
+  .kicker{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:clamp(.78rem,1.5vmin,1rem); letter-spacing:.22em; text-transform:uppercase;
+    color:var(--cobalt); display:flex; align-items:center; gap:1.1em; margin-bottom:3vmin;
+  }
+  .kicker::after{content:""; flex:0 0 6rem; height:2px; background:var(--cobalt); opacity:.5}
+
+  h1{font-weight:600; line-height:1.06; letter-spacing:-.02em; font-size:clamp(2.4rem,7vmin,4.6rem); max-width:16ch}
+  h1 em{font-style:normal; color:var(--cobalt)}
+  .lede{margin-top:3vmin; font-size:clamp(1.1rem,2.6vmin,1.65rem); color:var(--muted); max-width:52ch; line-height:1.45}
+
+  .talks{margin-top:9vmin; display:flex; flex-direction:column; gap:0}
+  .talk{
+    display:grid; grid-template-columns:auto 1fr auto; gap:1.2rem 2rem; align-items:baseline;
+    border-top:2px solid var(--line); padding:3.2vmin 0;
+    text-decoration:none; color:inherit; transition:border-color .2s ease;
+  }
+  .talk:last-child{border-bottom:2px solid var(--line)}
+  .talk:hover{border-color:var(--cobalt)}
+  .talk:hover .t{color:var(--cobalt)}
+  .num{font-family:"IBM Plex Mono",monospace; color:var(--muted); font-size:clamp(.85rem,1.7vmin,1.1rem)}
+  .t{font-size:clamp(1.35rem,3.2vmin,2.1rem); font-weight:600; line-height:1.2; transition:color .2s ease}
+  .d{grid-column:2; margin-top:.9rem; color:var(--muted); font-size:clamp(1rem,2vmin,1.3rem); line-height:1.45; max-width:56ch}
+  .meta{
+    font-family:"IBM Plex Mono",monospace; font-size:clamp(.75rem,1.5vmin,.95rem);
+    color:var(--muted); letter-spacing:.1em; white-space:nowrap; text-align:right;
+  }
+  .meta b{color:var(--ink); font-weight:600}
+
+  .foot{margin-top:9vmin; display:flex; flex-wrap:wrap; gap:.8rem 2.4rem;
+        font-family:"IBM Plex Mono",monospace; font-size:.82rem; letter-spacing:.08em; color:var(--muted)}
+  .foot a{color:var(--cobalt); text-decoration:none}
+  .foot a:hover{text-decoration:underline}
+
+  @media (max-width:640px){
+    .talk{grid-template-columns:auto 1fr; gap:.6rem 1.2rem}
+    .meta{grid-column:2; text-align:left; margin-top:.6rem}
+    .d{grid-column:2}
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="kicker mono">GuestGraph</div>
+  <h1>Talks on <em>guest identity</em>.</h1>
+  <p class="lede">
+    GuestGraph is an open-source guest identity graph for hospitality: one explainable,
+    reversible guest profile derived from records scattered across every system in the hotel.
+    These are the talks about it.
+  </p>
+
+  <div class="talks">
+    <a class="talk" href="intro/">
+      <span class="num mono">01</span>
+      <span class="t">GuestGraph — an introduction</span>
+      <span class="meta mono"><b>10 min</b><br>DE · EN</span>
+      <span class="d">
+        Why a returning guest looks like five strangers, what it costs to merge them wrongly,
+        and how layered confidence keeps every decision explainable and reversible.
+        A talk that asks for pushback, not applause.
+      </span>
+    </a>
+  </div>
+
+  <div class="foot">
+    <span><a href="https://github.com/guestgraph/guestgraph">github.com/guestgraph</a></span>
+    <span>Apache 2.0</span>
+    <span>Robert Blust</span>
+  </div>
+</main>
+</body>
+</html>
