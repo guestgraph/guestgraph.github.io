@@ -169,6 +169,30 @@
   .langind{position:fixed; top:3vmin; left:4vmin; font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.15em; color:var(--muted); z-index:5}
   .langind .on{color:var(--cobalt); font-weight:700}
 
+  /* narration control */
+  .play{
+    position:fixed; left:50%; transform:translateX(-50%); bottom:2.6vmin; z-index:6;
+    display:flex; align-items:center; gap:.7em; cursor:pointer;
+    background:var(--paper2); color:var(--ink); border:1.5px solid var(--line);
+    border-radius:999px; padding:.6em 1.15em .6em 1em;
+    font-family:"IBM Plex Mono",monospace; font-size:.72rem; letter-spacing:.14em;
+    text-transform:uppercase; transition:border-color .18s ease, color .18s ease;
+  }
+  .play:hover, .play:focus-visible{border-color:var(--cobalt); color:var(--cobalt)}
+  .play svg{width:11px; height:13px; fill:currentColor; display:block}
+  .play .pause{display:none}
+  .play.on{border-color:var(--cobalt); color:var(--cobalt)}
+  .play.on .picon{display:none}
+  .play.on .pause{display:block}
+  .play[hidden]{display:none}
+  /* what is being said, for anyone who cannot hear it */
+  .speaking{
+    position:fixed; left:50%; transform:translateX(-50%); bottom:7.4vmin; z-index:6;
+    max-width:74ch; text-align:center; font-size:.76rem; line-height:1.5; color:var(--muted);
+    opacity:0; transition:opacity .25s ease; pointer-events:none; padding:0 4vmin;
+  }
+  .speaking.show{opacity:1}
+
   .notes{position:fixed; inset:auto 0 0 0; background:#17181c; color:#f1ede4; border-top:2px solid var(--cobalt); padding:3vmin 4vmin 4vmin; transform:translateY(101%); transition:transform .3s ease; z-index:20; max-height:52vh; overflow:auto}
   .notes.show{transform:none}
   .notes h3{font-family:"IBM Plex Mono",monospace; font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; color:#9db0ff; margin-bottom:1.4vmin}
@@ -177,6 +201,7 @@
   .notes .time{float:right; color:#9db0ff; font-family:"IBM Plex Mono",monospace}
   .notes small{display:block; margin-top:1.6vmin; color:#b7b0a2; opacity:.7; font-family:"IBM Plex Mono",monospace; letter-spacing:.1em}
   /* notes open: JS scales the active slide to fit above the panel */
+  .deck.notes-open ~ .play, .deck.notes-open ~ .speaking{display:none}
   .deck.notes-open .slide.active{justify-content:flex-start; padding:4vmin 10vmin; transform-origin:top center}
   .deck.notes-open .split{align-items:start; margin-top:1.6vmin}
 
@@ -186,6 +211,15 @@
        indicator — and it names keys a touch device does not have. Tapping the
        left or right half of the screen already navigates. */
     .hint{display:none}
+    /* stack the narration controls clear of the bottom chrome row, which a centred
+       pill would otherwise sit on top of at this width */
+    .play{bottom:9vmin}
+    .speaking{
+      bottom:17vmin; font-size:.7rem; line-height:1.45; padding:0 6vmin;
+      max-height:7.2em; overflow:hidden;
+      -webkit-mask-image:linear-gradient(#000 72%, transparent);
+      mask-image:linear-gradient(#000 72%, transparent);
+    }
     .slide{justify-content:flex-start; overflow-y:auto; padding:14vmin 7vw 10vh}
     h1{font-size:clamp(1.7rem,7.5vw,3rem); max-width:100%}
     .big-punch{font-size:clamp(1.8rem,8vw,3.2rem); max-width:100%}
@@ -473,6 +507,13 @@
 <div class="name"><span class="namemark"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/><circle cx="6" cy="7.2" r="2.6" fill="#0f1013"/><circle cx="6" cy="16" r="2.6" fill="#0f1013"/><circle cx="6" cy="24.8" r="2.6" fill="#0f1013"/></g><circle cx="24" cy="16" r="5.4" fill="currentColor"/></svg></span><b>GuestGraph</b> · Robert Blust</div>
 <div class="counter mono"><b id="cur">1</b> / <span id="tot">11</span></div>
 
+<button class="play mono" id="play" aria-label="Play narration" title="P">
+  <svg viewBox="0 0 12 14" aria-hidden="true" class="picon"><path d="M1 1 L11 7 L1 13 Z"/></svg>
+  <svg viewBox="0 0 12 14" aria-hidden="true" class="pause"><rect x="1" y="1" width="3.4" height="12"/><rect x="7.6" y="1" width="3.4" height="12"/></svg>
+  <span id="playlabel">Play</span>
+</button>
+<div class="speaking mono" id="speaking" aria-live="polite"></div>
+
 <div class="bar" id="bar"></div>
 
 <div class="notes" id="notes">
@@ -492,8 +533,8 @@
   i18n.forEach(function(el){ el.setAttribute('data-de', el.innerHTML); });
 
   var UI = {
-    de:{ hint:'← →  blättern · N  Notizen · L  Sprache · F  Vollbild', label:'Sprecher-Notiz', close:'N schliesst die Notizen', title:'GuestGraph – Robert Blust' },
-    en:{ hint:'← →  navigate · N  notes · L  language · F  fullscreen', label:'Speaker note', close:'N closes the notes', title:'GuestGraph – Robert Blust' }
+    de:{ hint:'← →  blättern · P  Vortrag · N  Notizen · L  Sprache · F  Vollbild', label:'Sprecher-Notiz', close:'N schliesst die Notizen', title:'GuestGraph – Robert Blust', play:'Vortrag', pause:'Pause' },
+    en:{ hint:'← →  navigate · P  play · N  notes · L  language · F  fullscreen', label:'Speaker note', close:'N closes the notes', title:'GuestGraph – Robert Blust', play:'Play', pause:'Pause' }
   };
 
   function applyLang(){
@@ -505,6 +546,8 @@
     document.getElementById('lde').classList.toggle('on', lang === 'de');
     document.getElementById('len').classList.toggle('on', lang === 'en');
     document.documentElement.lang = lang;
+    if (typeof playing !== 'undefined' && playing) { synth.cancel(); setTimeout(narrateCurrent, 120); }
+    if (typeof playLabel !== 'undefined' && playLabel) playLabel.textContent = playing ? UI[lang].pause : UI[lang].play;
     render();
   }
 
@@ -539,11 +582,123 @@
     else if(e.key==='n'||e.key==='N'){ notesOpen=!notesOpen; notes.classList.toggle('show',notesOpen); document.getElementById('deck').classList.toggle('notes-open',notesOpen); render(); }
     else if(e.key==='l'||e.key==='L'){ lang = (lang==='de') ? 'en' : 'de'; applyLang(); }
     else if(e.key==='f'||e.key==='F'){ if(!document.fullscreenElement){ document.documentElement.requestFullscreen(); } else { document.exitFullscreen(); } }
+    else if(e.key==='p'||e.key==='P'){ toggleNarration(); e.preventDefault(); }
   });
   document.getElementById('deck').addEventListener('click', function(e){
     if(e.clientX > window.innerWidth/2){ go(i+1); } else { go(i-1); }
   });
   applyLang();
+
+  /* ---------- narration ----------
+     The speaker notes mix stage directions with what is actually said: the <em> spans are
+     Regie-Instruktionen ("the title stays up while I greet"), the rest is Sprechtext. Only the
+     latter is spoken.
+
+     Nothing is timed. Each slide advances on the speech-end event, so the deck follows the voice
+     rather than a clock — which means it stays in sync when a note is edited, when a voice reads
+     at a different rate, and across the two languages. The data-time cues remain what they always
+     were: the presenter's own pacing for the live talk. */
+  var synth = window.speechSynthesis;
+  var playBtn = document.getElementById('play');
+  var playLabel = document.getElementById('playlabel');
+  var caption = document.getElementById('speaking');
+  var playing = false, utter = null;
+
+  if (!synth) { playBtn.hidden = true; }
+
+  function spokenText(slide){
+    var raw = (lang === 'en' && slide.dataset.notesEn) ? slide.dataset.notesEn : slide.dataset.notes;
+    if (!raw) return '';
+    var d = document.createElement('div');
+    d.innerHTML = raw;
+    d.querySelectorAll('em').forEach(function(e){ e.remove(); });   // drop the stage directions
+    return (d.textContent || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function pickVoice(){
+    var want = lang === 'de' ? 'de' : 'en';
+    var voices = synth.getVoices() || [];
+    var exact = voices.filter(function(v){ return v.lang && v.lang.toLowerCase().indexOf(want) === 0; });
+    if (!exact.length) return null;
+    // prefer a local voice: network voices stall the onend event the deck advances on
+    return exact.filter(function(v){ return v.localService; })[0] || exact[0];
+  }
+
+  function say(text, whenDone){
+    utter = new SpeechSynthesisUtterance(text);
+    var v = pickVoice();
+    if (v) utter.voice = v;
+    utter.lang = v ? v.lang : (lang === 'de' ? 'de-DE' : 'en-GB');
+    utter.rate = 0.98;
+    utter.onend = function(){ if (playing) whenDone(); };
+    utter.onerror = function(){ stopNarration(); };
+    // a throwing speak() would otherwise leave the deck stuck in a playing state that
+    // never advances, because onend can no longer fire
+    try { synth.speak(utter); } catch (e) { stopNarration(); }
+  }
+
+  function narrateCurrent(){
+    if (!playing) return;
+    var text = spokenText(slides[i]);
+    caption.textContent = text;
+    caption.classList.toggle('show', !!text);
+    if (!text) { advanceOrStop(); return; }
+    say(text, advanceOrStop);
+  }
+
+  function advanceOrStop(){
+    if (!playing) return;
+    if (i >= slides.length - 1) { stopNarration(); return; }
+    go(i + 1);
+    // a beat between slides, so the next line does not start on top of the transition
+    setTimeout(narrateCurrent, 550);
+  }
+
+  function startNarration(){
+    if (!synth) return;
+    if (!pickVoice()) {
+      caption.textContent = lang === 'de'
+        ? 'Keine Stimme für diese Sprache auf diesem Gerät installiert.'
+        : 'No voice for this language is installed on this device.';
+      caption.classList.add('show');
+      setTimeout(function(){ caption.classList.remove('show'); }, 4000);
+      return;
+    }
+    playing = true;
+    playBtn.classList.add('on');
+    playLabel.textContent = UI[lang].pause;
+    playBtn.setAttribute('aria-label', UI[lang].pause);
+    narrateCurrent();
+  }
+
+  function stopNarration(){
+    playing = false;
+    synth.cancel();
+    playBtn.classList.remove('on');
+    playLabel.textContent = UI[lang].play;
+    playBtn.setAttribute('aria-label', UI[lang].play);
+    caption.classList.remove('show');
+  }
+
+  function toggleNarration(){ playing ? stopNarration() : startNarration(); }
+
+  playBtn.addEventListener('click', function(e){ e.stopPropagation(); toggleNarration(); });
+  // taking manual control stops the narration rather than fighting it
+  ['keydown','pointerdown'].forEach(function(ev){
+    document.addEventListener(ev, function(e){
+      if (!playing) return;
+      if (e.type === 'pointerdown' && playBtn.contains(e.target)) return;
+      // P toggles narration and L switches its language — both are narration controls,
+      // not someone taking over, so they must not count as manual intervention
+      if (e.type === 'keydown' && 'pPlL'.indexOf(e.key) !== -1) return;
+      stopNarration();
+    }, true);
+  });
+  // voices load asynchronously in some browsers
+  if (synth && typeof synth.onvoiceschanged !== 'undefined') {
+    synth.addEventListener('voiceschanged', function(){ /* refresh list */ });
+  }
+  window.addEventListener('beforeunload', function(){ if (synth) synth.cancel(); });
 </script>
 </body>
 </html>
