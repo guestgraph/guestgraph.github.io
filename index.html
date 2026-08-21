@@ -18,69 +18,79 @@
     -webkit-font-smoothing:antialiased;
   }
   .mono{font-family:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace}
-  .wrap{max-width:64rem; margin:0 auto; padding:14vmin 7vw 12vh}
+  /* same rhythm as the deck: full-bleed, vmin padding — not a centred column */
+  .wrap{padding:11vmin 10vmin 9vmin}
 
   .kicker{
     font-family:"IBM Plex Mono", ui-monospace, monospace;
-    font-size:clamp(.78rem,1.5vmin,1rem); letter-spacing:.22em; text-transform:uppercase;
-    color:var(--cobalt); display:flex; align-items:center; gap:1.1em; margin-bottom:3vmin;
+    font-size:clamp(.82rem,1.6vmin,1.15rem); letter-spacing:.22em; text-transform:uppercase;
+    color:var(--cobalt); display:flex; align-items:center; gap:1.1em; margin-bottom:3.2vmin;
   }
-  .kicker::after{content:""; flex:0 0 6rem; height:2px; background:var(--cobalt); opacity:.5}
+  .kicker::after{content:""; flex:0 0 8vmin; height:2px; background:var(--cobalt); opacity:.5}
 
-  h1{font-weight:600; line-height:1.06; letter-spacing:-.02em; font-size:clamp(2.4rem,7vmin,4.6rem); max-width:16ch}
+  h1{font-weight:600; line-height:1.07; letter-spacing:-.02em; font-size:clamp(2.3rem,6.6vmin,5.6rem); max-width:21ch}
   h1 em{font-style:normal; color:var(--cobalt)}
-  .lede{margin-top:3vmin; font-size:clamp(1.1rem,2.6vmin,1.65rem); color:var(--muted); max-width:52ch; line-height:1.45}
+  .lede{margin-top:3.4vmin; font-size:clamp(1.25rem,3.1vmin,2.5rem); color:var(--muted); max-width:36ch; line-height:1.4}
 
-  .talks{margin-top:9vmin; display:flex; flex-direction:column; gap:0}
+  .talks{margin-top:8vmin}
   .talk{
-    display:grid; grid-template-columns:auto 1fr auto; gap:1.2rem 2rem; align-items:baseline;
-    border-top:2px solid var(--line); padding:3.2vmin 0;
+    display:grid; grid-template-columns:auto 1fr auto; gap:1.2rem 3vmin; align-items:baseline;
+    border-top:2px solid var(--line); padding:3.4vmin 0;
     text-decoration:none; color:inherit; transition:border-color .2s ease;
   }
   .talk:last-child{border-bottom:2px solid var(--line)}
   .talk:hover{border-color:var(--cobalt)}
   .talk:hover .t{color:var(--cobalt)}
-  .num{font-family:"IBM Plex Mono",monospace; color:var(--muted); font-size:clamp(.85rem,1.7vmin,1.1rem)}
-  .t{font-size:clamp(1.35rem,3.2vmin,2.1rem); font-weight:600; line-height:1.2; transition:color .2s ease}
-  .d{grid-column:2; margin-top:.9rem; color:var(--muted); font-size:clamp(1rem,2vmin,1.3rem); line-height:1.45; max-width:56ch}
+  .num{font-family:"IBM Plex Mono",monospace; color:var(--muted); font-size:clamp(.9rem,1.7vmin,1.25rem)}
+  .t{font-size:clamp(1.4rem,3.4vmin,2.4rem); font-weight:600; line-height:1.2; transition:color .2s ease}
+  .d{grid-column:2; margin-top:1.2vmin; color:var(--muted); font-size:clamp(1rem,2.1vmin,1.45rem); line-height:1.45; max-width:62ch}
   .meta{
-    font-family:"IBM Plex Mono",monospace; font-size:clamp(.75rem,1.5vmin,.95rem);
+    font-family:"IBM Plex Mono",monospace; font-size:clamp(.78rem,1.5vmin,1.05rem);
     color:var(--muted); letter-spacing:.1em; white-space:nowrap; text-align:right;
   }
   .meta b{color:var(--ink); font-weight:600}
 
-  .foot{margin-top:9vmin; display:flex; flex-wrap:wrap; gap:.8rem 2.4rem;
-        font-family:"IBM Plex Mono",monospace; font-size:.82rem; letter-spacing:.08em; color:var(--muted)}
+  .foot{margin-top:8vmin; display:flex; flex-wrap:wrap; gap:.9rem 3vmin;
+        font-family:"IBM Plex Mono",monospace; font-size:clamp(.72rem,1.4vmin,.95rem);
+        letter-spacing:.1em; color:var(--muted)}
   .foot a{color:var(--cobalt); text-decoration:none}
   .foot a:hover{text-decoration:underline}
 
-  @media (max-width:640px){
+  /* chrome positioned exactly as in the deck */
+  .langind{position:fixed; top:3vmin; left:4vmin; font-family:"IBM Plex Mono",monospace;
+           font-size:.7rem; letter-spacing:.15em; color:var(--muted); z-index:5; cursor:pointer;
+           user-select:none}
+  .langind .on{color:var(--cobalt); font-weight:700}
+  .hint{position:fixed; top:3vmin; right:4vmin; font-family:"IBM Plex Mono",monospace;
+        font-size:.68rem; color:var(--muted); letter-spacing:.1em; z-index:5; opacity:.7}
+
+  @media (max-width:860px), (max-aspect-ratio:4/5){
+    .wrap{padding:16vmin 7vw 10vh}
+    h1{font-size:clamp(1.7rem,7.5vw,3rem); max-width:100%}
+    .lede{font-size:clamp(1rem,4.4vw,1.5rem); max-width:100%}
     .talk{grid-template-columns:auto 1fr; gap:.6rem 1.2rem}
     .meta{grid-column:2; text-align:left; margin-top:.6rem}
-    .d{grid-column:2}
+    .d{grid-column:2; max-width:100%}
+    .hint{display:none}
   }
 </style>
 </head>
 <body>
+
+<div class="langind mono" id="langind"><span id="lde">DE</span> · <span id="len">EN</span></div>
+<div class="hint mono" id="hint">L  Sprache</div>
+
 <main class="wrap">
   <div class="kicker mono">GuestGraph</div>
-  <h1>Talks on <em>guest identity</em>.</h1>
-  <p class="lede">
-    GuestGraph is an open-source guest identity graph for hospitality: one explainable,
-    reversible guest profile derived from records scattered across every system in the hotel.
-    These are the talks about it.
-  </p>
+  <h1 data-en="Talks on <em>guest identity</em>.">Vorträge über <em>Gast-Identität</em>.</h1>
+  <p class="lede" data-en="GuestGraph is an open-source guest identity graph for hospitality: one explainable, reversible guest profile derived from records scattered across every system in the hotel.">GuestGraph ist ein Open-Source-Identitätsgraph für Gäste in der Hotellerie: ein erklärbares, umkehrbares Gastprofil, abgeleitet aus Datensätzen, die über jedes System im Hotel verstreut liegen.</p>
 
   <div class="talks">
     <a class="talk" href="intro/">
       <span class="num mono">01</span>
-      <span class="t">GuestGraph — an introduction</span>
+      <span class="t" data-en="GuestGraph — an introduction">GuestGraph — eine Einführung</span>
       <span class="meta mono"><b>10 min</b><br>DE · EN</span>
-      <span class="d">
-        Why a returning guest looks like five strangers, what it costs to merge them wrongly,
-        and how layered confidence keeps every decision explainable and reversible.
-        A talk that asks for pushback, not applause.
-      </span>
+      <span class="d" data-en="Why a returning guest looks like five strangers, what it costs to merge them wrongly, and how layered confidence keeps every decision explainable and reversible. A talk that asks for pushback, not applause.">Warum ein Stammgast wie fünf Fremde aussieht, was es kostet, sie falsch zusammenzuführen, und wie gestufte Sicherheit jede Entscheidung erklärbar und umkehrbar hält. Ein Vortrag, der um Gegenwind bittet, nicht um Applaus.</span>
     </a>
   </div>
 
@@ -90,5 +100,37 @@
     <span>Robert Blust</span>
   </div>
 </main>
+
+<script>
+  // Same mechanism as the decks: German is the markup, English lives in data-en.
+  var lang = 'en';
+  var i18n = Array.prototype.slice.call(document.querySelectorAll('[data-en]'));
+  i18n.forEach(function(el){ el.setAttribute('data-de', el.innerHTML); });
+
+  var UI = {
+    de:{ hint:'L  Sprache', title:'GuestGraph – Vorträge' },
+    en:{ hint:'L  language', title:'GuestGraph – Talks' }
+  };
+
+  function applyLang(){
+    i18n.forEach(function(el){ el.innerHTML = el.getAttribute('data-' + lang); });
+    document.getElementById('hint').textContent = UI[lang].hint;
+    document.title = UI[lang].title;
+    document.getElementById('lde').classList.toggle('on', lang === 'de');
+    document.getElementById('len').classList.toggle('on', lang === 'en');
+    document.documentElement.lang = lang;
+  }
+  function toggle(){ lang = (lang === 'de') ? 'en' : 'de'; applyLang(); }
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'l' || e.key === 'L'){ toggle(); }
+  });
+  // A web page is clicked, not presented — the indicator has to work as a control.
+  document.getElementById('langind').addEventListener('click', toggle);
+  document.getElementById('lde').addEventListener('click', function(e){ e.stopPropagation(); if(lang!=='de') toggle(); });
+  document.getElementById('len').addEventListener('click', function(e){ e.stopPropagation(); if(lang!=='en') toggle(); });
+
+  applyLang();
+</script>
 </body>
 </html>
