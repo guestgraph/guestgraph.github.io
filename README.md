@@ -4,6 +4,10 @@ Talks on **GuestGraph**, the open-source guest identity graph for hospitality.
 
 **Live:** https://guestgraph.github.io/talks/
 
+`favicon.svg` is a copy of the one on [guestgraph.io](https://guestgraph.io) rather than a link
+to it. The decks are self-contained by design — they have to work from `file://` and a plain local
+server, not only from the live domain.
+
 Each talk is a self-contained HTML deck (dark theme, bilingual DE/EN, inline SVG, no external
 assets) with a PDF fallback. Same approach as [mental-model](https://github.com/robertblust/mental-model)
 and [essential-complexity](https://github.com/robertblust/essential-complexity).
