@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="GuestGraph">
+  <!-- Three scattered records resolve into one derived profile. The sources stay open
+       (nothing is consumed); the profile is solid (it is a conclusion, not a record). -->
+  <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+    <path d="M8.6 7.2 L20.5 14.2"/>
+    <path d="M8.6 16 L19.4 16"/>
+    <path d="M8.6 24.8 L20.5 17.8"/>
+    <circle cx="6" cy="7.2" r="2.6" fill="#0f1013"/>
+    <circle cx="6" cy="16"  r="2.6" fill="#0f1013"/>
+    <circle cx="6" cy="24.8" r="2.6" fill="#0f1013"/>
+  </g>
+  <circle cx="24" cy="16" r="5.4" fill="currentColor"/>
+</svg>
