@@ -40,7 +40,7 @@ python3 -m http.server 8000    # → http://localhost:8000
 
 One screen, one job: say what GuestGraph is and send the visitor to the talk or the code. The
 page carries the title, the hook, and two links — nothing else. Everything a visitor would ask
-next is answered in the [10-minute talk](https://guestgraph.io/talks/intro/), which is a better
+next is answered in the [12-minute talk](https://guestgraph.io/talks/intro/), which is a better
 medium for it than a scrolling page of claims.
 
 That is also why the page makes no claim about matching behaviour, roadmap, or status. Those
