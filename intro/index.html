@@ -173,7 +173,7 @@
      --chromeH is measured in JS, because the notes sheet and the mobile progress bar
      both have to sit exactly on top of whatever height this row ends up at. */
   .chrome{
-    position:fixed; left:0; right:0; bottom:0; z-index:6;
+    position:fixed; left:0; right:0; bottom:0; z-index:21;
     display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
     padding:0 4vmin 2.6vmin; pointer-events:none;
   }
@@ -206,6 +206,8 @@
   .lcd .clip{width:100%; height:2px; background:#1e2029; border-radius:2px; overflow:hidden}
   .lcd .clip i{display:block; height:100%; width:0; background:var(--cobalt); transition:width .25s linear}
 
+  .tmain, .tside{display:flex; align-items:center; gap:.45rem}
+
   .tbtn{
     display:grid; place-items:center; width:34px; height:34px; flex:0 0 auto;
     background:none; border:0; border-radius:9px; color:var(--muted); cursor:pointer;
@@ -228,7 +230,7 @@
   .tbtn.play.on .iplay{display:none}
   .tbtn.play.on .ipause{display:block}
 
-  .tdiv{width:1px; align-self:stretch; margin:.3rem .25rem; background:var(--line); flex:0 0 auto}
+  .tdiv{width:1px; align-self:stretch; margin:.3rem .25rem; background:#333743; flex:0 0 auto}
 
   .seg{display:flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; flex:0 0 auto}
   .seg button{
@@ -244,7 +246,7 @@
     .tbtn, .seg button, .lcd .clip i{transition:none}
   }
 
-  .notes{position:fixed; inset:auto 0 var(--chromeH,0px) 0; background:#17181c; color:#f1ede4; border-top:2px solid var(--cobalt); padding:3vmin 4vmin 4vmin; transform:translateY(calc(101% + var(--chromeH,0px))); transition:transform .3s ease; z-index:20; max-height:52vh; overflow:auto}
+  .notes{position:fixed; inset:auto 0 0 0; background:#17181c; color:#f1ede4; border-top:2px solid var(--cobalt); padding:3vmin 4vmin calc(var(--chromeH,0px) + 2vmin); transform:translateY(101%); transition:transform .3s ease; z-index:20; max-height:56vh; overflow:auto}
   .notes.show{transform:none}
   .notes h3{font-family:"IBM Plex Mono",monospace; font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; color:#9db0ff; margin-bottom:1.4vmin}
   .notes p{font-size:clamp(.95rem,2vmin,1.3rem); line-height:1.5; max-width:82ch}
@@ -274,16 +276,20 @@
       padding-bottom:env(safe-area-inset-bottom);
     }
     .name{display:none}
+    .notes{bottom:var(--chromeH,0px); padding-bottom:3vmin;
+           transform:translateY(calc(101% + var(--chromeH,0px)))}
     .transport{
       grid-column:1; justify-self:stretch; width:100%;
       background:none; border:0; border-radius:0; box-shadow:none;
-      padding:.45rem .6rem; gap:.2rem; justify-content:space-between;
+      padding:.45rem .5rem; gap:.2rem; justify-content:space-between;
     }
+    .tmain{gap:.1rem}
+    .tside{gap:.2rem}
     .tbtn{width:44px; height:44px}
     .tbtn svg{width:20px; height:20px}
     .tbtn.play{width:46px; height:46px}
     .tdiv{margin:.4rem .1rem}
-    .seg button{padding:.6rem .42rem}
+    .seg button{padding:0 .5rem; min-width:38px; min-height:44px}
     .lcd{padding:.42rem .5rem .36rem; margin-right:0}
     /* the deck progress bar sits on the transport's top edge, not behind it */
     .bar{bottom:var(--chromeH,0px)}
@@ -300,7 +306,21 @@
      bar still say where you are */
   @media (max-width: 400px){
     .lcd{display:none}
+    .transport{padding:.45rem .35rem}
     .tbtn{width:40px; height:40px}
+    .tside{gap:.1rem}
+    .tdiv{margin:.4rem .05rem}
+    .seg button{padding:0 .3rem; min-width:32px; min-height:40px; font-size:.6rem; letter-spacing:.08em}
+  }
+  /* the smallest phones still in use. body{overflow:hidden} hides a transport that is
+     wider than the screen instead of scrolling it, so this has to be measured, not assumed */
+  @media (max-width: 350px){
+    .transport{padding:.4rem .3rem}
+    .tbtn{width:36px; height:36px}
+    .tbtn svg{width:18px; height:18px}
+    .tbtn.play{width:42px; height:42px}
+    .tside{gap:.05rem}
+    .seg button{min-width:28px; min-height:36px; padding:0 .22rem}
   }
 </style>
 </head>
@@ -589,6 +609,8 @@
       <div class="clip"><i id="cliplen"></i></div>
     </div>
 
+    <div class="tmain">
+
     <button class="tbtn" id="tFirst" type="button">
       <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.4" y="5" width="2.3" height="14" rx="1"/><path d="M13.2 5.4v13.2L7.6 12z"/><path d="M21 5.4v13.2L13.6 12z"/></svg>
     </button>
@@ -611,6 +633,9 @@
       <svg viewBox="0 0 24 24" aria-hidden="true" class="stroked icontract"><path d="M4.5 9.5H9.5V4.5M19.5 9.5H14.5V4.5M19.5 14.5H14.5V19.5M4.5 14.5H9.5V19.5"/></svg>
     </button>
 
+    </div>
+
+    <div class="tside">
     <div class="tdiv"></div>
 
     <div class="seg" id="lang">
@@ -621,6 +646,7 @@
     <button class="tbtn" id="tNotes" type="button" aria-pressed="false">
       <svg viewBox="0 0 24 24" aria-hidden="true" class="stroked"><rect x="3.5" y="4.5" width="17" height="11" rx="1.5"/><path d="M7 8.5h10M7 11.8h6M8.5 19.2h7"/></svg>
     </button>
+    </div>
 
   </div>
 </div>
@@ -699,7 +725,7 @@
     var s = slides[i];
     s.style.transform = '';
     if(!notesOpen) return;
-    var avail = window.innerHeight - notes.offsetHeight - chrome.offsetHeight - 20;
+    var avail = notes.getBoundingClientRect().top - 20;
     var need  = s.scrollHeight;
     if(need > avail){ s.style.transform = 'scale(' + Math.max(0.5, avail/need) + ')'; }
   }
@@ -718,14 +744,27 @@
   window.addEventListener('resize', function(){ measureChrome(); fitNotes(); });
   function go(n){ i = Math.max(0, Math.min(slides.length-1, n)); render(); }
 
-  /* Someone turning the page by hand is taking over from the narration, so the voice
-     stops rather than talking over the slide it is no longer on. Pressing play, switching
-     language, opening notes and going fullscreen are not that, and leave it running. */
-  function manual(n){ if (playing) stopNarration(); go(n); }
+  /* Turning the page by hand does not end the talk — the voice follows to the slide you
+     landed on. JUMP_MS is why: it lets someone click through five slides and hear only the
+     fifth, instead of a syllable of each one on the way. Back to the start is the exception,
+     because going back to slide zero is leaving the talk, not moving inside it. */
+  var JUMP_MS = 400;
+
+  function manual(n){
+    if (!playing) { go(n); return; }
+    stopVoice();
+    go(n);
+    gapTimer = setTimeout(function(){ if (playing) narrateCurrent(); }, JUMP_MS);
+  }
+
+  function restart(){ if (playing) stopNarration(); go(0); }
 
   function setNotes(open){
     notesOpen = open;
     notes.classList.toggle('show', notesOpen);
+    // the closed sheet is only translated off-screen, so its close button would otherwise
+    // still be a tab stop for something nobody can see
+    notes.toggleAttribute('inert', !notesOpen);
     deck.classList.toggle('notes-open', notesOpen);
     btn.notes.setAttribute('aria-pressed', notesOpen ? 'true' : 'false');
     render();
@@ -746,7 +785,7 @@
 
   function setLang(next){ if (next === lang) return; lang = next; applyLang(); }
 
-  btn.first.addEventListener('click', function(){ manual(0); });
+  btn.first.addEventListener('click', restart);
   btn.prev .addEventListener('click', function(){ manual(i-1); });
   btn.next .addEventListener('click', function(){ manual(i+1); });
   btn.play .addEventListener('click', function(){ toggleNarration(); });
@@ -762,7 +801,7 @@
   document.addEventListener('keydown', function(e){
     if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){ manual(i+1); e.preventDefault(); }
     else if(e.key==='ArrowLeft'||e.key==='PageUp'){ manual(i-1); e.preventDefault(); }
-    else if(e.key==='Home'){ manual(0); e.preventDefault(); }
+    else if(e.key==='Home'){ restart(); e.preventDefault(); }
     else if(e.key==='End'){ manual(slides.length-1); e.preventDefault(); }
   });
 
@@ -781,6 +820,7 @@
   }, {passive:true});
 
   measureChrome();
+  setNotes(false);
   applyLang();
 
   /* ---------- narration ----------
@@ -807,7 +847,7 @@
     var l = playing ? UI[lang].pause : UI[lang].play;
     btn.play.setAttribute('aria-label', l);
     btn.play.setAttribute('aria-pressed', playing ? 'true' : 'false');
-    btn.play.classList.toggle('on', playing);
+    btn.play.classList.toggle('on', !!playing);
   }
 
   /* The display window is where a player says NO DISC. A refusal that shows up there reads
@@ -940,13 +980,18 @@
     narrateCurrent();
   }
 
-  function stopNarration(){
-    playing = false;
+  // silence whatever is speaking, without deciding whether the talk is over
+  function stopVoice(){
     clearTimeout(gapTimer);
     clip.pause();
     clip.onended = clip.onerror = null;
     if (synth) synth.cancel();
     setClipProgress(0);
+  }
+
+  function stopNarration(){
+    playing = false;
+    stopVoice();
     labelPlay();
   }
 
