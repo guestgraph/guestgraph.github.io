@@ -24,7 +24,8 @@ const talks = path.dirname(here);
 
 // hide the on-screen chrome: a share card with a progress bar and a play button on it
 // advertises controls that do nothing inside a PNG
-const HIDE = `.chrome,.bar,.notes,.langind,.hint{display:none!important}`;
+const HIDE = `.chrome,.bar,.notes,.langind,.hint{display:none!important}
+  .slide.active > *{animation:none!important}`;
 
 const cards = [
   { out: path.join(talks, "og.png"), src: path.join(talks, "index.html") },

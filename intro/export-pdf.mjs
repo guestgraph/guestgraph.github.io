@@ -21,7 +21,7 @@ await page.goto(src, { waitUntil: "networkidle" });
 await page.click("#langDe");
 await page.waitForTimeout(300);
 // hide on-screen chrome (navigation hints, counter, name, progress bar, notes)
-await page.addStyleTag({ content: `.chrome,.bar,.notes{display:none!important}` });
+await page.addStyleTag({ content: `.chrome,.bar,.notes{display:none!important}\n     .slide.active > *{animation:none!important}` });
 
 const count = await page.evaluate(() => document.querySelectorAll(".slide").length);
 

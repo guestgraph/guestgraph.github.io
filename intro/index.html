@@ -58,11 +58,24 @@
     opacity:0; transition:opacity .35s ease;
   }
   .slide.active{display:flex; opacity:1}
-  .slide.active .rise{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
-  .slide.active .rise:nth-child(1){animation-delay:.05s}
-  .slide.active .rise:nth-child(2){animation-delay:.14s}
-  .slide.active .rise:nth-child(3){animation-delay:.24s}
-  .slide.active .rise:nth-child(4){animation-delay:.34s}
+  /* Every direct child of the active slide rises, in order. This used to require a
+     hand-applied .rise class, which meant a slide animated only if someone remembered —
+     one deck had it on all fifty-five children, another on nine, a third on two. The rule
+     now applies itself, so a new slide cannot be forgotten.
+     The stagger ran out at four children while slides carry up to six, and the fifth and
+     sixth inherited animation-delay:0 — firing before the first four rather than after.
+     Hence steps to six and a catch-all beyond. */
+  .slide.active > *{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+  .slide.active > *:nth-child(1){animation-delay:.05s}
+  .slide.active > *:nth-child(2){animation-delay:.14s}
+  .slide.active > *:nth-child(3){animation-delay:.24s}
+  .slide.active > *:nth-child(4){animation-delay:.34s}
+  .slide.active > *:nth-child(5){animation-delay:.43s}
+  .slide.active > *:nth-child(6){animation-delay:.51s}
+  .slide.active > *:nth-child(n+7){animation-delay:.58s}
+  @media (prefers-reduced-motion: reduce){
+    .slide.active > *{animation:none}
+  }
   @keyframes rise{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
 
   .kicker{
@@ -370,12 +383,12 @@
     data-notes="<em class='cue'>Der Titel liegt an, während ich eröffne.</em> GuestGraph ist kein fertiges Produkt. Es ist eine Idee, und ich stelle sie hier zur Prüfung. <em class='cue'>Wichtig im Ton — kurze Pause davor:</em> Ich will Gegenwind, nicht Applaus."
     data-notes-en="<em class='cue'>The title stays up while I open.</em> GuestGraph is not a finished product. It is an idea, and I am putting it up for scrutiny. <em class='cue'>Important in tone — a short pause first:</em> I want pushback, not applause.">
     <div class="kicker mono" data-n="00" data-en="An idea, put up for scrutiny">Eine Idee, zur Prüfung gestellt</div>
-    <div class="titlelock rise">
+    <div class="titlelock">
       <span class="titlemark"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/><circle cx="6" cy="7.2" r="2.6" fill="#0f1013"/><circle cx="6" cy="16" r="2.6" fill="#0f1013"/><circle cx="6" cy="24.8" r="2.6" fill="#0f1013"/></g><circle cx="24" cy="16" r="5.4" fill="currentColor"/></svg></span>
       <h1 data-en="Guest<em>Graph</em>.">Guest<em>Graph</em>.</h1>
     </div>
     <p class="sub" data-en="One explainable guest profile, from data scattered across every system in the hotel.">Ein erklärbares Gastprofil — aus Daten, die über jedes System im Hotel verstreut liegen.</p>
-    <p class="byline rise" data-en="Robert Blust · <span>Software Engineer &amp; Architect</span>">Robert Blust · <span>Software Engineer &amp; Architekt</span></p>
+    <p class="byline" data-en="Robert Blust · <span>Software Engineer &amp; Architect</span>">Robert Blust · <span>Software Engineer &amp; Architekt</span></p>
   </section>
 
   <!-- 01 · Das Problem -->
