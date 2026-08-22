@@ -23,7 +23,9 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const talks = path.dirname(here);
 
 // hide the on-screen chrome: a share card with a progress bar and a play button on it
-// advertises controls that do nothing inside a PNG
+// advertises controls that do nothing inside a PNG. `.bar` is two different things by the
+// same name — a deck's transport bar and the talks index's header bar — and hiding both is
+// what a card wants, but the overlap is accidental: rename either and this stops applying.
 const HIDE = `.chrome,.bar,.notes,.langind,.hint{display:none!important}
   .slide.active > *{animation:none!important}`;
 

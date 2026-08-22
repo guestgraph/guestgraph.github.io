@@ -26,6 +26,10 @@
 <meta property="og:locale:alternate" content="de_CH">
 <meta name="twitter:card" content="summary_large_image">
 <style>
+  /* Shell, header, brand, nav and footer are guestgraph.io's, deliberately: the domain is
+     served by two repositories and a visitor crossing between them should not meet a seam.
+     What only exists here is the talk list — and the language control, because this is the
+     only bilingual page on the domain. */
   :root{
     --paper:#0f1013; --ink:#f1ede4; --muted:#9a9384; --cobalt:#7aa0ff;
     --line:#282a30; --paper2:#191b20;
@@ -33,95 +37,130 @@
   *{box-sizing:border-box; margin:0; padding:0}
   body{
     font-family:"IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    background:var(--paper); color:var(--ink); min-height:100vh;
-    background-image:radial-gradient(130% 70% at 50% 0%, #17191f 0%, var(--paper) 62%);
+    background:var(--paper); color:var(--ink); line-height:1.5; min-height:100vh;
+    background-image:radial-gradient(120% 60% at 50% -10%, #17191f 0%, var(--paper) 60%);
     -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column;
   }
+  a{color:inherit}
   .mono{font-family:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace}
-  /* same rhythm as the deck: full-bleed, vmin padding — not a centred column */
-  .wrap{padding:11vmin 10vmin 9vmin}
 
-  /* the same lockup the landing page opens with, and a way back to it */
-  .brand{display:inline-flex; align-items:center; gap:.65em; text-decoration:none;
-         margin-bottom:3.4vmin; color:var(--cobalt)}
-  .brand svg{width:clamp(26px,3.4vmin,38px); height:clamp(26px,3.4vmin,38px); flex:0 0 auto}
-  .brand b{font-weight:600; letter-spacing:-.01em; color:var(--ink);
-           font-size:clamp(1.02rem,2.1vmin,1.5rem)}
+  .shell{width:100%; max-width:1180px; margin:0 auto; padding:0 7vw}
+
+  header{padding:2rem 0}
+  .bar{display:flex; align-items:center; justify-content:space-between; gap:2rem}
+  .brand{display:flex; align-items:center; gap:.7rem; text-decoration:none}
+  .brand svg{width:28px; height:28px; color:var(--cobalt); flex:0 0 auto}
+  .brand b{font-weight:600; font-size:1.06rem; letter-spacing:-.01em}
   .brand b span{color:var(--cobalt)}
-  .brand:hover b, .brand:focus-visible b{color:var(--cobalt)}
+  nav{display:flex; align-items:center; gap:1.9rem; font-family:"IBM Plex Mono",monospace;
+      font-size:.8rem; letter-spacing:.1em; text-transform:uppercase}
+  nav a{color:var(--muted); text-decoration:none; padding-bottom:.2rem; border-bottom:1px solid transparent}
+  nav a:hover, nav a:focus-visible{color:var(--ink); border-color:var(--cobalt)}
+  /* the bar is the same component on both sites, so this page says which one you are on
+     rather than dropping the item and leaving the header subtly different */
+  nav a[aria-current="page"]{color:var(--ink); border-color:var(--cobalt)}
 
-  h1{font-weight:600; line-height:1.07; letter-spacing:-.02em; font-size:clamp(2.3rem,6.6vmin,5.6rem); max-width:21ch}
+  /* The language control lives in the bar rather than floating over the page. The deck
+     keeps its fixed DE/EN indicator because a deck is presented; this is a page that is
+     clicked, and a visible control in the header explains itself without a key hint. */
+  .langind{font:inherit; letter-spacing:inherit; text-transform:inherit; background:none;
+           border:0; border-bottom:1px solid transparent; padding:0 0 .2rem; cursor:pointer;
+           color:var(--muted); white-space:nowrap}
+  .langind:hover{color:var(--ink)}
+  .langind .on{color:var(--cobalt); font-weight:700}
+
+  /* vertically centred, as on guestgraph.io: with a short list the alternative is a
+     column of content sitting above a screen-height void */
+  main{flex:1; display:flex; align-items:center; padding:2vh 0 5vh}
+
+  h1{font-weight:600; line-height:1.07; letter-spacing:-.025em;
+     font-size:clamp(2.2rem,5.4vw,4.2rem); max-width:21ch}
   h1 em{font-style:normal; color:var(--cobalt)}
-  .lede{margin-top:3.4vmin; font-size:clamp(1.25rem,3.1vmin,2.5rem); color:var(--muted); max-width:36ch; line-height:1.4}
+  .lede{margin-top:1.6rem; font-size:clamp(1.05rem,1.6vw,1.35rem); color:var(--muted);
+        max-width:44ch}
 
-  .talks{margin-top:8vmin}
+  .talks{margin-top:clamp(3rem,6vh,5rem)}
   .talk{
-    display:grid; grid-template-columns:auto 1fr auto; gap:1.2rem 3vmin; align-items:baseline;
-    border-top:2px solid var(--line); padding:3.4vmin 0;
+    display:grid; grid-template-columns:auto 1fr auto; gap:1rem 2.5rem; align-items:baseline;
+    border-top:2px solid var(--line); padding:clamp(1.6rem,3vh,2.4rem) 0;
     text-decoration:none; color:inherit; transition:border-color .2s ease;
   }
   .talk:last-child{border-bottom:2px solid var(--line)}
-  .talk:hover{border-color:var(--cobalt)}
-  .talk:hover .t{color:var(--cobalt)}
-  .num{font-family:"IBM Plex Mono",monospace; color:var(--muted); font-size:clamp(.9rem,1.7vmin,1.25rem)}
-  .t{font-size:clamp(1.4rem,3.4vmin,2.4rem); font-weight:600; line-height:1.2; transition:color .2s ease}
-  .d{grid-column:2; margin-top:1.2vmin; color:var(--muted); font-size:clamp(1rem,2.1vmin,1.45rem); line-height:1.45; max-width:62ch}
+  .talk:hover, .talk:focus-visible{border-color:var(--cobalt)}
+  .talk:hover .t, .talk:focus-visible .t{color:var(--cobalt)}
+  .num{font-family:"IBM Plex Mono",monospace; color:var(--muted); font-size:.95rem}
+  .t{font-size:clamp(1.3rem,2.6vw,2rem); font-weight:600; line-height:1.2;
+     letter-spacing:-.015em; transition:color .2s ease}
+  .d{grid-column:2; margin-top:.7rem; color:var(--muted);
+     font-size:clamp(1rem,1.35vw,1.15rem); line-height:1.5; max-width:62ch}
   .meta{
-    font-family:"IBM Plex Mono",monospace; font-size:clamp(.78rem,1.5vmin,1.05rem);
+    font-family:"IBM Plex Mono",monospace; font-size:.78rem;
     color:var(--muted); letter-spacing:.1em; white-space:nowrap; text-align:right;
   }
   .meta b{color:var(--ink); font-weight:600}
 
-  .foot{margin-top:8vmin; display:flex; flex-wrap:wrap; gap:.9rem 3vmin;
-        font-family:"IBM Plex Mono",monospace; font-size:clamp(.72rem,1.4vmin,.95rem);
-        letter-spacing:.1em; color:var(--muted)}
-  .foot a{color:var(--cobalt); text-decoration:none}
-  .foot a:hover{text-decoration:underline}
+  footer{padding:0 0 2rem; display:flex; flex-wrap:wrap; gap:.9rem 2.6rem; align-items:center;
+         font-family:"IBM Plex Mono",monospace; font-size:.76rem; letter-spacing:.08em; color:var(--muted)}
+  footer a{color:var(--cobalt); text-decoration:none}
+  footer a:hover, footer a:focus-visible{text-decoration:underline}
 
-  /* chrome positioned exactly as in the deck */
-  .langind{position:fixed; top:3vmin; left:4vmin; font-family:"IBM Plex Mono",monospace;
-           font-size:.7rem; letter-spacing:.15em; color:var(--muted); z-index:5; cursor:pointer;
-           user-select:none}
-  .langind .on{color:var(--cobalt); font-weight:700}
-  .hint{position:fixed; top:3vmin; right:4vmin; font-family:"IBM Plex Mono",monospace;
-        font-size:.68rem; color:var(--muted); letter-spacing:.1em; z-index:5; opacity:.7}
+  :focus-visible{outline:2px solid var(--cobalt); outline-offset:3px; border-radius:3px}
 
-  @media (max-width:860px), (max-aspect-ratio:4/5){
-    .wrap{padding:16vmin 7vw 10vh}
-    h1{font-size:clamp(1.7rem,7.5vw,3rem); max-width:100%}
-    .lede{font-size:clamp(1rem,4.4vw,1.5rem); max-width:100%}
+  @media (max-width:900px){
+    .lede{max-width:100%}
+    nav{gap:1.4rem}
+    /* three nav items and a wordmark do not fit a phone on one line. Letting the bar wrap
+       keeps all four legible; squeezing them instead broke „DE · EN" across two lines. */
+    .bar{flex-wrap:wrap; gap:1.1rem 1.4rem}
+    main{padding:1vh 0 4vh}
     .talk{grid-template-columns:auto 1fr; gap:.6rem 1.2rem}
     .meta{grid-column:2; text-align:left; margin-top:.6rem}
     .d{grid-column:2; max-width:100%}
-    .hint{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .talk, .t, nav a{transition:none}
   }
 </style>
 </head>
 <body>
 
-<div class="langind mono" id="langind"><span id="lde">DE</span> · <span id="len">EN</span></div>
-<div class="hint mono" id="hint">L  Sprache</div>
+<div class="shell">
+  <header>
+    <div class="bar">
+      <a class="brand" href="https://guestgraph.io"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/><circle cx="6" cy="7.2" r="2.6" fill="#0f1013"/><circle cx="6" cy="16" r="2.6" fill="#0f1013"/><circle cx="6" cy="24.8" r="2.6" fill="#0f1013"/></g><circle cx="24" cy="16" r="5.4" fill="currentColor"/></svg><b>Guest<span>Graph</span></b></a>
+      <nav>
+        <a href="./" aria-current="page">Talks</a>
+        <a target="_blank" rel="noopener" href="https://github.com/guestgraph/engine">Code</a>
+        <button class="langind" id="langind" type="button" aria-label="Sprache wechseln — switch language"><span id="lde">DE</span> · <span id="len">EN</span></button>
+      </nav>
+    </div>
+  </header>
+</div>
 
-<main class="wrap">
-  <a class="brand" href="https://guestgraph.io"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/><circle cx="6" cy="7.2" r="2.6" fill="#0f1013"/><circle cx="6" cy="16" r="2.6" fill="#0f1013"/><circle cx="6" cy="24.8" r="2.6" fill="#0f1013"/></g><circle cx="24" cy="16" r="5.4" fill="currentColor"/></svg><b>Guest<span>Graph</span></b></a>
-  <h1 data-en="Talks on <em>guest identity</em>.">Vorträge über <em>Gast-Identität</em>.</h1>
-  <p class="lede" data-en="GuestGraph is an open-source guest identity graph for hospitality: one explainable, reversible guest profile derived from records scattered across every system in the hotel.">GuestGraph ist ein Open-Source-Identitätsgraph für Gäste in der Hotellerie: ein erklärbares, umkehrbares Gastprofil, abgeleitet aus Datensätzen, die über jedes System im Hotel verstreut liegen.</p>
+<main>
+  <div class="shell">
+    <h1 data-en="Talks on <em>guest identity</em>.">Vorträge über <em>Gast-Identität</em>.</h1>
+    <p class="lede" data-en="GuestGraph is an open-source guest identity graph for hospitality: one explainable, reversible guest profile derived from records scattered across every system in the hotel.">GuestGraph ist ein Open-Source-Identitätsgraph für Gäste in der Hotellerie: ein erklärbares, umkehrbares Gastprofil, abgeleitet aus Datensätzen, die über jedes System im Hotel verstreut liegen.</p>
 
-  <div class="talks">
-    <a class="talk" href="intro/">
-      <span class="num mono">01</span>
-      <span class="t" data-en="GuestGraph — an introduction">GuestGraph — eine Einführung</span>
-      <span class="meta mono"><b>12 min</b><br>DE · EN</span>
-      <span class="d" data-en="Why a returning guest looks like five strangers, what it costs to merge them wrongly, and how layered confidence keeps every decision explainable and reversible. A talk that asks for pushback, not applause.">Warum ein Stammgast wie fünf Fremde aussieht, was es kostet, sie falsch zusammenzuführen, und wie gestufte Sicherheit jede Entscheidung erklärbar und umkehrbar hält. Ein Vortrag, der um Gegenwind bittet, nicht um Applaus.</span>
-    </a>
+    <div class="talks">
+      <a class="talk" target="_blank" rel="noopener" href="intro/">
+        <span class="num mono">01</span>
+        <span class="t" data-en="GuestGraph — an introduction">GuestGraph — eine Einführung</span>
+        <span class="meta mono"><b>12 min</b><br>DE · EN</span>
+        <span class="d" data-en="Why a returning guest looks like five strangers, what it costs to merge them wrongly, and how layered confidence keeps every decision explainable and reversible. A talk that asks for pushback, not applause.">Warum ein Stammgast wie fünf Fremde aussieht, was es kostet, sie falsch zusammenzuführen, und wie gestufte Sicherheit jede Entscheidung erklärbar und umkehrbar hält. Ein Vortrag, der um Gegenwind bittet, nicht um Applaus.</span>
+      </a>
+    </div>
   </div>
+</main>
 
-  <div class="foot">
+<div class="shell">
+  <footer>
     <span><a target="_blank" rel="noopener" href="https://github.com/guestgraph">github.com/guestgraph</a></span>
     <span><a target="_blank" rel="noopener" href="https://github.com/guestgraph/engine/blob/HEAD/LICENSE">Apache 2.0</a></span>
     <span><a target="_blank" rel="noopener" href="https://blust.ch/">Robert Blust</a></span>
-  </div>
-</main>
+  </footer>
+</div>
 
 <script>
   // Same mechanism as the decks: German is the markup, English lives in data-en.
@@ -130,15 +169,14 @@
   i18n.forEach(function(el){ el.setAttribute('data-de', el.innerHTML); });
 
   var UI = {
-    de:{ hint:'L  Sprache', title:'GuestGraph — Vorträge über Gast-Identität in der Hotellerie',
+    de:{ title:'GuestGraph — Vorträge über Gast-Identität in der Hotellerie',
          desc:'Vorträge über GuestGraph, den Open-Source-Identitätsgraphen für Gäste in der Hotellerie — auf Deutsch und Englisch.' },
-    en:{ hint:'L  language', title:'GuestGraph — talks on guest identity in hospitality',
+    en:{ title:'GuestGraph — talks on guest identity in hospitality',
          desc:'Talks on GuestGraph, the open-source guest identity graph for hospitality — in German and English.' }
   };
 
   function applyLang(){
     i18n.forEach(function(el){ el.innerHTML = el.getAttribute('data-' + lang); });
-    document.getElementById('hint').textContent = UI[lang].hint;
     document.title = UI[lang].title;
     document.getElementById('metadesc').setAttribute('content', UI[lang].desc);
     document.getElementById('lde').classList.toggle('on', lang === 'de');
@@ -147,10 +185,11 @@
   }
   function toggle(){ lang = (lang === 'de') ? 'en' : 'de'; applyLang(); }
 
+  // The key still works — a presenter remote and muscle memory both reach for it — but it
+  // is no longer advertised on screen, because the control in the header says it better.
   document.addEventListener('keydown', function(e){
     if(e.key === 'l' || e.key === 'L'){ toggle(); }
   });
-  // A web page is clicked, not presented — the indicator has to work as a control.
   document.getElementById('langind').addEventListener('click', toggle);
   document.getElementById('lde').addEventListener('click', function(e){ e.stopPropagation(); if(lang!=='de') toggle(); });
   document.getElementById('len').addEventListener('click', function(e){ e.stopPropagation(); if(lang!=='en') toggle(); });

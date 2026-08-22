@@ -34,6 +34,24 @@ from `file://` and a plain local server, not only the live domain.
   Keep them distinct: the directions outnumber the emphases roughly ten to one, so
   overloading one tag makes both meaningless.
 
+## The talks index is a page; the decks are decks
+
+`index.html` at the repository root is not a deck and does not behave like one. It shares
+guestgraph.io's shell, header bar and footer verbatim — the domain is served by two
+repositories, and a visitor crossing between them should not meet a seam. Changing that
+chrome means changing it in both repositories; there is no shared stylesheet and cannot
+be one, because a deck has to open from `file://`.
+
+- **A deck opens in a new tab, the index does not.** Someone who opens a twelve-minute
+  talk has not finished with the page that sent them. Nobody is mid-way through a list of
+  one link, so `guestgraph.io/talks/` — from the site's nav and from anywhere else — stays
+  in the tab. The rule follows what the destination is, not which domain it is on.
+- **The language control sits in the header bar here, not floating over the page.** The
+  deck keeps its fixed `DE · EN` indicator and its `L Sprache` hint because a deck is
+  presented and the hint tells a presenter which key to press. This page is clicked, so
+  the control lives in the bar with the nav and the hint is gone. The `L` key still works;
+  it is simply no longer advertised.
+
 ## Notes live inside HTML attributes — three ways that bites
 
 Speaker notes are attribute *values*, so anything that ends an attribute ends the note,
