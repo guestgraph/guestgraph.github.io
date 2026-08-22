@@ -2,7 +2,7 @@
 """Generate one narration clip per slide, per language, straight from the deck.
 
 The deck is the only source: index.html holds both the spoken text and, in the
-<em class='cue'> directions, the places Rob meant to pause. A cue becomes a
+<em class='cue'> directions, the places the author meant to pause. A cue becomes a
 paragraph break, and its data-tag becomes an eleven_v3 audio tag.
 
 Both are nudges, not controls. Measured on slide 04: a [slowly] tag moved the

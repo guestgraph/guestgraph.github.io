@@ -88,5 +88,5 @@ owned. A deck that restates the roadmap is a second copy that no CI can keep hon
 
 ## Process
 
-- Commits happen when Rob asks; suggest a message, don't auto-commit.
+- Commits happen when the user asks; suggest a message, don't auto-commit.
 - Never mention closed-source predecessor projects — here, in docs, or in commits.
