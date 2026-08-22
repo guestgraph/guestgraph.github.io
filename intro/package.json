@@ -6,7 +6,8 @@
   "description": "A 10-minute talk: GuestGraph, the open-source guest identity graph for hospitality.",
   "scripts": {
     "pdf": "node export-pdf.mjs",
-    "serve": "python3 -m http.server 8000"
+    "serve": "python3 -m http.server 8000",
+    "og": "node export-og.mjs"
   },
   "devDependencies": {
     "pdf-lib": "^1.17.1",

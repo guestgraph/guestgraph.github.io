@@ -1,11 +1,30 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<title>GuestGraph – Talks</title>
-<meta name="description" content="Talks on GuestGraph, the open-source guest identity graph for hospitality.">
+<link rel="canonical" href="https://guestgraph.io/talks/">
+
+<!-- The head is English while the body is German, and that is deliberate. The body is
+     authored German-first and swapped by applyLang(); the head describes the page as it
+     is actually delivered, which is English by default — and applyLang() swaps the title
+     and the description too when a visitor picks German. -->
+<title>GuestGraph — talks on guest identity in hospitality</title>
+<meta id="metadesc" name="description" content="Talks on GuestGraph, the open-source guest identity graph for hospitality — in German and English.">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GuestGraph">
+<meta property="og:url" content="https://guestgraph.io/talks/">
+<meta property="og:title" content="GuestGraph — talks on guest identity in hospitality">
+<meta property="og:description" content="Talks on GuestGraph, the open-source guest identity graph for hospitality — in German and English.">
+<meta property="og:image" content="https://guestgraph.io/talks/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GuestGraph — talks on guest identity.">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="de_CH">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   :root{
     --paper:#0f1013; --ink:#f1ede4; --muted:#9a9384; --cobalt:#7aa0ff;
@@ -98,7 +117,7 @@
   </div>
 
   <div class="foot">
-    <span><a href="https://github.com/guestgraph/engine">github.com/guestgraph</a></span>
+    <span><a href="https://github.com/guestgraph">github.com/guestgraph</a></span>
     <span>Apache 2.0</span>
     <span>Robert Blust</span>
   </div>
@@ -111,14 +130,17 @@
   i18n.forEach(function(el){ el.setAttribute('data-de', el.innerHTML); });
 
   var UI = {
-    de:{ hint:'L  Sprache', title:'GuestGraph – Vorträge' },
-    en:{ hint:'L  language', title:'GuestGraph – Talks' }
+    de:{ hint:'L  Sprache', title:'GuestGraph — Vorträge über Gast-Identität in der Hotellerie',
+         desc:'Vorträge über GuestGraph, den Open-Source-Identitätsgraphen für Gäste in der Hotellerie — auf Deutsch und Englisch.' },
+    en:{ hint:'L  language', title:'GuestGraph — talks on guest identity in hospitality',
+         desc:'Talks on GuestGraph, the open-source guest identity graph for hospitality — in German and English.' }
   };
 
   function applyLang(){
     i18n.forEach(function(el){ el.innerHTML = el.getAttribute('data-' + lang); });
     document.getElementById('hint').textContent = UI[lang].hint;
     document.title = UI[lang].title;
+    document.getElementById('metadesc').setAttribute('content', UI[lang].desc);
     document.getElementById('lde').classList.toggle('on', lang === 'de');
     document.getElementById('len').classList.toggle('on', lang === 'en');
     document.documentElement.lang = lang;

@@ -1,10 +1,34 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<title>GuestGraph – Robert Blust</title>
+<link rel="canonical" href="https://guestgraph.io/talks/intro/">
+
+<!-- lang="de" is the truth about this file: the slides are German markup, and English
+     lives in data-en until applyLang() swaps it. A crawler that runs JS then sees English
+     under lang="en"; one that does not sees German under lang="de". Either way the page
+     is coherent, which it was not when the German source claimed to be English.
+
+     The head is English because it describes the page as delivered — the deck opens in
+     English — and applyLang() swaps the title and description when a visitor picks German. -->
+<title>GuestGraph — an introduction · a talk by Robert Blust</title>
+<meta id="metadesc" name="description" content="A talk on why a returning guest looks like five strangers, and how layered confidence makes every merge explainable and reversible.">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="GuestGraph">
+<meta property="og:url" content="https://guestgraph.io/talks/intro/">
+<meta property="og:title" content="GuestGraph — an introduction">
+<meta property="og:description" content="Why a returning guest looks like five strangers, and how layered confidence makes every merge explainable and reversible.">
+<meta property="og:image" content="https://guestgraph.io/talks/intro/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GuestGraph. One explainable guest profile, from data scattered across every system in the hotel.">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="de_CH">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Robert Blust">
 <style>
   :root{
     --paper:#0f1013; --ink:#f1ede4; --muted:#9a9384; --cobalt:#7aa0ff;
@@ -681,11 +705,15 @@
   i18n.forEach(function(el){ el.setAttribute('data-de', el.innerHTML); });
 
   var UI = {
-    de:{ label:'Sprecher-Notiz', close:'Notizen schliessen', title:'GuestGraph – Robert Blust',
+    de:{ label:'Sprecher-Notiz', close:'Notizen schliessen',
+         title:'GuestGraph — eine Einführung · ein Vortrag von Robert Blust',
+         desc:'Ein Vortrag darüber, warum ein Stammgast wie fünf Fremde aussieht — und wie gestufte Sicherheit jede Zusammenführung erklärbar und umkehrbar macht.',
          play:'Vortrag abspielen', pause:'Vortrag pausieren', first:'Zurück zum Anfang',
          prev:'Vorherige Folie', next:'Nächste Folie', full:'Vollbild', unfull:'Vollbild verlassen',
          notes:'Sprecher-Notizen', de:'Auf Deutsch', en:'Auf Englisch', novoice:'Keine Stimme' },
-    en:{ label:'Speaker note', close:'Close notes', title:'GuestGraph – Robert Blust',
+    en:{ label:'Speaker note', close:'Close notes',
+         title:'GuestGraph — an introduction · a talk by Robert Blust',
+         desc:'A talk on why a returning guest looks like five strangers, and how layered confidence makes every merge explainable and reversible.',
          play:'Play the talk', pause:'Pause the talk', first:'Back to the start',
          prev:'Previous slide', next:'Next slide', full:'Fullscreen', unfull:'Leave fullscreen',
          notes:'Speaker notes', de:'In German', en:'In English', novoice:'No voice' }
@@ -695,6 +723,7 @@
     i18n.forEach(function(el){ el.innerHTML = el.getAttribute('data-' + lang); });
     var t = UI[lang];
     document.title = t.title;
+    document.getElementById('metadesc').setAttribute('content', t.desc);
     document.getElementById('noteslabel').textContent = t.label;
     document.getElementById('notesclose').textContent = t.close;
     langDe.setAttribute('aria-pressed', lang === 'de' ? 'true' : 'false');
