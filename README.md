@@ -1,4 +1,4 @@
-# guestgraph.io
+# GuestGraph — Landing Page
 
 The landing page for **GuestGraph** — the open-source guest identity graph for hospitality.
 
