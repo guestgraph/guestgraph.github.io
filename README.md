@@ -40,7 +40,7 @@ python3 -m http.server 8000    # → http://localhost:8000
 
 The talks state the project's status honestly — what is built, what is not, and that there are no
 production users yet. Every substantive claim about how matching decides is backed by
-[`docs/matching.md`](https://github.com/guestgraph/guestgraph/blob/main/docs/matching.md) in the
+[`docs/matching.md`](https://github.com/guestgraph/engine/blob/main/docs/matching.md) in the
 core repository, which is the single place those rules are defined. Per that repo's documentation
 rules, a talk **links to** the values rather than restating them, so a matcher change cannot leave
 a slide quietly wrong.
