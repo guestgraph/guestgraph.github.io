@@ -107,9 +107,34 @@ reintroduce substring tests over whole blocks. Explaining a flag must never set 
 | Talk list, length, controls | `README.md` |
 | Narration mechanics and measurements | `intro/tts/generate.py` docstring |
 | Matching behaviour, thresholds, roadmap | the **engine** repo — link, never restate |
+| The talk URLs a crawler should find | `sitemap.xml` here — guestgraph.io only indexes it |
 
 Before writing a number or a claim about the product into a slide, ask where it is
 owned. A deck that restates the roadmap is a second copy that no CI can keep honest.
+
+## Findability
+
+`sitemap.xml` lists the talk URLs, because this repository owns the talks. The root
+`guestgraph.io/sitemap.xml` is an index that points at it and never names a talk itself,
+so there is no second copy to drift. **Adding a talk means editing `README.md` and
+`sitemap.xml`** — a second obligation alongside the deck's own `index.html`. The PDF is
+deliberately not listed: it is the same talk in a second format, and would compete with
+the deck for the same query.
+
+`npm run og` regenerates the 1200×630 share cards from the pages themselves — the talks
+index card is that page, a deck's card is its title slide. Re-run it after a visual change
+to either, and keep the `og:image:width`/`height` tags matching the file.
+
+- **`lang` describes the source, not the default.** These files are German markup with
+  English in `data-en`, so the static attribute is `lang="de"`; `applyLang()` sets it to
+  `en` on load. A crawler that runs JS sees English under `en`, one that does not sees
+  German under `de`. Before this, German source claimed to be English and neither was true.
+- **The head is English while the body is German.** Deliberate: the head describes the
+  page as delivered, and the deck opens in English. `applyLang()` swaps the title and the
+  meta description too, so both stay true when a visitor picks German.
+- **One URL, one indexable language.** A scraper never runs `applyLang()`, so the OG tags
+  and the cards are English, and only English gets indexed. Fixing that needs per-language
+  URLs with hreflang, which is a different shape of deck — a known limit, not an oversight.
 
 ## Process
 
