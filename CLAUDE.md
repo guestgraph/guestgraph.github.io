@@ -38,7 +38,7 @@ number carrying that obligation, which is what makes it worth naming.
   the exception**: `guestgraph.io/talks/` is an index — a short list page you read and
   leave — not a twelve-minute deck, so it stays in the tab. The rule is about what the
   visitor has not finished with, and nobody is mid-way through a list of two links. The
-  `Watch Intro Talk` button still opens a new tab, because that one is a deck.
+  `Watch intro talk` button still opens a new tab, because that one is a deck.
 - **Self-contained apart from the Google Fonts stylesheet.** No other external asset.
 - **The avatar is uploaded by hand** — GitHub takes no SVG and offers no API for it.
   Upload `avatar.png` (Organisation → Settings → Profile).
