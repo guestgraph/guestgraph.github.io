@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  An index, not a list of URLs — and that is the point.
+
+  guestgraph.io is served by two repositories: this one at the root, and guestgraph/talks
+  under /talks/. Each names its own URLs in its own sitemap, and this file only points at
+  them. A flat sitemap here would be a second copy of the talk list, which no CI in this
+  repository could keep honest — the same failure the org profile once shipped.
+-->
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://guestgraph.io/sitemap-site.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://guestgraph.io/talks/sitemap.xml</loc>
+  </sitemap>
+</sitemapindex>

@@ -1,0 +1,13 @@
+# guestgraph.io
+#
+# Everything here is meant to be found. The only rule that matters is the pointer to the
+# sitemaps below — this site has no inbound links yet, so discovery starts here.
+
+User-agent: *
+Allow: /
+
+# The index, and its two children named directly in case a crawler skips the index.
+# /talks/sitemap.xml lives in the guestgraph/talks repository, which owns those URLs.
+Sitemap: https://guestgraph.io/sitemap.xml
+Sitemap: https://guestgraph.io/sitemap-site.xml
+Sitemap: https://guestgraph.io/talks/sitemap.xml

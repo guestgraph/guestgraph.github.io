@@ -6,10 +6,47 @@
 <title>GuestGraph — the open-source guest identity graph</title>
 <meta name="description" content="One explainable guest profile, from data scattered across every system in the hotel. Open source, Apache 2.0.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="GuestGraph">
+<link rel="canonical" href="https://guestgraph.io/">
+
+<meta property="og:title" content="GuestGraph — the open-source guest identity graph">
 <meta property="og:description" content="One explainable guest profile, from data scattered across every system in the hotel.">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="GuestGraph">
 <meta property="og:url" content="https://guestgraph.io/">
+<meta property="og:image" content="https://guestgraph.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GuestGraph. Five strangers, one guest — five scattered records resolving into one derived profile.">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Two things this page already says, in a form a search engine can read: who publishes
+     it, and where else that publisher is. Nothing about what the software does — those
+     fields (applicationCategory, featureList, status) are claims, and this page makes
+     none. Structured data is not the place to start breaking that rule. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://guestgraph.io/#organization",
+      "name": "GuestGraph",
+      "url": "https://guestgraph.io/",
+      "logo": "https://guestgraph.io/logo.svg",
+      "sameAs": ["https://github.com/guestgraph"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://guestgraph.io/#website",
+      "name": "GuestGraph",
+      "url": "https://guestgraph.io/",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://guestgraph.io/#organization" }
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">

@@ -39,6 +39,26 @@ number carrying that obligation, which is what makes it worth naming.
 - **The avatar is uploaded by hand** — GitHub takes no SVG and offers no API for it.
   Upload `avatar.png` (Organisation → Settings → Profile).
 
+## Findability
+
+The domain is served by two repositories, so the crawl map is split the same way the
+content is. `sitemap.xml` here is a **sitemap index** and lists no URLs of its own: it
+points at `sitemap-site.xml` (this repo's one page) and at `/talks/sitemap.xml`, which
+`guestgraph/talks` owns. A flat sitemap listing the talks would be a second copy of the
+talk list — the failure this repo's rules exist to prevent. `robots.txt` names the index
+and both children.
+
+`og.png` is the landing page itself, rendered at 1200×630 and committed as a PNG. It is
+made by hand — like `avatar.png` — because a generator here would mean a build step, and
+this repo has none. To remake it after a visual change, render `index.html` at 1200×675
+and take the middle 630 rows; `intro/export-og.mjs` in the talks repo does exactly that
+and is the reference. Its declared size in the `og:image:width`/`height` tags must keep
+matching the file.
+
+The page is English only, so there is no hreflang here. The decks are bilingual on one
+URL and only one language is indexable; that is a known, accepted limit, recorded in the
+talks repo.
+
 ## Process
 
 - Commits happen when the user asks; suggest a message, don't auto-commit.
