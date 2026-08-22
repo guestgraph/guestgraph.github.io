@@ -52,10 +52,12 @@ and the rest of the tag is swallowed with it. Each of these shipped at least onc
 said. Clips cache on a content hash: editing one note regenerates one clip.
 
 ```bash
-export ELEVENLABS_API_KEY=...      # never `eval` an extraction from the shell profile —
-./generate.py --dry-run            # a bare `export` with no match prints the environment
+./generate.py --dry-run            # what would be billed, and for which slides
 ./generate.py [--only 04]
 ```
+
+The key is not in a tool shell's environment — see **Secrets** below for why, and for the
+one line that fetches it.
 
 - **Measurements before mechanisms.** `voice_settings.speed` is accepted by the API and
   ignored by `eleven_v3`; audio tags and paragraph breaks move the speaking rate a few
@@ -65,6 +67,29 @@ export ELEVENLABS_API_KEY=...      # never `eval` an extraction from the shell p
   serve the pointer text. `.gitattributes` records why.
 - **Two durations, both true.** ~6 min narrated, 12 min live. The live figure is the one
   quoted publicly; presenting involves pauses a recording does not take.
+
+## Secrets
+
+`ELEVENLABS_API_KEY` is the only credential these decks need, and it lives in `~/.zshrc`.
+Only an **interactive** zsh sources that file, so a tool shell starts without it — and so
+does a login shell, which is the surprising half. Pull it in for the one command that
+needs it, and let it die with that command:
+
+```bash
+cd intro/tts
+export ELEVENLABS_API_KEY="$(zsh -ic 'printf %s "$ELEVENLABS_API_KEY"' 2>/dev/null)"
+./generate.py --only 10
+```
+
+- **Never print an environment variable's value.** Not to check it, not in a debug line,
+  not buried in a larger `echo`. A transcript outlives the session, and a key that reaches
+  one has to be rotated.
+- **`${VAR:-UNSET}` prints the value whenever the variable is set.** This is exactly how
+  the key leaked once: it reads like a set/unset probe and does the opposite. Probe with
+  `${VAR:+SET}` alone, or `[ -n "$VAR" ] && echo set || echo unset` — forms that can only
+  ever emit a fixed string.
+- **Never `eval` an extraction from the shell profile.** A bare `export` with no match
+  prints the whole environment.
 
 ## The parsing pitfall behind two of the above
 
