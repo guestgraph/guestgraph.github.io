@@ -17,10 +17,11 @@ const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 2 });
 await page.goto(src, { waitUntil: "networkidle" });
 // German for the printed fallback; the deck itself opens in English.
-await page.keyboard.press("l");
+// The deck has no keyboard shortcuts any more — click the transport's language toggle.
+await page.click("#langDe");
 await page.waitForTimeout(300);
 // hide on-screen chrome (navigation hints, counter, name, progress bar, notes)
-await page.addStyleTag({ content: `.hint,.counter,.name,.langind,.bar,.notes,.play{display:none!important}` });
+await page.addStyleTag({ content: `.chrome,.bar,.notes{display:none!important}` });
 
 const count = await page.evaluate(() => document.querySelectorAll(".slide").length);
 

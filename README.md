@@ -1,4 +1,4 @@
-# GuestGraph — talks
+# GuestGraph — Talks
 
 Talks on **GuestGraph**, the open-source guest identity graph for hospitality.
 
@@ -17,10 +17,14 @@ and [essential-complexity](https://github.com/robertblust/essential-complexity).
 | 01 | [**GuestGraph — an introduction**](intro/) · [live](https://guestgraph.io/talks/intro/) | 12 min | DE · EN |
 
 ### Controls
-- **← →** – navigate
-- **N** – speaker notes on/off
-- **L** – switch language (DE/EN)
-- **F** – fullscreen
+
+A transport bar along the bottom edge drives the deck: back to start, previous, play/pause,
+next, fullscreen, then language (DE/EN) and speaker notes. The track number sits in the bar's
+display window; the hairline under it is the position of the clip that is speaking.
+
+On touch, swipe left or right to turn the page. Arrow, space, page and Home/End keys still work
+so a presenter remote can drive the deck, but they are not shown anywhere — the buttons are the
+interface.
 
 ## Working on a talk
 
