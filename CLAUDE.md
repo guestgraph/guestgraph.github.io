@@ -41,5 +41,5 @@ number carrying that obligation, which is what makes it worth naming.
 
 ## Process
 
-- Commits happen when Rob asks; suggest a message, don't auto-commit.
+- Commits happen when the user asks; suggest a message, don't auto-commit.
 - Never mention closed-source predecessor projects — here, in docs, or in commits.
