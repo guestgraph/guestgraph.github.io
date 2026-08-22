@@ -45,5 +45,5 @@ medium for it than a scrolling page of claims.
 
 That is also why the page makes no claim about matching behaviour, roadmap, or status. Those
 live where they are maintained — in the core repository and in
-[`docs/matching.md`](https://github.com/guestgraph/guestgraph/blob/main/docs/matching.md) — so a
+[`docs/matching.md`](https://github.com/guestgraph/engine/blob/main/docs/matching.md) — so a
 change there cannot leave this page quietly wrong.
