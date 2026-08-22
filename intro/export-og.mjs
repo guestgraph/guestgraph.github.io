@@ -12,7 +12,13 @@ import { chromium } from "playwright";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
-const W = 1200, H = 630;
+// 1200×630 is the size every scraper recommends and the size the og:image:width tags
+// declare, so deviceScaleFactor stays 1 and the file is exactly what the head claims.
+// The page is rendered at 16:9 and the middle band taken: both pages lay themselves out
+// in vmin, so squeezing them into 1.9:1 directly shrinks everything and leaves the frame
+// half empty. This keeps the proportions the page was designed with, instead of a second
+// set of type rules living in here to be kept in step by hand.
+const W = 1200, H = 630, RENDER_H = 675, BAND_Y = Math.round((675 - 630) / 2);
 const here = path.dirname(fileURLToPath(import.meta.url));
 const talks = path.dirname(here);
 
@@ -27,7 +33,7 @@ const cards = [
 
 const browser = await chromium.launch();
 for (const c of cards) {
-  const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 2 });
+  const page = await browser.newPage({ viewport: { width: W, height: RENDER_H } });
   await page.goto(pathToFileURL(c.src).href, { waitUntil: "networkidle" });
   await page.addStyleTag({ content: HIDE });
   if (c.titleSlide) {
@@ -37,7 +43,7 @@ for (const c of cards) {
     });
   }
   await page.waitForTimeout(900);            // let the rise animation settle
-  await page.screenshot({ path: c.out, clip: { x: 0, y: 0, width: W, height: H } });
+  await page.screenshot({ path: c.out, clip: { x: 0, y: BAND_Y, width: W, height: H } });
   console.log("  ✓ " + path.relative(talks, c.out));
   await page.close();
 }
