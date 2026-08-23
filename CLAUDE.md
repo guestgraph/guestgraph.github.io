@@ -42,12 +42,12 @@ repositories, and a visitor crossing between them should not meet a seam. Changi
 chrome means changing it in both repositories; there is no shared stylesheet and cannot
 be one, because a deck has to open from `file://`.
 
-- **The nav is shared chrome, and one of its items is not a page in this repository.**
-  `Billing` points at `guestgraph.io/billing/`, which `guestgraph/guestgraph.github.io`
-  owns. Adding, renaming or reordering a nav item means doing it in both repositories in
-  the same breath: `verify` here can assert that the link stays in the tab, never that
-  the page on the other side still exists or still carries the same item back. The seam
-  this rule exists to prevent is invisible from either repository alone.
+- **The nav and the footer are shared chrome, and two of their items are not pages in this
+  repository.** `Billing` and `/legal/` both point at `guestgraph.github.io`, which owns
+  them. Adding, renaming or reordering either means doing it in both repositories in the
+  same breath: `verify` here can assert that the link stays in the tab, never that the page
+  on the other side still exists or still carries the same item back. The seam this rule
+  exists to prevent is invisible from either repository alone.
 
   The decks are out of scope. A deck has a transport bar, not a nav — its *All talks*
   control is a way out of a presentation, and a second site link beside play and next
