@@ -120,6 +120,20 @@ mentioned `data-say-title="no"` matched a substring test and silently stripped t
 neighbouring slide's title. `generate.py` strips comments before parsing; do not
 reintroduce substring tests over whole blocks. Explaining a flag must never set it.
 
+**The same literal string decides what counts as a slide at all.** `slides()` splits on
+`<section class="slide` — the exact characters — so anything inserted between the tag name
+and `class` makes a slide disappear from the generator:
+
+```html
+<section data-say-title="no" class="slide title-slide">   <!-- invisible to the generator -->
+<section class="slide title-slide" data-say-title="no">   <!-- correct -->
+```
+
+Nothing errors. The deck renders, the notes panel works, and the only symptom is a clip
+that is never generated — indistinguishable from one that was already up to date.
+`--dry-run` catches it: the slide count drops. Check it against the deck before reading a
+quiet run as a cached one.
+
 ## Ownership (prevents drift)
 
 | Fact | Owner |
