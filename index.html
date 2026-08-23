@@ -96,7 +96,9 @@
 
   h1{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
      font-weight:700; line-height:1.04; letter-spacing:-.032em; font-size:clamp(2.1rem,5vw,3.9rem); max-width:21ch}
-  h1 em{font-style:normal; color:var(--c-firm)}
+  /* the wordmark, wherever it appears: Guest in ink, Graph in the brand accent */
+  h1 em{font-style:normal; color:var(--c-mid)}
+  .t em{font-style:normal; color:var(--c-mid)}
   .lede{margin-top:1.6rem; font-size:clamp(1.05rem,1.6vw,1.35rem); color:var(--dim);
         max-width:44ch}
 
@@ -166,13 +168,13 @@
 
 <main>
   <div class="shell">
-    <h1 data-de="Vorträge über <em>Gast-Identität</em>.">Talks on <em>guest identity</em>.</h1>
+    <h1 data-de="Vorträge über Guest<em>Graph</em>.">Talks on Guest<em>Graph</em>.</h1>
     <p class="lede" data-de="GuestGraph ist ein Open-Source-Identitätsgraph für Gäste in der Hotellerie: ein erklärbares, umkehrbares Gastprofil, abgeleitet aus Datensätzen, die über jedes System im Hotel verstreut liegen.">GuestGraph is an open-source guest identity graph for hospitality: one explainable, reversible guest profile derived from records scattered across every system in the hotel.</p>
 
     <div class="talks">
       <div class="talkrow">
       <a class="talk" href="intro/">
-        <span class="t" data-de="GuestGraph — eine Einführung">GuestGraph — an introduction</span>
+        <span class="t" data-de="Guest<em>Graph</em> — eine Einführung">Guest<em>Graph</em> — an introduction</span>
         <span class="meta mono"><b>12 min</b></span>
         <span class="d" data-de="Warum ein Stammgast wie fünf Fremde aussieht, was es kostet, sie falsch zusammenzuführen, und wie gestufte Sicherheit jede Entscheidung erklärbar und umkehrbar hält. Ein Vortrag, der um Gegenwind bittet, nicht um Applaus.">Why a returning guest looks like five strangers, what it costs to merge them wrongly, and how layered confidence keeps every decision explainable and reversible. A talk that asks for pushback, not applause.</span>
       </a>
