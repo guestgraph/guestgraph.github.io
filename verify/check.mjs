@@ -15,7 +15,9 @@ const PAGES = [
     // the nav no longer carries a Code item — the footer's org link is the way to the
     // source from here, one click further out than it used to be
     links: ["https://github.com/guestgraph"],
-    sameTab: ["intro/", "./"],
+    // Billing lives in the guestgraph.github.io repository and this nav item is the only
+    // link to it from here — it is shared chrome, so it stays in the tab like the rest.
+    sameTab: ["intro/", "./", "https://guestgraph.io/billing/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io/talks", internalLinks: true },
   { path: "/intro/", title: /GuestGraph/, lang: "en", sourceLang: "en", wayOut: "../",
