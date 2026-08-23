@@ -42,10 +42,13 @@ repositories, and a visitor crossing between them should not meet a seam. Changi
 chrome means changing it in both repositories; there is no shared stylesheet and cannot
 be one, because a deck has to open from `file://`.
 
-- **A deck opens in a new tab, the index does not.** Someone who opens a twelve-minute
-  talk has not finished with the page that sent them. Nobody is mid-way through a list of
-  one link, so `guestgraph.io/talks/` — from the site's nav and from anywhere else — stays
-  in the tab. The rule follows what the destination is, not which domain it is on.
+- **Nothing opens in a new tab; every deck carries its own way out.** The deck's transport
+  bar has an *All talks* control on the far side of the divider — beside the language and
+  notes buttons, deliberately not beside play and next, where a misclick mid-talk would
+  leave the deck instead of skipping a slide. The credit in the bottom-left corner is the
+  same link. With those in place a deck can be opened in the tab the reader is already in,
+  which is what the back button, the history and every phone browser expect.
+
 - **The language control sits in the header bar here, not floating over the page.** The
   deck keeps its fixed `DE · EN` indicator and its `L Sprache` hint because a deck is
   presented and the hint tells a presenter which key to press. This page is clicked, so
@@ -154,7 +157,91 @@ to either, and keep the `og:image:width`/`height` tags matching the file.
   and the cards are English, and only English gets indexed. Fixing that needs per-language
   URLs with hreflang, which is a different shape of deck — a known limit, not an oversight.
 
+## The design system, and why it is a copy
+
+Type and colour are shared across `blust.ch`, `guestgraph.io` and the talks repository.
+They share no stylesheet and cannot: a deck has to open from `file://`, so there is
+nothing to import. Every page therefore carries its own copy of the token block, fenced
+by `design tokens · vN` markers.
+
+- **Brightness is confidence, and each stop has exactly one job.** `--c-weak` a candidate
+  considered and not accepted; `--c-mid` anything interactive — links, controls, the brand
+  accent; `--c-firm` the resolved thing — the thesis, the current page; `--c-flag` a
+  reversal, at most once per page and never decoration. Before adding a colour, ask which
+  of the four jobs it is doing. If the answer is "none", it does not belong.
+- **Mono means data.** Record values, lengths, language pairs, URLs, code. Not navigation,
+  not buttons, not prose. It was on all of those before, which is why it had stopped
+  meaning anything. `verify` fails the build if mono appears outside data.
+- **Fonts are self-hosted, same origin.** Not a preference: a font CDN sends every
+  visitor's IP to a third party, and a bare family name with no `@font-face` — which is
+  what these sites shipped for months — silently renders in system-ui instead. Both
+  failures are invisible in the source. `verify` measures the rendered text and fails if a
+  declared family matches the fallback width.
+- **Redaction's grade is data.** Coarser means the record arrived more mangled. Grade 70 is
+  the floor for display type: at 100 it stops reading as a typeface and starts reading as a
+  page that failed to load — which is indistinguishable from the bug above. Grade 100 is
+  for short, source-labelled record values only.
+
+### Changing a token
+
+Edit the block, run `npm run verify`, and it will name any page in **this** repository that
+is behind. Nothing can tell you that a sibling repository is behind — that is why the block
+carries a version. Bumping `vN` means bumping it in all three repositories and running all
+three suites. The check is a habit with a tripwire, not a guarantee.
+
+The deck under `intro/` carries the system too, and its fonts live in `intro/fonts/`
+rather than at the repository root. That is deliberate: a deck already keeps `audio/`
+and its images beside it, so the folder — not the file — is the unit that has to survive
+being copied to another machine. A shared `../fonts/` would break the moment someone
+sent just the talk.
+
+## Slides are a canvas, not a page
+
+A deck lays its slides out once at a fixed height of **900**, and the whole plane is scaled
+to the screen — the way a presentation tool does it, not the way a web page does. Two
+things that used to be worth re-testing are now guarantees: **a slide can never scroll**,
+because the canvas always fits, and **the composition is identical on every screen**,
+because there is only one composition.
+
+- **Only the height is fixed.** The width follows the screen's aspect, so the canvas covers
+  the viewport exactly and there are never letterbox bars. A fixed 16:9 canvas put 96px of
+  black top and bottom on a 4:3 screen, which is the wrong trade on the *minimum* supported
+  size.
+- **Every length is in `cqmin`, never `vmin`.** `cqmin` is 1% of the canvas's shorter side,
+  and since the height is pinned at 900 and any landscape screen is wider than it is tall,
+  that is a constant 9px. Type keeps its size and a wider screen buys real width. `vmin`
+  did the opposite: it derived width from *viewport height*, so content width could never
+  track the frame — at 2560×1080 the slides used 36–51% of the width and the rest was
+  margin. That was the bug, and it is invisible unless you measure it.
+- **Media needs a ceiling.** `.slide svg, .slide img{max-height:60cqmin}`. Anything sized as
+  a fraction of width grows taller as the canvas widens: a square 300×300 diagram in a
+  half-width column reached 780px inside a 900px frame on an ultrawide screen and pushed
+  the slide into overflow. The cap sits well above any inline icon, so it only bites on a
+  figure that was about to break the guarantee.
+- **Below the breakpoint the canvas is switched off** — `transform:none`, `container-type:
+  normal` — and the deck reflows into the scrolling reading view it always had. That is
+  what "minimum supported width 1024" means in practice: canvas above, reflow below.
+
+The scale is driven by one `fit()` function at the end of each deck. Both exporters ride on
+it unchanged: the share card renders at 1200×675 and the PDF at 1280×720, and in each case
+the canvas fills the frame exactly with no bars.
+
 ## Process
 
 - Commits happen when the user asks; suggest a message, don't auto-commit.
 - Never mention closed-source predecessor projects — here, in docs, or in commits.
+
+### Why this rule moved twice
+
+It first said every link off the landing page opens in a new tab, decks included. Then it
+said the talks index is an index and stays in the tab, but a deck still gets its own. Now
+nothing gets its own tab at all.
+
+None of those were wrong for what existed at the time — a deck really did have no exit, and
+opening one in the same tab really did strand the reader. The mistake was writing it down as
+a **navigation principle** when it was a **workaround for a missing button**. A principle
+invites you to defend it; a workaround invites you to remove the thing that made it
+necessary. Once the deck carried its own way out, the rule dissolved on its own.
+
+`verify` asserts both halves together — same-tab links *and* the deck's way out — because
+either one alone is a trap.

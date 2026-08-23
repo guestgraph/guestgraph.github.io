@@ -16,19 +16,43 @@ one note does not cost a full regeneration.
 
   export ELEVENLABS_API_KEY=...
   ./generate.py [--voice ID] [--model eleven_v3] [--only 04] [--dry-run]
+                                       # --voice overrides both languages; the
+                                       # per-language default is VOICE below
 """
 import argparse, hashlib, html, json, os, pathlib, re, subprocess, sys, time
 
 DECK = pathlib.Path(__file__).resolve().parent.parent / "index.html"
 OUT = pathlib.Path(__file__).resolve().parent.parent / "audio"
-GEORGE = "JBFqnCBsd6RMkjVDRZzb"
+# The narrating voices for GuestGraph — one per language, not one per repository.
+#
+# A voice that carries English well does not necessarily carry German well, and these
+# decks narrate both; keeping the two separate lets each be chosen on its own merits.
+# They are also deliberately different from the sibling repository's, so the product and
+# the person do not sound like the same speaker.
+#
+# Changing either reprices only that language: the clip cache keys on
+# sha256(voice|model|text), so a new id invalidates that language's clips and leaves the
+# other alone. Check the bill first —
+#   ./generate.py --dry-run
+# reports the exact character count without generating anything.
+VOICE = {
+    "en": "XrExE9yKIg1WjnnlVkGX",   # Matilda — knowledgable, professional
+    "de": "cgSgspJ2msm6clMCkdW9",   # Jessica — playful, bright, warm
+}
 
 def read_h1(block):
-    """German content and the data-en attribute of the slide's <h1>.
+    """English content and the data-de attribute of the slide's <h1>.
 
-    Parsed by scanning for the tag's real closing '>' rather than with a regex: the data-en
+    The deck is English-first: the markup carries the language the deck is delivered in,
+    so it is correct before any JS runs, and German lives in data-de. This function was
+    written the other way round and had to flip with the decks — if it is ever wrong, the
+    symptom is a German title read in the English voice, which nothing but listening
+    catches. `--dry-run` is the guard: the clip cache keys on the text, so a swap shows up
+    immediately as every clip needing regeneration.
+
+    Parsed by scanning for the tag's real closing '>' rather than with a regex: the data-de
     attribute contains <em> markup, so <h1[^>]*> ends inside the attribute and returns a
-    fragment of the English title glued to the German one.
+    fragment of the German title glued to the English one.
     """
     i = block.find("<h1")
     if i < 0:
@@ -47,9 +71,9 @@ def read_h1(block):
     tag, rest = block[i:j], block[j + 1:]
     end = rest.find("</h1>")
     inner = rest[:end] if end >= 0 else ""
-    m = re.search(r'data-en="([^"]*)"', tag)
+    m = re.search(r'data-de="([^"]*)"', tag)
     strip = lambda t: html.unescape(re.sub(r"<[^>]+>", "", t)).replace("\xa0", " ").strip()
-    return {"de": strip(inner), "en": strip(m.group(1)) if m else ""}
+    return {"en": strip(inner), "de": strip(m.group(1)) if m else ""}
 
 def slides(deck_html):
     """(index, {lang: spoken_text}) for every slide that has notes."""
@@ -126,7 +150,8 @@ def speak(text, voice, model, key):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--voice", default=GEORGE)
+    # --voice overrides both languages at once, which is what auditioning wants
+    ap.add_argument("--voice")
     ap.add_argument("--model", default="eleven_v3")
     ap.add_argument("--only")
     ap.add_argument("--dry-run", action="store_true")
@@ -146,7 +171,8 @@ def main():
             d = OUT / lang
             d.mkdir(parents=True, exist_ok=True)
             mp3, stamp = d / f"{idx}.mp3", d / f"{idx}.sha"
-            sig = hashlib.sha256(f"{a.voice}|{a.model}|{text}".encode()).hexdigest()
+            voice = a.voice or VOICE[lang]
+            sig = hashlib.sha256(f"{voice}|{a.model}|{text}".encode()).hexdigest()
             if mp3.exists() and stamp.exists() and stamp.read_text().strip() == sig:
                 skipped += 1
                 continue
@@ -156,7 +182,7 @@ def main():
                       f"{text.count(chr(10)+chr(10))+1} paragraph(s)")
                 continue
             try:
-                mp3.write_bytes(speak(text, a.voice, a.model, key))
+                mp3.write_bytes(speak(text, voice, a.model, key))
                 stamp.write_text(sig)
                 print(f"  ✓ {lang}/{idx}.mp3  {mp3.stat().st_size//1024:4} KB  {len(text):4} chars")
                 made += 1

@@ -32,7 +32,7 @@ interface.
 cd intro
 npm install
 npx playwright install chromium
-npm run pdf        # → guestgraph.pdf, the 16:9 fallback (German)
+npm run pdf        # → guestgraph-de.pdf and guestgraph-en.pdf, the 16:9 fallbacks
 python3 -m http.server 8000    # → http://localhost:8000
 ```
 

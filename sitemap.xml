@@ -9,8 +9,9 @@
   No <lastmod>: without a build step it could only be hand-maintained, and a date that
   lies is worse than no date — crawlers discount a lastmod they catch being wrong.
 
-  guestgraph.pdf is deliberately absent. It is the same talk in a second format, and a
-  PDF that competes with the deck for the same query is a duplicate, not a page.
+  The PDFs are deliberately absent. They are the same talk in a second format — now in
+  two languages — and a PDF that competes with the deck for the same query is a
+  duplicate, not a page. The talks index links to them; the crawl map does not.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
