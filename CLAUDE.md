@@ -99,10 +99,17 @@ by `design tokens · vN` markers.
   what these sites shipped for months — silently renders in system-ui instead. Both
   failures are invisible in the source. `verify` measures the rendered text and fails if a
   declared family matches the fallback width.
-- **Redaction's grade is data.** Coarser means the record arrived more mangled. Grade 70 is
-  the floor for display type: at 100 it stops reading as a typeface and starts reading as a
-  page that failed to load — which is indistinguishable from the bug above. Grade 100 is
-  for short, source-labelled record values only.
+- **One display face across both sites: Bricolage Grotesque.** Its weight axis carries each
+  page's argument — light where the sentence describes the solved or unresolved half, heavy
+  where it lands. blust.ch sets *Building fast is solved* against *Deciding well is not*;
+  guestgraph.io sets *Five strangers* against *One guest*.
+
+  It replaced Redaction, whose seven grades of decay were used to make the strangers arrive
+  degraded and the guest resolve clean. That is a better idea on paper than in a browser: it
+  was read as a page that had failed to load, twice, by the person who commissioned it — and
+  on a site whose one genuine bug was a font that never loaded, that is the worst sentence
+  type can utter. Weight says the same thing and never needs explaining. Do not reintroduce a
+  degraded display face to make this point.
 
 ### Changing a token
 

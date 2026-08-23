@@ -15,7 +15,7 @@ const PAGES = [
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
     sameTab: ["https://guestgraph.io/talks/", "https://guestgraph.io/talks/intro/"],
-    fontsLoaded: ["Redaction", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io", internalLinks: true },
 ];
 

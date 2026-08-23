@@ -49,15 +49,11 @@
 </script>
 <style>
 /* Self-hosted, same origin: no third party sees a visitor, and the files resolve
-   from file:// as well as from the domain. Redaction is dual-licensed SIL OFL 1.1
-   / LGPL 2.1; its grade encodes how degraded a record is, and is never decorative. */
+   from file:// as well as from the domain. */
 @font-face{font-family:"Instrument Sans";src:url(fonts/InstrumentSans-var.woff2) format("woff2-variations"),url(fonts/InstrumentSans-var.woff2) format("woff2");font-weight:400 700;font-display:swap}
 @font-face{font-family:"Plex Mono";src:url(fonts/PlexMono-400.woff2) format("woff2");font-weight:400;font-display:swap}
 @font-face{font-family:"Plex Mono";src:url(fonts/PlexMono-600.woff2) format("woff2");font-weight:600;font-display:swap}
-@font-face{font-family:"Redaction";src:url(fonts/Redaction-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:"Redaction35";src:url(fonts/Redaction35-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:"Redaction70";src:url(fonts/Redaction70-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:"Redaction100";src:url(fonts/Redaction100-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Bricolage Grotesque";src:url(fonts/Bricolage-var.woff2) format("woff2-variations"),url(fonts/Bricolage-var.woff2) format("woff2");font-weight:200 800;font-display:swap}
 
   /* ─── design tokens · v1 · keep in step across all three repositories ───
      These sites share no stylesheet by design — a deck has to open from
@@ -109,13 +105,16 @@
   main{flex:1; display:flex; align-items:center; padding:2vh 0 5vh}
 
   /* the title, as the talk opens */
-  /* Redaction's grade carries the argument: the strangers arrive degraded, the
-     guest resolves clean. Grade 70 is the floor for display type — 100 stops
-     reading as a typeface and starts reading as a page that failed to load. */
-  .title h1{font-weight:400; letter-spacing:-.02em; line-height:1.0;
-            font-size:clamp(2.5rem,7.4vw,5.8rem)}
-  .title h1 .r70{font-family:"Redaction70",Georgia,serif; color:var(--dim)}
-  .title h1 .rcl{font-family:"Redaction",Georgia,serif}
+  /* One axis carries the argument: the strangers arrive light and unresolved, the guest
+     lands heavy. This was once a typeface whose grades encode decay, set degraded and
+     then clean — a good idea on paper that kept being read as a page that had failed to
+     load, which on a site whose one real bug was exactly that is the worst thing type
+     can say. Weight makes the same point and never has to be explained. */
+  .title h1{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+            letter-spacing:-.035em; line-height:1.0;
+            font-size:clamp(2.4rem,7vw,5.4rem)}
+  .title h1 .r70{display:block; font-weight:300; color:var(--dim)}
+  .title h1 .rcl{display:block; font-weight:800}
   .title h1 em{font-style:normal; color:var(--c-firm)}
   .tagline{margin-top:1.6rem; font-size:clamp(1.1rem,1.9vw,1.5rem); color:var(--dim);
            max-width:44ch; line-height:1.4}
@@ -143,17 +142,18 @@
   /* records resolving into one profile */
   .figure svg{width:100%; height:auto; display:block; overflow:visible}
   .chip rect{fill:var(--raise); stroke:var(--rule); stroke-width:1.5}
-  .chip text{font-size:17px; fill:var(--dim); text-anchor:middle; dominant-baseline:middle}
+  /* A record value is data, so it takes the data face. That these arrive mangled is
+     carried by the strings themselves — MUSTER/ERIKA MRS, „E. M.“, xy7k2@… — which is the
+     argument the diagram is actually making. */
+  .chip text{font-family:"Plex Mono",monospace; font-size:15px; fill:var(--dim);
+             text-anchor:middle; dominant-baseline:middle}
   .chip .src{font-family:"Plex Mono",monospace; font-size:11px; letter-spacing:.16em;
              fill:var(--dim); opacity:.75}
-  .chip .g35{font-family:"Redaction35",Georgia,serif}
-  .chip .g70{font-family:"Redaction70",Georgia,serif}
-  .chip .g100{font-family:"Redaction100",Georgia,serif}
   .wire{stroke:var(--c-mid); stroke-width:1.5; fill:none; opacity:.85}
   /* a record below the threshold keeps a faint link: considered, not accepted */
   .wire.candidate{stroke:var(--c-weak); opacity:1}
   .profile rect{fill:var(--raise); stroke:var(--c-firm); stroke-width:2.2}
-  .pname{font-family:"Redaction",Georgia,serif; font-weight:400; font-size:27px; fill:var(--ink);
+  .pname{font-family:"Bricolage Grotesque",sans-serif; font-weight:700; font-size:26px; fill:var(--ink);
          text-anchor:middle; dominant-baseline:middle}
   .pmeta{font-family:"Plex Mono",monospace; font-size:12.5px; fill:var(--dim);
          text-anchor:middle; dominant-baseline:middle; letter-spacing:.06em}
@@ -229,7 +229,7 @@
 <main>
   <div class="shell">
     <div class="title">
-      <h1 data-de="<span class='r70'>Fünf Fremde.</span><br><span class='rcl'>Ein <em>Gast</em>.</span>"><span class="r70">Five strangers.</span><br><span class="rcl">One <em>guest</em>.</span></h1>
+      <h1 data-de="<span class='r70'>Fünf Fremde.</span><br><span class='rcl'>Ein <em>Gast</em>.</span>"><span class="r70">Five strangers.</span><span class="rcl">One <em>guest</em>.</span></h1>
       <p class="tagline" data-de="Ein erklärbares Gastprofil, aus Daten, die über jedes System im Hotel verstreut liegen.">One explainable guest profile, from data scattered across every system in the hotel.</p>
       <div class="cta">
         <a class="btn primary" href="https://guestgraph.io/talks/intro/" data-de="Einführungsvortrag ansehen">Watch intro talk</a>
@@ -243,7 +243,7 @@
          neither won. The lede sits under it as the caption it always was. -->
     <div class="figure">
       <svg viewBox="0 0 1200 286" role="img"
-           aria-label="Five differently-formatted records from five hotel systems, all resolving into one derived profile for Anna Müller">
+           aria-label="Five differently-formatted records from five hotel systems, all resolving into one derived profile for Erika Muster">
         <g class="wires">
           <path class="wire" d="M110,74 C110,132 404,148 588,206" pathLength="1"/>
           <path class="wire" d="M355,74 C355,132 528,164 596,206" pathLength="1"/>
@@ -255,24 +255,24 @@
         <g class="chips">
         <g class="chip"><text class="src" x="110" y="12">PMS</text>
           <rect x="0" y="28" width="220" height="46" rx="9"/>
-          <text class="g35" x="110" y="52">Müller, Anna</text></g>
+          <text x="110" y="52">MUSTER/ERIKA MRS</text></g>
         <g class="chip"><text class="src" x="355" y="12">BOOKING.COM</text>
           <rect x="245" y="28" width="220" height="46" rx="9"/>
-          <text class="g35" x="355" y="52">a.mueller@bluewin.ch</text></g>
+          <text x="355" y="52">e.muster@example.com</text></g>
         <g class="chip"><text class="src" x="600" y="12">POS</text>
           <rect x="490" y="28" width="220" height="46" rx="9"/>
-          <text class="g70" x="600" y="52">Table 12</text></g>
+          <text x="600" y="52">Table 12</text></g>
         <g class="chip"><text class="src" x="845" y="12">WLAN</text>
           <rect x="735" y="28" width="220" height="46" rx="9"/>
-          <text class="g70" x="845" y="52">+41 79 ••• 12</text></g>
+          <text x="845" y="52">+41 79 ••• 12</text></g>
         <g class="chip"><text class="src" x="1090" y="12">REVIEWS</text>
           <rect x="980" y="28" width="220" height="46" rx="9"/>
-          <text class="g100" x="1090" y="52">„A. M.“</text></g>
+          <text x="1090" y="52">„E. M.“</text></g>
         </g>
 
         <g class="profile">
           <rect x="470" y="206" width="260" height="76" rx="15"/>
-          <text class="pname" x="600" y="234">Anna Müller</text>
+          <text class="pname" x="600" y="234">Erika Muster</text>
           <text class="pmeta" x="600" y="261" data-de="ein abgeleitetes Profil">one derived profile</text>
         </g>
       </svg>
