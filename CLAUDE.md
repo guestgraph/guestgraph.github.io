@@ -40,6 +40,12 @@ This narrows the rule above; it does not repeal it. Product status, matching beh
 roadmap still belong to the engine repository. What this repo now owns is the commercial
 model, because nothing else does.
 
+**The `Billing` nav item is shared chrome, so it lives in three files across two
+repositories** — both pages here, and `index.html` in `guestgraph/talks`, whose header bar
+is a verbatim copy of this one. Renaming or reordering the nav means editing all three in
+the same breath. `verify` in either repository can only see its own half: nothing here can
+tell you the talks index has fallen behind, and nothing there can tell you this page has.
+
 **The one fact this site restates** is the talk's length ("12 minutes", in `index.html`
 and `README.md`). It is duplicated from the talks repo because a call-to-action needs
 it inline. If the talk's length changes, both files here change too — it is the only
