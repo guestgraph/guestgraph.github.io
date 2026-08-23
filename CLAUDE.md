@@ -40,7 +40,7 @@ This narrows the rule above; it does not repeal it. Product status, matching beh
 roadmap still belong to the engine repository. What this repo now owns is the commercial
 model, because nothing else does.
 
-`legal/index.html` is the other one, and it is the same kind of claim: what **this site**
+`privacy/index.html` is the other one, and it is the same kind of claim: what **this site**
 does with a visitor, and what the hosted service will do with guest data. Both are facts
 this repo owns, because nobody else can state them — and the site half is checkable, so
 `verify` checks it rather than trusting the prose. The `sameOrigin` assertion records every
@@ -49,11 +49,12 @@ is fetched from anywhere else, and a font CDN, an analytics tag or one embedded 
 make that a lie which reads exactly like the truth.
 
 **Two obligations fire on one event, and neither may fire alone.** The day the hosted
-service opens, the billing page's *not open yet* sentence comes out **and** the imprint —
-name, postal address, contact — goes onto `/legal/`, which currently says in public that it
-is missing on purpose. Until then nothing here can be bought, which is what makes both
-states honest. Doing half of it leaves the site either advertising a product with no
-seller, or naming a seller for a product it still calls unavailable.
+service opens, the billing page's *not open yet* sentence comes out **and** an imprint —
+name, postal address, contact — is published. It gets a page of its own, `/imprint/`, which
+is also the word a German-speaking visitor looks for; `/privacy/` says in public that it is
+coming and stays named for what it carries. Until then nothing here can be bought, which is
+what makes both states honest. Doing half of it leaves the site either advertising a product
+with no seller, or naming a seller for a product it still calls unavailable.
 
 **The `Billing` nav item is shared chrome, so it lives in three files across two
 repositories** — both pages here, and `index.html` in `guestgraph/talks`, whose header bar
@@ -63,7 +64,7 @@ tell you the talks index has fallen behind, and nothing there can tell you this 
 The footer's *Privacy* link is the same shape of obligation, in four files across the two
 repositories.
 
-It was written as the path `/legal/` first, to keep the footer strictly to data — the strip
+It was written as a bare path first, to keep the footer strictly to data — the strip
 is set in the data face, and a bare word there looked like navigation in mono. That was the
 wrong reading of the rule. The strip is not URLs: `Apache 2.0` is a licence name and
 `Robert Blust` is a person's name, and both are links. It is *identifiers that happen to be
@@ -107,7 +108,7 @@ two-file obligation, which is the point.
 The domain is served by two repositories, so the crawl map is split the same way the
 content is. `sitemap.xml` here is a **sitemap index** and lists no URLs of its own: it
 points at `sitemap-site.xml` (this repo's three pages — the landing page, `/billing/` and
-`/legal/`)
+`/privacy/`)
 and at `/talks/sitemap.xml`, which `guestgraph/talks` owns. A flat sitemap listing the talks would be a second copy of the
 talk list — the failure this repo's rules exist to prevent. `robots.txt` names the index
 and both children.
@@ -117,7 +118,7 @@ made by hand — like `avatar.png` — because a generator here would mean a bui
 this repo has none. To remake it after a visual change, render `index.html` at 1200×675
 and take the middle 630 rows; `intro/export-og.mjs` in the talks repo does exactly that
 and is the reference. Its declared size in the `og:image:width`/`height` tags must keep
-matching the file — on **all three** pages, because `/billing/` and `/legal/` point their
+matching the file — on **all three** pages, because `/billing/` and `/privacy/` point their
 cards at the same file rather than carrying one of their own. A second card would be a
 second hand-render to keep in step, and the landing card is the right thing to show for a
 link to any of them.

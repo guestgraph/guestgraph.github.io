@@ -14,7 +14,7 @@ const PAGES = [
     contains: ["Five strangers", "One guest", "GuestGraph"],
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
-    sameTab: ["https://guestgraph.io/talks/", "https://guestgraph.io/talks/intro/", "billing/", "legal/"],
+    sameTab: ["https://guestgraph.io/talks/", "https://guestgraph.io/talks/intro/", "billing/", "privacy/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io", internalLinks: true },
 
@@ -28,7 +28,7 @@ const PAGES = [
     // no call to action here: the page ends on its argument, so the only outbound link
     // left to hold to the new-tab rule is the one in the footer.
     links: ["https://github.com/guestgraph"],
-    sameTab: ["https://guestgraph.io/talks/", "../", "./", "../legal/"],
+    sameTab: ["https://guestgraph.io/talks/", "../", "./", "../privacy/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io", internalLinks: true },
 
@@ -36,8 +36,8 @@ const PAGES = [
   // trusting the prose: a page that says it makes no third-party request must make none,
   // and the suite's own `requestfailed`/`links` machinery cannot see that. If a font, an
   // analytics tag or an embed ever creeps in, this is what fails.
-  { path: "/legal/", title: /GuestGraph/, lang: "en",
-    contains: ["This site collects", "no imprint here yet"],
+  { path: "/privacy/", title: /GuestGraph/, lang: "en",
+    contains: ["This site collects", "There is no imprint yet"],
     links: ["https://github.com/guestgraph"],
     sameTab: ["https://guestgraph.io/talks/", "../", "../billing/", "./"],
     sameOrigin: true,
