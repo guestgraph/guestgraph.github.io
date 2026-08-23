@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GuestGraph — the open-source guest identity graph</title>
-<meta name="description" content="One explainable guest profile, from data scattered across every system in the hotel. Open source, Apache 2.0.">
+<meta id="metadesc" name="description" content="One explainable guest profile, from data scattered across every system in the hotel. Open source, Apache 2.0.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://guestgraph.io/">
 
@@ -47,97 +47,152 @@
   ]
 }
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+/* Self-hosted, same origin: no third party sees a visitor, and the files resolve
+   from file:// as well as from the domain. Redaction is dual-licensed SIL OFL 1.1
+   / LGPL 2.1; its grade encodes how degraded a record is, and is never decorative. */
+@font-face{font-family:"Instrument Sans";src:url(fonts/InstrumentSans-var.woff2) format("woff2-variations"),url(fonts/InstrumentSans-var.woff2) format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"Plex Mono";src:url(fonts/PlexMono-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Plex Mono";src:url(fonts/PlexMono-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Redaction";src:url(fonts/Redaction-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Redaction35";src:url(fonts/Redaction35-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Redaction70";src:url(fonts/Redaction70-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Redaction100";src:url(fonts/Redaction100-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+
+  /* ─── design tokens · v1 · keep in step across all three repositories ───
+     These sites share no stylesheet by design — a deck has to open from
+     file:// — so this block is a copy, and each repo's verify suite asserts
+     the copy still matches. Change it here, then run the checks.
+
+     Brightness is confidence. Each stop has exactly one job:
+       --c-weak  a candidate: considered, not accepted
+       --c-mid   anything interactive — links, controls, the brand accent
+       --c-firm  the resolved thing — the thesis, the current page
+       --c-flag  a reversal; at most one per page, never decoration
+  */
   :root{
-    --paper:#0f1013; --paper2:#191b20; --ink:#f1ede4; --muted:#9a9384;
-    --cobalt:#7aa0ff; --line:#282a30;
+    --ground:#0C0E13; --raise:#171A21; --rule:#232833;
+    --ink:#EFEDE8;    --dim:#8A8B86;
+    --c-weak:#3E5878; --c-mid:#7FA3D8; --c-firm:#B8D0FF; --c-flag:#D9A44F;
   }
+  /* ─── end design tokens ─────────────────────────────────────────────── */
   *{box-sizing:border-box; margin:0; padding:0}
   body{
-    font-family:"IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
-    background:var(--paper); color:var(--ink); line-height:1.5; min-height:100vh;
-    background-image:radial-gradient(120% 60% at 50% -10%, #17191f 0%, var(--paper) 60%);
+    font-family:"Instrument Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    background:var(--ground); color:var(--ink); line-height:1.5; min-height:100vh;
+    background-image:radial-gradient(120% 60% at 50% -10%, var(--raise) 0%, var(--ground) 60%);
     -webkit-font-smoothing:antialiased;
     display:flex; flex-direction:column;
   }
-  .mono{font-family:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace}
+  .mono{font-family:"Plex Mono", ui-monospace, "SF Mono", Menlo, monospace}
   a{color:inherit}
   .shell{width:100%; max-width:1180px; margin:0 auto; padding:0 7vw}
 
   header{padding:2rem 0}
   .bar{display:flex; align-items:center; justify-content:space-between; gap:2rem}
   .brand{display:flex; align-items:center; gap:.7rem; text-decoration:none}
-  .brand svg{width:28px; height:28px; color:var(--cobalt); flex:0 0 auto}
+  .brand svg{width:28px; height:28px; color:var(--c-mid); flex:0 0 auto}
   .brand b{font-weight:600; font-size:1.06rem; letter-spacing:-.01em}
-  .brand b span{color:var(--cobalt)}
-  nav{display:flex; gap:1.9rem; font-family:"IBM Plex Mono",monospace; font-size:.8rem;
-      letter-spacing:.1em; text-transform:uppercase}
-  nav a{color:var(--muted); text-decoration:none; padding-bottom:.2rem; border-bottom:1px solid transparent}
-  nav a:hover, nav a:focus-visible{color:var(--ink); border-color:var(--cobalt)}
+  .brand b span{color:var(--c-mid)}
+  nav{display:flex; gap:1.9rem; font-size:.76rem; font-weight:500;
+      letter-spacing:.14em; text-transform:uppercase}
+  nav a{color:var(--dim); text-decoration:none; padding-bottom:.2rem; border-bottom:1px solid transparent}
+  nav a:hover, nav a:focus-visible{color:var(--ink); border-color:var(--c-mid)}
+  /* the language control is a nav item, not a floating badge: it belongs with the
+     other things you can do to the page rather than on top of the page */
+  .langind{font:inherit; letter-spacing:inherit; text-transform:inherit; background:none;
+           border:0; border-bottom:1px solid transparent; padding:0 0 .2rem; cursor:pointer;
+           color:var(--dim); white-space:nowrap}
+  .langind:hover{color:var(--ink)}
+  .langind .on{color:var(--c-firm); font-weight:700}
 
   main{flex:1; display:flex; align-items:center; padding:2vh 0 5vh}
 
   /* the title, as the talk opens */
-  .title h1{font-weight:600; letter-spacing:-.03em; line-height:1.02;
-            font-size:clamp(3rem,8vw,6.2rem)}
-  .title h1 span{color:var(--cobalt)}
-  .tagline{margin-top:1.6rem; font-size:clamp(1.15rem,2.1vw,1.62rem); color:var(--muted);
-           max-width:34ch; line-height:1.38}
+  /* Redaction's grade carries the argument: the strangers arrive degraded, the
+     guest resolves clean. Grade 70 is the floor for display type — 100 stops
+     reading as a typeface and starts reading as a page that failed to load. */
+  .title h1{font-weight:400; letter-spacing:-.02em; line-height:1.0;
+            font-size:clamp(2.5rem,7.4vw,5.8rem)}
+  .title h1 .r70{font-family:"Redaction70",Georgia,serif; color:var(--dim)}
+  .title h1 .rcl{font-family:"Redaction",Georgia,serif}
+  .title h1 em{font-style:normal; color:var(--c-firm)}
+  .tagline{margin-top:1.6rem; font-size:clamp(1.1rem,1.9vw,1.5rem); color:var(--dim);
+           max-width:44ch; line-height:1.4}
 
-  .split{display:grid; grid-template-columns:1fr 1.04fr; gap:4vw; align-items:center;
-         margin-top:clamp(2.5rem,5vh,4.6rem)}
+  .figure{margin-top:clamp(2.6rem,6vh,4.6rem)}
+  /* five across is inherently wide: below the breakpoint the band scrolls inside its own
+     box rather than shrinking the record values past reading size. The page never scrolls
+     sideways — only the figure does. */
+  .figure{overflow-x:auto}
   h2{font-weight:600; letter-spacing:-.025em; line-height:1.06; font-size:clamp(1.9rem,3.7vw,3rem)}
-  h2 em{font-style:normal; color:var(--cobalt)}
-  .lede{margin-top:1.5rem; font-size:clamp(1rem,1.35vw,1.18rem); color:var(--muted); max-width:44ch}
+  h2 em{font-style:normal; color:var(--c-mid)}
+  .lede{margin-top:2rem; font-size:clamp(1rem,1.3vw,1.14rem); color:var(--dim); max-width:64ch}
 
   .cta{margin-top:2.3rem; display:flex; flex-wrap:wrap; gap:1rem}
   .btn{
-    font-family:"IBM Plex Mono",monospace; font-size:.85rem; letter-spacing:.06em;
-    text-decoration:none; padding:.9rem 1.25rem; border-radius:7px; border:1.5px solid var(--line);
-    color:var(--ink); background:var(--paper2); transition:border-color .18s ease, color .18s ease;
+    font-size:.82rem; font-weight:500; letter-spacing:.07em;
+    text-decoration:none; padding:.9rem 1.25rem; border-radius:7px; border:1.5px solid var(--rule);
+    color:var(--ink); background:var(--raise); transition:border-color .18s ease, color .18s ease;
   }
-  .btn:hover, .btn:focus-visible{border-color:var(--cobalt); color:var(--cobalt)}
-  .btn.primary{border-color:var(--cobalt); color:var(--cobalt)}
-  .btn.primary:hover, .btn.primary:focus-visible{background:#1b2233}
-  .ctameta{margin-top:1.1rem; font-size:.78rem; color:var(--muted); letter-spacing:.05em}
+  .btn:hover, .btn:focus-visible{border-color:var(--c-mid); color:var(--c-mid)}
+  .btn.primary{border-color:var(--c-mid); color:var(--c-mid)}
+  .btn.primary:hover, .btn.primary:focus-visible{background:#1b2333}
+  .ctameta{margin-top:1.1rem; font-size:.78rem; color:var(--dim); letter-spacing:.05em}
 
   /* records resolving into one profile */
   .figure svg{width:100%; height:auto; display:block; overflow:visible}
-  .chip rect{fill:var(--paper2); stroke:var(--line); stroke-width:1.5}
-  .chip text{font-family:"IBM Plex Mono",monospace; font-size:14px; fill:var(--muted); dominant-baseline:middle}
-  .wire{stroke:var(--cobalt); stroke-width:1.5; fill:none; opacity:.55}
-  .profile rect{fill:#1b2130; stroke:var(--cobalt); stroke-width:2.2}
-  .pname{font-family:"IBM Plex Sans",sans-serif; font-weight:600; font-size:23px; fill:var(--cobalt);
+  .chip rect{fill:var(--raise); stroke:var(--rule); stroke-width:1.5}
+  .chip text{font-size:17px; fill:var(--dim); text-anchor:middle; dominant-baseline:middle}
+  .chip .src{font-family:"Plex Mono",monospace; font-size:11px; letter-spacing:.16em;
+             fill:var(--dim); opacity:.75}
+  .chip .g35{font-family:"Redaction35",Georgia,serif}
+  .chip .g70{font-family:"Redaction70",Georgia,serif}
+  .chip .g100{font-family:"Redaction100",Georgia,serif}
+  .wire{stroke:var(--c-mid); stroke-width:1.5; fill:none; opacity:.85}
+  /* a record below the threshold keeps a faint link: considered, not accepted */
+  .wire.candidate{stroke:var(--c-weak); opacity:1}
+  .profile rect{fill:var(--raise); stroke:var(--c-firm); stroke-width:2.2}
+  .pname{font-family:"Redaction",Georgia,serif; font-weight:400; font-size:27px; fill:var(--ink);
          text-anchor:middle; dominant-baseline:middle}
-  .pmeta{font-family:"IBM Plex Mono",monospace; font-size:12.5px; fill:var(--muted);
+  .pmeta{font-family:"Plex Mono",monospace; font-size:12.5px; fill:var(--dim);
          text-anchor:middle; dominant-baseline:middle; letter-spacing:.06em}
 
-  .chip{opacity:0; animation:pop .5s ease forwards}
-  .chip:nth-of-type(1){animation-delay:.2s} .chip:nth-of-type(2){animation-delay:.33s}
-  .chip:nth-of-type(3){animation-delay:.46s} .chip:nth-of-type(4){animation-delay:.59s}
-  .chip:nth-of-type(5){animation-delay:.72s}
+  /* One thing happens at a time, left to right: the five records arrive, then each is
+     connected in turn, then the profile they resolve into. Everything firing at once
+     read as noise rather than as an argument being assembled. */
+  .chip{opacity:0; animation:pop .34s ease forwards}
+  .chips .chip:nth-of-type(1){animation-delay:.08s}
+  .chips .chip:nth-of-type(2){animation-delay:.18s}
+  .chips .chip:nth-of-type(3){animation-delay:.28s}
+  .chips .chip:nth-of-type(4){animation-delay:.38s}
+  .chips .chip:nth-of-type(5){animation-delay:.48s}
   @keyframes pop{from{opacity:0; transform:translateY(9px)} to{opacity:1; transform:none}}
-  .wire{stroke-dasharray:340; stroke-dashoffset:340; animation:draw .9s ease forwards .9s}
+
+  .wire{stroke-dasharray:1; stroke-dashoffset:1; animation:draw .30s ease forwards}
+  .wires .wire:nth-of-type(1){animation-delay:.95s}
+  .wires .wire:nth-of-type(2){animation-delay:1.21s}
+  .wires .wire:nth-of-type(3){animation-delay:1.47s}
+  .wires .wire:nth-of-type(4){animation-delay:1.73s}
+  .wires .wire:nth-of-type(5){animation-delay:1.99s}
   @keyframes draw{to{stroke-dashoffset:0}}
-  .profile{opacity:0; animation:pop .6s cubic-bezier(.2,.7,.2,1) forwards 1.55s}
+
+  /* last, and only once every record has been joined */
+  .profile{opacity:0; animation:pop .5s cubic-bezier(.2,.7,.2,1) forwards 2.35s}
 
   footer{padding:0 0 2rem; display:flex; flex-wrap:wrap; gap:.9rem 2.6rem; align-items:center;
-         font-family:"IBM Plex Mono",monospace; font-size:.76rem; letter-spacing:.08em; color:var(--muted)}
-  footer a{color:var(--cobalt); text-decoration:none}
+         font-family:"Plex Mono",monospace; font-size:.76rem; letter-spacing:.08em; color:var(--dim)}
+  footer a{color:var(--c-mid); text-decoration:none}
   footer a:hover, footer a:focus-visible{text-decoration:underline}
 
-  :focus-visible{outline:2px solid var(--cobalt); outline-offset:3px; border-radius:3px}
+  :focus-visible{outline:2px solid var(--c-mid); outline-offset:3px; border-radius:3px}
 
   @media (max-width:900px){
     main{padding:2vh 0 6vh}
-    .split{grid-template-columns:1fr; gap:3rem; margin-top:3rem}
-    .figure{order:2}
+    .figure svg{min-width:760px}
     .tagline{max-width:100%}
     nav{gap:1.4rem}
-    .chip text{font-size:18px} .pname{font-size:25px} .pmeta{font-size:13.5px}
+    .chip text{font-size:18px} .pname{font-size:26px} .pmeta{font-size:13.5px}
     .chip rect{stroke-width:2}
   }
   @media (prefers-reduced-motion:reduce){
@@ -151,21 +206,21 @@
 <div class="shell">
   <header>
     <div class="bar">
-      <a class="brand" href="/">
+      <a class="brand" href="./">
         <svg viewBox="0 0 32 32" aria-hidden="true">
           <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
             <path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/>
-            <circle cx="6" cy="7.2" r="2.6" fill="#0f1013"/>
-            <circle cx="6" cy="16" r="2.6" fill="#0f1013"/>
-            <circle cx="6" cy="24.8" r="2.6" fill="#0f1013"/>
+            <circle cx="6" cy="7.2" r="2.6" fill="#0C0E13"/>
+            <circle cx="6" cy="16" r="2.6" fill="#0C0E13"/>
+            <circle cx="6" cy="24.8" r="2.6" fill="#0C0E13"/>
           </g>
           <circle cx="24" cy="16" r="5.4" fill="currentColor"/>
         </svg>
         <b>Guest<span>Graph</span></b>
       </a>
       <nav>
-        <a href="https://guestgraph.io/talks/">Talks</a>
-        <a target="_blank" rel="noopener" href="https://github.com/guestgraph/engine">Code</a>
+        <a href="https://guestgraph.io/talks/" data-de="Vorträge">Talks</a>
+        <button class="langind" id="langind" type="button" aria-label="Sprache wechseln — switch language"><span id="lde">DE</span> · <span id="len">EN</span></button>
       </nav>
     </div>
   </header>
@@ -174,57 +229,60 @@
 <main>
   <div class="shell">
     <div class="title">
-      <h1>Guest<span>Graph</span>.</h1>
-      <p class="tagline">One explainable guest profile, from data scattered across every system in the hotel.</p>
+      <h1 data-de="<span class='r70'>Fünf Fremde.</span><br><span class='rcl'>Ein <em>Gast</em>.</span>"><span class="r70">Five strangers.</span><br><span class="rcl">One <em>guest</em>.</span></h1>
+      <p class="tagline" data-de="Ein erklärbares Gastprofil, aus Daten, die über jedes System im Hotel verstreut liegen.">One explainable guest profile, from data scattered across every system in the hotel.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://guestgraph.io/talks/intro/" data-de="Einführungsvortrag ansehen">Watch intro talk</a>
+        <a target="_blank" rel="noopener" class="btn" href="https://github.com/guestgraph/engine" data-de="Zum Code">Read the code</a>
+      </div>
+      <p class="ctameta mono" data-de="12 Minuten · Deutsch oder Englisch">12 minutes · German or English</p>
     </div>
 
-    <div class="split">
-      <div>
-        <h2>Five strangers.<br><em>One guest.</em></h2>
-        <p class="lede">
-          The same person books, checks in, eats, joins the wifi and leaves a review — and every
-          system stores someone different. GuestGraph resolves those records into one profile,
-          and can always tell you why.
-        </p>
-        <div class="cta">
-          <a target="_blank" rel="noopener" class="btn primary" href="https://guestgraph.io/talks/intro/">Watch intro talk</a>
-          <a target="_blank" rel="noopener" class="btn" href="https://github.com/guestgraph/engine">Read the code</a>
-        </div>
-        <p class="ctameta mono">12 minutes · German or English</p>
-      </div>
+    <!-- The band runs the full width because five records across is what the argument
+         looks like; boxed into a column beside the headline the two competed and
+         neither won. The lede sits under it as the caption it always was. -->
+    <div class="figure">
+      <svg viewBox="0 0 1200 286" role="img"
+           aria-label="Five differently-formatted records from five hotel systems, all resolving into one derived profile for Anna Müller">
+        <g class="wires">
+          <path class="wire" d="M110,74 C110,132 404,148 588,206" pathLength="1"/>
+          <path class="wire" d="M355,74 C355,132 528,164 596,206" pathLength="1"/>
+          <path class="wire" d="M600,74 C600,132 600,168 600,206" pathLength="1"/>
+          <path class="wire" d="M845,74 C845,132 672,164 604,206" pathLength="1"/>
+          <path class="wire" d="M1090,74 C1090,132 796,148 612,206" pathLength="1"/>
+        </g>
 
-      <div class="figure">
-        <svg viewBox="0 0 620 420" role="img"
-             aria-label="Five differently-formatted records from five systems, all connected to one derived profile for Anna Müller">
-          <g class="wires">
-            <path class="wire" d="M206,64 C258,64 258,166 292,184"/>
-            <path class="wire" d="M214,196 C252,196 262,196 292,199"/>
-            <path class="wire" d="M196,348 C254,348 258,244 292,218"/>
-            <path class="wire" d="M414,86 C382,86 378,164 348,184"/>
-            <path class="wire" d="M396,342 C372,342 370,242 348,218"/>
-          </g>
+        <g class="chips">
+        <g class="chip"><text class="src" x="110" y="12">PMS</text>
+          <rect x="0" y="28" width="220" height="46" rx="9"/>
+          <text class="g35" x="110" y="52">Müller, Anna</text></g>
+        <g class="chip"><text class="src" x="355" y="12">BOOKING.COM</text>
+          <rect x="245" y="28" width="220" height="46" rx="9"/>
+          <text class="g35" x="355" y="52">a.mueller@bluewin.ch</text></g>
+        <g class="chip"><text class="src" x="600" y="12">POS</text>
+          <rect x="490" y="28" width="220" height="46" rx="9"/>
+          <text class="g70" x="600" y="52">Table 12</text></g>
+        <g class="chip"><text class="src" x="845" y="12">WLAN</text>
+          <rect x="735" y="28" width="220" height="46" rx="9"/>
+          <text class="g70" x="845" y="52">+41 79 ••• 12</text></g>
+        <g class="chip"><text class="src" x="1090" y="12">REVIEWS</text>
+          <rect x="980" y="28" width="220" height="46" rx="9"/>
+          <text class="g100" x="1090" y="52">„A. M.“</text></g>
+        </g>
 
-          <g class="chip"><rect x="26" y="47" width="180" height="34" rx="7"/>
-            <text x="42" y="65">MÜLLER/ANNA MRS</text></g>
-          <g class="chip"><rect x="2" y="179" width="212" height="34" rx="7"/>
-            <text x="18" y="197">a.mueller@bluewin.ch</text></g>
-          <g class="chip"><rect x="30" y="331" width="166" height="34" rx="7"/>
-            <text x="46" y="349">+41 79 ••• 12</text></g>
-          <g class="chip"><rect x="414" y="69" width="118" height="34" rx="7"/>
-            <text x="430" y="87">„A. M."</text></g>
-          <g class="chip"><rect x="396" y="325" width="208" height="34" rx="7"/>
-            <text x="411" y="343">xy7k2@guest.booking.com</text></g>
-
-          <g class="profile">
-            <rect x="230" y="162" width="180" height="78" rx="14"/>
-            <text class="pname" x="320" y="192">Anna Müller</text>
-            <text class="pmeta" x="320" y="219">one derived profile</text>
-          </g>
-        </svg>
-      </div>
+        <g class="profile">
+          <rect x="470" y="206" width="260" height="76" rx="15"/>
+          <text class="pname" x="600" y="234">Anna Müller</text>
+          <text class="pmeta" x="600" y="261" data-de="ein abgeleitetes Profil">one derived profile</text>
+        </g>
+      </svg>
+      <p class="lede">
+        The same person books, checks in, eats, joins the wifi and leaves a review — and every
+        system stores someone different. GuestGraph resolves those records into one profile,
+        and can always tell you why.
+      </p>
     </div>
-  </div>
-</main>
+  </main>
 
 <div class="shell">
   <footer>
@@ -234,5 +292,48 @@
   </footer>
 </div>
 
+<script>
+// English is the markup and German lives in data-de — the other way round from the decks,
+// and deliberately. This page is delivered, shared and indexed in English, so English is
+// what it should say before a single line of JS has run: no swap on load, no flash, and a
+// crawler without JS reads the same language the og tags promise. The choice is remembered
+// per origin,
+// so it carries from here to the talks index and into the deck — all one origin. Every
+// storage access is guarded: file:// is an opaque origin in some browsers and throws,
+// and a page that cannot remember a preference must still work without one.
+(function(){
+  var KEY = "gg-lang";
+  function stored(){ try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function remember(v){ try { localStorage.setItem(KEY, v); } catch (e) {} }
+
+  var lang = stored() === "de" ? "de" : "en";
+  var i18n = Array.prototype.slice.call(document.querySelectorAll("[data-de]"));
+  i18n.forEach(function(el){ el.setAttribute("data-en", el.innerHTML); });
+
+  var UI = {
+    de:{ title:"GuestGraph — der Open-Source-Identitätsgraph für Gäste",
+         desc:"Ein erklärbares Gastprofil, aus Daten, die über jedes System im Hotel verstreut liegen. Open Source, Apache 2.0." },
+    en:{ title:"GuestGraph — the open-source guest identity graph",
+         desc:"One explainable guest profile, from data scattered across every system in the hotel. Open source, Apache 2.0." }
+  };
+
+  function applyLang(){
+    i18n.forEach(function(el){ el.innerHTML = el.getAttribute("data-" + lang); });
+    document.title = UI[lang].title;
+    document.getElementById("metadesc").setAttribute("content", UI[lang].desc);
+    document.getElementById("lde").classList.toggle("on", lang === "de");
+    document.getElementById("len").classList.toggle("on", lang === "en");
+    document.documentElement.lang = lang;
+  }
+  function toggle(){ lang = (lang === "de") ? "en" : "de"; remember(lang); applyLang(); }
+
+  document.getElementById("langind").addEventListener("click", toggle);
+  document.getElementById("lde").addEventListener("click", function(e){ e.stopPropagation(); if(lang!=="de") toggle(); });
+  document.getElementById("len").addEventListener("click", function(e){ e.stopPropagation(); if(lang!=="en") toggle(); });
+  document.addEventListener("keydown", function(e){ if(e.key === "l" || e.key === "L") toggle(); });
+
+  applyLang();
+})();
+</script>
 </body>
 </html>

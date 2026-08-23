@@ -33,12 +33,13 @@ number carrying that obligation, which is what makes it worth naming.
   Pages site, so the custom domain in `CNAME` cascades to every other Pages site in the
   org — `guestgraph/talks` serves at guestgraph.io/talks/ with no configuration of its
   own. Renaming this repo or removing `CNAME` silently breaks the talks URL.
-- **Outbound links open in a new tab** — `target="_blank" rel="noopener"`. A visitor
-  leaving for a deck or the repo should not lose the page. **The nav's `Talks` link is
-  the exception**: `guestgraph.io/talks/` is an index — a short list page you read and
-  leave — not a twelve-minute deck, so it stays in the tab. The rule is about what the
-  visitor has not finished with, and nobody is mid-way through a list of two links. The
-  `Watch intro talk` button still opens a new tab, because that one is a deck.
+- **Outbound links open in a new tab** — `target="_blank" rel="noopener"` — and that now
+  means GitHub only. Both links into `guestgraph.io/talks/`, the nav item and the
+  `Watch intro talk` button, stay in the tab: the deck they lead to carries its own *All
+  talks* control in the transport bar, so it can no longer strand anyone. That control
+  lives in the talks repository; `verify` there asserts it, and `verify` here asserts these
+  links stay in the tab. The two halves are a pair — breaking either one alone is the trap.
+
 - **Self-contained apart from the Google Fonts stylesheet.** No other external asset.
 - **The avatar is uploaded by hand** — GitHub takes no SVG and offers no API for it.
   Upload `avatar.png` (Organisation → Settings → Profile).
@@ -59,6 +60,12 @@ and take the middle 630 rows; `intro/export-og.mjs` in the talks repo does exact
 and is the reference. Its declared size in the `og:image:width`/`height` tags must keep
 matching the file.
 
+**Hide `.figure` when rendering the card.** The record band runs the full page width and
+cannot fit beside the headline in a 1.9:1 crop; included, the frame cuts the wires off
+above the profile they converge on, so the card shows five records connected to nothing —
+which says the opposite of what the page says. The card carries the lockup, the headline
+and the call to action, and that is a complete thought on its own.
+
 **Render it with `prefers-reduced-motion` emulated** (Playwright: `reducedMotion:
 "reduce"`). The figure animates in over a chain that finishes at 2.15s — chips, then
 wires, then the profile box last of all — so a render that merely waits "long enough"
@@ -71,6 +78,41 @@ racing a timer.
 The page is English only, so there is no hreflang here. The decks are bilingual on one
 URL and only one language is indexable; that is a known, accepted limit, recorded in the
 talks repo.
+
+## The design system, and why it is a copy
+
+Type and colour are shared across `blust.ch`, `guestgraph.io` and the talks repository.
+They share no stylesheet and cannot: a deck has to open from `file://`, so there is
+nothing to import. Every page therefore carries its own copy of the token block, fenced
+by `design tokens · vN` markers.
+
+- **Brightness is confidence, and each stop has exactly one job.** `--c-weak` a candidate
+  considered and not accepted; `--c-mid` anything interactive — links, controls, the brand
+  accent; `--c-firm` the resolved thing — the thesis, the current page; `--c-flag` a
+  reversal, at most once per page and never decoration. Before adding a colour, ask which
+  of the four jobs it is doing. If the answer is "none", it does not belong.
+- **Mono means data.** Record values, lengths, language pairs, URLs, code. Not navigation,
+  not buttons, not prose. It was on all of those before, which is why it had stopped
+  meaning anything. `verify` fails the build if mono appears outside data.
+- **Fonts are self-hosted, same origin.** Not a preference: a font CDN sends every
+  visitor's IP to a third party, and a bare family name with no `@font-face` — which is
+  what these sites shipped for months — silently renders in system-ui instead. Both
+  failures are invisible in the source. `verify` measures the rendered text and fails if a
+  declared family matches the fallback width.
+- **Redaction's grade is data.** Coarser means the record arrived more mangled. Grade 70 is
+  the floor for display type: at 100 it stops reading as a typeface and starts reading as a
+  page that failed to load — which is indistinguishable from the bug above. Grade 100 is
+  for short, source-labelled record values only.
+
+### Changing a token
+
+Edit the block, run `npm run verify`, and it will name any page in **this** repository that
+is behind. Nothing can tell you that a sibling repository is behind — that is why the block
+carries a version. Bumping `vN` means bumping it in all three repositories and running all
+three suites. The check is a habit with a tripwire, not a guarantee.
+
+This repository had no test suite at all before. `npm install && npm run verify` now runs
+the same assertions the other two do, against a served copy on `localhost:8000`.
 
 ## Process
 
