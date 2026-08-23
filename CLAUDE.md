@@ -1,7 +1,8 @@
 # guestgraph.io — working conventions
 
-The landing page for GuestGraph, the open-source guest identity graph. What the files
-are and why the mark looks the way it does is in `README.md`; this file is about the
+The site for GuestGraph, the open-source guest identity graph: a landing page, and a
+billing page describing how the hosted service will charge. What the files are and why
+the mark looks the way it does is in `README.md`; this file is about the
 constraints that are easy to break.
 
 ## Build & verify
@@ -14,18 +15,39 @@ guestgraph.io is usually just not deployed yet.
 
 ## One screen, one job
 
-The page says what GuestGraph is and sends the visitor to the talk or the code. That is
-the whole scope. It deliberately makes **no claim about matching behaviour, roadmap, or
-status** — those are owned by the engine repository and go stale here within a slice.
+The landing page says what GuestGraph is and sends the visitor to the talk or the code.
+That is the whole scope of `index.html`. It deliberately makes **no claim about matching
+behaviour, roadmap, or status** — those are owned by the engine repository and go stale
+here within a slice.
 
 This is not hypothetical: the org profile at `guestgraph/.github` once advertised "Core
 in development" while two slices had shipped, because it restated a roadmap that lives
 elsewhere. No CI in one repository can catch drift in another.
 
-**The one fact this page restates** is the talk's length ("12 minutes", in `index.html`
+### The billing page is the exception, and a narrow one
+
+`billing/index.html` is the second page and the only place this site makes a claim **of its
+own** rather than restating one. It describes how the hosted service will bill — one meter,
+and it is arrivals — and carries **no prices and no bands**. The model is the durable part;
+the numbers are the part that goes stale, and there is no other repository to own them.
+
+The service does not exist yet, which is what makes one sentence on that page load-bearing:
+*the hosted service is not open yet*. It is the difference between publishing an intention
+and advertising a product, and `verify` asserts the page still contains it. It comes out the
+day the service opens — not before, and not as tidying.
+
+This narrows the rule above; it does not repeal it. Product status, matching behaviour and
+roadmap still belong to the engine repository. What this repo now owns is the commercial
+model, because nothing else does.
+
+**The one fact this site restates** is the talk's length ("12 minutes", in `index.html`
 and `README.md`). It is duplicated from the talks repo because a call-to-action needs
 it inline. If the talk's length changes, both files here change too — it is the only
 number carrying that obligation, which is what makes it worth naming.
+
+The billing page carries no call to action and so no copy of the length: it ends on its
+argument and lets the nav and the footer do the routing. The obligation above stays a
+two-file obligation, which is the point.
 
 ## Constraints
 
@@ -40,7 +62,11 @@ number carrying that obligation, which is what makes it worth naming.
   lives in the talks repository; `verify` there asserts it, and `verify` here asserts these
   links stay in the tab. The two halves are a pair — breaking either one alone is the trap.
 
-- **Self-contained apart from the Google Fonts stylesheet.** No other external asset.
+- **Self-contained. No external asset at all** — the fonts are served from `fonts/`, and
+  nothing else is fetched off-origin. Reference them relatively (`../fonts/…` from
+  `billing/`): a root-absolute path works on the domain and breaks under `file://`, which
+  is the one failure mode nobody opens a browser to find. `verify` asserts the same for
+  internal links.
 - **The avatar is uploaded by hand** — GitHub takes no SVG and offers no API for it.
   Upload `avatar.png` (Organisation → Settings → Profile).
 
@@ -48,8 +74,8 @@ number carrying that obligation, which is what makes it worth naming.
 
 The domain is served by two repositories, so the crawl map is split the same way the
 content is. `sitemap.xml` here is a **sitemap index** and lists no URLs of its own: it
-points at `sitemap-site.xml` (this repo's one page) and at `/talks/sitemap.xml`, which
-`guestgraph/talks` owns. A flat sitemap listing the talks would be a second copy of the
+points at `sitemap-site.xml` (this repo's two pages — the landing page and `/billing/`)
+and at `/talks/sitemap.xml`, which `guestgraph/talks` owns. A flat sitemap listing the talks would be a second copy of the
 talk list — the failure this repo's rules exist to prevent. `robots.txt` names the index
 and both children.
 
@@ -58,7 +84,9 @@ made by hand — like `avatar.png` — because a generator here would mean a bui
 this repo has none. To remake it after a visual change, render `index.html` at 1200×675
 and take the middle 630 rows; `intro/export-og.mjs` in the talks repo does exactly that
 and is the reference. Its declared size in the `og:image:width`/`height` tags must keep
-matching the file.
+matching the file — on **both** pages, because `/billing/` points its card at the same
+file rather than carrying one of its own. A second card would be a second hand-render to
+keep in step, and the landing card is the right thing to show for a link to either page.
 
 **Hide `.figure` when rendering the card.** The record band runs the full page width and
 cannot fit beside the headline in a 1.9:1 crop; included, the frame cuts the wires off
@@ -75,9 +103,11 @@ nothing, and it looks deliberate. The page's own `@media (prefers-reduced-motion
 already defines the settled state; emulating it renders that state exactly instead of
 racing a timer.
 
-The page is English only, so there is no hreflang here. The decks are bilingual on one
-URL and only one language is indexable; that is a known, accepted limit, recorded in the
-talks repo.
+Both pages are one URL carrying two languages, with English in the markup and German in
+`data-de`, so English is what a crawler reads and what the og tags promise. There is no
+hreflang here, because there is no second URL to point one at — only one language of any
+page on this domain is indexable. The decks work the same way; it is a known, accepted
+limit, recorded in the talks repo.
 
 ## The design system, and why it is a copy
 

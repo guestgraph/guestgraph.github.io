@@ -85,7 +85,9 @@
   .shell{width:100%; max-width:1180px; margin:0 auto; padding:0 7vw}
 
   header{padding:2rem 0}
-  .bar{display:flex; align-items:center; justify-content:space-between; gap:2rem}
+  /* three nav items plus the language control no longer fit beside the lockup on a
+     phone: let the row wrap rather than clip the control off the right edge. */
+  .bar{display:flex; align-items:center; justify-content:space-between; gap:1rem 2rem; flex-wrap:wrap}
   .brand{display:flex; align-items:center; gap:.7rem; text-decoration:none}
   .brand svg{width:28px; height:28px; color:var(--c-mid); flex:0 0 auto}
   .brand b{font-weight:600; font-size:1.06rem; letter-spacing:-.01em}
@@ -220,6 +222,7 @@
       </a>
       <nav>
         <a href="https://guestgraph.io/talks/" data-de="Vorträge">Talks</a>
+        <a href="billing/" data-de="Abrechnung">Billing</a>
         <button class="langind" id="langind" type="button" aria-label="Sprache wechseln — switch language"><span id="lde">DE</span> · <span id="len">EN</span></button>
       </nav>
     </div>

@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- The URLs this repository serves. One page, which is the whole scope. -->
+<!-- The URLs this repository serves. The landing page, and the billing model — which is
+     the one thing this repo states in its own right rather than restating from another. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://guestgraph.io/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://guestgraph.io/billing/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

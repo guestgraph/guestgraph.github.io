@@ -14,7 +14,21 @@ const PAGES = [
     contains: ["Five strangers", "One guest", "GuestGraph"],
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
-    sameTab: ["https://guestgraph.io/talks/", "https://guestgraph.io/talks/intro/"],
+    sameTab: ["https://guestgraph.io/talks/", "https://guestgraph.io/talks/intro/", "billing/"],
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
+    card: true, cardBase: "https://guestgraph.io", internalLinks: true },
+
+  // The billing model. The only page here that makes a claim of its own rather than
+  // restating one, which is why two of these assertions are about the claim itself:
+  // the unit must be stated exactly, and the page must keep saying the service is not
+  // open. Drop that second sentence and the page stops describing an intention and
+  // starts advertising a product that does not exist.
+  { path: "/billing/", title: /GuestGraph/, lang: "en",
+    contains: ["Not per record", "1 arrival = 1 reservation that checked in", "not open yet"],
+    // no call to action here: the page ends on its argument, so the only outbound link
+    // left to hold to the new-tab rule is the one in the footer.
+    links: ["https://github.com/guestgraph"],
+    sameTab: ["https://guestgraph.io/talks/", "../", "./"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io", internalLinks: true },
 ];

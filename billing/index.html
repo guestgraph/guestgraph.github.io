@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Billing — GuestGraph</title>
+<meta id="metadesc" name="description" content="How the hosted GuestGraph will bill: one meter, and it is arrivals. Ingestion, backfill, storage and lookups are free.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://guestgraph.io/billing/">
+
+<meta property="og:title" content="Billing — GuestGraph">
+<meta property="og:description" content="How the hosted GuestGraph will bill: one meter, and it is arrivals.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GuestGraph">
+<meta property="og:url" content="https://guestgraph.io/billing/">
+<meta property="og:image" content="https://guestgraph.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GuestGraph. Five strangers, one guest — five scattered records resolving into one derived profile.">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Same rule as the landing page: the publisher and its other addresses, nothing about
+     what the software does or when it does it. An `Offer` here would be a price, and
+     this page deliberately quotes none. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://guestgraph.io/#organization",
+      "name": "GuestGraph",
+      "url": "https://guestgraph.io/",
+      "logo": "https://guestgraph.io/logo.svg",
+      "sameAs": ["https://github.com/guestgraph"]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://guestgraph.io/billing/#webpage",
+      "name": "Billing",
+      "url": "https://guestgraph.io/billing/",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://guestgraph.io/#website" },
+      "publisher": { "@id": "https://guestgraph.io/#organization" }
+    }
+  ]
+}
+</script>
+<style>
+/* Self-hosted, same origin: no third party sees a visitor, and the files resolve
+   from file:// as well as from the domain. Relative, because this page sits one
+   directory down and a root-absolute path would break the file:// case. */
+@font-face{font-family:"Instrument Sans";src:url(../fonts/InstrumentSans-var.woff2) format("woff2-variations"),url(../fonts/InstrumentSans-var.woff2) format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"Plex Mono";src:url(../fonts/PlexMono-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Plex Mono";src:url(../fonts/PlexMono-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Bricolage Grotesque";src:url(../fonts/Bricolage-var.woff2) format("woff2-variations"),url(../fonts/Bricolage-var.woff2) format("woff2");font-weight:200 800;font-display:swap}
+
+  /* ─── design tokens · v1 · keep in step across all three repositories ───
+     These sites share no stylesheet by design — a deck has to open from
+     file:// — so this block is a copy, and each repo's verify suite asserts
+     the copy still matches. Change it here, then run the checks.
+
+     Brightness is confidence. Each stop has exactly one job:
+       --c-weak  a candidate: considered, not accepted
+       --c-mid   anything interactive — links, controls, the brand accent
+       --c-firm  the resolved thing — the thesis, the current page
+       --c-flag  a reversal; at most one per page, never decoration
+  */
+  :root{
+    --ground:#0C0E13; --raise:#171A21; --rule:#232833;
+    --ink:#EFEDE8;    --dim:#8A8B86;
+    --c-weak:#3E5878; --c-mid:#7FA3D8; --c-firm:#B8D0FF; --c-flag:#D9A44F;
+  }
+  /* ─── end design tokens ─────────────────────────────────────────────── */
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{
+    font-family:"Instrument Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    background:var(--ground); color:var(--ink); line-height:1.5; min-height:100vh;
+    background-image:radial-gradient(120% 60% at 50% -10%, var(--raise) 0%, var(--ground) 60%);
+    -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column;
+  }
+  .mono{font-family:"Plex Mono", ui-monospace, "SF Mono", Menlo, monospace}
+  a{color:inherit}
+  .shell{width:100%; max-width:1180px; margin:0 auto; padding:0 7vw}
+
+  header{padding:2rem 0}
+  /* three nav items plus the language control no longer fit beside the lockup on a
+     phone: let the row wrap rather than clip the control off the right edge. */
+  .bar{display:flex; align-items:center; justify-content:space-between; gap:1rem 2rem; flex-wrap:wrap}
+  .brand{display:flex; align-items:center; gap:.7rem; text-decoration:none}
+  .brand svg{width:28px; height:28px; color:var(--c-mid); flex:0 0 auto}
+  .brand b{font-weight:600; font-size:1.06rem; letter-spacing:-.01em}
+  .brand b span{color:var(--c-mid)}
+  nav{display:flex; gap:1.9rem; font-size:.76rem; font-weight:500;
+      letter-spacing:.14em; text-transform:uppercase}
+  nav a{color:var(--dim); text-decoration:none; padding-bottom:.2rem; border-bottom:1px solid transparent}
+  nav a:hover, nav a:focus-visible{color:var(--ink); border-color:var(--c-mid)}
+  /* the page you are on is a resolved fact, so it takes the resolved colour */
+  nav a[aria-current="page"]{color:var(--c-firm)}
+  .langind{font:inherit; letter-spacing:inherit; text-transform:inherit; background:none;
+           border:0; border-bottom:1px solid transparent; padding:0 0 .2rem; cursor:pointer;
+           color:var(--dim); white-space:nowrap}
+  .langind:hover{color:var(--ink)}
+  .langind .on{color:var(--c-firm); font-weight:700}
+
+  /* Not one screen: this page has an argument to make in order, so it scrolls and
+     starts at the top rather than centring itself the way the landing page does. */
+  main{flex:1; padding:2vh 0 6vh}
+
+  .title h1{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+            letter-spacing:-.035em; line-height:1.0;
+            font-size:clamp(2.2rem,6vw,4.6rem)}
+  .title h1 .r70{display:block; font-weight:300; color:var(--dim)}
+  .title h1 .rcl{display:block; font-weight:800}
+  .title h1 em{font-style:normal; color:var(--c-firm)}
+  .tagline{margin-top:1.6rem; font-size:clamp(1.1rem,1.9vw,1.4rem); color:var(--dim);
+           max-width:46ch; line-height:1.4}
+
+  /* The page's one reversal, and it earns the flag: everything below describes a
+     service you cannot buy yet. Said quietly at the bottom it would be small print;
+     said here it is part of the argument. */
+  .note{margin-top:2rem; max-width:52ch; padding-left:1rem;
+        border-left:2px solid var(--c-flag); color:var(--ink); font-size:1rem}
+
+  section{margin-top:clamp(3rem,8vh,5.5rem)}
+  h2{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+     font-weight:700; letter-spacing:-.025em; line-height:1.06;
+     font-size:clamp(1.6rem,3vw,2.3rem)}
+  h2 em{font-style:normal; color:var(--c-mid)}
+  .lede{margin-top:1.2rem; font-size:clamp(1rem,1.3vw,1.1rem); color:var(--dim); max-width:64ch}
+
+  /* the billable unit, stated once, in the face this system reserves for data */
+  .unit{margin-top:1.8rem; display:inline-block; padding:1rem 1.35rem; border-radius:10px;
+        background:var(--raise); border:1.5px solid var(--c-firm);
+        font-size:clamp(.95rem,1.6vw,1.2rem); color:var(--ink); letter-spacing:.02em}
+
+  .cols{margin-top:2rem; display:grid; gap:1.1rem; align-items:start;
+        grid-template-columns:repeat(auto-fit, minmax(280px, 1fr))}
+  .card{background:var(--raise); border:1.5px solid var(--rule); border-radius:12px;
+        padding:1.5rem 1.6rem}
+  .card h3{font-size:.76rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+           color:var(--dim)}
+  .card ul{margin-top:1.1rem; list-style:none; display:grid; gap:.95rem}
+  .card li{font-size:.98rem; line-height:1.45}
+  .card li b{font-weight:600}
+  .card li i{font-style:normal; display:block; color:var(--dim); font-size:.88rem; margin-top:.2rem}
+  /* free: the settled half of the model */
+  .free{border-color:var(--c-firm)}
+  .free li b{color:var(--c-firm)}
+  /* rejected: considered, not accepted — the job --c-weak exists for */
+  .never li b{color:var(--c-weak)}
+
+  .rules{margin-top:2rem; display:grid; gap:1.6rem; max-width:68ch}
+  .rules p b{font-weight:600; color:var(--ink)}
+  .rules p{color:var(--dim); font-size:1rem}
+
+  footer{padding:0 0 2rem; display:flex; flex-wrap:wrap; gap:.9rem 2.6rem; align-items:center;
+         font-family:"Plex Mono",monospace; font-size:.76rem; letter-spacing:.08em; color:var(--dim)}
+  footer a{color:var(--c-mid); text-decoration:none}
+  footer a:hover, footer a:focus-visible{text-decoration:underline}
+
+  :focus-visible{outline:2px solid var(--c-mid); outline-offset:3px; border-radius:3px}
+
+  @media (max-width:900px){
+    nav{gap:1.4rem}
+    .tagline{max-width:100%}
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <header>
+    <div class="bar">
+      <a class="brand" href="../">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/>
+            <circle cx="6" cy="7.2" r="2.6" fill="#0C0E13"/>
+            <circle cx="6" cy="16" r="2.6" fill="#0C0E13"/>
+            <circle cx="6" cy="24.8" r="2.6" fill="#0C0E13"/>
+          </g>
+          <circle cx="24" cy="16" r="5.4" fill="currentColor"/>
+        </svg>
+        <b>Guest<span>Graph</span></b>
+      </a>
+      <nav>
+        <a href="https://guestgraph.io/talks/" data-de="Vorträge">Talks</a>
+        <a href="./" aria-current="page" data-de="Abrechnung">Billing</a>
+        <button class="langind" id="langind" type="button" aria-label="Sprache wechseln — switch language"><span id="lde">DE</span> · <span id="len">EN</span></button>
+      </nav>
+    </div>
+  </header>
+</div>
+
+<main>
+  <div class="shell">
+    <div class="title">
+      <h1 data-de="<span class='r70'>Nicht pro Datensatz.</span><span class='rcl'>Pro <em>Anreise</em>.</span>"><span class="r70">Not per record.</span><span class="rcl">Per <em>arrival</em>.</span></h1>
+      <p class="tagline" data-de="Eine einzige Zahl bestimmt die Rechnung — und sie steht jeden Morgen schon auf Ihrem eigenen PMS-Dashboard.">One number decides the bill, and it is already on your own PMS dashboard every morning.</p>
+      <p class="note" data-de="Der gehostete Dienst ist noch nicht verfügbar. Dies ist das Modell, nach dem er abrechnen wird — die Staffeln und die Preise kommen, wenn es etwas zu kaufen gibt.">The hosted service is not open yet. This is the model it will bill on — bands and prices follow when there is something to buy.</p>
+    </div>
+
+    <section>
+      <h2 data-de="Ein einziger Zähler">One meter</h2>
+      <p class="lede" data-de="Ein Gastprofil ist an genau einem Moment etwas wert: wenn jemand vor der Rezeption steht und Sie wissen, wer das ist. Also wird dieser Moment gezählt und sonst nichts.">A resolved profile is worth something at exactly one moment: when someone is standing at the desk and you know who they are. So that moment is what gets counted, and nothing else is.</p>
+      <p class="unit mono" data-de="1 Anreise = 1 Reservierung, die eingecheckt hat">1 arrival = 1 reservation that checked in</p>
+      <p class="lede" data-de="Stornierungen und No-Shows zählen nicht — Sie werden dafür ja auch nicht bezahlt. Walk-ins zählen. Alle auf der Reservierung werden aufgelöst: eine vierköpfige Familie ist eine Anreise und vier Profile. Und dieselbe Person nächsten Monat ist eine neue Anreise, weil die Antwort an der Rezeption erneut geliefert wird.">Cancellations and no-shows don't count — you aren't paid for those either. Walk-ins do. Everyone on the reservation is resolved: a family of four is one arrival and four profiles. The same guest returning next month is a new arrival, because the answer is delivered at the desk again.</p>
+      <p class="lede" data-de="Die Zahl steht in Ihrem eigenen Belegungsbericht. Sie können jede Rechnung gegen ein System prüfen, das uns nicht gehört — genau das, was ein Guthabenzähler nie zulässt.">That number is in your own occupancy report. You can check every invoice against a system we don't own — which is the one thing a credit meter never lets you do.</p>
+    </section>
+
+    <section>
+      <h2 data-de="Alles andere ist kostenlos">Everything else is free</h2>
+      <p class="lede" data-de="Ein Identitätsgraph wird mit jedem Datensatz besser, den er sieht. Alles, was das Zuführen von Daten verteuert, arbeitet gegen das Produkt — deshalb kostet nichts davon etwas.">An identity graph gets better with every record it sees. Anything that makes feeding it more expensive works against the product, so none of it costs anything.</p>
+      <div class="cols">
+        <div class="card free">
+          <h3 data-de="Kostenlos, immer">Free, always</h3>
+          <ul>
+            <li><b data-de="Datenzufuhr">Ingestion</b><i data-de="Jede Quelle, jeder Datensatz, kein Limit.">Every source, every record, no limit.</i></li>
+            <li><b data-de="Historischer Import">Historical backfill</b><i data-de="Das ganze Archiv, einmalig. Es ist der Beweis, nicht die Ware.">The whole archive, once. It is the proof, not the product.</i></li>
+            <li><b data-de="Gespeicherte Profile">Stored profiles</b><i data-de="Nie gezählt. Wer für Speicher zahlt, löscht Daten — und macht den Graphen schlechter.">Never metered. Charge for storage and people delete records, which makes the graph worse.</i></li>
+            <li><b data-de="Abfragen">Lookups</b><i data-de="So oft, wie der Check-in es braucht. Genau dort gehört es hin.">As often as the check-in desk needs. That is where this belongs.</i></li>
+            <li><b data-de="Selbst betreiben">Self-hosting</b><i data-de="Apache 2.0, für immer kostenlos. Der gehostete Dienst ist eine Bequemlichkeit, kein Zoll.">Apache 2.0, free forever. The hosted service is a convenience, not a toll.</i></li>
+          </ul>
+        </div>
+        <div class="card never">
+          <h3 data-de="Erwogen und verworfen">Considered, not accepted</h3>
+          <ul>
+            <li><b data-de="Pro zugeführtem Datensatz">Per record ingested</b><i data-de="Die grösste Rechnung käme beim Erstimport — bevor ein einziges Profil aufgelöst ist.">The largest invoice would arrive at the backfill, before a single profile is resolved.</i></li>
+            <li><b data-de="Prepaid-Guthaben">Prepaid credit wallets</b><i data-de="Niemand sollte sich im August fragen müssen, ob das Guthaben reicht.">Nobody should have to wonder in August whether the balance holds.</i></li>
+            <li><b data-de="Pro Schnittstelle">Per connector</b><i data-de="Das fünfte System ist genau das, an dem sich Identitätsauflösung bezahlt macht.">The fifth system is precisely where identity resolution earns its keep.</i></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-de="Wie sich die Rechnung verhält">How the bill behaves</h2>
+      <div class="rules">
+        <p data-de="<b>Ein Jahreskontingent, in zwölf gleichen Raten.</b> Hotels sind saisonal. Monatlich nach Verbrauch abgerechnet käme im August eine brutale Rechnung und im Februar keine — das Jahr ist die ehrliche Einheit, und eine gleichbleibende Rate ist die, die sich budgetieren lässt."><b>An annual allowance, in twelve equal instalments.</b> Hotels are seasonal. Metered monthly, August would bring a brutal invoice and February none — the year is the honest unit, and a level instalment is the one you can budget.</p>
+        <p data-de="<b>Mehrverbrauch stoppt nie die Auflösung.</b> Ein Identitätsdienst, der in der Hochsaison abschaltet, hat seine Aufgabe verfehlt. Über dem Kontingent kostet eine Anreise ihren Satz — mehr passiert nicht."><b>Overage never stops resolution.</b> An identity service that switches off in high season has failed at its job. Above the allowance an arrival costs its rate, and that is all that happens.</p>
+        <p data-de="<b>Gruppen teilen sich einen Topf.</b> Ein Vertrag, ein Kontingent über alle Häuser. Niemand unterschreibt zwölf Verträge für zwölf Hotels."><b>Groups pool.</b> One contract, one allowance across every property. Nobody signs twelve agreements for twelve hotels.</p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<div class="shell">
+  <footer>
+    <span><a target="_blank" rel="noopener" href="https://github.com/guestgraph">github.com/guestgraph</a></span>
+    <span><a target="_blank" rel="noopener" href="https://github.com/guestgraph/engine/blob/HEAD/LICENSE">Apache 2.0</a></span>
+    <span><a target="_blank" rel="noopener" href="https://blust.ch/">Robert Blust</a></span>
+  </footer>
+</div>
+
+<script>
+// Same mechanism as the landing page, and the same reason: English is the markup so the
+// page says the right thing before any JS runs, and the choice is remembered per origin —
+// so a visitor who switched to German on the landing page arrives here in German.
+(function(){
+  var KEY = "gg-lang";
+  function stored(){ try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function remember(v){ try { localStorage.setItem(KEY, v); } catch (e) {} }
+
+  var lang = stored() === "de" ? "de" : "en";
+  var i18n = Array.prototype.slice.call(document.querySelectorAll("[data-de]"));
+  i18n.forEach(function(el){ el.setAttribute("data-en", el.innerHTML); });
+
+  var UI = {
+    de:{ title:"Abrechnung — GuestGraph",
+         desc:"Wie der gehostete GuestGraph abrechnen wird: ein einziger Zähler, und das sind Anreisen. Datenzufuhr, Import, Speicher und Abfragen sind kostenlos." },
+    en:{ title:"Billing — GuestGraph",
+         desc:"How the hosted GuestGraph will bill: one meter, and it is arrivals. Ingestion, backfill, storage and lookups are free." }
+  };
+
+  function applyLang(){
+    i18n.forEach(function(el){ el.innerHTML = el.getAttribute("data-" + lang); });
+    document.title = UI[lang].title;
+    document.getElementById("metadesc").setAttribute("content", UI[lang].desc);
+    document.getElementById("lde").classList.toggle("on", lang === "de");
+    document.getElementById("len").classList.toggle("on", lang === "en");
+    document.documentElement.lang = lang;
+  }
+  function toggle(){ lang = (lang === "de") ? "en" : "de"; remember(lang); applyLang(); }
+
+  document.getElementById("langind").addEventListener("click", toggle);
+  document.getElementById("lde").addEventListener("click", function(e){ e.stopPropagation(); if(lang!=="de") toggle(); });
+  document.getElementById("len").addEventListener("click", function(e){ e.stopPropagation(); if(lang!=="en") toggle(); });
+  document.addEventListener("keydown", function(e){ if(e.key === "l" || e.key === "L") toggle(); });
+
+  applyLang();
+})();
+</script>
+</body>
+</html>
