@@ -17,7 +17,7 @@ const PAGES = [
     links: ["https://github.com/guestgraph"],
     // Billing lives in the guestgraph.github.io repository and this nav item is the only
     // link to it from here — it is shared chrome, so it stays in the tab like the rest.
-    sameTab: ["intro/", "./", "https://guestgraph.io/billing/", "https://guestgraph.io/legal/"],
+    sameTab: ["intro/", "./", "https://guestgraph.io/billing/", "https://guestgraph.io/privacy/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io/talks", internalLinks: true },
   { path: "/intro/", title: /GuestGraph/, lang: "en", sourceLang: "en", wayOut: "../",

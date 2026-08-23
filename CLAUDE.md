@@ -43,7 +43,7 @@ chrome means changing it in both repositories; there is no shared stylesheet and
 be one, because a deck has to open from `file://`.
 
 - **The nav and the footer are shared chrome, and two of their items are not pages in this
-  repository.** `Billing` and `/legal/` both point at `guestgraph.github.io`, which owns
+  repository.** `Billing` and `Privacy` both point at `guestgraph.github.io`, which owns
   them. Adding, renaming or reordering either means doing it in both repositories in the
   same breath: `verify` here can assert that the link stays in the tab, never that the page
   on the other side still exists or still carries the same item back. The seam this rule
