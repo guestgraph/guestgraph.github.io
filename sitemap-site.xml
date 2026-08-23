@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- The URLs this repository serves. The landing page, and the billing model — which is
-     the one thing this repo states in its own right rather than restating from another. -->
+<!-- The URLs this repository serves: the landing page, the billing model, and the privacy
+     note. The last two are the things this repo states in its own right rather than
+     restating from another. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://guestgraph.io/</loc>
@@ -11,5 +12,10 @@
     <loc>https://guestgraph.io/billing/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://guestgraph.io/legal/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

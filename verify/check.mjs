@@ -14,7 +14,7 @@ const PAGES = [
     contains: ["Five strangers", "One guest", "GuestGraph"],
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
-    sameTab: ["https://guestgraph.io/talks/", "https://guestgraph.io/talks/intro/", "billing/"],
+    sameTab: ["https://guestgraph.io/talks/", "https://guestgraph.io/talks/intro/", "billing/", "legal/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io", internalLinks: true },
 
@@ -28,7 +28,19 @@ const PAGES = [
     // no call to action here: the page ends on its argument, so the only outbound link
     // left to hold to the new-tab rule is the one in the footer.
     links: ["https://github.com/guestgraph"],
-    sameTab: ["https://guestgraph.io/talks/", "../", "./"],
+    sameTab: ["https://guestgraph.io/talks/", "../", "./", "../legal/"],
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
+    card: true, cardBase: "https://guestgraph.io", internalLinks: true },
+
+  // The privacy note. Its claims are checkable, so `verify` checks them rather than
+  // trusting the prose: a page that says it makes no third-party request must make none,
+  // and the suite's own `requestfailed`/`links` machinery cannot see that. If a font, an
+  // analytics tag or an embed ever creeps in, this is what fails.
+  { path: "/legal/", title: /GuestGraph/, lang: "en",
+    contains: ["This site collects", "no imprint here yet"],
+    links: ["https://github.com/guestgraph"],
+    sameTab: ["https://guestgraph.io/talks/", "../", "../billing/", "./"],
+    sameOrigin: true,
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io", internalLinks: true },
 ];
@@ -96,6 +108,18 @@ const CHECKS = {
         .map(a => a.getAttribute("href"))
         .filter(h => h && !/^(https?:|mailto:|tel:|#)/i.test(h) && h.startsWith("/")));
     return bad.length ? `root-absolute internal link(s), break file://: ${bad.join(", ")}` : null;
+  },
+  // A page that claims it contacts nobody has to be held to it. Every request the page
+  // makes is recorded and compared against its own origin; one off-origin fetch — a font
+  // CDN, a tag, an embedded image — makes the headline false, and nothing else here
+  // would notice.
+  async sameOrigin(page, spec) {
+    const seen = [];
+    page.on("request", r => seen.push(r.url()));
+    await page.reload({ waitUntil: "networkidle" });
+    const origin = new URL(spec.absolute).origin;
+    const foreign = [...new Set(seen.filter(u => /^https?:/.test(u) && !u.startsWith(origin)))];
+    return foreign.length ? "off-origin request(s): " + foreign.join(", ") : null;
   },
   // The card is fetched back to compare its real pixel size with the declared tags.
   // `cardBase` is the production prefix to strip: this repository is served under

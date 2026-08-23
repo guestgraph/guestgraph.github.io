@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Billing — GuestGraph</title>
-<meta id="metadesc" name="description" content="How the hosted GuestGraph will bill: one meter, and it is arrivals. Ingestion, backfill, storage and lookups are free.">
+<title>Privacy — GuestGraph</title>
+<meta id="metadesc" name="description" content="This site sets no cookies, runs no analytics and makes no third-party requests. How the hosted GuestGraph will treat guest data, written down before there is any.">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<link rel="canonical" href="https://guestgraph.io/billing/">
+<link rel="canonical" href="https://guestgraph.io/legal/">
 
-<meta property="og:title" content="Billing — GuestGraph">
-<meta property="og:description" content="How the hosted GuestGraph will bill: one meter, and it is arrivals.">
+<meta property="og:title" content="Privacy — GuestGraph">
+<meta property="og:description" content="This site sets no cookies, runs no analytics and makes no third-party requests.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="GuestGraph">
-<meta property="og:url" content="https://guestgraph.io/billing/">
+<meta property="og:url" content="https://guestgraph.io/legal/">
 <meta property="og:image" content="https://guestgraph.io/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -20,9 +20,8 @@
 <meta property="og:locale" content="en_GB">
 <meta name="twitter:card" content="summary_large_image">
 
-<!-- Same rule as the landing page: the publisher and its other addresses, nothing about
-     what the software does or when it does it. An `Offer` here would be a price, and
-     this page deliberately quotes none. -->
+<!-- Publisher and page, nothing about the product. The same rule the other two pages
+     follow: structured data is not a back door for claims the prose does not make. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -37,9 +36,9 @@
     },
     {
       "@type": "WebPage",
-      "@id": "https://guestgraph.io/billing/#webpage",
-      "name": "Billing",
-      "url": "https://guestgraph.io/billing/",
+      "@id": "https://guestgraph.io/legal/#webpage",
+      "name": "Privacy",
+      "url": "https://guestgraph.io/legal/",
       "inLanguage": "en",
       "isPartOf": { "@id": "https://guestgraph.io/#website" },
       "publisher": { "@id": "https://guestgraph.io/#organization" }
@@ -48,9 +47,8 @@
 }
 </script>
 <style>
-/* Self-hosted, same origin: no third party sees a visitor, and the files resolve
-   from file:// as well as from the domain. Relative, because this page sits one
-   directory down and a root-absolute path would break the file:// case. */
+/* Self-hosted, same origin — which is the subject of this page as well as a rule of it.
+   Relative, because a root-absolute path breaks under file://. */
 @font-face{font-family:"Instrument Sans";src:url(../fonts/InstrumentSans-var.woff2) format("woff2-variations"),url(../fonts/InstrumentSans-var.woff2) format("woff2");font-weight:400 700;font-display:swap}
 @font-face{font-family:"Plex Mono";src:url(../fonts/PlexMono-400.woff2) format("woff2");font-weight:400;font-display:swap}
 @font-face{font-family:"Plex Mono";src:url(../fonts/PlexMono-600.woff2) format("woff2");font-weight:600;font-display:swap}
@@ -97,16 +95,12 @@
       letter-spacing:.14em; text-transform:uppercase}
   nav a{color:var(--dim); text-decoration:none; padding-bottom:.2rem; border-bottom:1px solid transparent}
   nav a:hover, nav a:focus-visible{color:var(--ink); border-color:var(--c-mid)}
-  /* the page you are on is a resolved fact, so it takes the resolved colour */
-  nav a[aria-current="page"]{color:var(--c-firm)}
   .langind{font:inherit; letter-spacing:inherit; text-transform:inherit; background:none;
            border:0; border-bottom:1px solid transparent; padding:0 0 .2rem; cursor:pointer;
            color:var(--dim); white-space:nowrap}
   .langind:hover{color:var(--ink)}
   .langind .on{color:var(--c-firm); font-weight:700}
 
-  /* Not one screen: this page has an argument to make in order, so it scrolls and
-     starts at the top rather than centring itself the way the landing page does. */
   main{flex:1; padding:2vh 0 6vh}
 
   .title h1{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
@@ -118,10 +112,9 @@
   .tagline{margin-top:1.6rem; font-size:clamp(1.1rem,1.9vw,1.4rem); color:var(--dim);
            max-width:46ch; line-height:1.4}
 
-  /* The page's one reversal, and it earns the flag: everything below describes a
-     service you cannot buy yet. Said quietly at the bottom it would be small print;
-     said here it is part of the argument. */
-  .note{margin-top:2rem; max-width:52ch; padding-left:1rem;
+  /* The page's one reversal, and the only honest place for it: the headline says nothing
+     leaves, and one thing does — the request itself, to whoever serves the file. */
+  .note{margin-top:2rem; max-width:54ch; padding-left:1rem;
         border-left:2px solid var(--c-flag); color:var(--ink); font-size:1rem}
 
   section{margin-top:clamp(3rem,8vh,5.5rem)}
@@ -130,8 +123,10 @@
      font-size:clamp(1.6rem,3vw,2.3rem)}
   h2 em{font-style:normal; color:var(--c-mid)}
   .lede{margin-top:1.2rem; font-size:clamp(1rem,1.3vw,1.1rem); color:var(--dim); max-width:64ch}
+  .lede a{color:var(--c-mid)}
 
-  /* the billable unit, stated once, in the face this system reserves for data */
+  /* the billable-unit box from the billing page, doing the same job: one datum, stated
+     once, in the face this system reserves for data */
   .unit{margin-top:1.8rem; display:inline-block; padding:1rem 1.35rem; border-radius:10px;
         background:var(--raise); border:1.5px solid var(--c-firm);
         font-size:clamp(.95rem,1.6vw,1.2rem); color:var(--ink); letter-spacing:.02em}
@@ -146,20 +141,22 @@
   .card li{font-size:.98rem; line-height:1.45}
   .card li b{font-weight:600}
   .card li i{font-style:normal; display:block; color:var(--dim); font-size:.88rem; margin-top:.2rem}
-  /* free: the settled half of the model */
-  .free{border-color:var(--c-firm)}
-  .free li b{color:var(--c-firm)}
-  /* rejected: considered, not accepted — the job --c-weak exists for */
+  .card li i .mono{font-size:.95em; color:var(--ink)}
+  /* five short items across a full-width card read as a list, not a column of stubs */
+  .wide ul{grid-template-columns:repeat(auto-fit, minmax(255px, 1fr)); gap:1.3rem 1.8rem}
+  /* things a site could do and this one does not: considered, not accepted */
   .never li b{color:var(--c-weak)}
 
   .rules{margin-top:2rem; display:grid; gap:1.6rem; max-width:68ch}
-  .rules p b{font-weight:600; color:var(--ink)}
   .rules p{color:var(--dim); font-size:1rem}
+  .rules p b{font-weight:600; color:var(--ink)}
+  .rules p a{color:var(--c-mid)}
 
   footer{padding:0 0 2rem; display:flex; flex-wrap:wrap; gap:.9rem 2.6rem; align-items:center;
          font-family:"Plex Mono",monospace; font-size:.76rem; letter-spacing:.08em; color:var(--dim)}
   footer a{color:var(--c-mid); text-decoration:none}
   footer a:hover, footer a:focus-visible{text-decoration:underline}
+  footer a[aria-current="page"]{color:var(--c-firm)}
 
   :focus-visible{outline:2px solid var(--c-mid); outline-offset:3px; border-radius:3px}
 
@@ -188,7 +185,7 @@
       </a>
       <nav>
         <a href="https://guestgraph.io/talks/" data-de="Vorträge">Talks</a>
-        <a href="./" aria-current="page" data-de="Abrechnung">Billing</a>
+        <a href="../billing/" data-de="Abrechnung">Billing</a>
         <button class="langind" id="langind" type="button" aria-label="Sprache wechseln — switch language"><span id="lde">DE</span> · <span id="len">EN</span></button>
       </nav>
     </div>
@@ -198,53 +195,50 @@
 <main>
   <div class="shell">
     <div class="title">
-      <h1 data-de="<span class='r70'>Nicht pro Datensatz.</span><span class='rcl'>Pro <em>Anreise</em>.</span>"><span class="r70">Not per record.</span><span class="rcl">Per <em>arrival</em>.</span></h1>
-      <p class="tagline" data-de="Eine einzige Zahl bestimmt die Rechnung — und sie steht jeden Morgen schon auf Ihrem eigenen PMS-Dashboard.">One number decides the bill, and it is already on your own PMS dashboard every morning.</p>
-      <p class="note" data-de="Der gehostete Dienst ist noch nicht verfügbar. Dies ist das Modell, nach dem er abrechnen wird — die Staffeln und die Preise kommen, wenn es etwas zu kaufen gibt.">The hosted service is not open yet. This is the model it will bill on — bands and prices follow when there is something to buy.</p>
+      <h1 data-de="<span class='r70'>Diese Seite sammelt</span><span class='rcl'><em>nichts</em>.</span>"><span class="r70">This site collects</span><span class="rcl"><em>nothing</em>.</span></h1>
+      <p class="tagline" data-de="Keine Cookies, keine Statistik, keine Anfrage an Dritte. Die Liste dessen, was Ihren Browser verlässt, ist kurz genug, um sie hier abzudrucken.">No cookies, no analytics, no third-party requests. The list of what leaves your browser is short enough to print here.</p>
+      <p class="note" data-de="Eine Ausnahme, und sie steht uns nicht zu, sie zu entfernen: GitHub liefert diese Seiten aus und sieht dabei — wie jeder Hoster — die Anfrage, die sie holt.">One exception, and it is not ours to remove: GitHub serves these pages and, like any host, sees the request that fetches them.</p>
     </div>
 
     <section>
-      <h2 data-de="Ein einziger Zähler">One meter</h2>
-      <p class="lede" data-de="Ein Gastprofil ist an genau einem Moment etwas wert: wenn jemand vor der Rezeption steht und Sie wissen, wer das ist. Also wird dieser Moment gezählt und sonst nichts.">A resolved profile is worth something at exactly one moment: when someone is standing at the desk and you know who they are. So that moment is what gets counted, and nothing else is.</p>
-      <p class="unit mono" data-de="1 Anreise = 1 Reservierung, die eingecheckt hat">1 arrival = 1 reservation that checked in</p>
-      <p class="lede" data-de="Stornierungen und No-Shows zählen nicht — Sie werden dafür ja auch nicht bezahlt. Walk-ins zählen. Alle auf der Reservierung werden aufgelöst: eine vierköpfige Familie ist eine Anreise und vier Profile. Und dieselbe Person nächsten Monat ist eine neue Anreise, weil die Antwort an der Rezeption erneut geliefert wird.">Cancellations and no-shows don't count — you aren't paid for those either. Walk-ins do. Everyone on the reservation is resolved: a family of four is one arrival and four profiles. The same guest returning next month is a new arrival, because the answer is delivered at the desk again.</p>
-      <p class="lede" data-de="Die Zahl steht in Ihrem eigenen Belegungsbericht. Sie können jede Rechnung gegen ein System prüfen, das uns nicht gehört — genau das, was ein Guthabenzähler nie zulässt.">That number is in your own occupancy report. You can check every invoice against a system we don't own — which is the one thing a credit meter never lets you do.</p>
-    </section>
-
-    <section>
-      <h2 data-de="Alles andere ist kostenlos">Everything else is free</h2>
-      <p class="lede" data-de="Ein Identitätsgraph wird mit jedem Datensatz besser, den er sieht. Alles, was das Zuführen von Daten verteuert, arbeitet gegen das Produkt — deshalb kostet nichts davon etwas.">An identity graph gets better with every record it sees. Anything that makes feeding it more expensive works against the product, so none of it costs anything.</p>
+      <h2 data-de="Was diese Seite tut">What this site does</h2>
+      <p class="lede" data-de="Alles, was diese Seite braucht, kommt von guestgraph.io — auch die Schriften. Nichts wird anderswo geholt, also erfährt kein Dritter, dass Sie hier waren.">Everything this page needs comes from guestgraph.io, fonts included. Nothing is fetched from anywhere else, so no third party learns that you were here.</p>
+      <!-- no data-de: this is the value itself, and it says the same thing in either language.
+           Both cases are shown because pinning one would be wrong the moment you switch. -->
+      <p class="unit mono">localStorage: gg-lang = "de" | "en"</p>
+      <p class="lede" data-de="Das ist alles, was gespeichert wird: Ihre Sprachwahl, zwei Buchstaben, damit die nächste Seite sie kennt. Sie erreicht keinen Server und identifiziert niemanden.">That is everything that gets stored: your choice of language, two letters, so the next page knows it. It reaches no server and identifies nobody.</p>
       <div class="cols">
-        <div class="card free">
-          <h3 data-de="Kostenlos, immer">Free, always</h3>
+        <div class="card never wide">
+          <h3 data-de="Gar nicht erst verwendet">Not used at all</h3>
           <ul>
-            <li><b data-de="Datenzufuhr">Ingestion</b><i data-de="Jede Quelle, jeder Datensatz, kein Limit.">Every source, every record, no limit.</i></li>
-            <li><b data-de="Historischer Import">Historical backfill</b><i data-de="Das ganze Archiv, einmalig. Es ist der Beweis, nicht die Ware.">The whole archive, once. It is the proof, not the product.</i></li>
-            <li><b data-de="Gespeicherte Profile">Stored profiles</b><i data-de="Nie gezählt. Wer für Speicher zahlt, löscht Daten — und macht den Graphen schlechter.">Never metered. Charge for storage and people delete records, which makes the graph worse.</i></li>
-            <li><b data-de="Abfragen">Lookups</b><i data-de="So oft, wie der Check-in es braucht. Genau dort gehört es hin.">As often as the check-in desk needs. That is where this belongs.</i></li>
-            <li><b data-de="Selbst betreiben">Self-hosting</b><i data-de="Apache 2.0, für immer kostenlos. Der gehostete Dienst ist eine Bequemlichkeit, kein Zoll.">Apache 2.0, free forever. The hosted service is a convenience, not a toll.</i></li>
-          </ul>
-        </div>
-        <div class="card never">
-          <h3 data-de="Erwogen und verworfen">Considered, not accepted</h3>
-          <ul>
-            <li><b data-de="Pro zugeführtem Datensatz">Per record ingested</b><i data-de="Die grösste Rechnung käme beim Erstimport — bevor ein einziges Profil aufgelöst ist.">The largest invoice would arrive at the backfill, before a single profile is resolved.</i></li>
-            <li><b data-de="Prepaid-Guthaben">Prepaid credit wallets</b><i data-de="Niemand sollte sich im August fragen müssen, ob das Guthaben reicht.">Nobody should have to wonder in August whether the balance holds.</i></li>
-            <li><b data-de="Pro Schnittstelle">Per connector</b><i data-de="Das fünfte System ist genau das, an dem sich Identitätsauflösung bezahlt macht.">The fifth system is precisely where identity resolution earns its keep.</i></li>
+            <li><b data-de="Cookies">Cookies</b><i data-de="Keine, keiner Art. Es gibt kein Banner, weil es nichts zuzustimmen gibt.">None, of any kind. There is no banner because there is nothing to consent to.</i></li>
+            <li><b data-de="Statistik und Tracking">Analytics</b><i data-de="Nichts zählt Sie, und niemandem wird gemeldet, dass Sie hier waren.">Nothing counts you, and nobody is told that you were here.</i></li>
+            <li><b data-de="Anfragen an Dritte">Third-party requests</b><i data-de="Schriften, Bilder und Stile kommen alle von diesem Ursprung. Kein CDN sieht Ihre Adresse.">Fonts, images and styles all come from this origin. No CDN sees your address.</i></li>
+            <li><b data-de="Formulare und Konten">Forms and accounts</b><i data-de="Nichts auszufüllen, nichts anzumelden, nichts zu speichern.">Nothing to fill in, nothing to sign up for, nothing to store.</i></li>
+            <li><b data-de="Wiedererkennung">Fingerprinting</b><i data-de="Es wird nicht versucht, Sie über Besuche hinweg wiederzuerkennen. Der Sprachschlüssel ist kein Merkmal dafür.">No attempt is made to recognise you across visits. The language key is not an identifier.</i></li>
           </ul>
         </div>
       </div>
     </section>
 
     <section>
-      <h2 data-de="Wie sich die Rechnung verhält">How the bill behaves</h2>
+      <h2 data-de="Gastdaten, sobald es welche gibt">Guest data, when there is any</h2>
+      <p class="lede" data-de="Der gehostete Dienst läuft nicht, also liegen dort keine Gastdaten. So werden sie behandelt, sobald es sie gibt — jetzt aufgeschrieben, weil ein Hotel diese Frage vor der nach dem Preis stellt.">The hosted service is not running, so there is no guest data in it. This is how it will be handled when there is — written down now, because a hotel asks this before it asks the price.</p>
       <div class="rules">
-        <p data-de="<b>Ein Jahreskontingent, in zwölf gleichen Raten.</b> Hotels sind saisonal. Monatlich nach Verbrauch abgerechnet käme im August eine brutale Rechnung und im Februar keine — das Jahr ist die ehrliche Einheit, und eine gleichbleibende Rate ist die, die sich budgetieren lässt."><b>An annual allowance, in twelve equal instalments.</b> Hotels are seasonal. Metered monthly, August would bring a brutal invoice and February none — the year is the honest unit, and a level instalment is the one you can budget.</p>
-        <p data-de="<b>Mehrverbrauch stoppt nie die Auflösung.</b> Ein Identitätsdienst, der in der Hochsaison abschaltet, hat seine Aufgabe verfehlt. Über dem Kontingent kostet eine Anreise ihren Satz — mehr passiert nicht."><b>Overage never stops resolution.</b> An identity service that switches off in high season has failed at its job. Above the allowance an arrival costs its rate, and that is all that happens.</p>
-        <p data-de="<b>Gruppen teilen sich einen Topf.</b> Ein Vertrag, ein Kontingent über alle Häuser. Niemand unterschreibt zwölf Verträge für zwölf Hotels."><b>Groups pool.</b> One contract, one allowance across every property. Nobody signs twelve agreements for twelve hotels.</p>
+        <p data-de="<b>Das Hotel ist verantwortlich, GuestGraph ist Auftragsverarbeiter.</b> Sie entscheiden, was erhoben wird und wofür. Verarbeitet wird auf Ihre Weisung, für Ihre Zwecke, und für nichts sonst."><b>The hotel is the controller; GuestGraph is the processor.</b> You decide what is collected and why. It is processed on your instruction, for your purposes, and for nothing else.</p>
+        <p data-de="<b>Ein Auftragsverarbeitungsvertrag, auf Anfrage.</b> Das revidierte DSG und die DSGVO gelten beide — Schweizer Hotels und deutsche oder österreichische sind hier derselbe Markt. Der Angemessenheitsbeschluss für die Schweiz macht den Datenverkehr zwischen beiden zu weniger von einem Hindernis, als oft angenommen wird."><b>A data-processing agreement, on request.</b> The revised Swiss DSG and the GDPR both apply — Swiss hotels and German or Austrian ones are one market here. Switzerland's adequacy decision makes data moving between the two less of an obstacle than it is often assumed to be.</p>
+        <p data-de="<b>Die Cloud ist noch nicht gewählt.</b> Kein Anbieter, keine Region, keine Gastdaten — weil nichts läuft. Welcher es wird, steht auf dieser Seite, bevor der erste Datensatz verarbeitet wird, nicht danach."><b>The cloud is not chosen yet.</b> No provider, no region, no guest data — because nothing is running. Whichever it turns out to be will be named on this page before the first record is processed, not after.</p>
+        <p data-de="<b>Wer selbst betreibt, den betrifft nichts davon.</b> Apache 2.0, Ihre Infrastruktur, Ihre Daten: nichts verlässt das Haus, und es gibt niemanden, mit dem ein Vertrag zu schliessen wäre."><b>Self-host and none of this applies.</b> Apache 2.0, your infrastructure, your data: nothing leaves the building, and there is nobody to sign an agreement with.</p>
       </div>
     </section>
 
+    <section>
+      <h2 data-de="Wer das betreibt">Who runs this</h2>
+      <div class="rules">
+        <p data-de="GuestGraph wird von <a href='https://blust.ch/' target='_blank' rel='noopener'>Robert Blust</a> gebaut und betrieben. Es ist keine Firma: eine Person, die offen arbeitet, mit der Engine unter Apache 2.0 für alle, die nachlesen wollen, was sie tatsächlich tut.">GuestGraph is built and run by <a href="https://blust.ch/" target="_blank" rel="noopener">Robert Blust</a>. It is not a company: one person, working in the open, with the engine under Apache 2.0 for anyone who wants to read what it actually does.</p>
+        <p data-de="Ein Impressum steht hier noch nicht, und das ist Absicht statt Versäumnis: Es gibt hier nichts zu kaufen, also gibt es kein Geschäft, an das eines gehörte. Sobald der gehostete Dienst öffnet, stehen Name, Adresse und Kontakt hier — am selben Tag, an dem die Abrechnungsseite aufhört zu sagen, dass sie noch nicht offen ist.">There is no imprint here yet, and that is deliberate rather than an omission: nothing here can be bought, so there is no transaction for one to belong to. When the hosted service opens, the name, address and contact details that belong beside a price go here — on the same day the billing page stops saying it is not open.</p>
+      </div>
+    </section>
   </div>
 </main>
 
@@ -253,14 +247,14 @@
     <span><a target="_blank" rel="noopener" href="https://github.com/guestgraph">github.com/guestgraph</a></span>
     <span><a target="_blank" rel="noopener" href="https://github.com/guestgraph/engine/blob/HEAD/LICENSE">Apache 2.0</a></span>
     <span><a target="_blank" rel="noopener" href="https://blust.ch/">Robert Blust</a></span>
-    <span><a href="../legal/" data-de="Datenschutz">Privacy</a></span>
+    <span><a href="./" aria-current="page" data-de="Datenschutz">Privacy</a></span>
   </footer>
 </div>
 
 <script>
-// Same mechanism as the landing page, and the same reason: English is the markup so the
-// page says the right thing before any JS runs, and the choice is remembered per origin —
-// so a visitor who switched to German on the landing page arrives here in German.
+// Same mechanism as the other two pages: English is the markup so the page says the right
+// thing before any JS runs, and the choice is remembered per origin. This page describes
+// that key, which is the only reason it is worth pointing at the code from here.
 (function(){
   var KEY = "gg-lang";
   function stored(){ try { return localStorage.getItem(KEY); } catch (e) { return null; } }
@@ -271,10 +265,10 @@
   i18n.forEach(function(el){ el.setAttribute("data-en", el.innerHTML); });
 
   var UI = {
-    de:{ title:"Abrechnung — GuestGraph",
-         desc:"Wie der gehostete GuestGraph abrechnen wird: ein einziger Zähler, und das sind Anreisen. Datenzufuhr, Import, Speicher und Abfragen sind kostenlos." },
-    en:{ title:"Billing — GuestGraph",
-         desc:"How the hosted GuestGraph will bill: one meter, and it is arrivals. Ingestion, backfill, storage and lookups are free." }
+    de:{ title:"Datenschutz — GuestGraph",
+         desc:"Diese Seite setzt keine Cookies, führt keine Statistik und stellt keine Anfragen an Dritte. Wie der gehostete GuestGraph Gastdaten behandeln wird, aufgeschrieben, bevor es welche gibt." },
+    en:{ title:"Privacy — GuestGraph",
+         desc:"This site sets no cookies, runs no analytics and makes no third-party requests. How the hosted GuestGraph will treat guest data, written down before there is any." }
   };
 
   function applyLang(){

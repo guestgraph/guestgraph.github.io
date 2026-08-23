@@ -1,7 +1,7 @@
 # guestgraph.io — working conventions
 
-The site for GuestGraph, the open-source guest identity graph: a landing page, and a
-billing page describing how the hosted service will charge. What the files are and why
+The site for GuestGraph, the open-source guest identity graph: a landing page, a billing
+page describing how the hosted service will charge, and a privacy note. What the files are and why
 the mark looks the way it does is in `README.md`; this file is about the
 constraints that are easy to break.
 
@@ -24,7 +24,7 @@ This is not hypothetical: the org profile at `guestgraph/.github` once advertise
 in development" while two slices had shipped, because it restated a roadmap that lives
 elsewhere. No CI in one repository can catch drift in another.
 
-### The billing page is the exception, and a narrow one
+### The other two pages are the exception, and a narrow one
 
 `billing/index.html` is the second page and the only place this site makes a claim **of its
 own** rather than restating one. It describes how the hosted service will bill — one meter,
@@ -40,11 +40,37 @@ This narrows the rule above; it does not repeal it. Product status, matching beh
 roadmap still belong to the engine repository. What this repo now owns is the commercial
 model, because nothing else does.
 
+`legal/index.html` is the other one, and it is the same kind of claim: what **this site**
+does with a visitor, and what the hosted service will do with guest data. Both are facts
+this repo owns, because nobody else can state them — and the site half is checkable, so
+`verify` checks it rather than trusting the prose. The `sameOrigin` assertion records every
+request the page makes and fails on any that leaves this origin: the headline says nothing
+is fetched from anywhere else, and a font CDN, an analytics tag or one embedded image would
+make that a lie which reads exactly like the truth.
+
+**Two obligations fire on one event, and neither may fire alone.** The day the hosted
+service opens, the billing page's *not open yet* sentence comes out **and** the imprint —
+name, postal address, contact — goes onto `/legal/`, which currently says in public that it
+is missing on purpose. Until then nothing here can be bought, which is what makes both
+states honest. Doing half of it leaves the site either advertising a product with no
+seller, or naming a seller for a product it still calls unavailable.
+
 **The `Billing` nav item is shared chrome, so it lives in three files across two
 repositories** — both pages here, and `index.html` in `guestgraph/talks`, whose header bar
 is a verbatim copy of this one. Renaming or reordering the nav means editing all three in
 the same breath. `verify` in either repository can only see its own half: nothing here can
 tell you the talks index has fallen behind, and nothing there can tell you this page has.
+The footer's *Privacy* link is the same shape of obligation, in four files across the two
+repositories.
+
+It was written as the path `/legal/` first, to keep the footer strictly to data — the strip
+is set in the data face, and a bare word there looked like navigation in mono. That was the
+wrong reading of the rule. The strip is not URLs: `Apache 2.0` is a licence name and
+`Robert Blust` is a person's name, and both are links. It is *identifiers that happen to be
+links*, and a page name belongs in that slot. What settled it is that someone looking for a
+privacy statement scans for the word, not for a path — on a page that exists to be found by
+exactly that person, findability beats formal tidiness. The mono rule's real target is nav
+bars, buttons and prose, which is the scope `verify` encodes.
 
 **The one fact this site restates** is the talk's length ("12 minutes", in `index.html`
 and `README.md`). It is duplicated from the talks repo because a call-to-action needs
@@ -80,7 +106,8 @@ two-file obligation, which is the point.
 
 The domain is served by two repositories, so the crawl map is split the same way the
 content is. `sitemap.xml` here is a **sitemap index** and lists no URLs of its own: it
-points at `sitemap-site.xml` (this repo's two pages — the landing page and `/billing/`)
+points at `sitemap-site.xml` (this repo's three pages — the landing page, `/billing/` and
+`/legal/`)
 and at `/talks/sitemap.xml`, which `guestgraph/talks` owns. A flat sitemap listing the talks would be a second copy of the
 talk list — the failure this repo's rules exist to prevent. `robots.txt` names the index
 and both children.
@@ -90,9 +117,10 @@ made by hand — like `avatar.png` — because a generator here would mean a bui
 this repo has none. To remake it after a visual change, render `index.html` at 1200×675
 and take the middle 630 rows; `intro/export-og.mjs` in the talks repo does exactly that
 and is the reference. Its declared size in the `og:image:width`/`height` tags must keep
-matching the file — on **both** pages, because `/billing/` points its card at the same
-file rather than carrying one of its own. A second card would be a second hand-render to
-keep in step, and the landing card is the right thing to show for a link to either page.
+matching the file — on **all three** pages, because `/billing/` and `/legal/` point their
+cards at the same file rather than carrying one of their own. A second card would be a
+second hand-render to keep in step, and the landing card is the right thing to show for a
+link to any of them.
 
 **Hide `.figure` when rendering the card.** The record band runs the full page width and
 cannot fit beside the headline in a 1.9:1 crop; included, the frame cuts the wires off
@@ -109,7 +137,7 @@ nothing, and it looks deliberate. The page's own `@media (prefers-reduced-motion
 already defines the settled state; emulating it renders that state exactly instead of
 racing a timer.
 
-Both pages are one URL carrying two languages, with English in the markup and German in
+All three pages are one URL carrying two languages, with English in the markup and German in
 `data-de`, so English is what a crawler reads and what the og tags promise. There is no
 hreflang here, because there is no second URL to point one at — only one language of any
 page on this domain is indexable. The decks work the same way; it is a known, accepted

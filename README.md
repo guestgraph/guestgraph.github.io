@@ -13,6 +13,7 @@ serves at **guestgraph.io/talks/** with no configuration of its own.
 
 - `index.html` — the landing page. Self-contained: even the fonts are served from `fonts/`.
 - `billing/index.html` — how the hosted service will bill. One meter, and it is arrivals.
+- `legal/index.html` — what this site collects (nothing) and how guest data will be handled.
 - `logo.svg` — the mark: three open records resolving into one solid profile. Uses
   `currentColor`, so it inherits whatever colour it is placed in.
 - `favicon.svg`
@@ -61,3 +62,16 @@ It carries no prices and no bands. The model is the durable half; the numbers ar
 that goes stale, and the hosted service is not open yet — which the page says out loud. That
 sentence is the difference between publishing an intention and advertising a product, and it
 stays until there is something to buy.
+
+## Privacy
+
+[`/legal/`](https://guestgraph.io/legal/) says what this site collects, which is nothing: no
+cookies, no analytics, no third-party requests, no forms, fonts served from this origin. The
+only thing stored is the language choice, in the visitor's own browser. `verify` records every
+request the page makes and fails on any that leaves this origin, because that claim is the kind
+that can quietly stop being true.
+
+The same page says how guest data will be handled once the hosted service exists — hotel as
+controller, GuestGraph as processor, revDSG and GDPR, a cloud not yet chosen and named there
+before the first record is processed. There is no imprint yet, and the page says why: nothing
+here can be bought. It arrives the day the billing page stops saying the service is not open.
