@@ -34,11 +34,10 @@
    unit that has to survive being copied to someone else's machine is the folder,
    not the file. Before this the deck named a face it never shipped, so every slide
    rendered in whatever system-ui the room's laptop happened to have. */
+@font-face{font-family:"Bricolage Grotesque";src:url(fonts/Bricolage-var.woff2) format("woff2-variations"),url(fonts/Bricolage-var.woff2) format("woff2");font-weight:200 800;font-display:swap}
 @font-face{font-family:"Instrument Sans";src:url(fonts/InstrumentSans-var.woff2) format("woff2-variations"),url(fonts/InstrumentSans-var.woff2) format("woff2");font-weight:400 700;font-display:swap}
 @font-face{font-family:"Plex Mono";src:url(fonts/PlexMono-400.woff2) format("woff2");font-weight:400;font-display:swap}
 @font-face{font-family:"Plex Mono";src:url(fonts/PlexMono-600.woff2) format("woff2");font-weight:600;font-display:swap}
-@font-face{font-family:"Redaction";src:url(fonts/Redaction-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:"Redaction70";src:url(fonts/Redaction70-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
 
   /* ─── design tokens · v1 · keep in step across all three repositories ───
      These sites share no stylesheet by design — a deck has to open from
@@ -415,7 +414,7 @@
      Set last so it wins over the rules above. The slide headline carries the
      same face the site's does; everything else on a slide is a label or a
      value, and stays where it was. */
-  h1{font-family:"Redaction",Georgia,serif; font-weight:400; letter-spacing:-.012em}
+  h1{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; letter-spacing:-.028em}
   h1 em{color:var(--c-firm)}
 </style>
 </head>
@@ -451,8 +450,8 @@
   <!-- 01 · Das Problem -->
   <section class="slide"
     data-time="0:40"
-    data-notes="<em class='cue'>Konkret einsteigen, nicht abstrakt.</em> Anna bucht über Booking.com, checkt im PMS ein, isst im Restaurant, loggt sich ins WLAN ein, schreibt eine Bewertung. Fünf Systeme, fünf Datensätze, fünf verschiedene Schlüssel. <em class='cue'>Kurze Pause.</em> Das Hotel hat keinen einzigen Gast namens Anna — es hat fünf Fremde. Und niemand im Haus merkt es."
-    data-notes-en="<em class='cue'>Start concrete, not abstract.</em> Anna books via Booking.com, checks in through the PMS, eats in the restaurant, logs into the wifi, writes a review. Five systems, five records, five different keys. <em class='cue'>Short pause.</em> The hotel does not have one guest called Anna — it has five strangers. And nobody in the building notices.">
+    data-notes="<em class='cue'>Konkret einsteigen, nicht abstrakt.</em> Erika bucht über Booking.com, checkt im PMS ein, isst im Restaurant, loggt sich ins WLAN ein, schreibt eine Bewertung. Fünf Systeme, fünf Datensätze, fünf verschiedene Schlüssel. <em class='cue'>Kurze Pause.</em> Das Hotel hat keinen einzigen Gast namens Erika — es hat fünf Fremde. Und niemand im Haus merkt es."
+    data-notes-en="<em class='cue'>Start concrete, not abstract.</em> Erika books via Booking.com, checks in through the PMS, eats in the restaurant, logs into the wifi, writes a review. Five systems, five records, five different keys. <em class='cue'>Short pause.</em> The hotel does not have one guest called Erika — it has five strangers. And nobody in the building notices.">
     <div class="kicker mono" data-n="01" data-de="Das Problem">The problem</div>
     <h1 data-de="Ein Stammgast sieht aus wie <em>fünf Fremde</em>.">A returning guest looks like <em>five strangers</em>.</h1>
     <div class="diagram" style="margin-top:4cqmin; max-width:70ch">
@@ -465,8 +464,8 @@
           <rect class="node" x="534" y="34" width="100" height="46" rx="8"/><text x="584" y="57">Reviews</text>
         </g>
         <g class="nlabel dim">
-          <text x="60"  y="104">a.mueller@…</text>
-          <text x="192" y="104">Müller, Anna</text>
+          <text x="60"  y="104">e.muster@…</text>
+          <text x="192" y="104">MUSTER/ERIKA</text>
           <text x="324" y="104" data-de="Tisch 12">Table 12</text>
           <text x="456" y="104">+41 79 …</text>
           <text x="584" y="104">„A. M.“</text>
@@ -526,7 +525,7 @@
           <path class="arrow" d="M112,151 C165,151 175,112 208,108"/>
           <path class="arrow" d="M112,191 C165,191 165,115 208,110"/>
           <rect class="node center" x="214" y="76" width="196" height="62" rx="10"/>
-          <text class="nlabel c" x="312" y="99">Anna Müller</text>
+          <text class="nlabel c" x="312" y="99">Erika Muster</text>
           <text class="nlabel dim" x="312" y="120" style="font-size:11px" data-de="ein abgeleitetes Profil">one derived profile</text>
         </svg>
         <p class="caption" data-de="Quellen bleiben unangetastet. <b>Identität ist eine Schlussfolgerung</b>, kein Feld.">Sources stay untouched. <b>Identity is a conclusion</b>, not a field.</p>

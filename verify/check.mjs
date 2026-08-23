@@ -16,10 +16,10 @@ const PAGES = [
     // source from here, one click further out than it used to be
     links: ["https://github.com/guestgraph"],
     sameTab: ["intro/", "./"],
-    fontsLoaded: ["Redaction", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io/talks", internalLinks: true },
   { path: "/intro/", title: /GuestGraph/, lang: "en", sourceLang: "en", wayOut: "../",
-    fontsLoaded: ["Redaction", "Instrument Sans"],
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"],
     tokens: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io/talks", internalLinks: true },
 ];

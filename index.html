@@ -27,13 +27,11 @@
 <meta name="twitter:card" content="summary_large_image">
 <style>
 /* Self-hosted, same origin — no third party sees a visitor, and the files resolve
-   from file:// as well as from the domain. Redaction is dual-licensed SIL OFL 1.1
-   / LGPL 2.1. */
+   from file:// as well as from the domain. */
+@font-face{font-family:"Bricolage Grotesque";src:url(fonts/Bricolage-var.woff2) format("woff2-variations"),url(fonts/Bricolage-var.woff2) format("woff2");font-weight:200 800;font-display:swap}
 @font-face{font-family:"Instrument Sans";src:url(fonts/InstrumentSans-var.woff2) format("woff2-variations"),url(fonts/InstrumentSans-var.woff2) format("woff2");font-weight:400 700;font-display:swap}
 @font-face{font-family:"Plex Mono";src:url(fonts/PlexMono-400.woff2) format("woff2");font-weight:400;font-display:swap}
 @font-face{font-family:"Plex Mono";src:url(fonts/PlexMono-600.woff2) format("woff2");font-weight:600;font-display:swap}
-@font-face{font-family:"Redaction";src:url(fonts/Redaction-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:"Redaction70";src:url(fonts/Redaction70-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
 
   /* Shell, header, brand, nav and footer are guestgraph.io's, deliberately: the domain is
      served by two repositories and a visitor crossing between them should not meet a seam.
@@ -96,8 +94,8 @@
      column of content sitting above a screen-height void */
   main{flex:1; display:flex; align-items:center; padding:2vh 0 5vh}
 
-  h1{font-family:"Redaction",Georgia,serif; font-weight:400; line-height:1.05;
-     letter-spacing:-.015em; font-size:clamp(2.1rem,5vw,3.9rem); max-width:21ch}
+  h1{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+     font-weight:700; line-height:1.04; letter-spacing:-.032em; font-size:clamp(2.1rem,5vw,3.9rem); max-width:21ch}
   h1 em{font-style:normal; color:var(--c-firm)}
   .lede{margin-top:1.6rem; font-size:clamp(1.05rem,1.6vw,1.35rem); color:var(--dim);
         max-width:44ch}
@@ -119,7 +117,7 @@
   .dl .sep{color:var(--dim); margin:0 .7em}
   .talk:hover, .talk:focus-visible{border-color:var(--c-mid)}
   .talk:hover .t, .talk:focus-visible .t{color:var(--c-mid)}
-  .t{font-family:"Redaction",Georgia,serif; font-size:clamp(1.35rem,2.7vw,2.05rem); font-weight:400; line-height:1.2;
+  .t{font-family:"Bricolage Grotesque",sans-serif; font-size:clamp(1.32rem,2.65vw,2rem); font-weight:700; line-height:1.2;
      letter-spacing:-.015em; transition:color .2s ease}
   .d{grid-column:1; margin-top:.7rem; color:var(--dim);
      font-size:clamp(1rem,1.35vw,1.15rem); line-height:1.5; max-width:62ch}
