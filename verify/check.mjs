@@ -121,12 +121,17 @@ const CHECKS = {
     const declared = await page.evaluate(() => [
       (document.querySelector('meta[property="og:image:width"]')  || {}).content,
       (document.querySelector('meta[property="og:image:height"]') || {}).content]);
-    const real = await page.evaluate(async ({ u, base }) => {
-      const r = await fetch(base ? u.replace(base, location.origin) : u.replace(/^https:\/\/[^/]+/, location.origin));
+    // Rewrite the card's absolute URL onto whatever is being tested — BASE, not
+    // location.origin. An origin carries no path, and this repository is served under one:
+    // locally it is the root of http://localhost:8000, live it is guestgraph.io/talks/.
+    // Using the origin dropped the /talks prefix, so `BASE=https://guestgraph.io/talks npm
+    // run verify` reported a card that serves perfectly as "not fetchable".
+    const real = await page.evaluate(async ({ u, base, testBase }) => {
+      const r = await fetch(base ? u.replace(base, testBase) : u.replace(/^https:\/\/[^/]+/, testBase));
       if (!r.ok) return null;
       const dv = new DataView(await r.arrayBuffer());
       return [String(dv.getUint32(16)), String(dv.getUint32(20))];   // PNG IHDR
-    }, { u: img, base: spec.cardBase });
+    }, { u: img, base: spec.cardBase, testBase: BASE });
     if (!real) return `${img} is not fetchable`;
     if (real[0] !== declared[0] || real[1] !== declared[1])
       return `card is ${real.join("×")} but declared ${declared.join("×")}`;
