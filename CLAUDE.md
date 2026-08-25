@@ -90,19 +90,14 @@ two-file obligation, which is the point.
   repository of their own. A repository named `talks` in this org would claim
   `guestgraph.io/talks/` the moment its Pages were switched on, shadowing `talks/` here; that
   is what had to be undone to merge them. Do not recreate one.
-- **Nothing opens in a new tab, and there is one exception.** The three sites are one ring
-  now — each links the other two, and every deck carries its own way out — so a new tab is a
-  workaround for a problem that no longer exists, and it costs the visitor their back button.
+- **Nothing opens in a new tab, and there is one exception.** A new tab takes away the
+  visitor's back button, and every deck carries its own way out, so nothing needs one.
   `noNewTab` asserts it on every page.
 
   The exception is **a link inside a slide**. A presenter who clicks one mid-talk in the same
   tab loses the deck, and no back-button muscle memory saves that in front of a room. Note
   what the exception keys on: *where the link sits*, not where it points. This site has no
   such link today; companygraph's deck has two.
-
-  This bullet used to say outbound links open in a new tab and that this "now means GitHub
-  only" — which was already wrong when it was written, since the `blust.ch` credit was
-  sitting on the landing page and the talks index with `target="_blank"` the whole time.
 - **The deck's footer is three destinations, and two of them are brands.** The lockup goes to
   the landing page (`../../`), `Robert Blust` to `https://blust.ch/`, and *Talks* / *Vorträge*
   to the index (`../`) — the same place the transport control goes, which is the deliberate
@@ -119,9 +114,6 @@ two-file obligation, which is the point.
   `file://`, where a linked asset is a broken box. Its face is `Plex Mono`, the name this deck
   actually `@font-face`s; naming the upstream `IBM Plex Mono` would render it in whatever mono
   the visitor's OS happens to have.
-
-  It used to be a single link to the index with `· Robert Blust` as plain text that went
-  nowhere.
 
   Three checks share the row and none covers another's link. `wayOut` takes the index link,
   `links` takes `blust.ch` (presence only — it no longer asserts anything about tabs), and
