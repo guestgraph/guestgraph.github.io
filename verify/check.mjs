@@ -14,7 +14,7 @@ const PAGES = [
     contains: ["Five strangers", "One guest", "GuestGraph"],
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
-    sameTab: ["https://guestgraph.io/talks/", "https://guestgraph.io/talks/intro/", "billing/", "privacy/"],
+    sameTab: ["talks/", "talks/intro/", "billing/", "privacy/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io", internalLinks: true },
 
@@ -28,7 +28,7 @@ const PAGES = [
     // no call to action here: the page ends on its argument, so the only outbound link
     // left to hold to the new-tab rule is the one in the footer.
     links: ["https://github.com/guestgraph"],
-    sameTab: ["https://guestgraph.io/talks/", "../", "./", "../privacy/"],
+    sameTab: ["../talks/", "../", "./", "../privacy/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io", internalLinks: true },
 
@@ -39,9 +39,24 @@ const PAGES = [
   { path: "/privacy/", title: /GuestGraph/, lang: "en",
     contains: ["This site collects", "There is no imprint yet"],
     links: ["https://github.com/guestgraph"],
-    sameTab: ["https://guestgraph.io/talks/", "../", "../billing/", "./"],
+    sameTab: ["../talks/", "../", "../billing/", "./"],
     sameOrigin: true,
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
+    card: true, cardBase: "https://guestgraph.io", internalLinks: true },
+
+  { path: "/talks/", title: /talks/i, lang: "en", sourceLang: "en",
+    contains: ["GuestGraph", "guest identity"],
+    // the nav no longer carries a Code item — the footer's org link is the way to the
+    // source from here, one click further out than it used to be
+    links: ["https://github.com/guestgraph"],
+    // Billing lives in the guestgraph.github.io repository and this nav item is the only
+    // link to it from here — it is shared chrome, so it stays in the tab like the rest.
+    sameTab: ["intro/", "./", "../billing/", "../privacy/"],
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], tokens: true, monoScope: true, contrast: true, tokenVersion: true,
+    card: true, cardBase: "https://guestgraph.io", internalLinks: true },
+  { path: "/talks/intro/", title: /GuestGraph/, lang: "en", sourceLang: "en", wayOut: "../",
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"],
+    tokens: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io", internalLinks: true },
 ];
 
@@ -121,6 +136,26 @@ const CHECKS = {
     const foreign = [...new Set(seen.filter(u => /^https?:/.test(u) && !u.startsWith(origin)))];
     return foreign.length ? "off-origin request(s): " + foreign.join(", ") : null;
   },
+  // `links` only sees a[href^='http'], so a root-absolute internal link — which breaks
+  // under file:// — is invisible to it.
+  // Decks open in the same tab now, which is only safe because the deck carries its own
+  // way out. If that button ever disappears the same-tab links strand the reader on a
+  // page with no exit — so the two rules are asserted together, deliberately.
+  async wayOut(page, spec) {
+    const found = await page.evaluate(href => {
+      const links = [...document.querySelectorAll("a[href]")]
+        .filter(a => a.getAttribute("href") === href);
+      return links.map(a => ({
+        inChrome: !!a.closest("#chrome"),
+        named: !!(a.getAttribute("aria-label") || (a.textContent || "").trim()),
+      }));
+    }, spec.wayOut);
+    if (!found.length) return `no link back to ${spec.wayOut} — a same-tab deck with no exit`;
+    if (!found.some(l => l.inChrome)) return `the way back is not in the transport bar`;
+    const unnamed = found.filter(l => !l.named).length;
+    return unnamed ? `${unnamed} way-back link(s) without an accessible name` : null;
+  },
+
   // The card is fetched back to compare its real pixel size with the declared tags.
   // `cardBase` is the production prefix to strip: this repository is served under
   // /talks/ on the domain but at / locally, so stripping the origin alone would ask
@@ -132,12 +167,17 @@ const CHECKS = {
     const declared = await page.evaluate(() => [
       (document.querySelector('meta[property="og:image:width"]')  || {}).content,
       (document.querySelector('meta[property="og:image:height"]') || {}).content]);
-    const real = await page.evaluate(async ({ u, base }) => {
-      const r = await fetch(base ? u.replace(base, location.origin) : u.replace(/^https:\/\/[^/]+/, location.origin));
+    // Rewrite the card's absolute URL onto whatever is being tested — BASE, not
+    // location.origin. An origin carries no path, and this repository is served under one:
+    // locally it is the root of http://localhost:8000, live it is guestgraph.io/talks/.
+    // Using the origin dropped the /talks prefix, so `BASE=https://guestgraph.io/talks npm
+    // run verify` reported a card that serves perfectly as "not fetchable".
+    const real = await page.evaluate(async ({ u, base, testBase }) => {
+      const r = await fetch(base ? u.replace(base, testBase) : u.replace(/^https:\/\/[^/]+/, testBase));
       if (!r.ok) return null;
       const dv = new DataView(await r.arrayBuffer());
       return [String(dv.getUint32(16)), String(dv.getUint32(20))];   // PNG IHDR
-    }, { u: img, base: spec.cardBase });
+    }, { u: img, base: spec.cardBase, testBase: BASE });
     if (!real) return `${img} is not fetchable`;
     if (real[0] !== declared[0] || real[1] !== declared[1])
       return `card is ${real.join("×")} but declared ${declared.join("×")}`;

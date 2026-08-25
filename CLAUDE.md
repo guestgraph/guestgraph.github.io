@@ -105,44 +105,10 @@ two-file obligation, which is the point.
 
 ## Findability
 
-The domain is served by two repositories, so the crawl map is split the same way the
-content is. `sitemap.xml` here is a **sitemap index** and lists no URLs of its own: it
-points at `sitemap-site.xml` (this repo's three pages — the landing page, `/billing/` and
-`/privacy/`)
-and at `/talks/sitemap.xml`, which `guestgraph/talks` owns. A flat sitemap listing the talks would be a second copy of the
-talk list — the failure this repo's rules exist to prevent. `robots.txt` names the index
-and both children.
+`sitemap.xml` lists every URL on this domain — the landing page, billing, privacy and the
+talks. It was an index pointing at `sitemap-site.xml` and a second sitemap owned by another
+repository; that split is gone, so there is one list and no second copy to keep in step.
 
-`og.png` is the landing page itself, rendered at 1200×630 and committed as a PNG. It is
-made by hand — like `avatar.png` — because a generator here would mean a build step, and
-this repo has none. To remake it after a visual change, render `index.html` at 1200×675
-and take the middle 630 rows; `intro/export-og.mjs` in the talks repo does exactly that
-and is the reference. Its declared size in the `og:image:width`/`height` tags must keep
-matching the file — on **all three** pages, because `/billing/` and `/privacy/` point their
-cards at the same file rather than carrying one of their own. A second card would be a
-second hand-render to keep in step, and the landing card is the right thing to show for a
-link to any of them.
-
-**Hide `.figure` when rendering the card.** The record band runs the full page width and
-cannot fit beside the headline in a 1.9:1 crop; included, the frame cuts the wires off
-above the profile they converge on, so the card shows five records connected to nothing —
-which says the opposite of what the page says. The card carries the lockup, the headline
-and the call to action, and that is a complete thought on its own.
-
-**Render it with `prefers-reduced-motion` emulated** (Playwright: `reducedMotion:
-"reduce"`). The figure animates in over a chain that finishes at 2.15s — chips, then
-wires, then the profile box last of all — so a render that merely waits "long enough"
-catches the diagram mid-draw. It fails in the worst way available: the wires arrive and
-the box they converge on does not, so the card ships showing five records connected to
-nothing, and it looks deliberate. The page's own `@media (prefers-reduced-motion)` block
-already defines the settled state; emulating it renders that state exactly instead of
-racing a timer.
-
-All three pages are one URL carrying two languages, with English in the markup and German in
-`data-de`, so English is what a crawler reads and what the og tags promise. There is no
-hreflang here, because there is no second URL to point one at — only one language of any
-page on this domain is indexable. The decks work the same way; it is a known, accepted
-limit, recorded in the talks repo.
 
 ## The design system, and why it is a copy
 
@@ -190,3 +156,173 @@ the same assertions the other two do, against a served copy on `localhost:8000`.
 
 - Commits happen when the user asks; suggest a message, don't auto-commit.
 - Never mention closed-source predecessor projects — here, in docs, or in commits.
+
+
+# The talks
+
+The decks live at `talks/`, served from this repository at guestgraph.io/talks/.
+
+## Building and checking the decks
+
+```bash
+cd intro && npm install && npx playwright install chromium
+python3 -m http.server 8000        # → localhost:8000/intro/  (audio autoplay is
+                                   #   blocked on file:// in some browsers)
+node export-pdf.mjs                # PDF fallback, after slide edits
+```
+
+**Verify by rendering, never by reading the diff.** Three separate bugs in one session
+were invisible in the source and obvious in a screenshot: notes leaking onto slides,
+comment text rendering as content, an English title in the German voice. Take a
+screenshot, or query the DOM for what you claim to have fixed.
+
+## Deck conventions
+
+One talk per directory, one `index.html` per talk, no external assets. Decks must work
+from `file://` and a plain local server, not only the live domain.
+
+- **Bilingual by attribute.** German is the element's content, English is `data-en`.
+  Speaker notes are `data-notes` / `data-notes-en` on the `<section>`.
+- **Slide numbers are zero-based everywhere the viewer can see them** — the kicker on
+  the slide, the counter, and the audio filename all say the same number.
+- **`<em class='cue'>` is a stage direction**, never spoken. `<em>` alone is emphasis.
+  Keep them distinct: the directions outnumber the emphases roughly ten to one, so
+  overloading one tag makes both meaningless.
+
+## Notes live inside HTML attributes — three ways that bites
+
+Speaker notes are attribute *values*, so anything that ends an attribute ends the note,
+and the rest of the tag is swallowed with it. Each of these shipped at least once:
+
+- **Nested markup uses single quotes** — `<em class='cue'>`, never `class="cue"`.
+- **German quotes must be typographic** — `„…“` with U+201E/U+201C. One straight ASCII
+  `"` inside a note terminates the attribute and dumps the note onto the slide.
+- **Never put an HTML comment inside a start tag.** The parser consumes it as
+  attributes and everything after it is lost — `data-notes` included. Comments go
+  *above* the tag.
+
+## Narration (`intro/tts/`)
+
+`generate.py` reads the deck directly, so the notes are the single source for what is
+said. Clips cache on a content hash: editing one note regenerates one clip.
+
+```bash
+./generate.py --dry-run            # what would be billed, and for which slides
+./generate.py [--only 04]
+```
+
+The key is not in a tool shell's environment — see **Secrets** below for why, and for the
+one line that fetches it.
+
+- **Measurements before mechanisms.** `voice_settings.speed` is accepted by the API and
+  ignored by `eleven_v3`; audio tags and paragraph breaks move the speaking rate a few
+  percent. The numbers are in the generator's docstring. Real pauses would mean silence
+  between separate clips, owned by the player. Don't re-litigate this by feel.
+- **Audio is committed, not LFS.** GitHub Pages does not resolve LFS objects — it would
+  serve the pointer text. `.gitattributes` records why.
+- **Two durations, both true.** ~6 min narrated, 12 min live. The live figure is the one
+  quoted publicly; presenting involves pauses a recording does not take.
+
+## Secrets
+
+`ELEVENLABS_API_KEY` is the only credential these decks need, and it lives in `~/.zshrc`.
+Only an **interactive** zsh sources that file, so a tool shell starts without it — and so
+does a login shell, which is the surprising half. Pull it in for the one command that
+needs it, and let it die with that command:
+
+```bash
+cd intro/tts
+export ELEVENLABS_API_KEY="$(zsh -ic 'printf %s "$ELEVENLABS_API_KEY"' 2>/dev/null)"
+./generate.py --only 10
+```
+
+- **Never print an environment variable's value.** Not to check it, not in a debug line,
+  not buried in a larger `echo`. A transcript outlives the session, and a key that reaches
+  one has to be rotated.
+- **`${VAR:-UNSET}` prints the value whenever the variable is set.** This is exactly how
+  the key leaked once: it reads like a set/unset probe and does the opposite. Probe with
+  `${VAR:+SET}` alone, or `[ -n "$VAR" ] && echo set || echo unset` — forms that can only
+  ever emit a fixed string.
+- **Never `eval` an extraction from the shell profile.** A bare `export` with no match
+  prints the whole environment.
+
+## The parsing pitfall behind two of the above
+
+A slide "block" runs from one `<section class="slide` to the next, so a comment written
+*above* a slide lands inside the **previous** slide's block. A comment that merely
+mentioned `data-say-title="no"` matched a substring test and silently stripped the
+neighbouring slide's title. `generate.py` strips comments before parsing; do not
+reintroduce substring tests over whole blocks. Explaining a flag must never set it.
+
+**The same literal string decides what counts as a slide at all.** `slides()` splits on
+`<section class="slide` — the exact characters — so anything inserted between the tag name
+and `class` makes a slide disappear from the generator:
+
+```html
+<section data-say-title="no" class="slide title-slide">   <!-- invisible to the generator -->
+<section class="slide title-slide" data-say-title="no">   <!-- correct -->
+```
+
+Nothing errors. The deck renders, the notes panel works, and the only symptom is a clip
+that is never generated — indistinguishable from one that was already up to date.
+`--dry-run` catches it: the slide count drops. Check it against the deck before reading a
+quiet run as a cached one.
+
+## Ownership (prevents drift)
+
+| Fact | Owner |
+|---|---|
+| What the talk says, and the narration script | the deck's `index.html` |
+| Talk list, length, controls | `README.md` |
+| Narration mechanics and measurements | `intro/tts/generate.py` docstring |
+| Matching behaviour, thresholds, roadmap | the **engine** repo — link, never restate |
+| The talk URLs a crawler should find | `sitemap.xml` here — guestgraph.io only indexes it |
+
+Before writing a number or a claim about the product into a slide, ask where it is
+owned. A deck that restates the roadmap is a second copy that no CI can keep honest.
+
+## Findability
+
+`sitemap.xml` at the repository root lists every URL on this domain, the talks included.
+It was an index pointing at `sitemap-site.xml` and `talks/sitemap.xml` while the decks lived
+in a repository of their own — one list per repository, kept in step by hand. One repository
+serves the domain now, so there is one list and nothing to drift.
+
+**Adding a talk means editing `README.md` and `sitemap.xml`**, alongside the deck's own
+`index.html`. The PDF is deliberately not listed: it is the same talk in a second format and
+would compete with the deck for the same query.
+
+`npm run og` regenerates the 1200×630 share cards from the pages themselves. Re-run it after
+a visual change and keep the `og:image:width`/`height` tags matching the file.
+
+## Slides are a canvas, not a page
+
+A deck lays its slides out once at a fixed height of **900**, and the whole plane is scaled
+to the screen — the way a presentation tool does it, not the way a web page does. Two
+things that used to be worth re-testing are now guarantees: **a slide can never scroll**,
+because the canvas always fits, and **the composition is identical on every screen**,
+because there is only one composition.
+
+- **Only the height is fixed.** The width follows the screen's aspect, so the canvas covers
+  the viewport exactly and there are never letterbox bars. A fixed 16:9 canvas put 96px of
+  black top and bottom on a 4:3 screen, which is the wrong trade on the *minimum* supported
+  size.
+- **Every length is in `cqmin`, never `vmin`.** `cqmin` is 1% of the canvas's shorter side,
+  and since the height is pinned at 900 and any landscape screen is wider than it is tall,
+  that is a constant 9px. Type keeps its size and a wider screen buys real width. `vmin`
+  did the opposite: it derived width from *viewport height*, so content width could never
+  track the frame — at 2560×1080 the slides used 36–51% of the width and the rest was
+  margin. That was the bug, and it is invisible unless you measure it.
+- **Media needs a ceiling.** `.slide svg, .slide img{max-height:60cqmin}`. Anything sized as
+  a fraction of width grows taller as the canvas widens: a square 300×300 diagram in a
+  half-width column reached 780px inside a 900px frame on an ultrawide screen and pushed
+  the slide into overflow. The cap sits well above any inline icon, so it only bites on a
+  figure that was about to break the guarantee.
+- **Below the breakpoint the canvas is switched off** — `transform:none`, `container-type:
+  normal` — and the deck reflows into the scrolling reading view it always had. That is
+  what "minimum supported width 1024" means in practice: canvas above, reflow below.
+
+The scale is driven by one `fit()` function at the end of each deck. Both exporters ride on
+it unchanged: the share card renders at 1200×675 and the PDF at 1280×720, and in each case
+the canvas fills the frame exactly with no bars.
+

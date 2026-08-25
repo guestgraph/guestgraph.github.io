@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  An index, not a list of URLs — and that is the point.
-
-  guestgraph.io is served by two repositories: this one at the root, and guestgraph/talks
-  under /talks/. Each names its own URLs in its own sitemap, and this file only points at
-  them. A flat sitemap here would be a second copy of the talk list, which no CI in this
-  repository could keep honest — the same failure the org profile once shipped.
+  One repository serves this domain, so one file lists every URL. This was an index
+  pointing at sitemap-site.xml and talks/sitemap.xml while the talks lived in a repository
+  of their own; they no longer do, so there is no second list to keep in step.
 -->
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap>
-    <loc>https://guestgraph.io/sitemap-site.xml</loc>
-  </sitemap>
-  <sitemap>
-    <loc>https://guestgraph.io/talks/sitemap.xml</loc>
-  </sitemap>
-</sitemapindex>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://guestgraph.io/</loc></url>
+  <url><loc>https://guestgraph.io/billing/</loc></url>
+  <url><loc>https://guestgraph.io/privacy/</loc></url>
+  <url><loc>https://guestgraph.io/talks/</loc></url>
+  <url><loc>https://guestgraph.io/talks/intro/</loc></url>
+</urlset>
