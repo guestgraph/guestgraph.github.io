@@ -123,6 +123,16 @@ two-file obligation, which is the point.
   The same footer is on `companygraph.io`, and on `blust.ch` in two parts rather than three:
   there the brand and the person are the same name, so merging them is the only way not to
   print it twice.
+
+  It is fenced by a **`deck footer · vN` marker** and `footerVersion` asserts it — the same
+  habit-with-a-tripwire the token block gets, for the same reason: no suite can see a sibling.
+  What the marker covers is a contract, not a look — where each of the three links goes, and
+  that none opens in a new tab. Change any of that and bump `vN` in all three repositories,
+  then run all three suites. A suite fails both on a version it does not expect and on no
+  marker at all, so removing the fence is not a way around it.
+
+  `verify/design.mjs` is byte-identical across the three and holds both `TOKEN_VERSION` and
+  `FOOTER_VERSION`. Never edit it in one repo alone.
 - **Self-contained. No external asset at all** — the fonts are served from `fonts/`, and
   nothing else is fetched off-origin. Reference them relatively (`../fonts/…` from
   `billing/`): a root-absolute path works on the domain and breaks under `file://`, which
