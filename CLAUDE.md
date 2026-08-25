@@ -90,13 +90,47 @@ two-file obligation, which is the point.
   repository of their own. A repository named `talks` in this org would claim
   `guestgraph.io/talks/` the moment its Pages were switched on, shadowing `talks/` here; that
   is what had to be undone to merge them. Do not recreate one.
-- **Outbound links open in a new tab** — `target="_blank" rel="noopener"` — and that now
-  means GitHub only. Both links into `guestgraph.io/talks/`, the nav item and the
-  `Watch intro talk` button, stay in the tab: the deck they lead to carries its own *All
-  talks* control in the transport bar, so it can no longer strand anyone. That control
-  lives in the talks repository; `verify` there asserts it, and `verify` here asserts these
-  links stay in the tab. The two halves are a pair — breaking either one alone is the trap.
+- **Nothing opens in a new tab, and there is one exception.** The three sites are one ring
+  now — each links the other two, and every deck carries its own way out — so a new tab is a
+  workaround for a problem that no longer exists, and it costs the visitor their back button.
+  `noNewTab` asserts it on every page.
 
+  The exception is **a link inside a slide**. A presenter who clicks one mid-talk in the same
+  tab loses the deck, and no back-button muscle memory saves that in front of a room. Note
+  what the exception keys on: *where the link sits*, not where it points. This site has no
+  such link today; companygraph's deck has two.
+
+  This bullet used to say outbound links open in a new tab and that this "now means GitHub
+  only" — which was already wrong when it was written, since the `blust.ch` credit was
+  sitting on the landing page and the talks index with `target="_blank"` the whole time.
+- **The deck's footer is three destinations, and two of them are brands.** The lockup goes to
+  the landing page (`../../`), `Robert Blust` to `https://blust.ch/`, and *Talks* / *Vorträge*
+  to the index (`../`) — the same place the transport control goes, which is the deliberate
+  duplicate: the corner offers every level of "out", and it is the one corner nobody clicks by
+  accident.
+
+  `Robert Blust` is a **full lockup, not a name in text** — the `rb` plate from `blust.ch`
+  inlined beside the wordmark, taking the colours `.name b` already defines: ink with the
+  second word in `--c-mid`. It is a brand with a mark of its own and reads as a peer of this
+  site's lockup, which is the whole point of the row. *Talks* stays `--dim`: it is the one nav
+  item among two brands, and that contrast is what makes the row legible at 15px.
+
+  The plate is inlined rather than linked, like every mark on these sites — a deck opens from
+  `file://`, where a linked asset is a broken box. Its face is `Plex Mono`, the name this deck
+  actually `@font-face`s; naming the upstream `IBM Plex Mono` would render it in whatever mono
+  the visitor's OS happens to have.
+
+  It used to be a single link to the index with `· Robert Blust` as plain text that went
+  nowhere.
+
+  Three checks share the row and none covers another's link. `wayOut` takes the index link,
+  `links` takes `blust.ch` (presence only — it no longer asserts anything about tabs), and
+  `landing` takes the lockup, which nothing else can: a relative `../../` is invisible to
+  `links`, and a dead one looks like a working deck right up until somebody clicks it.
+
+  The same footer is on `companygraph.io`, and on `blust.ch` in two parts rather than three:
+  there the brand and the person are the same name, so merging them is the only way not to
+  print it twice.
 - **Self-contained. No external asset at all** — the fonts are served from `fonts/`, and
   nothing else is fetched off-origin. Reference them relatively (`../fonts/…` from
   `billing/`): a root-absolute path works on the domain and breaks under `file://`, which

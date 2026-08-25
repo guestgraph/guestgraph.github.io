@@ -192,11 +192,28 @@
   .titlemark{color:var(--c-mid); display:flex; flex:0 0 auto}
   .titlemark svg{width:clamp(2.6rem,9cqmin,6.6rem); height:clamp(2.6rem,9cqmin,6.6rem); display:block}
   .titlelock h1{margin:0}
-  .name{display:flex; align-items:center; gap:.6em}
+  .name{display:flex; align-items:center; gap:.5em}
+  .name .lockup, .name .nperson{display:flex; align-items:center; gap:.6em}
+  /* blust.ch is a brand with a mark of its own, so it appears here as a full lockup and
+     not as a name in text. The plate is favicon.svg from that site, inlined rather than
+     linked: a deck has to open from file://, where a linked asset is a broken box. It
+     draws its colours from the tokens, and its face is "Plex Mono" — the name this deck
+     actually @font-faces. */
+  .name .rbmark{display:flex}
+  .name .rbmark svg{width:15px; height:15px; display:block}
+  .name .plate{fill:var(--raise); stroke:var(--rule); stroke-width:1.5}
+  .name .rb{fill:var(--c-mid)}
   .name .namemark{color:var(--c-mid); display:flex}
   .name .namemark svg{width:15px; height:15px; display:block}
   .name b{color:var(--ink); font-weight:600; letter-spacing:.01em; text-transform:none}
   .name b em{font-style:normal; color:var(--c-mid)}
+  /* the two trailing links are nav items, so they take the nav treatment the pages use --
+     dim until pointed at. The separators are not links and must not read as one. */
+  .name .nsep{color:var(--dim)}
+  /* "Talks" is a nav item and stays dim. "Robert Blust" is not — it is the other brand in
+     this row, so it takes the wordmark colours `.name b` already defines and reads as a peer
+     of the site's own lockup rather than as a person mentioned in passing. */
+  .name .nlink{color:var(--dim)}
 
   .title-slide{justify-content:center}
   .title-slide h1{font-size:clamp(2.8rem,11cqmin,7.2rem); max-width:20ch; line-height:1.02}
@@ -259,9 +276,12 @@
   }
   .chrome > *{pointer-events:auto}
 
+  /* Mono, uppercase and .14em tracking used to live here, from when this corner held one
+     credit and nothing else. They are wrong for a row of links: mono on these sites means
+     data, and this is navigation. The wordmark already opted out with text-transform:none;
+     the person and the talks link had no such escape and rendered UPPERCASE MONO. */
   .name{grid-column:1; justify-self:start;
-        font-family:"Plex Mono", ui-monospace, monospace; font-size:.72rem;
-        color:var(--dim); letter-spacing:.14em; text-transform:uppercase}
+        font-family:"Instrument Sans", ui-sans-serif, system-ui, sans-serif; font-size:.72rem}
 
   .transport{
     grid-column:2; justify-self:center;
@@ -313,8 +333,11 @@
   /* the exit is an <a>, so it works with no JS and the browser treats it as
      navigation — history, middle-click and "open in new tab" all behave. */
   a.tbtn{text-decoration:none}
-  a.name{text-decoration:none; color:inherit; pointer-events:auto}
-  a.name:hover, a.name:focus-visible{color:var(--ink)}
+  .name a{text-decoration:none; color:inherit; pointer-events:auto}
+  .name a:hover, .name a:focus-visible{color:var(--ink)}
+  /* the wordmark sets its own colours, so the rule above cannot show its hover;
+     the accent brightening to full ink is what replaces it. */
+  .name a:hover b em, .name a:focus-visible b em{color:var(--ink)}
 
   .tdiv{width:1px; align-self:stretch; margin:.3rem .25rem; background:#333743; flex:0 0 auto}
 
@@ -694,7 +717,13 @@
 
 <div class="chrome" id="chrome">
 
-  <a class="name" href="../" aria-label="Back to all talks"><span class="namemark"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/><circle cx="6" cy="7.2" r="2.6" fill="#0C0E13"/><circle cx="6" cy="16" r="2.6" fill="#0C0E13"/><circle cx="6" cy="24.8" r="2.6" fill="#0C0E13"/></g><circle cx="24" cy="16" r="5.4" fill="currentColor"/></svg></span><b>Guest<em>Graph</em></b> · Robert Blust</a>
+  <div class="name">
+    <a class="lockup" href="../../"><span class="namemark"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/><circle cx="6" cy="7.2" r="2.6" fill="#0C0E13"/><circle cx="6" cy="16" r="2.6" fill="#0C0E13"/><circle cx="6" cy="24.8" r="2.6" fill="#0C0E13"/></g><circle cx="24" cy="16" r="5.4" fill="currentColor"/></svg></span><b>Guest<em>Graph</em></b></a>
+    <span class="nsep" aria-hidden="true">·</span>
+    <a class="nperson" href="https://blust.ch/"><span class="rbmark"><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="plate" x=".75" y=".75" width="30.5" height="30.5" rx="7"/><text class="rb" x="16" y="22.5" text-anchor="middle" font-family="Plex Mono, ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17" font-weight="600">rb</text></svg></span><b>Robert <em>Blust</em></b></a>
+    <span class="nsep" aria-hidden="true">·</span>
+    <a class="nlink" href="../" data-de="Vorträge">Talks</a>
+  </div>
 
   <div class="transport" id="transport" role="group" aria-label="Deck controls">
 
