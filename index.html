@@ -18,12 +18,12 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="GuestGraph. Five strangers. One guest. — one explainable guest profile, from data scattered across every system in the hotel.">
 <meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="de_CH">
 <meta name="twitter:card" content="summary_large_image">
-
-<!-- Two things this page already says, in a form a search engine can read: who publishes
-     it, and where else that publisher is. Nothing about what the software does — those
-     fields (applicationCategory, featureList, status) are claims, and this page makes
-     none. Structured data is not the place to start breaking that rule. -->
+<!-- The publisher, the site and this page — nothing about what the software does or when
+     it does it, which is the same rule the prose follows. Each page carries the whole graph
+     it references: Google resolves @graph within one document, so a bare { "@id": ... }
+     naming a node defined on another page resolved to nothing, which is what this replaced. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -34,7 +34,9 @@
       "name": "GuestGraph",
       "url": "https://guestgraph.io/",
       "logo": "https://guestgraph.io/logo.svg",
-      "sameAs": ["https://github.com/guestgraph"]
+      "sameAs": [
+        "https://github.com/guestgraph"
+      ]
     },
     {
       "@type": "WebSite",
@@ -42,11 +44,41 @@
       "name": "GuestGraph",
       "url": "https://guestgraph.io/",
       "inLanguage": "en",
-      "publisher": { "@id": "https://guestgraph.io/#organization" }
+      "publisher": {
+        "@id": "https://guestgraph.io/#organization"
+      }
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://guestgraph.io/#software",
+      "name": "GuestGraph",
+      "description": "An open-source guest identity graph for hospitality: one explainable guest profile, from data scattered across every system in the hotel.",
+      "codeRepository": "https://github.com/guestgraph",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "author": {
+        "@id": "https://guestgraph.io/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://guestgraph.io/#webpage",
+      "name": "GuestGraph \u2014 the open-source guest identity graph",
+      "url": "https://guestgraph.io/",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://guestgraph.io/#website"
+      },
+      "publisher": {
+        "@id": "https://guestgraph.io/#organization"
+      },
+      "about": {
+        "@id": "https://guestgraph.io/#software"
+      }
     }
   ]
 }
 </script>
+
 <style>
 /* Self-hosted, same origin: no third party sees a visitor, and the files resolve
    from file:// as well as from the domain. */

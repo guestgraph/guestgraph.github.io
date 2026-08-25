@@ -18,11 +18,12 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="GuestGraph. Five strangers. One guest. — one explainable guest profile, from data scattered across every system in the hotel.">
 <meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="de_CH">
 <meta name="twitter:card" content="summary_large_image">
-
-<!-- Same rule as the landing page: the publisher and its other addresses, nothing about
-     what the software does or when it does it. An `Offer` here would be a price, and
-     this page deliberately quotes none. -->
+<!-- The publisher, the site and this page — nothing about what the software does or when
+     it does it, which is the same rule the prose follows. Each page carries the whole graph
+     it references: Google resolves @graph within one document, so a bare { "@id": ... }
+     naming a node defined on another page resolved to nothing, which is what this replaced. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -33,7 +34,19 @@
       "name": "GuestGraph",
       "url": "https://guestgraph.io/",
       "logo": "https://guestgraph.io/logo.svg",
-      "sameAs": ["https://github.com/guestgraph"]
+      "sameAs": [
+        "https://github.com/guestgraph"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://guestgraph.io/#website",
+      "name": "GuestGraph",
+      "url": "https://guestgraph.io/",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://guestgraph.io/#organization"
+      }
     },
     {
       "@type": "WebPage",
@@ -41,12 +54,38 @@
       "name": "Billing",
       "url": "https://guestgraph.io/billing/",
       "inLanguage": "en",
-      "isPartOf": { "@id": "https://guestgraph.io/#website" },
-      "publisher": { "@id": "https://guestgraph.io/#organization" }
+      "isPartOf": {
+        "@id": "https://guestgraph.io/#website"
+      },
+      "publisher": {
+        "@id": "https://guestgraph.io/#organization"
+      },
+      "breadcrumb": {
+        "@id": "https://guestgraph.io/billing/#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://guestgraph.io/billing/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://guestgraph.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Billing",
+          "item": "https://guestgraph.io/billing/"
+        }
+      ]
     }
   ]
 }
 </script>
+
 <style>
 /* Self-hosted, same origin: no third party sees a visitor, and the files resolve
    from file:// as well as from the domain. Relative, because this page sits one

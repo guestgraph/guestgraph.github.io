@@ -1,13 +1,14 @@
 # guestgraph.io
 #
 # Everything here is meant to be found. The only rule that matters is the pointer to the
-# sitemaps below — this site has no inbound links yet, so discovery starts here.
+# sitemap below — this site has no inbound links yet, so discovery starts here.
 
 User-agent: *
 Allow: /
 
-# The index, and its two children named directly in case a crawler skips the index.
-# /talks/sitemap.xml lives in the guestgraph/talks repository, which owns those URLs.
+# One sitemap, because there is one. This used to name three: sitemap-site.xml and
+# talks/sitemap.xml were both 404 in production, left behind when the talks moved out of
+# the guestgraph/talks repository and into this one. A robots.txt that points a crawler at
+# a missing file costs nothing visible and is wrong on every fetch, which is why verify now
+# checks that every sitemap named here resolves.
 Sitemap: https://guestgraph.io/sitemap.xml
-Sitemap: https://guestgraph.io/sitemap-site.xml
-Sitemap: https://guestgraph.io/talks/sitemap.xml

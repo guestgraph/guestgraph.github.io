@@ -10,7 +10,7 @@ import { DESIGN_CHECKS } from "./design.mjs";
 const BASE = process.env.BASE || "http://localhost:8000";
 
 const PAGES = [
-  { path: "/", noNewTab: true, title: /GuestGraph/, lang: "en",
+  { path: "/", seo: true, noNewTab: true, title: /GuestGraph/, lang: "en",
     contains: ["Five strangers", "One guest", "GuestGraph"],
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
@@ -23,7 +23,7 @@ const PAGES = [
   // the unit must be stated exactly, and the page must keep saying the service is not
   // open. Drop that second sentence and the page stops describing an intention and
   // starts advertising a product that does not exist.
-  { path: "/billing/", noNewTab: true, title: /GuestGraph/, lang: "en",
+  { path: "/billing/", seo: true, noNewTab: true, title: /GuestGraph/, lang: "en",
     contains: ["Not per record", "1 arrival = 1 reservation that checked in", "not open yet"],
     // no call to action here: the page ends on its argument, so the only outbound link
     // left to hold to the new-tab rule is the one in the footer.
@@ -36,7 +36,7 @@ const PAGES = [
   // trusting the prose: a page that says it makes no third-party request must make none,
   // and the suite's own `requestfailed`/`links` machinery cannot see that. If a font, an
   // analytics tag or an embed ever creeps in, this is what fails.
-  { path: "/privacy/", noNewTab: true, title: /GuestGraph/, lang: "en",
+  { path: "/privacy/", seo: true, noNewTab: true, title: /GuestGraph/, lang: "en",
     contains: ["This site collects", "There is no imprint yet"],
     links: ["https://github.com/guestgraph"],
     sameTab: ["../talks/", "../", "../billing/", "./"],
@@ -44,7 +44,7 @@ const PAGES = [
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io", internalLinks: true },
 
-  { path: "/talks/", noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
+  { path: "/talks/", seo: true, noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
     contains: ["GuestGraph", "guest identity"],
     // the nav no longer carries a Code item — the footer's org link is the way to the
     // source from here, one click further out than it used to be
@@ -54,7 +54,7 @@ const PAGES = [
     sameTab: ["intro/", "./", "../billing/", "../privacy/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io", internalLinks: true },
-  { path: "/talks/intro/", noNewTab: true, footerVersion: true, title: /GuestGraph/, lang: "en", sourceLang: "en", wayOut: "../",
+  { path: "/talks/intro/", seo: true, noNewTab: true, footerVersion: true, title: /GuestGraph/, lang: "en", sourceLang: "en", wayOut: "../",
     // The footer's other two destinations. `landing` covers the lockup, which is relative and
     // therefore invisible to `links`; blust.ch is absolute, so `links` catches a typo in it and
     // `newTab` holds it to the rule the pages already follow — a talk the presenter navigates
@@ -203,6 +203,79 @@ const CHECKS = {
   // `cardBase` is the production prefix to strip: this repository is served under
   // /talks/ on the domain but at / locally, so stripping the origin alone would ask
   // for a path that does not exist here — which looked like a broken card and was not.
+  // The head Google reads, asserted as a contract rather than page by page. `card` below
+  // already proves og:image resolves at its declared size; nothing proved a canonical
+  // exists, that it agrees with og:url, or that structured data points at anything real.
+  // Both failures this replaced were live 404s — a logo.svg this site never had, and an
+  // isPartOf naming a #website node defined nowhere — and both had shipped green.
+  async seo(page, spec) {
+    const problems = [];
+    const m = await page.evaluate(() => {
+      const meta = (sel) => (document.querySelector(sel) || {}).content || null;
+      return {
+        canonical: (document.querySelector('link[rel="canonical"]') || {}).getAttribute?.("href") ?? null,
+        ogUrl: meta('meta[property="og:url"]'),
+        desc: meta('meta[name="description"]'),
+        site: meta('meta[property="og:site_name"]'),
+        locale: meta('meta[property="og:locale"]'),
+        alt: meta('meta[property="og:image:alt"]'),
+        twitter: meta('meta[name="twitter:card"]'),
+        ld: [...document.querySelectorAll('script[type="application/ld+json"]')].map(s => s.textContent),
+      };
+    });
+
+    if (!m.canonical) problems.push("no canonical");
+    else if (!/^https:\/\//.test(m.canonical))
+      problems.push(`canonical ${JSON.stringify(m.canonical)} is relative — nothing can compare it with og:url`);
+    else if (m.canonical !== m.ogUrl)
+      problems.push(`canonical ${m.canonical} != og:url ${m.ogUrl}`);
+
+    if (!m.desc) problems.push("no meta description");
+    else if (m.desc.length > 200) problems.push(`description is ${m.desc.length} chars, over 200`);
+
+    for (const [k, v] of [["og:site_name", m.site], ["og:locale", m.locale],
+                          ["og:image:alt", m.alt], ["twitter:card", m.twitter]])
+      if (!v) problems.push(`no ${k}`);
+
+    // Structured data has to resolve, not merely parse. Google reads @graph within one
+    // document, so an @id referenced but defined elsewhere is a pointer to nothing — and
+    // a URL inside it is a promise the site either keeps or does not.
+    if (!m.ld.length) problems.push("no application/ld+json");
+    const defined = new Set(), referenced = [], urls = new Set();
+    for (const block of m.ld) {
+      let data;
+      try { data = JSON.parse(block); }
+      catch (e) { problems.push("ld+json does not parse: " + e.message); continue; }
+      const nodes = data["@graph"] || (Array.isArray(data) ? data : [data]);
+      const walk = (o) => {
+        if (Array.isArray(o)) return o.forEach(walk);
+        if (!o || typeof o !== "object") return;
+        for (const [k, v] of Object.entries(o)) {
+          // A node that carries @id *and* @type defines something; a bare { "@id": ... }
+          // is a reference to a node that must be defined somewhere on this same page.
+          if (k === "@id" && typeof v === "string") { if (!o["@type"]) referenced.push(v); }
+          else if (typeof v === "string" && /^https?:\/\//.test(v) && k !== "@context") urls.add(v);
+          else walk(v);
+        }
+      };
+      nodes.forEach(n => { if (n && n["@id"]) defined.add(n["@id"]); });
+      nodes.forEach(walk);
+    }
+    for (const r of referenced)
+      if (!defined.has(r)) problems.push(`ld+json references ${r}, which no node on this page defines`);
+
+    for (const u of urls) {
+      if (!u.startsWith(spec.cardBase || new URL(spec.absolute).origin.replace(/^http:\/\/localhost:8000$/, "https://guestgraph.io"))) continue;
+      const status = await page.evaluate(async (x) => {
+        try { const r = await fetch(x.replace("https://guestgraph.io", location.origin), { method: "GET" }); return r.status; }
+        catch { return 0; }
+      }, u);
+      if (status !== 200) problems.push(`ld+json names ${u} → HTTP ${status}`);
+    }
+
+    return problems.length ? problems.join("; ") : null;
+  },
+
   async card(page, spec) {
     const img = await page.evaluate(() =>
       (document.querySelector('meta[property="og:image"]') || {}).content);
@@ -257,5 +330,51 @@ for (const spec of PAGES) {
   await page.close();
 }
 await browser.close();
+// The crawl map is not a page, so it is checked separately. Two separate promises live
+// here and both were being made without anything keeping them: every URL a sitemap claims
+// must resolve, and every sitemap robots.txt names must exist. This file named three —
+// sitemap-site.xml and talks/sitemap.xml were 404 in production, left behind when the talks
+// moved out of the guestgraph/talks repository and into this one. Nothing failed, nobody
+// saw it, and a crawler was being sent to both on every fetch.
+{
+  const ORIGIN = "https://guestgraph.io";
+  const res = await fetch(BASE + "/sitemap.xml");
+  if (!res.ok) { console.log(`✗ /sitemap.xml  HTTP ${res.status}`); failures++; }
+  else {
+    const xml = await res.text();
+    const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
+    const expected = [`${ORIGIN}/`, `${ORIGIN}/billing/`, `${ORIGIN}/privacy/`,
+                      `${ORIGIN}/talks/`, `${ORIGIN}/talks/intro/`];
+    const missing = expected.filter(u => !locs.includes(u));
+    const extra = locs.filter(u => !expected.includes(u));
+    if (missing.length || extra.length) {
+      console.log(`✗ /sitemap.xml  missing: ${missing} unexpected: ${extra}`); failures++;
+    } else {
+      let unreachable = 0;
+      for (const u of locs) {
+        const r = await fetch(u.replace(ORIGIN, BASE));
+        if (!r.ok) { console.log(`✗ sitemap URL ${u} → ${r.status}`); failures++; unreachable++; }
+      }
+      if (!unreachable) console.log("✓ /sitemap.xml  " + locs.length + " urls, all reachable");
+    }
+  }
+
+  const rb = await fetch(BASE + "/robots.txt");
+  if (!rb.ok) { console.log(`✗ /robots.txt  HTTP ${rb.status}`); failures++; }
+  else {
+    const named = [...(await rb.text()).matchAll(/^\s*Sitemap:\s*(\S+)/gim)].map(m => m[1]);
+    if (!named.length) { console.log("✗ /robots.txt  names no sitemap"); failures++; }
+    else {
+      const dead = [];
+      for (const u of named) {
+        const r = await fetch(u.replace(ORIGIN, BASE));
+        if (!r.ok) dead.push(`${u} → ${r.status}`);
+      }
+      if (dead.length) { console.log("✗ /robots.txt  names sitemap(s) that do not exist: " + dead.join(", ")); failures++; }
+      else console.log(`✓ /robots.txt  ${named.length} sitemap(s), all reachable`);
+    }
+  }
+}
+
 console.log(failures ? `\n${failures} page(s) FAILED` : "\nall checks pass");
 process.exit(failures ? 1 : 0);

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<link rel="canonical" href="./">
+<link rel="canonical" href="https://guestgraph.io/talks/">
 
 <!-- The head is English while the body is German, and that is deliberate. The body is
      authored German-first and swapped by applyLang(); the head describes the page as it
@@ -25,6 +25,71 @@
 <meta property="og:locale" content="en_GB">
 <meta property="og:locale:alternate" content="de_CH">
 <meta name="twitter:card" content="summary_large_image">
+<!-- The publisher, the site and this page — nothing about what the software does or when
+     it does it, which is the same rule the prose follows. Each page carries the whole graph
+     it references: Google resolves @graph within one document, so a bare { "@id": ... }
+     naming a node defined on another page resolved to nothing, which is what this replaced. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://guestgraph.io/#organization",
+      "name": "GuestGraph",
+      "url": "https://guestgraph.io/",
+      "logo": "https://guestgraph.io/logo.svg",
+      "sameAs": [
+        "https://github.com/guestgraph"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://guestgraph.io/#website",
+      "name": "GuestGraph",
+      "url": "https://guestgraph.io/",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://guestgraph.io/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://guestgraph.io/talks/#webpage",
+      "name": "Talks",
+      "url": "https://guestgraph.io/talks/",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://guestgraph.io/#website"
+      },
+      "publisher": {
+        "@id": "https://guestgraph.io/#organization"
+      },
+      "breadcrumb": {
+        "@id": "https://guestgraph.io/talks/#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://guestgraph.io/talks/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://guestgraph.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Talks",
+          "item": "https://guestgraph.io/talks/"
+        }
+      ]
+    }
+  ]
+}
+</script>
 <style>
 /* Self-hosted, same origin — no third party sees a visitor, and the files resolve
    from file:// as well as from the domain. */
