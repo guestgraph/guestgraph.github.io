@@ -21,6 +21,11 @@ jobs:
         with:
           node-version: "22"
           cache: npm
+      # Before `npm ci`, deliberately: the check re-derives each card's recipe hash and
+      # renders nothing, so it needs no browser and no dependencies. A stale card is the
+      # cheapest failure here to report and the slowest one to notice in the wild.
+      - name: Assert the share cards still show their pages
+        run: npm run og:check
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - name: Serve the site

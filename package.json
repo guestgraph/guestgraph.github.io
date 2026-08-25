@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "serve": "python3 -m http.server 8000",
-    "verify": "node verify/check.mjs"
+    "verify": "node verify/check.mjs",
+    "og": "node export-og.mjs",
+    "og:check": "node export-og.mjs --check"
   },
   "devDependencies": { "playwright": "^1.49.1" }
 }

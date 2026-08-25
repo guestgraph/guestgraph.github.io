@@ -117,8 +117,46 @@ and nothing to drift.
 `index.html`. The PDF is deliberately not listed: it is the same talk in a second format and
 would compete with the deck for the same query.
 
-`npm run og` regenerates the 1200×630 share cards from the pages themselves. Re-run it after
-a visual change to either, and keep the `og:image:width`/`height` tags matching the file.
+`npm run og` regenerates the 1200×630 share cards from the pages themselves, and
+`npm run og:check` says whether they still match. Keep the `og:image:width`/`height` tags
+matching the file.
+
+## Share cards go stale silently, and nothing on the page says so
+
+`og.png` is not a banner someone drew: `npm run og` renders it from the page itself — the
+landing page and the talks index are their own cards, the deck's card is its title slide —
+so a link preview shows what the visitor is about to land on. The cost of that is a copy
+that has to be re-rendered whenever the page moves, and nothing about a stale card looks
+wrong. Two of the three here were stale when the check was added: the landing card predated
+the `Billing` nav item and the footer's `Privacy` link, the talks card predated the same
+footer link, and both had been serving guestgraph.io that way through several commits.
+
+- **`npm run og:check` compares the recipe, never the pixels.** Two machines rasterise the
+  same text differently, so a card compared by its bytes reports which machine rendered it.
+  The check re-derives a hash of what went *into* the card and compares it with the `og.sha`
+  committed beside it. It renders nothing, needs no browser, and runs in CI before `npm ci`.
+- **The recipe is the page plus every local file the page renders plus the exporter's own
+  frame and hide rules.** Fonts count, and here there is one `fonts/` at the root shared by
+  all three pages — so a font swap marks **all three** cards stale in one go. On blust.ch,
+  where each deck carries its own fonts, the same edit moves only the index cards. Nothing
+  about the check changed; the dependency graph is simply flatter here.
+- **`<a href>` is excluded, and it is the one place the walk is not a plain attribute
+  sweep.** The talks index links two multi-megabyte PDFs of the same talk. A link target is
+  not something the page renders, so hashing it would report the talks card stale every
+  time `npm run pdf` ran, over a page that had not moved a pixel — noise that trains you
+  to stop reading the check.
+- **The three cards do not all hide the same things.** The talks cards drop the chrome — a
+  card with a progress bar and a play button on it advertises controls that do nothing
+  inside a PNG. The landing card keeps its header and drops `.figure`, which is why its
+  right half is empty. The rules are hashed per card, so changing one marks only its own
+  card stale.
+- **Both files are committed together.** `og.png` and `og.sha`, in the same commit as the
+  page that moved. The stamp is written after the screenshot, so an exporter that dies half
+  way leaves the card reported stale rather than reported current.
+- **It over-reports and never under-reports, deliberately.** Editing a comment in a page
+  marks its card stale even though the render would be identical. Clearing that is
+  `npm run og` and a commit — cheap, and the opposite error is a card nobody notices for
+  weeks.
 
 ## The design system, and why it is a copy
 
