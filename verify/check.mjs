@@ -113,10 +113,24 @@ const CHECKS = {
   // So the exception is about *where* a link sits, not where it points: this site has none
   // today, and companygraph's deck has two.
   async noNewTab(page) {
-    const bad = await page.evaluate(() =>
-      [...document.querySelectorAll('a[target="_blank"]')]
+    const bad = await page.evaluate(() => {
+      const live = [...document.querySelectorAll('a[target="_blank"]')]
         .filter(a => !a.closest(".slide"))
-        .map(a => a.getAttribute("href")));
+        .map(a => a.getAttribute("href"));
+      // The rendered DOM is only ever one language. German rides in `data-de` as markup that
+      // does not exist until a visitor switches, so a link check that trusts the DOM inspects
+      // half the site. That is not hypothetical: the privacy page's German credit kept
+      // `target='_blank'` — in single quotes, because it is nested inside an attribute — and
+      // survived both a source-wide strip and this check until the attributes were parsed.
+      const translated = [...document.querySelectorAll("[data-de]")].flatMap(el => {
+        if (el.closest(".slide")) return [];
+        const t = document.createElement("template");
+        t.innerHTML = el.getAttribute("data-de");
+        return [...t.content.querySelectorAll('a[target="_blank"]')]
+          .map(a => `${a.getAttribute("href")} [de]`);
+      });
+      return [...live, ...translated];
+    });
     return bad.length ? "must stay in this tab: " + bad.join(", ") : null;
   },
   async sameTab(page, spec) {
