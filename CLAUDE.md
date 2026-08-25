@@ -56,13 +56,13 @@ coming and stays named for what it carries. Until then nothing here can be bough
 what makes both states honest. Doing half of it leaves the site either advertising a product
 with no seller, or naming a seller for a product it still calls unavailable.
 
-**The `Billing` nav item is shared chrome, so it lives in three files across two
-repositories** — both pages here, and `index.html` in `guestgraph/talks`, whose header bar
-is a verbatim copy of this one. Renaming or reordering the nav means editing all three in
-the same breath. `verify` in either repository can only see its own half: nothing here can
-tell you the talks index has fallen behind, and nothing there can tell you this page has.
-The footer's *Privacy* link is the same shape of obligation, in four files across the two
-repositories.
+**The nav and the footer are repeated in every page here, and `verify` is what keeps them in
+step.** `Billing` lives in four files — the landing page, billing, privacy and the talks index
+— and the footer's *Privacy* link in the same four, because there is no build step and nothing
+to import. That used to be an obligation spanning two repositories that neither suite could see
+across; the talks live here now, so one `npm run verify` asserts all of them in one run.
+Renaming or reordering a nav item still means editing every page, but forgetting one is now
+caught rather than merely warned about.
 
 It was written as a bare path first, to keep the footer strictly to data — the strip
 is set in the data face, and a bare word there looked like navigation in mono. That was the
@@ -84,10 +84,12 @@ two-file obligation, which is the point.
 
 ## Constraints
 
-- **The repository name is load-bearing.** `guestgraph.github.io` makes this the org's
-  Pages site, so the custom domain in `CNAME` cascades to every other Pages site in the
-  org — `guestgraph/talks` serves at guestgraph.io/talks/ with no configuration of its
-  own. Renaming this repo or removing `CNAME` silently breaks the talks URL.
+- **The repository name is load-bearing.** `guestgraph.github.io` makes this the org's Pages
+  site, which is what puts it on the custom domain in `CNAME`. Renaming it or removing `CNAME`
+  takes the whole domain down — the talks included, since they are folders here rather than a
+  repository of their own. A repository named `talks` in this org would claim
+  `guestgraph.io/talks/` the moment its Pages were switched on, shadowing `talks/` here; that
+  is what had to be undone to merge them. Do not recreate one.
 - **Outbound links open in a new tab** — `target="_blank" rel="noopener"` — and that now
   means GitHub only. Both links into `guestgraph.io/talks/`, the nav item and the
   `Watch intro talk` button, stay in the tab: the deck they lead to carries its own *All
@@ -105,10 +107,18 @@ two-file obligation, which is the point.
 
 ## Findability
 
-`sitemap.xml` lists every URL on this domain — the landing page, billing, privacy and the
-talks. It was an index pointing at `sitemap-site.xml` and a second sitemap owned by another
-repository; that split is gone, so there is one list and no second copy to keep in step.
+`sitemap.xml` at the repository root lists every URL on this domain — the landing page,
+billing, privacy, the talks index and each deck. It was an index pointing at
+`sitemap-site.xml` and a second sitemap owned by the talks repository: one list per
+repository, kept in step by hand. One repository serves the domain now, so there is one list
+and nothing to drift.
 
+**Adding a talk means editing `README.md` and `sitemap.xml`**, alongside the deck's own
+`index.html`. The PDF is deliberately not listed: it is the same talk in a second format and
+would compete with the deck for the same query.
+
+`npm run og` regenerates the 1200×630 share cards from the pages themselves. Re-run it after
+a visual change to either, and keep the `og:image:width`/`height` tags matching the file.
 
 ## The design system, and why it is a copy
 
@@ -156,7 +166,6 @@ the same assertions the other two do, against a served copy on `localhost:8000`.
 
 - Commits happen when the user asks; suggest a message, don't auto-commit.
 - Never mention closed-source predecessor projects — here, in docs, or in commits.
-
 
 # The talks
 
@@ -280,20 +289,6 @@ quiet run as a cached one.
 
 Before writing a number or a claim about the product into a slide, ask where it is
 owned. A deck that restates the roadmap is a second copy that no CI can keep honest.
-
-## Findability
-
-`sitemap.xml` at the repository root lists every URL on this domain, the talks included.
-It was an index pointing at `sitemap-site.xml` and `talks/sitemap.xml` while the decks lived
-in a repository of their own — one list per repository, kept in step by hand. One repository
-serves the domain now, so there is one list and nothing to drift.
-
-**Adding a talk means editing `README.md` and `sitemap.xml`**, alongside the deck's own
-`index.html`. The PDF is deliberately not listed: it is the same talk in a second format and
-would compete with the deck for the same query.
-
-`npm run og` regenerates the 1200×630 share cards from the pages themselves. Re-run it after
-a visual change and keep the `og:image:width`/`height` tags matching the file.
 
 ## Slides are a canvas, not a page
 

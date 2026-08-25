@@ -1,2 +1,3 @@
 node_modules/
-package-lock.json
+# package-lock.json is committed, deliberately: CI runs `npm ci`, which fails outright
+# without a lockfile in the tree. It was ignored while nothing ran the suite automatically.

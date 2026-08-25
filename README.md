@@ -17,6 +17,14 @@ A repository named `talks` in this organisation would claim `guestgraph.io/talks
 its Pages were enabled — shadowing the folder in this repository, which is how the old split
 had to be unwound. Do not recreate one.
 
+| Path | |
+|---|---|
+| `/` | The landing page. |
+| `/talks/` | The talks index. |
+| `/talks/intro/` | The introduction — narrated, German and English, with a PDF in each. |
+| `/billing/` | How the hosted service will bill. One meter, and it is arrivals. |
+| `/privacy/` | What this site collects, which is nothing. |
+
 ## Contents
 
 - `index.html` — the landing page. Self-contained: even the fonts are served from `fonts/`.

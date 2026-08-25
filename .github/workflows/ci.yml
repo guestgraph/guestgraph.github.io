@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    # Two ways to hang this job in the server step are already documented in CLAUDE.md and
+    # both were hit for real. A third would otherwise burn the 360-minute default before
+    # anyone learned it existed, on a check destined to be required.
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Serve the site
+        run: python3 -m http.server 8000 > /dev/null 2>&1 &
+      - name: Wait for the server
+        run: |
+          for i in $(seq 1 20); do
+            curl -sf http://127.0.0.1:8000/ > /dev/null && exit 0
+            sleep 0.5
+          done
+          echo "Server never came up on :8000" >&2
+          exit 1
+      - name: Assert what it renders
+        run: npm run verify
