@@ -135,6 +135,18 @@ footer link, and both had been serving guestgraph.io that way through several co
   same text differently, so a card compared by its bytes reports which machine rendered it.
   The check re-derives a hash of what went *into* the card and compares it with the `og.sha`
   committed beside it. It renders nothing, needs no browser, and runs in CI before `npm ci`.
+- **Three files, and the split is what makes the check testable.** `og-recipe.mjs` is pure and
+  has no side effects on import — the card list, the knobs, `sources()`, `recipe()`, `state()`.
+  `export-og.mjs` is the only one that needs playwright. `og-check.mjs` reports. An exporter
+  that renders on import cannot be loaded by a test file, which is why the knobs left it.
+- **The knobs live in `og-recipe.mjs`, not in the exporter.** A second copy of the frame or a
+  hide rule is a knob that can be edited without the hash moving — the one failure this whole
+  mechanism exists to make impossible. The recipe hashes the card object canonically, so a knob
+  added later enters the hash by existing rather than by someone remembering to list it.
+- **`npm run test:og` is the check's own suite** (`verify/og-recipe.test.mjs`, `node --test`,
+  no dependencies). It drives both directions — a moved page must come out stale, and a card
+  reported current after the page changed must be impossible — against a temporary tree rather
+  than against this repository, so it still means something after these pages change.
 - **The recipe is the page plus every local file the page renders plus the exporter's own
   frame and hide rules.** Fonts count, and here there is one `fonts/` at the root shared by
   all three pages — so a font swap marks **all three** cards stale in one go. On blust.ch,
@@ -157,6 +169,11 @@ footer link, and both had been serving guestgraph.io that way through several co
   marks its card stale even though the render would be identical. Clearing that is
   `npm run og` and a commit — cheap, and the opposite error is a card nobody notices for
   weeks.
+- **The setup is shared with `blust.ch` and `companygraph.io`,** which render their own cards
+  the same way. `og-recipe.mjs` differs between them only in the card list and the hide rules,
+  and `verify/og-recipe.test.mjs` is the same file in all three. Fixing a rule here means
+  fixing it there — like the design tokens above, it is a habit with a tripwire, not a
+  guarantee.
 
 ## The design system, and why it is a copy
 
