@@ -39,7 +39,7 @@
 @font-face{font-family:"Plex Mono";src:url(../../fonts/PlexMono-400.woff2) format("woff2");font-weight:400;font-display:swap}
 @font-face{font-family:"Plex Mono";src:url(../../fonts/PlexMono-600.woff2) format("woff2");font-weight:600;font-display:swap}
 
-  /* ─── design tokens · v1 · keep in step across every repository that shares them ───
+  /* ─── design tokens · v2 · keep in step across every repository that shares them ───
      These sites share no stylesheet by design — a deck has to open from
      file:// — so this block is a copy, and each repo's verify suite asserts
      the copy still matches. Change it here, then run the checks.
@@ -52,6 +52,7 @@
   */
   :root{
     --ground:#0C0E13; --raise:#171A21; --rule:#232833;
+    --sky:radial-gradient(120% 60% at 50% -10%, var(--raise) 0%, var(--ground) 60%);
     --ink:#EFEDE8;    --dim:#8A8B86;
     --c-weak:#3E5878; --c-mid:#7FA3D8; --c-firm:#B8D0FF; --c-flag:#D9A44F;
   /* ─── end design tokens ─────────────────────────────────────────────── */
@@ -66,6 +67,7 @@
   body{
     font-family:"Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     background:var(--ground); color:var(--ink);
+    background-image:var(--sky); background-repeat:no-repeat;
     -webkit-font-smoothing:antialiased; overflow:hidden;
   }
   .mono{font-family:"Plex Mono", ui-monospace, "SF Mono", Menlo, monospace}
@@ -83,7 +85,11 @@
     width:1600px; height:900px;   /* width is overwritten per screen, see fit() */
     transform-origin:0 0;
     container-type:size;
-    background:radial-gradient(130% 85% at 50% 0%, var(--raise) 0%, var(--ground) 62%);
+    /* No sky of its own. The canvas used to paint one — a slightly different one —
+       which meant the deck was lit unlike every page on the site, and an opaque fixed
+       canvas hides whatever sky the body sets anyway. Transparent lets --sky through,
+       so the deck and the pages get the same one. */
+    background:transparent;
   }
 
   /* A slide can never be taller than the canvas, so anything that scales with

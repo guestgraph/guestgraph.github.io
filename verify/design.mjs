@@ -9,8 +9,19 @@
 // the system means bumping N in all three and running all three suites. `npm run verify`
 // will tell you which page in *this* repo is behind; nothing here can tell you that a
 // sibling repository is. That part is a habit, and this comment is the reminder.
+//
+// What this file asserts, in the order the checks are defined below:
+//   fontsLoaded     a declared family is really loaded, measured rather than believed
+//   fontsAvailable  every family named anywhere is self-hosted or a system face
+//   tokens          the palette's vocabulary and its values
+//   sky             the one gradient, declared *and* painted by the body
+//   header          the lockup, the nav and the header's own metrics, measured
+//   monoScope       mono means data, and nothing else
+//   contrast        the text colours clear their ratios on --ground
+//   tokenVersion    the page's `design tokens · vN` marker matches this suite
+//   footerVersion   the deck's `deck footer · vN` marker matches this suite
 
-export const TOKEN_VERSION = "v1";
+export const TOKEN_VERSION = "v2";
 
 // The deck footer is copied across the three sites for the same reason the token block is:
 // a deck opens from file://, so there is nothing to import. What it holds is a contract, not
@@ -31,6 +42,21 @@ export const TOKENS = {
 };
 
 const hex = v => v.trim().replace(/^#/, "").toUpperCase();
+
+// The sky every page and every deck is lit by. It is a token like the rest, but unlike the
+// rest it cannot be compared to what the block says: a custom property's computed value has
+// its var() references substituted, so a page carrying
+// `--sky:radial-gradient(… var(--raise) … var(--ground) …)` reports the two colours already
+// resolved. This is that resolved string — what the page must actually report.
+export const SKY = "radial-gradient(120% 60% at 50% -10%, #171A21 0%, #0C0E13 60%)";
+
+// Chromium is free to serialise a colour inside a gradient either as the hex it was written
+// as or as rgb(), and which one you get depends on where the value came from. Fold both to a
+// lower-case hex, and forgive the whitespace the serialiser may add or drop.
+const rgbToHex = v => v.replace(
+  /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/gi,
+  (_, r, g, b) => "#" + [r, g, b].map(n => Number(n).toString(16).padStart(2, "0")).join(""));
+const norm = v => rgbToHex(String(v).trim().replace(/\s+/g, " ")).toLowerCase();
 
 // Generic keywords and the system faces a fallback stack is allowed to name. Several are
 // one platform's and absent on the others — Segoe UI is Windows, Menlo and SF Mono are
@@ -140,6 +166,95 @@ export const DESIGN_CHECKS = {
     const wrong = Object.entries(TOKENS)
       .filter(([k, v]) => hex(got[k] || "") !== hex(v))
       .map(([k, v]) => `${k} is ${(got[k] || "unset").trim()}, expected ${v}`);
+    return wrong.length ? wrong.join("; ") : null;
+  },
+
+  // One sky, everywhere. Declaring it is only half: a page can carry --sky and never paint
+  // it, which is how the landing page read before this — flat --ground while every sibling
+  // page had a gradient overhead, a difference no token check could see. So this asserts the
+  // property *and* that the body actually paints a gradient from it. A deck counts: its
+  // canvas must not sit over the body opaque, or the sky is declared and invisible.
+  async sky(page) {
+    const got = await page.evaluate(() => ({
+      prop: getComputedStyle(document.documentElement).getPropertyValue("--sky"),
+      image: getComputedStyle(document.body).backgroundImage,
+    }));
+    if (norm(got.prop) !== norm(SKY))
+      return `--sky is ${got.prop.trim() || "unset"}, expected ${SKY}`;
+    if (!got.image || got.image === "none")
+      return "--sky is declared and the body paints no background-image at all";
+    if (!/radial-gradient/i.test(got.image))
+      return `the body's background-image is ${got.image}, which draws no radial-gradient`;
+    return null;
+  },
+
+  // The header is one object copied into every page, exactly the way the token block is,
+  // and it drifts the same way: not by a redesign but by two pixels on a lockup and a
+  // tenth of a rem in a gap — invisible in a diff, obvious the moment two tabs are open
+  // side by side. It was already true here. The landing page sat its header 38.4px from
+  // the top and 0 from the bottom while every other page used 32/32, and it drew a 26px
+  // mark where the rest drew 28px; the talks index had the small mark too.
+  //
+  // So this measures rather than reads: computed values at the suite's viewport, which
+  // lets a page reach them however it likes and still pass, and which catches the page
+  // that declares the right thing and renders the wrong one. Every mismatch is reported
+  // at once — fixing a header one measurement per run is how you learn to hate a suite.
+  //
+  // A deck has no <header> at all; it carries a transport bar instead. The check stands
+  // down for that case and only that case: a page whose header merely *differs* is the
+  // whole reason this exists, so `null` here means the element is absent, never wrong.
+  async header(page) {
+    const got = await page.evaluate(() => {
+      const h = document.querySelector("header");
+      if (!h) return null;                       // a deck — transport bar, no header
+      const px = (el, prop) => el ? getComputedStyle(el)[prop] : null;
+      const brand = h.querySelector(".brand");
+      const svg   = h.querySelector(".brand svg");
+      const nav   = h.querySelector("nav");
+      const link  = nav && nav.querySelector("a");
+      const box   = svg && svg.getBoundingClientRect();
+      return {
+        inShell:   !!h.parentElement && h.parentElement.classList.contains("shell"),
+        parent:    h.parentElement ? h.parentElement.tagName.toLowerCase() +
+                     "." + (h.parentElement.className || "(no class)") : "(none)",
+        padTop:    px(h, "paddingTop"),
+        padBottom: px(h, "paddingBottom"),
+        hasBrand:  !!brand, hasSvg: !!svg, hasNav: !!nav, hasLink: !!link,
+        brandGap:  px(brand, "gap"),
+        svgW:      box ? Math.round(box.width  * 1e3) / 1e3 : null,
+        svgH:      box ? Math.round(box.height * 1e3) / 1e3 : null,
+        navGap:    px(nav, "gap"),
+        size:      px(link, "fontSize"),
+        weight:    px(link, "fontWeight"),
+        spacing:   px(link, "letterSpacing"),
+        transform: px(link, "textTransform"),
+      };
+    });
+    if (got === null) return null;
+
+    const wrong = [];
+    const want = (label, actual, expected) => {
+      if (actual !== expected) wrong.push(`${label} is ${actual}, expected ${expected}`);
+    };
+    if (!got.inShell) wrong.push(`header sits in ${got.parent}, expected a .shell`);
+    want("header padding-top", got.padTop, "32px");
+    want("header padding-bottom", got.padBottom, "32px");
+    if (!got.hasBrand) wrong.push("there is no .brand in the header");
+    else want(".brand gap", got.brandGap, "11.2px");
+    if (!got.hasSvg) wrong.push("the .brand carries no svg mark");
+    else {
+      want(".brand svg width", got.svgW, 28);
+      want(".brand svg height", got.svgH, 28);
+    }
+    if (!got.hasNav) wrong.push("there is no nav in the header");
+    else want("nav gap", got.navGap, "30.4px");
+    if (!got.hasLink) wrong.push("the nav carries no link to measure");
+    else {
+      want("the first nav link's font-size", got.size, "12.16px");
+      want("the first nav link's font-weight", got.weight, "500");
+      want("the first nav link's letter-spacing", got.spacing, "1.7024px");
+      want("the first nav link's text-transform", got.transform, "uppercase");
+    }
     return wrong.length ? wrong.join("; ") : null;
   },
 
