@@ -1,0 +1,12 @@
+node_modules/
+package-lock.json
+shot-*.png
+_dbg*
+
+# TTS scratch output. The published clips live in intro/audio/ and ARE committed —
+# GitHub Pages can only serve what is in the repo.
+intro/tts/*.mp3
+intro/tts/*.wav
+__pycache__/
+.env
+*.key

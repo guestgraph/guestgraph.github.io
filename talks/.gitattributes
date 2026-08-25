@@ -1,0 +1,7 @@
+# Git already detects these as binary (NUL bytes in the first 8KB), so this file is
+# belt-and-braces: it guarantees no end-of-line rewriting on a Windows clone, and
+# -delta stops Git attempting delta compression between unrelated audio clips.
+#
+# Deliberately NOT Git LFS: GitHub Pages does not resolve LFS objects, so the site
+# would serve the pointer text instead of the audio.
+*.mp3 binary -delta

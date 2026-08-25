@@ -1,0 +1,1153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://guestgraph.io/talks/intro/">
+
+<!-- lang="de" is the truth about this file: the slides are German markup, and English
+     lives in data-en until applyLang() swaps it. A crawler that runs JS then sees English
+     under lang="en"; one that does not sees German under lang="de". Either way the page
+     is coherent, which it was not when the German source claimed to be English.
+
+     The head is English because it describes the page as delivered — the deck opens in
+     English — and applyLang() swaps the title and description when a visitor picks German. -->
+<title>GuestGraph — an introduction · a talk by Robert Blust</title>
+<meta id="metadesc" name="description" content="A talk on why a returning guest looks like five strangers, and how layered confidence makes every merge explainable and reversible.">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="GuestGraph">
+<meta property="og:url" content="https://guestgraph.io/talks/intro/">
+<meta property="og:title" content="GuestGraph — an introduction">
+<meta property="og:description" content="Why a returning guest looks like five strangers, and how layered confidence makes every merge explainable and reversible.">
+<meta property="og:image" content="https://guestgraph.io/talks/intro/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GuestGraph. One explainable guest profile, from data scattered across every system in the hotel.">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="de_CH">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Robert Blust">
+<style>
+/* Self-hosted inside the deck directory, exactly as audio/ and the images are: the
+   unit that has to survive being copied to someone else's machine is the folder,
+   not the file. Before this the deck named a face it never shipped, so every slide
+   rendered in whatever system-ui the room's laptop happened to have. */
+@font-face{font-family:"Bricolage Grotesque";src:url(fonts/Bricolage-var.woff2) format("woff2-variations"),url(fonts/Bricolage-var.woff2) format("woff2");font-weight:200 800;font-display:swap}
+@font-face{font-family:"Instrument Sans";src:url(fonts/InstrumentSans-var.woff2) format("woff2-variations"),url(fonts/InstrumentSans-var.woff2) format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"Plex Mono";src:url(fonts/PlexMono-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Plex Mono";src:url(fonts/PlexMono-600.woff2) format("woff2");font-weight:600;font-display:swap}
+
+  /* ─── design tokens · v1 · keep in step across every repository that shares them ───
+     These sites share no stylesheet by design — a deck has to open from
+     file:// — so this block is a copy, and each repo's verify suite asserts
+     the copy still matches. Change it here, then run the checks.
+
+     Brightness is confidence. Each stop has exactly one job:
+       --c-weak  a candidate: considered, not accepted
+       --c-mid   anything interactive — links, controls, the brand accent
+       --c-firm  the resolved thing — the thesis, the current page
+       --c-flag  a reversal; at most one per page, never decoration
+  */
+  :root{
+    --ground:#0C0E13; --raise:#171A21; --rule:#232833;
+    --ink:#EFEDE8;    --dim:#8A8B86;
+    --c-weak:#3E5878; --c-mid:#7FA3D8; --c-firm:#B8D0FF; --c-flag:#D9A44F;
+  /* ─── end design tokens ─────────────────────────────────────────────── */
+
+    /* deck-only, and deliberately outside the shared block: a warning red the
+       prose pages have no use for, and the transport's own two surfaces — the
+       slab it is milled from and the recessed window the track number sits in. */
+    --warn:#e0705e; --slab:#16181d; --lcd:#0a0b0e;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%}
+  body{
+    font-family:"Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    background:var(--ground); color:var(--ink);
+    -webkit-font-smoothing:antialiased; overflow:hidden;
+  }
+  .mono{font-family:"Plex Mono", ui-monospace, "SF Mono", Menlo, monospace}
+
+  /* ─── the canvas ──────────────────────────────────────────────────────
+     Slides are laid out once at 1600×900 and the whole plane is scaled to
+     whatever the screen gives it, the way a presentation tool does it. Two
+     things follow, and both were previously things to re-test rather than
+     guarantees: a slide can never scroll, because the canvas always fits;
+     and the composition is identical on every screen, because there is only
+     one composition. Sizing by cqmin did the opposite — it derived width from
+     viewport height, so a wider screen only ever bought more empty margin. */
+  .deck{
+    position:fixed; top:0; left:0;
+    width:1600px; height:900px;   /* width is overwritten per screen, see fit() */
+    transform-origin:0 0;
+    container-type:size;
+    background:radial-gradient(130% 85% at 50% 0%, var(--raise) 0%, var(--ground) 62%);
+  }
+
+  /* A slide can never be taller than the canvas, so anything that scales with
+     width needs a ceiling. A square 300×300 diagram in a half-width column was
+     780px tall on an ultrawide screen — inside a 900px frame that already held a
+     kicker and a headline. The cap is well above any inline icon, so it only ever
+     bites on a figure that was about to overflow. */
+  .slide svg, .slide img{max-height:60cqmin}
+
+  .slide{
+    position:absolute; inset:0;
+    display:none; flex-direction:column; justify-content:center;
+    padding:6.5cqmin max(10cqmin, (100% - 1620px) / 2);
+    opacity:0; transition:opacity .35s ease;
+  }
+  .slide.active{display:flex; opacity:1}
+  /* Every direct child of the active slide rises, in order. This used to require a
+     hand-applied .rise class, which meant a slide animated only if someone remembered —
+     one deck had it on all fifty-five children, another on nine, a third on two. The rule
+     now applies itself, so a new slide cannot be forgotten.
+     The stagger ran out at four children while slides carry up to six, and the fifth and
+     sixth inherited animation-delay:0 — firing before the first four rather than after.
+     Hence steps to six and a catch-all beyond. */
+  .slide.active > *{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+  .slide.active > *:nth-child(1){animation-delay:.05s}
+  .slide.active > *:nth-child(2){animation-delay:.14s}
+  .slide.active > *:nth-child(3){animation-delay:.24s}
+  .slide.active > *:nth-child(4){animation-delay:.34s}
+  .slide.active > *:nth-child(5){animation-delay:.43s}
+  .slide.active > *:nth-child(6){animation-delay:.51s}
+  .slide.active > *:nth-child(n+7){animation-delay:.58s}
+  @media (prefers-reduced-motion: reduce){
+    .slide.active > *{animation:none}
+  }
+  @keyframes rise{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
+
+  .kicker{
+    font-family:"Plex Mono", ui-monospace, monospace;
+    font-size:clamp(.82rem,1.6cqmin,1.15rem); letter-spacing:.22em; text-transform:uppercase;
+    color:var(--c-mid); margin-bottom:3.2cqmin; display:flex; align-items:center; gap:1.1em;
+  }
+  .kicker::before{content:attr(data-n); color:var(--dim)}
+  .kicker::after{content:""; flex:0 0 8cqmin; height:2px; background:var(--c-mid); opacity:.5}
+
+  h1{
+    font-weight:600; line-height:1.07; letter-spacing:-.02em;
+    font-size:clamp(2.3rem,8.4cqmin,5.6rem); max-width:26ch;
+  }
+  h1 em{font-style:normal; color:var(--c-mid)}
+  .sub{
+    margin-top:3.4cqmin; font-size:clamp(1.25rem,3.1cqmin,2.5rem);
+    color:var(--dim); max-width:48ch; line-height:1.4; font-weight:400;
+  }
+  .note{
+    margin-top:4.4cqmin; font-size:clamp(1.05rem,2.3cqmin,1.7rem); color:var(--ink);
+    padding-left:1.4cqmin; border-left:3px solid var(--c-mid); max-width:54ch; line-height:1.45;
+  }
+
+  /* people / agents split */
+  .thennow{display:grid; grid-template-columns:1fr 1fr; gap:8cqmin; margin-top:3cqmin}
+  .col h4{
+    font-family:"Plex Mono",monospace; font-size:clamp(.9rem,1.7cqmin,1.25rem);
+    letter-spacing:.16em; text-transform:uppercase; color:var(--dim); margin-bottom:2cqmin;
+    padding-bottom:1.2cqmin; border-bottom:2px solid var(--rule);
+  }
+  .col.now h4{color:var(--c-mid); border-color:var(--c-mid)}
+  .col p{font-size:clamp(1.25rem,2.9cqmin,2rem); line-height:1.3; font-weight:500}
+  .col .small{font-size:clamp(1rem,2.1cqmin,1.45rem); color:var(--dim); font-weight:400; margin-top:1.4cqmin; line-height:1.4}
+  .verdict{margin-top:4cqmin; font-size:clamp(1.25rem,2.9cqmin,2.1rem); font-weight:600}
+  .verdict em{font-style:normal; color:var(--c-mid)}
+
+  /* breadth left, example diagram right */
+  .split{display:grid; grid-template-columns:0.9fr 1.1fr; gap:6cqmin; align-items:center; margin-top:2.4cqmin}
+  .blist{list-style:none; display:flex; flex-direction:column; gap:1.8cqmin}
+  .blist li{border-top:2px solid var(--rule); padding-top:1.2cqmin}
+  .blist b{display:block; font-size:clamp(1.2rem,2.6cqmin,1.85rem); font-weight:600}
+  .blist span{font-size:clamp(.98rem,1.85cqmin,1.35rem); color:var(--dim)}
+  .diagram svg{width:100%; height:auto; display:block}
+  .caption{margin-top:1.6cqmin; font-family:"Plex Mono",monospace; font-size:clamp(.82rem,1.6cqmin,1.15rem); color:var(--dim); letter-spacing:.02em}
+  .caption b{color:var(--c-mid); font-weight:600}
+  .stamp{
+    margin-top:3.4cqmin; font-family:"Plex Mono",monospace; font-size:clamp(.9rem,1.7cqmin,1.25rem);
+    color:var(--dim); letter-spacing:.02em;
+  }
+  .stamp b{color:var(--c-mid); font-weight:600}
+
+  /* breadth grid (domains overview) */
+  .grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:2.4cqmin 6cqmin; margin-top:4.4cqmin}
+  .cell{border-top:2px solid var(--rule); padding-top:1.4cqmin}
+  .cell b{display:block; font-size:clamp(1.1rem,2.3cqmin,1.65rem); font-weight:600}
+  .cell span{font-size:clamp(.88rem,1.6cqmin,1.15rem); color:var(--dim)}
+
+  /* example – diagram + list */
+  .split.even{grid-template-columns:1fr 1.05fr; gap:6cqmin}
+  .glossary{display:flex; flex-direction:column; gap:1.5cqmin; margin:0}
+  .glossary div{border-top:2px solid var(--rule); padding-top:1.1cqmin}
+  .glossary dt{font-family:"Plex Mono",monospace; color:var(--c-mid); font-weight:600; font-size:clamp(1.05rem,2.1cqmin,1.5rem)}
+  .glossary dd{color:var(--dim); font-size:clamp(1rem,1.9cqmin,1.4rem); line-height:1.34; margin:.3cqmin 0 0}
+
+  .big-punch{font-size:clamp(2.3rem,7.2cqmin,5.8rem)}
+
+  /* title slide */
+  /* the mark, so the opening slide is the same lockup the site opens with —
+     on one line, sized so the mark's visual height sits at the wordmark's cap height */
+  .titlelock{display:flex; align-items:center; gap:.32em}
+  .titlemark{color:var(--c-mid); display:flex; flex:0 0 auto}
+  .titlemark svg{width:clamp(2.6rem,9cqmin,6.6rem); height:clamp(2.6rem,9cqmin,6.6rem); display:block}
+  .titlelock h1{margin:0}
+  .name{display:flex; align-items:center; gap:.6em}
+  .name .namemark{color:var(--c-mid); display:flex}
+  .name .namemark svg{width:15px; height:15px; display:block}
+  .name b{color:var(--ink); font-weight:600; letter-spacing:.01em; text-transform:none}
+  .name b em{font-style:normal; color:var(--c-mid)}
+
+  .title-slide{justify-content:center}
+  .title-slide h1{font-size:clamp(2.8rem,11cqmin,7.2rem); max-width:20ch; line-height:1.02}
+  .title-slide .sub{margin-top:4.2cqmin; max-width:54ch; font-size:clamp(1.3rem,3.4cqmin,2.6rem); color:var(--dim)}
+  .title-slide .byline{margin-top:6cqmin; font-weight:500; font-size:clamp(.85rem,1.8cqmin,1.25rem); letter-spacing:.14em; color:var(--ink)}
+  .title-slide .byline span{color:var(--dim)}
+
+  /* SVG diagram tokens */
+  .node{fill:var(--raise); stroke:var(--c-mid); stroke-width:1.5}
+  .node.center{fill:#1c2130; stroke-width:2.2}
+  .edge{stroke:var(--rule); stroke-width:1.5; fill:none}
+  .edge.live{stroke:var(--c-mid); stroke-width:1.5; opacity:.7}
+  .nlabel{fill:var(--ink); font-family:"Plex Mono",monospace; font-size:13px; text-anchor:middle; dominant-baseline:middle}
+  .nlabel.c{fill:var(--c-mid); font-weight:700; font-size:14px}
+  .flowbox{fill:var(--raise); stroke:var(--rule); stroke-width:1.5}
+  .flowbox.hot{stroke:var(--c-mid)}
+  .flowlabel{fill:var(--ink); font-family:"Plex Mono",monospace; font-size:14px; text-anchor:middle; dominant-baseline:middle}
+  .gate{fill:#1c2130; stroke:var(--c-mid); stroke-width:2}
+  .arrow{stroke:var(--c-mid); stroke-width:1.6; fill:none; marker-end:url(#ah)}
+  .arrow.dim{stroke:var(--rule); marker-end:url(#ahd)}
+  .node.warm{stroke:var(--c-flag)}
+  .node.bad{stroke:var(--warn)}
+  .nlabel.dim{fill:var(--dim); font-size:12px}
+  .nlabel.warm{fill:var(--c-flag)}
+  .band{fill:var(--raise); stroke:var(--rule); stroke-width:1.5}
+  .band.merge{stroke:var(--c-mid)}
+  .band.review{stroke:var(--c-flag)}
+  .bandlabel{font-family:"Plex Mono",monospace; font-size:12.5px; dominant-baseline:middle}
+  .layers{display:flex; flex-direction:column; gap:1.5cqmin; margin-top:3cqmin; max-width:86%}
+  .layer{display:grid; grid-template-columns:auto 1fr; gap:1.6cqmin 2.2cqmin; align-items:baseline;
+         border-left:3px solid var(--rule); padding:1.1cqmin 0 1.1cqmin 2cqmin}
+  .layer.on{border-color:var(--c-mid)}
+  .layer.human{border-color:var(--c-flag)}
+  .layer .who{font-family:"Plex Mono",monospace; font-size:clamp(1rem,2cqmin,1.4rem); font-weight:600}
+  .layer.on .who{color:var(--c-mid)} .layer.human .who{color:var(--c-flag)}
+  .layer .what{font-size:clamp(.98rem,1.95cqmin,1.38rem); color:var(--dim); line-height:1.35}
+  .ask{display:flex; flex-direction:column; gap:2cqmin; margin-top:3.4cqmin; max-width:80%}
+  .ask li{list-style:none; border-top:2px solid var(--rule); padding-top:1.4cqmin;
+          font-size:clamp(1.1rem,2.4cqmin,1.7rem); line-height:1.35}
+  .ask li b{color:var(--c-mid)}
+  .status{display:grid; grid-template-columns:auto 1fr; gap:1.4cqmin 2.4cqmin; margin-top:3.2cqmin; max-width:84%;
+          font-size:clamp(1rem,2.1cqmin,1.45rem); line-height:1.4}
+  .status .tick{font-family:"Plex Mono",monospace; color:var(--c-mid); font-weight:700}
+  .status .todo{font-family:"Plex Mono",monospace; color:var(--dim)}
+  .status .lbl b{font-weight:600}
+  .status .lbl span{color:var(--dim)}
+
+  .bar{position:fixed; left:0; bottom:0; height:4px; background:var(--c-mid); width:0; transition:width .35s ease; z-index:5}
+
+  /* ---------- transport ----------
+     One instrument along the bottom edge instead of four fixed corners competing for
+     the same pixels. The counter lives inside the transport's display window: on the
+     device this borrows from, the track number and the transport are one thing.
+     --chromeH is measured in JS, because the notes sheet and the mobile progress bar
+     both have to sit exactly on top of whatever height this row ends up at. */
+  .chrome{
+    position:fixed; left:0; right:0; bottom:0; z-index:21;
+    display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
+    padding:0 4cqmin 2.6cqmin; pointer-events:none;
+  }
+  .chrome > *{pointer-events:auto}
+
+  .name{grid-column:1; justify-self:start;
+        font-family:"Plex Mono", ui-monospace, monospace; font-size:.72rem;
+        color:var(--dim); letter-spacing:.14em; text-transform:uppercase}
+
+  .transport{
+    grid-column:2; justify-self:center;
+    display:flex; align-items:center; gap:.45rem;
+    background:var(--slab); border:1px solid var(--rule); border-radius:14px;
+    padding:.45rem .55rem;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.055), 0 12px 34px rgba(0,0,0,.5);
+  }
+
+  /* the display window. The hairline under the number is the position of the clip that
+     is speaking — how much of this slide is left — and is empty when nothing speaks. */
+  .lcd{
+    display:flex; flex-direction:column; align-items:center; gap:5px;
+    background:var(--lcd); border-radius:8px; padding:.44rem .62rem .38rem;
+    box-shadow:inset 0 1px 3px rgba(0,0,0,.85), inset 0 0 0 1px rgba(122,160,255,.1);
+    font-family:"Plex Mono", ui-monospace, monospace; line-height:1;
+    margin-right:.2rem;
+  }
+  .lcd .n{font-size:.76rem; font-weight:600; letter-spacing:.09em; color:var(--c-mid); white-space:nowrap}
+  .lcd .n .sep, .lcd .n #tot{color:#4c566e}
+  .lcd .n.msg{color:var(--c-flag); font-size:.62rem; letter-spacing:.14em}
+  .lcd .clip{width:100%; height:2px; background:#1e2029; border-radius:2px; overflow:hidden}
+  .lcd .clip i{display:block; height:100%; width:0; background:var(--c-mid); transition:width .25s linear}
+
+  .tmain, .tside{display:flex; align-items:center; gap:.45rem}
+
+  .tbtn{
+    display:grid; place-items:center; width:34px; height:34px; flex:0 0 auto;
+    background:none; border:0; border-radius:9px; color:var(--dim); cursor:pointer;
+    transition:color .15s ease, background-color .15s ease, border-color .15s ease;
+  }
+  .tbtn svg{width:18px; height:18px; fill:currentColor; display:block}
+  .tbtn svg.stroked{fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+  .tbtn:hover{color:var(--ink); background:#20242e}
+  .tbtn:focus-visible{outline:2px solid var(--c-mid); outline-offset:2px; color:var(--ink)}
+  .tbtn[aria-pressed="true"]{color:var(--c-mid); background:#1b2231}
+
+  .tbtn.play{width:44px; height:44px; border-radius:50%; border:1.5px solid #39435c; color:var(--c-mid)}
+  .tbtn.play svg{width:17px; height:17px}
+  .tbtn.play:hover{background:#1b2231; border-color:var(--c-mid); color:var(--c-mid)}
+  .tbtn .icontract{display:none}
+  .tbtn[aria-pressed="true"] .icontract{display:block}
+  .tbtn[aria-pressed="true"] .iexpand{display:none}
+  .tbtn.play .ipause{display:none}
+  .tbtn.play.on{background:var(--c-mid); border-color:var(--c-mid); color:var(--ground)}
+  .tbtn.play.on .iplay{display:none}
+  .tbtn.play.on .ipause{display:block}
+
+  /* the exit is an <a>, so it works with no JS and the browser treats it as
+     navigation — history, middle-click and "open in new tab" all behave. */
+  a.tbtn{text-decoration:none}
+  a.name{text-decoration:none; color:inherit; pointer-events:auto}
+  a.name:hover, a.name:focus-visible{color:var(--ink)}
+
+  .tdiv{width:1px; align-self:stretch; margin:.3rem .25rem; background:#333743; flex:0 0 auto}
+
+  .seg{display:flex; border:1px solid var(--rule); border-radius:8px; overflow:hidden; flex:0 0 auto}
+  .seg button{
+    background:none; border:0; cursor:pointer; padding:.44rem .48rem;
+    font-family:"Plex Mono", ui-monospace, monospace; font-size:.63rem; letter-spacing:.12em;
+    color:var(--dim); transition:color .15s ease, background-color .15s ease;
+  }
+  .seg button:hover{color:var(--ink)}
+  .seg button[aria-pressed="true"]{color:var(--c-mid); background:#1b2231; font-weight:600}
+  .seg button:focus-visible{outline:2px solid var(--c-mid); outline-offset:-2px}
+
+  @media (prefers-reduced-motion: reduce){
+    .tbtn, .seg button, .lcd .clip i{transition:none}
+  }
+
+  .notes{position:fixed; inset:auto 0 0 0; background:#17181c; color:#f1ede4; border-top:2px solid var(--c-mid); padding:3cqmin 4cqmin calc(var(--chromeH,0px) + 2cqmin); transform:translateY(101%); transition:transform .3s ease; z-index:20; max-height:56vh; overflow:auto}
+  .notes.show{transform:none}
+  .notes h3{font-family:"Plex Mono",monospace; font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; color:#9db0ff; margin-bottom:1.4cqmin}
+  .notes p{font-size:clamp(.95rem,2cqmin,1.3rem); line-height:1.5; max-width:82ch}
+  /* Zwei Rollen, klar getrennt: eine Regie-Instruktion wird nicht gesprochen,
+     eine Betonung schon. Vorher war beides <em> und die Vertonung verschluckte Wörter. */
+  .notes em.cue{font-style:italic; color:#9a9dab}
+  .notes em{font-style:normal; font-weight:600; color:#f1ede4}
+  .notes .time{float:right; color:#9db0ff; font-family:"Plex Mono",monospace}
+  .notes .close{display:inline-block; margin-top:1.8cqmin; background:none; cursor:pointer;
+                border:1px solid #33353d; border-radius:8px; padding:.5em .9em;
+                color:#b7b0a2; font-family:"Plex Mono",monospace; font-size:.7rem; letter-spacing:.1em;
+                text-transform:uppercase; transition:color .15s ease, border-color .15s ease}
+  .notes .close:hover{color:#f1ede4; border-color:#9db0ff}
+  .notes .close:focus-visible{outline:2px solid #9db0ff; outline-offset:2px}
+  /* notes open: JS scales the active slide to fit above the panel */
+  .deck.notes-open .slide.active{justify-content:flex-start; padding:4cqmin 10cqmin; transform-origin:top center}
+  .deck.notes-open .split{align-items:start; margin-top:1.6cqmin}
+
+  /* mobile / portrait */
+  @media (max-width: 860px), (max-aspect-ratio: 4/5){
+    /* the transport becomes the bottom edge itself: full width, flush, clear of the
+       home indicator. The name credit goes — at this width it is the first thing that
+       would push the controls off centre. */
+    .chrome{
+      grid-template-columns:1fr; padding:0;
+      background:var(--slab); border-top:1px solid var(--rule);
+      padding-bottom:env(safe-area-inset-bottom);
+    }
+    .name{display:none}
+    .notes{bottom:var(--chromeH,0px); padding-bottom:3cqmin;
+           transform:translateY(calc(101% + var(--chromeH,0px)))}
+    .transport{
+      grid-column:1; justify-self:stretch; width:100%;
+      background:none; border:0; border-radius:0; box-shadow:none;
+      padding:.45rem .5rem; gap:.2rem; justify-content:space-between;
+    }
+    .tmain{gap:.1rem}
+    .tside{gap:.2rem}
+    .tbtn{width:44px; height:44px}
+    .tbtn svg{width:20px; height:20px}
+    .tbtn.play{width:46px; height:46px}
+    .tdiv{margin:.4rem .1rem}
+    .seg button{padding:0 .5rem; min-width:38px; min-height:44px}
+    .lcd{padding:.42rem .5rem .36rem; margin-right:0}
+    /* the deck progress bar sits on the transport's top edge, not behind it */
+    .bar{bottom:var(--chromeH,0px)}
+    .deck{inset:0; width:auto; height:auto; transform:none; container-type:normal}
+    .slide{justify-content:flex-start; overflow-y:auto;
+           padding:14cqmin 7vw calc(var(--chromeH,0px) + 5vh)}
+    h1{font-size:clamp(1.7rem,7.5vw,3rem); max-width:100%}
+    .big-punch{font-size:clamp(1.8rem,8vw,3.2rem); max-width:100%}
+    .sub{font-size:clamp(1rem,4.4vw,1.5rem); max-width:100%}
+    .note{font-size:clamp(.9rem,3.6vw,1.2rem); max-width:100%}
+    .thennow, .split, .split.even, .grid{grid-template-columns:1fr; gap:5vw; max-width:100%}
+    .kicker{margin-bottom:5vw}
+  }
+  /* below this the seven controls need every pixel; the slide kicker and the progress
+     bar still say where you are */
+  @media (max-width: 400px){
+    .lcd{display:none}
+    .transport{padding:.45rem .35rem}
+    .tbtn{width:40px; height:40px}
+    .tside{gap:.1rem}
+    .tdiv{margin:.4rem .05rem}
+    .seg button{padding:0 .3rem; min-width:32px; min-height:40px; font-size:.6rem; letter-spacing:.08em}
+  }
+  /* the smallest phones still in use. body{overflow:hidden} hides a transport that is
+     wider than the screen instead of scrolling it, so this has to be measured, not assumed */
+  @media (max-width: 350px){
+    .transport{padding:.4rem .3rem}
+    .tbtn{width:36px; height:36px}
+    .tbtn svg{width:18px; height:18px}
+    .tbtn.play{width:42px; height:42px}
+    .tside{gap:.05rem}
+    .seg button{min-width:28px; min-height:36px; padding:0 .22rem}
+  }
+
+  /* ─── display face ────────────────────────────────────────────────────
+     Set last so it wins over the rules above. The slide headline carries the
+     same face the site's does; everything else on a slide is a label or a
+     value, and stays where it was. */
+  h1{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; letter-spacing:-.028em}
+  h1 em{color:var(--c-firm)}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute"><defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#7aa0ff"></path>
+  </marker>
+  <marker id="ahd" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#282a30"></path>
+  </marker>
+</defs></svg>
+
+<div class="deck" id="deck">
+
+  <!-- 00 · Titel — data-say-title="no": the greeting is the opening, so the headline
+       is not read out on top of it -->
+  <section class="slide title-slide"
+    data-say-title="no"
+    data-time="0:00"
+    data-notes="<em class='cue'>Der Titel liegt an, während ich eröffne.</em> GuestGraph ist kein fertiges Produkt. Es ist eine Idee, und ich stelle sie hier zur Prüfung. <em class='cue'>Wichtig im Ton — kurze Pause davor:</em> Ich will Gegenwind, nicht Applaus."
+    data-notes-en="<em class='cue'>The title stays up while I open.</em> GuestGraph is not a finished product. It is an idea, and I am putting it up for scrutiny. <em class='cue'>Important in tone — a short pause first:</em> I want pushback, not applause.">
+    <div class="kicker mono" data-n="00" data-de="Eine Idee, zur Prüfung gestellt">An idea, put up for scrutiny</div>
+    <div class="titlelock">
+      <span class="titlemark"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/><circle cx="6" cy="7.2" r="2.6" fill="#0C0E13"/><circle cx="6" cy="16" r="2.6" fill="#0C0E13"/><circle cx="6" cy="24.8" r="2.6" fill="#0C0E13"/></g><circle cx="24" cy="16" r="5.4" fill="currentColor"/></svg></span>
+      <h1 data-de="Guest<em>Graph</em>.">Guest<em>Graph</em>.</h1>
+    </div>
+    <p class="sub" data-de="Ein erklärbares Gastprofil — aus Daten, die über jedes System im Hotel verstreut liegen.">One explainable guest profile, from data scattered across every system in the hotel.</p>
+    <p class="byline" data-de="Robert Blust · <span>Software Engineer &amp; Architekt</span>">Robert Blust · <span>Software Engineer &amp; Architect</span></p>
+  </section>
+
+  <!-- 01 · Das Problem -->
+  <section class="slide"
+    data-time="0:40"
+    data-notes="<em class='cue'>Konkret einsteigen, nicht abstrakt.</em> Erika bucht über Booking.com, checkt im PMS ein, isst im Restaurant, loggt sich ins WLAN ein, schreibt eine Bewertung. Fünf Systeme, fünf Datensätze, fünf verschiedene Schlüssel. <em class='cue'>Kurze Pause.</em> Das Hotel hat keinen einzigen Gast namens Erika — es hat fünf Fremde. Und niemand im Haus merkt es."
+    data-notes-en="<em class='cue'>Start concrete, not abstract.</em> Erika books via Booking.com, checks in through the PMS, eats in the restaurant, logs into the wifi, writes a review. Five systems, five records, five different keys. <em class='cue'>Short pause.</em> The hotel does not have one guest called Erika — it has five strangers. And nobody in the building notices.">
+    <div class="kicker mono" data-n="01" data-de="Das Problem">The problem</div>
+    <h1 data-de="Ein Stammgast sieht aus wie <em>fünf Fremde</em>.">A returning guest looks like <em>five strangers</em>.</h1>
+    <div class="diagram" style="margin-top:4cqmin; max-width:70ch">
+      <svg viewBox="0 0 640 150" role="img" aria-label="Five systems, five separate records">
+        <g class="nlabel">
+          <rect class="node" x="6"   y="34" width="108" height="46" rx="8"/><text x="60"  y="57">Booking.com</text>
+          <rect class="node" x="138" y="34" width="108" height="46" rx="8"/><text x="192" y="57">PMS</text>
+          <rect class="node" x="270" y="34" width="108" height="46" rx="8"/><text x="324" y="57">POS</text>
+          <rect class="node" x="402" y="34" width="108" height="46" rx="8"/><text x="456" y="57">WLAN</text>
+          <rect class="node" x="534" y="34" width="100" height="46" rx="8"/><text x="584" y="57">Reviews</text>
+        </g>
+        <g class="nlabel dim">
+          <text x="60"  y="104">e.muster@…</text>
+          <text x="192" y="104">MUSTER/ERIKA</text>
+          <text x="324" y="104" data-de="Tisch 12">Table 12</text>
+          <text x="456" y="104">+41 79 …</text>
+          <text x="584" y="104">„A. M.“</text>
+        </g>
+        <text class="nlabel dim" x="320" y="136" style="font-size:12px" data-de="— kein gemeinsamer Schlüssel —">— no shared key —</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 02 · Warum es nicht gelöst ist -->
+  <section class="slide"
+    data-time="1:40"
+    data-notes="<em class='cue'>Den naheliegenden Einwand selbst vorwegnehmen.</em> Die erste Antwort ist immer: dann gleicht doch über die E-Mail ab. Das funktioniert genau so lange, bis eine Familie sich eine Adresse teilt, bis Booking.com eine Relay-Adresse schickt, bis jemand die Adresse wechselt. <em class='cue'>Betonen:</em> Und wenn man falsch zusammenführt, ist das kein Schönheitsfehler — dann sieht ein Gast die Rechnungen und Aufenthalte eines anderen. Das ist ein Datenschutzvorfall. Deshalb trauen sich die meisten gar nicht erst."
+    data-notes-en="<em class='cue'>Pre-empt the obvious objection myself.</em> The first answer is always: just match on email. That works exactly until a family shares an address, until Booking.com sends a relay address, until someone changes provider. <em class='cue'>Stress this:</em> And if you merge wrongly, that is not a cosmetic flaw — one guest sees another's invoices and stays. That is a data protection incident. Which is why most people do not dare try.">
+    <div class="kicker mono" data-n="02" data-de="Warum es nicht gelöst ist">Why it is not solved</div>
+    <h1 data-de="Zusammenführen ist einfach. <em>Falsch</em> liegen ist teuer.">Matching is easy. Being <em>wrong</em> is expensive.</h1>
+    <div class="thennow">
+      <div class="col">
+        <h4 data-de="Die naheliegende Lösung">The naive fix</h4>
+        <p data-de="Über die E-Mail abgleichen.">Match on email.</p>
+        <p class="small" data-de="Scheitert an geteilten Familienadressen, an OTA-Relay-Adressen, und an jedem, der den Anbieter wechselt.">Breaks on shared family addresses, OTA relay addresses, and anyone who changes provider.</p>
+      </div>
+      <div class="col now">
+        <h4 data-de="Was es kostet">What it costs</h4>
+        <p data-de="Ein Gast sieht die Aufenthalte und Rechnungen eines anderen.">One guest sees another's stays and invoices.</p>
+        <p class="small" data-de="Eine falsche Zusammenführung ist ein Datenschutzvorfall — kein Schönheitsfehler. Also versuchen es die meisten gar nicht.">A wrong merge is a data protection incident — not a cosmetic flaw. So most hotels never try.</p>
+      </div>
+    </div>
+    <p class="verdict" data-de="Das Schwierige ist nicht, Treffer zu finden. Sondern <em>zu wissen, wann man einem nicht traut</em>.">The hard part is not finding matches. It is <em>knowing when not to trust one</em>.</p>
+  </section>
+
+  <!-- 03 · Die Idee -->
+  <section class="slide"
+    data-time="2:50"
+    data-notes="<em class='cue'>Die Kernidee, ruhig.</em> GuestGraph nimmt die Rohdaten aus allen Systemen, lässt sie unangetastet liegen, und leitet daraus ab, welche Datensätze zur selben Person gehören. <em class='cue'>Zwei Dinge betonen:</em> Erstens, das Original wird nie verändert — Korrekturen kommen als neuer Datensatz, nie als Überschreiben. Zweitens, das goldene Profil ist berechnet, nicht gespeichert: man kann es jederzeit neu herleiten. Das klingt nach einem Detail, ist aber die Grundlage für alles Weitere."
+    data-notes-en="<em class='cue'>The core idea, calmly.</em> GuestGraph takes the raw records from every system, leaves them untouched, and derives which of them belong to the same person. <em class='cue'>Stress two things:</em> First, the original is never altered — corrections arrive as a new record, never as an overwrite. Second, the golden profile is computed, not stored: it can be re-derived at any time. That sounds like a detail, but it is the foundation for everything that follows.">
+    <div class="kicker mono" data-n="03" data-de="Die Idee">The idea</div>
+    <h1 data-de="Speichern, was passiert ist. <em>Herleiten</em>, wer es war.">Store what happened. <em>Derive</em> who it was.</h1>
+    <div class="split">
+      <ul class="blist">
+        <li><b data-de="Datensätze sind unveränderlich">Records are immutable</b><span data-de="Korrekturen kommen als neue Datensätze, nie als Änderung. Das Original ist immer das, was die Quelle wirklich geschickt hat.">Corrections arrive as new records, never as edits. The original is always what the source actually sent.</span></li>
+        <li><b data-de="Das Profil ist abgeleitet">The profile is derived</b><span data-de="Eine Berechnung über die Datensätze, keine Zeile, die jemand ändert. Jederzeit neu herleitbar.">A computation over the records, not a row someone edits. It can always be recomputed.</span></li>
+        <li><b data-de="Mandantengetrennt von Tag eins">Tenant-scoped from day one</b><span data-de="Eine Instanz für viele Marken oder Häuser, ohne Weg dazwischen.">One instance serves many brands or properties, with no path between them.</span></li>
+      </ul>
+      <div class="diagram">
+        <svg viewBox="0 0 420 210" role="img" aria-label="Records resolve into one derived guest profile">
+          <g class="nlabel dim" style="font-size:11.5px">
+            <rect class="node" x="4"  y="10"  width="104" height="30" rx="6"/><text x="56" y="26">Booking.com</text>
+            <rect class="node" x="4"  y="52"  width="104" height="30" rx="6"/><text x="56" y="68">PMS</text>
+            <rect class="node" x="4"  y="94"  width="104" height="30" rx="6"/><text x="56" y="110">POS</text>
+            <rect class="node" x="4"  y="136" width="104" height="30" rx="6"/><text x="56" y="152">WLAN</text>
+            <rect class="node" x="4"  y="178" width="104" height="26" rx="6"/><text x="56" y="192">Reviews</text>
+          </g>
+          <path class="arrow" d="M112,25 C165,25 165,100 208,104"/>
+          <path class="arrow" d="M112,67 C165,67 175,100 208,104"/>
+          <path class="arrow" d="M112,109 L208,106"/>
+          <path class="arrow" d="M112,151 C165,151 175,112 208,108"/>
+          <path class="arrow" d="M112,191 C165,191 165,115 208,110"/>
+          <rect class="node center" x="214" y="76" width="196" height="62" rx="10"/>
+          <text class="nlabel c" x="312" y="99">Erika Muster</text>
+          <text class="nlabel dim" x="312" y="120" style="font-size:11px" data-de="ein abgeleitetes Profil">one derived profile</text>
+        </svg>
+        <p class="caption" data-de="Quellen bleiben unangetastet. <b>Identität ist eine Schlussfolgerung</b>, kein Feld.">Sources stay untouched. <b>Identity is a conclusion</b>, not a field.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · Wie entschieden wird -->
+  <section class="slide"
+    data-time="4:10"
+    data-notes="<em class='cue' data-tag='[slowly]'>Das ist die wichtigste Folie — hier langsam werden.</em> Aus dieser Frage folgt der ganze Aufbau: Jede Schicht entscheidet nur das, wozu sie berechtigt ist, und gibt den Rest nach oben. Geteilte starke Merkmale — E-Mail, Telefon, Ausweis — führen sofort zusammen. Wahrscheinlichkeitsbasiertes Scoring führt nur zusammen, wenn der Betrieb die Schwelle selbst gesetzt hat. Alles andere landet bei einem Menschen. <em class='cue' data-tag='[deliberate]'>Der Satz, den ich hängen lassen will:</em> Ab Werk ist das automatische Zusammenführen ausgeschaltet."
+    data-notes-en="<em class='cue' data-tag='[slowly]'>This is the most important slide — slow down here.</em> Everything about the design follows from that question: each layer decides only what it is entitled to decide, and hands the rest upward. Shared strong identifiers — email, phone, ID document — merge outright. Probabilistic scoring merges only if the operator set the threshold themselves. Everything else goes to a human. <em class='cue' data-tag='[deliberate]'>The sentence I want to leave hanging:</em> Out of the box, automatic merging is switched off.">
+    <div class="kicker mono" data-n="04" data-de="Wie entschieden wird">How it decides</div>
+    <h1 data-de="Nicht <em>„passt das?“</em> — sondern <em>„wie sicher sind wir?“</em>">Not <em>&#8220;is it a match?&#8221;</em> — but <em>&#8220;how sure are we?&#8221;</em></h1>
+    <div class="layers">
+      <div class="layer on">
+        <span class="who">1 ·</span>
+        <span class="what"><b style="color:var(--ink)" data-de="Geteiltes starkes Merkmal">Shared strong identifier</b><br><span data-de="E-Mail, Telefon, Kundennummer, Ausweis → führt direkt zusammen.">Email, phone, loyalty id, ID document → merges outright.</span></span>
+      </div>
+      <div class="layer on">
+        <span class="who">2 ·</span>
+        <span class="what"><b style="color:var(--ink)" data-de="Wahrscheinlichkeits-Score">Probabilistic score</b><br><span data-de="Führt nur über einer Schwelle zusammen, die der Betrieb selbst gesetzt hat. Sonst: Warteschlange.">Merges only above a threshold the operator chose. Otherwise it queues.</span></span>
+      </div>
+      <div class="layer human">
+        <span class="who">3 ·</span>
+        <span class="what"><b style="color:var(--ink)" data-de="Ein Mensch entscheidet">A human decides</b><br><span data-de="Das letzte Wort — und die Entscheidung hält auch gegen neue Hinweise.">The final word — and their decision sticks against future evidence.</span></span>
+      </div>
+    </div>
+    <p class="stamp" data-de="Ab Werk ist automatisches Zusammenführen <b>ausgeschaltet</b>. Es schlägt vor; ein Mensch entscheidet.">Out of the box, automatic probabilistic merging is <b>off</b>. It suggests; a human decides.</p>
+  </section>
+
+  <!-- 05 · Die zwei Garantien -->
+  <section class="slide"
+    data-time="5:40"
+    data-notes="<em class='cue'>Hier geht es um Vertrauen, nicht um Technik.</em> Zwei Eigenschaften gelten für jede Entscheidung, egal welche Schicht sie getroffen hat. Erstens: man kann fragen, warum zwei Datensätze eine Person sind, und bekommt die vollständige Kette — welcher Matcher, wie sicher, aufgrund welcher Hinweise, wann, und seit kurzem auch: wer. Zweitens: jede Zusammenführung lässt sich rückgängig machen, und diese Korrektur hält. <em class='cue'>Wichtig:</em> Das ist keine Zusatzfunktion. Das war zuerst da, bevor überhaupt eine unsichere Entscheidung möglich war."
+    data-notes-en="<em class='cue'>This is about trust, not technology.</em> Two properties hold for every decision, whichever layer made it. First: you can ask why two records are one person and get the full chain — which matcher, how confident, on what evidence, when, and recently also: who. Second: every merge can be undone, and that correction sticks. <em class='cue'>Important:</em> This is not an add-on. It came first, before any uncertain decision was possible at all.">
+    <div class="kicker mono" data-n="05" data-de="Die zwei Garantien">The two guarantees</div>
+    <h1 data-de="Jede Entscheidung ist <em>erklärbar</em> und <em>umkehrbar</em>.">Every decision can be <em>explained</em> and <em>undone</em>.</h1>
+    <div class="thennow">
+      <div class="col now">
+        <h4 data-de="Erklären">Explain</h4>
+        <p data-de="„Warum sind das ein Gast?“">&quot;Why are these one guest?&quot;</p>
+        <p class="small" data-de="Die vollständige Kette: welcher Matcher, wie sicher, aufgrund welcher Hinweise, wann — und wer, wenn ein Mensch oder ein Agent entschieden hat.">The full chain: which matcher, how confident, on what evidence, when — and who, if a person or an agent decided it.</p>
+      </div>
+      <div class="col now">
+        <h4 data-de="Umkehren">Undo</h4>
+        <p data-de="Wieder trennen — und es hält.">Split them again — and it holds.</p>
+        <p class="small" data-de="Eine Trennung schreibt eine dauerhafte Regel, damit neue Hinweise die beiden nicht stillschweigend wieder zusammenführen.">An undo writes a permanent do-not-merge rule, so new evidence cannot silently put them back together.</p>
+      </div>
+    </div>
+    <p class="verdict" data-de="Das gab es, <em>bevor</em> eine unsichere Entscheidung überhaupt möglich war. Diese Reihenfolge war der Punkt.">This shipped <em>before</em> any uncertain decision was possible. That order was the point.</p>
+  </section>
+
+  <!-- 06 · Wo KI hingehört -->
+  <section class="slide"
+    data-time="6:40"
+    data-notes="<em class='cue'>Hier kommt die Frage, die heute jeder stellt — und ich beantworte sie mit der Maschinerie, nicht mit dem Wort KI.</em> Ein Agent, der Gastdaten nutzt, muss zuerst wissen, <em>welcher</em> Gast. Ohne aufgelöste Identität beantwortet er Fragen über fünf Fremde. <em class='cue'>Der eigentliche Punkt, langsam:</em> Strukturell ist das nichts Neues. Genau dieselbe Maschinerie, die einen Fuzzy-Score absichert, sichert auch ihn ab — Schwellen, Review-Queue, Umkehrbarkeit. Seit Kurzem hält die Audit-Spur zusätzlich fest, <em>ob</em> ein Mensch oder ein benannter Agent entschieden hat. Damit wird die Regel „ein Agent hebt die Trennung eines Menschen nie auf“ zu einem einzigen Vergleich."
+    data-notes-en="<em class='cue'>Here comes the question everyone asks today — and I answer it with the machinery, not with the word AI.</em> An agent acting on guest data first has to know <em>which</em> guest. Without resolved identity it is answering questions about five strangers. <em class='cue'>The actual point, slowly:</em> Structurally it is nothing new. The very same machinery that gates a fuzzy score gates it — thresholds, review queue, reversibility. Recently the audit trail also records <em>whether</em> a human or a named agent decided. That turns the rule &#8220;an agent never lifts a human&#8217;s split&#8221; into a single comparison.">
+    <div class="kicker mono" data-n="06" data-de="Wo KI hingehört">Where AI fits</div>
+    <h1 data-de="Ein Agent ist nur <em>ein weiterer unsicherer Matcher</em>.">An agent is just <em>another uncertain matcher</em>.</h1>
+    <div class="split">
+      <ul class="blist">
+        <li><b data-de="Identität kommt zuerst">Identity comes first</b><span data-de="Ein Agent, der Gastdaten nutzt, muss wissen, welcher Gast. Ohne das beantwortet er Fragen über fünf Fremde.">An agent acting on guest data has to know which guest. Without that it answers questions about five strangers.</span></li>
+        <li><b data-de="Abgesichert durch vorhandene Maschinerie">Gated by machinery that exists</b><span data-de="Schwellen, Review-Queue, Umkehrbarkeit — der Agent bekommt keine Ausnahme, die ein Fuzzy-Score nicht auch bekäme.">Thresholds, review queue, reversibility — the agent gets no exemption a fuzzy score would not get.</span></li>
+        <li><b data-de="Die Audit-Spur benennt ihn">The audit trail names it</b><span data-de="Jede Entscheidung hält fest, ob das System, ein Mensch oder ein benannter Agent sie getroffen hat.">Every decision records whether the system, a person, or a named agent made it.</span></li>
+      </ul>
+      <div class="diagram">
+        <svg viewBox="0 0 420 220" role="img" aria-label="Three-tier stewardship: rules, agent, human">
+          <rect class="flowbox" x="10" y="14" width="400" height="52" rx="9"/>
+          <text class="flowlabel" x="210" y="34" style="font-size:13px" data-de="Regeln">Rules</text>
+          <text class="flowlabel" x="210" y="52" style="font-size:11.5px; fill:var(--dim)" data-de="entscheiden die klaren Fälle">decide the clear cases</text>
+          <path class="arrow" d="M210,68 L210,84"/>
+          <rect class="flowbox hot" x="10" y="86" width="400" height="52" rx="9"/>
+          <text class="flowlabel" x="210" y="106" style="font-size:13px; fill:var(--c-mid)">Agent · MCP</text>
+          <text class="flowlabel" x="210" y="124" style="font-size:11.5px; fill:var(--dim)" data-de="entscheidet, was er sicher belegen kann">decides what it can evidence</text>
+          <path class="arrow" d="M210,140 L210,156"/>
+          <rect class="gate" x="10" y="158" width="400" height="52" rx="9" style="stroke:var(--c-flag)"/>
+          <text class="flowlabel" x="210" y="178" style="font-size:13px; fill:var(--c-flag)" data-de="Mensch">Human</text>
+          <text class="flowlabel" x="210" y="196" style="font-size:11.5px; fill:var(--dim)" data-de="bekommt den Rest, mit Empfehlung">gets the rest, with a recommendation</text>
+        </svg>
+        <p class="caption" data-de="Jede Stufe gibt nach oben, was sie nicht belegen kann. <b>Eskalation ist der Normalfall</b>, nicht die Ausnahme.">Each tier hands upward what it cannot justify. <b>Escalation is the default</b>, not the exception.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 · Das Schwungrad -->
+  <section class="slide"
+    data-time="7:40"
+    data-notes="<em class='cue'>Das ist der Teil, bei dem technische Zuhörer aufhorchen.</em> Jede Entscheidung speichert schon heute ihren vollständigen Merkmalsvektor, und jede Review trägt ein Bestätigt oder Abgelehnt. Das heisst: Stewards erzeugen im normalen Arbeiten beschriftete Trainingsdaten — auf den eigenen Daten des Betriebs, nicht auf einem generischen Korpus. <em class='cue'>Ehrlich bleiben:</em> Es gibt kein Modell und keine Pipeline. Aber die Daten fallen in der richtigen Form an, und der Matcher hängt hinter genau einer Methode: Kandidaten rein, bewertete Entscheidungen raus. Ein Modell wäre die dritte Implementierung davon, nicht ein Umbau."
+    data-notes-en="<em class='cue'>This is the part where technical listeners lean in.</em> Every decision already stores its full feature vector, and every review carries a confirmed or rejected. Which means stewards produce labelled training data as a side effect of ordinary work — on the operation&#8217;s own data, not a generic corpus. <em class='cue'>Stay honest:</em> There is no model and no pipeline. But the data accrues in the right shape, and the matcher sits behind exactly one method: candidates in, scored decisions out. A model would be its third implementation, not a rebuild.">
+    <div class="kicker mono" data-n="07" data-de="Das Schwungrad">The flywheel</div>
+    <h1 data-de="Jede menschliche Entscheidung ist ein <em>beschriftetes Beispiel</em>.">Every human decision is a <em>labelled example</em>.</h1>
+    <div class="thennow">
+      <div class="col now">
+        <h4 data-de="Was schon anfällt">What already accrues</h4>
+        <p data-de="Merkmalsvektor + menschliches Urteil.">Feature vector + human verdict.</p>
+        <p class="small" data-de="Jede Entscheidung speichert, warum sie so bewertet wurde. Jede Review sagt bestätigt oder abgelehnt. Auf den eigenen Daten des Betriebs.">Every decision stores why it scored what it scored. Every review says confirmed or rejected. On the operation&#8217;s own data.</p>
+      </div>
+      <div class="col">
+        <h4 data-de="Was daraus wird">What it enables</h4>
+        <p data-de="Heute Regeln, später ein Modell.">Rules today, a model later.</p>
+        <p class="small" data-de="Der Matcher hängt hinter einer Methode — Kandidaten rein, bewertete Entscheidungen raus. Ein Modell ist die dritte Implementierung, kein Umbau.">The matcher sits behind one method — candidates in, scored decisions out. A model is its third implementation, not a rebuild.</p>
+      </div>
+    </div>
+    <p class="verdict" data-de="Noch kein Modell, keine Pipeline. Aber die Daten fallen <em>in der richtigen Form</em> an.">No model yet, and no pipeline. But the data is accruing <em>in the right shape</em>.</p>
+  </section>
+
+  <!-- 08 · Stand -->
+  <section class="slide"
+    data-time="8:40"
+    data-notes="<em class='cue'>Ehrlich bleiben — das ist der Teil, der Glaubwürdigkeit schafft.</em> Die Engine steht: deterministisch, wahrscheinlichkeitsbasiert, Review-Queue, Timeline. Was fehlt, sind die Konnektoren zu echten Systemen — und das ist genau der Teil, der über Nutzbarkeit entscheidet. <em class='cue'>Klar sagen:</em> Es läuft noch nirgends produktiv. Es gibt keine Kunden. Ich zeige eine Grundlage, kein Produkt."
+    data-notes-en="<em class='cue'>Stay honest — this is the part that earns credibility.</em> The engine is there: deterministic, probabilistic, review queue, timeline. What is missing are the connectors to real systems — and that is exactly the part that decides whether it is usable. <em class='cue'>Say it plainly:</em> It runs nowhere in production. There are no customers. I am showing a foundation, not a product.">
+    <div class="kicker mono" data-n="08" data-de="Stand der Dinge">Where it stands</div>
+    <h1 data-de="Die Engine steht. <em>Fast nichts sonst</em>.">The engine is built. <em>Almost nothing else</em> is.</h1>
+    <div class="status">
+      <span class="tick">✓</span><span class="lbl"><b data-de="Identitätsauflösung">Identity resolution</b> <span data-de="— deterministisch und wahrscheinlichkeitsbasiert, mit Review-Queue">— deterministic and probabilistic, with a human review queue</span></span>
+      <span class="tick">✓</span><span class="lbl"><b data-de="Erklären, Umkehren, Audit-Spur">Explain, undo, audit trail</b> <span data-de="— jede Entscheidung, inklusive wer sie getroffen hat">— every decision, including who made it</span></span>
+      <span class="tick">✓</span><span class="lbl"><b data-de="Gast-Timeline">Guest timeline</b> <span data-de="— was ein Gast aktuell hat, nicht nur was beobachtet wurde">— what a guest currently has, not just what was observed</span></span>
+      <span class="todo">○</span><span class="lbl"><b data-de="Konnektoren">Connectors</b> <span data-de="— echte PMS-, POS-, Buchungssysteme. Als Nächstes, und der Teil, der über Nutzbarkeit entscheidet.">— real PMS, POS, booking systems. Next, and the part that decides usability.</span></span>
+      <span class="todo">○</span><span class="lbl"><b data-de="Agent als Steward, MCP">Agent steward, MCP</b> <span data-de="— vorgesehen, nicht gebaut. Die Audit-Spur benennt bereits einen Agenten; noch handelt keiner.">— designed for, not built. The audit trail already names an agent; nothing acts as one yet.</span></span>
+      <span class="todo">○</span><span class="lbl"><b data-de="ML-basiertes Matching">ML-based matching</b> <span data-de="— kein Modell, keine Trainings-Pipeline. Heute sind es handgeschriebene Regeln, und der Matcher heisst auch so.">— no model, no training pipeline. Today the matcher is hand-written rules, and says so in its name.</span></span>
+      <span class="todo">○</span><span class="lbl"><b data-de="Produktivbetrieb">Production use</b> <span data-de="— noch keiner. Keine Kunden. Das ist eine Grundlage, kein Produkt.">— none yet. No customers. This is a foundation, not a product.</span></span>
+    </div>
+  </section>
+
+  <!-- 09 · Das Modell -->
+  <section class="slide"
+    data-time="9:40"
+    data-notes="<em class='cue'>Kurz halten — das ist Kontext, keine Pointe.</em> Der Kern ist Apache 2.0 und bleibt es. Wer ihn selbst betreiben will, kann das. Kommerziell wären gehostetes Angebot, Konsole, MCP-Zugang für KI-Agenten. <em class='cue'>Der Grund, den ich nenne:</em> Bei einem Identitätsgraphen muss man nachvollziehen können, wie entschieden wurde. Eine Blackbox, die Gäste zusammenführt, würde ich selbst nicht einsetzen."
+    data-notes-en="<em class='cue'>Keep this short — it is context, not the punchline.</em> The core is Apache 2.0 and stays that way. Anyone who wants to run it themselves can. Commercially: hosting, a console, MCP access for AI agents. <em class='cue'>The reason I give:</em> With an identity graph, you have to be able to follow how it decided. A black box that merges guests is not something I would deploy myself.">
+    <div class="kicker mono" data-n="09" data-de="Das Modell">The model</div>
+    <h1 data-de="Offener Kern — weil man <em>nachprüfen können muss</em>.">Open core — because <em>you have to be able to check it</em>.</h1>
+    <div class="thennow">
+      <div class="col now">
+        <h4 data-de="Open Source · Apache 2.0">Open source · Apache 2.0</h4>
+        <p data-de="Engine, Graph, API, Konnektoren.">Engine, graph, API, connectors.</p>
+        <p class="small" data-de="Selbst betreiben. Genau nachlesen, wie entschieden wurde, zwei Ihrer Gäste zusammenzuführen.">Run it yourself. Read exactly how it decided to merge two of your guests.</p>
+      </div>
+      <div class="col">
+        <h4 data-de="Kommerziell (geplant)">Commercial (planned)</h4>
+        <p data-de="Hosting, Konsole, MCP für KI-Agenten.">Hosting, console, MCP for AI agents.</p>
+        <p class="small" data-de="Der Kern hängt nie davon ab und wird nie beschnitten, um es zu verkaufen.">The core never depends on it, and is never degraded to sell it.</p>
+      </div>
+    </div>
+    <p class="verdict" data-de="Eine Blackbox, die Gäste zusammenführt, würde <em>ich</em> nicht einsetzen.">A black box that merges guests is not something <em>I</em> would deploy.</p>
+  </section>
+
+  <!-- 10 · Die Bitte -->
+  <section class="slide"
+    data-time="10:30"
+    data-notes="<em class='cue'>Das ist der eigentliche Zweck des Gesprächs — hier nicht hetzen.</em> Ich zeige das nicht, um zu verkaufen, sondern um herauszufinden, ob ich das Richtige baue. Vier Fragen, und bei jeder ist ein Nein für mich mehr wert als ein höfliches Ja. <em class='cue'>Danach: Pause. Zuhören, nicht verteidigen.</em>"
+    data-notes-en="<em class='cue'>This is the actual purpose of the conversation — do not rush it.</em> I am not showing this to sell, but to find out whether I am building the right thing. Four questions, and on each one a no is worth more to me than a polite yes. <em class='cue'>Then: pause. Listen, do not defend.</em>">
+    <div class="kicker mono" data-n="10" data-de="Worum ich bitte">What I am asking</div>
+    <h1 data-de="Sagen Sie mir, wo das <em>falsch</em> ist.">Tell me where this is <em>wrong</em>.</h1>
+    <ul class="ask">
+      <li><b>1 ·</b> <span data-de="Ist das Problem der verstreuten Gastdaten in Ihrem Betrieb real genug, dass jemand für die Lösung zahlen würde?">Is the scattered-guest problem real enough in your operation that someone would pay to fix it?</span></li>
+      <li><b>2 ·</b> <span data-de="Würde eine Review-Queue tatsächlich benutzt — oder ignoriert, wie jede andere Warteschlange?">Would a review queue be used — or ignored, like every other queue?</span></li>
+      <li><b>3 ·</b> <span data-de="Welches System müsste zuerst angebunden sein, damit das überhaupt etwas wert ist?">Which system would have to be connected first for this to be worth anything at all?</span></li>
+      <li><b>4 ·</b> <span data-de="Würden Sie einen Agenten über eine Zusammenführung entscheiden lassen — und was müsste er Ihnen vorher zeigen?">Would you let an agent decide a merge — and what would it have to show you first?</span></li>
+    </ul>
+    <p class="stamp" data-de="
+      <b>github.com/guestgraph</b> · ein Nein ist mir mehr wert als ein höfliches Ja"><b>github.com/guestgraph</b> · a no is worth more to me than a polite yes</p>
+  </section>
+
+</div>
+
+<div class="chrome" id="chrome">
+
+  <a class="name" href="../" aria-label="Back to all talks"><span class="namemark"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/><circle cx="6" cy="7.2" r="2.6" fill="#0C0E13"/><circle cx="6" cy="16" r="2.6" fill="#0C0E13"/><circle cx="6" cy="24.8" r="2.6" fill="#0C0E13"/></g><circle cx="24" cy="16" r="5.4" fill="currentColor"/></svg></span><b>Guest<em>Graph</em></b> · Robert Blust</a>
+
+  <div class="transport" id="transport" role="group" aria-label="Deck controls">
+
+    <div class="lcd" aria-hidden="true">
+      <div class="n" id="lcdn"><b id="cur">00</b><span class="sep">/</span><span id="tot">10</span></div>
+      <div class="clip"><i id="cliplen"></i></div>
+    </div>
+
+    <div class="tmain">
+
+    <button class="tbtn" id="tFirst" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.4" y="5" width="2.3" height="14" rx="1"/><path d="M13.2 5.4v13.2L7.6 12z"/><path d="M21 5.4v13.2L13.6 12z"/></svg>
+    </button>
+
+    <button class="tbtn" id="tPrev" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 4.6v14.8L6 12z"/></svg>
+    </button>
+
+    <button class="tbtn play" id="tPlay" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="iplay"><path d="M7 4.4L19.2 12 7 19.6z"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="ipause"><rect x="6.4" y="4.8" width="3.7" height="14.4" rx="1.1"/><rect x="13.9" y="4.8" width="3.7" height="14.4" rx="1.1"/></svg>
+    </button>
+
+    <button class="tbtn" id="tNext" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.4 4.6v14.8L18 12z"/></svg>
+    </button>
+
+    <button class="tbtn" id="tFull" type="button" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="stroked iexpand"><path d="M9.5 4.5H4.5V9.5M14.5 4.5H19.5V9.5M14.5 19.5H19.5V14.5M9.5 19.5H4.5V14.5"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="stroked icontract"><path d="M4.5 9.5H9.5V4.5M19.5 9.5H14.5V4.5M19.5 14.5H14.5V19.5M4.5 14.5H9.5V19.5"/></svg>
+    </button>
+
+    </div>
+
+    <div class="tside">
+    <div class="tdiv"></div>
+
+    <div class="seg" id="lang">
+      <button type="button" id="langDe" aria-pressed="false">DE</button>
+      <button type="button" id="langEn" aria-pressed="true">EN</button>
+    </div>
+
+    <div class="tdiv"></div>
+
+    <a class="tbtn" id="tUp" href="../">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="stroked"><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="1.4"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="1.4"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="1.4"/><rect x="13" y="13" width="7.5" height="7.5" rx="1.4"/></svg>
+    </a>
+
+    <button class="tbtn" id="tNotes" type="button" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="stroked"><rect x="3.5" y="4.5" width="17" height="11" rx="1.5"/><path d="M7 8.5h10M7 11.8h6M8.5 19.2h7"/></svg>
+    </button>
+    </div>
+
+  </div>
+</div>
+
+<div class="bar" id="bar"></div>
+
+<div class="notes" id="notes">
+  <h3><span id="noteslabel">Sprecher-Notiz</span> <span class="time" id="ntime"></span></h3>
+  <p id="ntext"></p>
+  <button class="close" type="button" id="notesclose">Notizen schliessen</button>
+</div>
+
+<script>
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  // slide numbering is zero-based everywhere the viewer can see it: the kicker on each
+  // slide, the transport's display window, and the audio filenames all say the same number.
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  // The language choice is shared with the other pages on this origin, so arriving from
+  // the talks index keeps the language the reader already picked. Storage is guarded:
+  // file:// is an opaque origin in some browsers and throws, and a deck that cannot read
+  // a preference must still open — in English, its default.
+  var LANG_KEY = 'gg-lang';
+  function langStored(){ try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } }
+  function langRemember(v){ try { localStorage.setItem(LANG_KEY, v); } catch (e) {} }
+
+  var i = 0, notesOpen = false, lang = langStored() === 'de' ? 'de' : 'en';
+  var deck = document.getElementById('deck');
+  var bar = document.getElementById('bar'), cur = document.getElementById('cur');
+  var notes = document.getElementById('notes'), ntext = document.getElementById('ntext'), ntime = document.getElementById('ntime');
+  var chrome = document.getElementById('chrome');
+  var lcdn = document.getElementById('lcdn'), cliplen = document.getElementById('cliplen');
+  var btn = { first:document.getElementById('tFirst'), prev:document.getElementById('tPrev'),
+              play:document.getElementById('tPlay'),  next:document.getElementById('tNext'),
+              full:document.getElementById('tFull'),  notes:document.getElementById('tNotes') };
+  var langDe = document.getElementById('langDe'), langEn = document.getElementById('langEn');
+  document.getElementById('tot').textContent = pad(slides.length - 1);
+
+  var i18n = Array.prototype.slice.call(document.querySelectorAll('[data-de]'));
+  i18n.forEach(function(el){ el.setAttribute('data-en', el.innerHTML); });
+
+  var UI = {
+    de:{ label:'Sprecher-Notiz', close:'Notizen schliessen',
+         title:'GuestGraph — eine Einführung · ein Vortrag von Robert Blust',
+         desc:'Ein Vortrag darüber, warum ein Stammgast wie fünf Fremde aussieht — und wie gestufte Sicherheit jede Zusammenführung erklärbar und umkehrbar macht.',
+         play:'Vortrag abspielen', pause:'Vortrag pausieren', first:'Zurück zum Anfang',
+         prev:'Vorherige Folie', next:'Nächste Folie', full:'Vollbild', unfull:'Vollbild verlassen',
+         notes:'Sprecher-Notizen', de:'Auf Deutsch', en:'Auf Englisch', novoice:'Keine Stimme', up:'Zurück zu allen Vorträgen' },
+    en:{ label:'Speaker note', close:'Close notes',
+         title:'GuestGraph — an introduction · a talk by Robert Blust',
+         desc:'A talk on why a returning guest looks like five strangers, and how layered confidence makes every merge explainable and reversible.',
+         play:'Play the talk', pause:'Pause the talk', first:'Back to the start',
+         prev:'Previous slide', next:'Next slide', full:'Fullscreen', unfull:'Leave fullscreen',
+         notes:'Speaker notes', de:'In German', en:'In English', novoice:'No voice', up:'Back to all talks' }
+  };
+
+  function applyLang(){
+    i18n.forEach(function(el){ el.innerHTML = el.getAttribute('data-' + lang); });
+    var t = UI[lang];
+    document.title = t.title;
+    document.getElementById('metadesc').setAttribute('content', t.desc);
+    document.getElementById('noteslabel').textContent = t.label;
+    document.getElementById('notesclose').textContent = t.close;
+    langDe.setAttribute('aria-pressed', lang === 'de' ? 'true' : 'false');
+    langEn.setAttribute('aria-pressed', lang === 'en' ? 'true' : 'false');
+    langDe.setAttribute('aria-label', t.de);
+    langEn.setAttribute('aria-label', t.en);
+    btn.first.setAttribute('aria-label', t.first);
+    btn.prev.setAttribute('aria-label', t.prev);
+    btn.next.setAttribute('aria-label', t.next);
+    btn.notes.setAttribute('aria-label', t.notes);
+    var up = document.getElementById('tUp');
+    up.setAttribute('aria-label', t.up);
+    up.setAttribute('title', t.up);
+    labelPlay();
+    labelFull();
+    document.documentElement.lang = lang;
+    if (playing) {
+      if (synth) synth.cancel();
+      clip.pause();
+      setTimeout(narrateCurrent, 120);
+    }
+    render();
+  }
+
+  /* The transport is a real element with a measured height, and two other things have to
+     land exactly on top of it: the notes sheet, and the progress bar on mobile. */
+  function measureChrome(){
+    document.documentElement.style.setProperty('--chromeH', chrome.offsetHeight + 'px');
+  }
+
+  function fitNotes(){
+    var s = slides[i];
+    s.style.transform = '';
+    if(!notesOpen) return;
+    var avail = notes.getBoundingClientRect().top - 20;
+    var need  = s.scrollHeight;
+    if(need > avail){ s.style.transform = 'scale(' + Math.max(0.5, avail/need) + ')'; }
+  }
+
+  function render(){
+    slides.forEach(function(s,n){ if(n!==i) s.style.transform=''; s.classList.toggle('active', n===i); });
+    bar.style.width = ((i+1)/slides.length*100) + '%';
+    cur.textContent = pad(i);
+    if(notesOpen){
+      var d = slides[i].dataset;
+      ntext.innerHTML = (lang === 'en' && d.notesEn) ? d.notesEn : d.notes;
+      ntime.textContent = d.time || '';
+    }
+    fitNotes();
+  }
+  window.addEventListener('resize', function(){ measureChrome(); fitNotes(); });
+  function go(n){ i = Math.max(0, Math.min(slides.length-1, n)); render(); }
+
+  /* Turning the page by hand does not end the talk — the voice follows to the slide you
+     landed on. JUMP_MS is why: it lets someone click through five slides and hear only the
+     fifth, instead of a syllable of each one on the way. Back to the start is the exception,
+     because going back to slide zero is leaving the talk, not moving inside it. */
+  var JUMP_MS = 400;
+
+  function manual(n){
+    if (!playing) { go(n); return; }
+    stopVoice();
+    go(n);
+    gapTimer = setTimeout(function(){ if (playing) narrateCurrent(); }, JUMP_MS);
+  }
+
+  function restart(){ if (playing) stopNarration(); go(0); }
+
+  function setNotes(open){
+    notesOpen = open;
+    notes.classList.toggle('show', notesOpen);
+    // the closed sheet is only translated off-screen, so its close button would otherwise
+    // still be a tab stop for something nobody can see
+    notes.toggleAttribute('inert', !notesOpen);
+    deck.classList.toggle('notes-open', notesOpen);
+    btn.notes.setAttribute('aria-pressed', notesOpen ? 'true' : 'false');
+    render();
+  }
+
+  function labelFull(){
+    var on = !!document.fullscreenElement;
+    btn.full.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.full.setAttribute('aria-label', on ? UI[lang].unfull : UI[lang].full);
+  }
+  function toggleFull(){
+    if(!document.fullscreenElement){
+      var r = document.documentElement.requestFullscreen();
+      if (r && r.catch) r.catch(function(){});
+    } else { document.exitFullscreen(); }
+  }
+  document.addEventListener('fullscreenchange', function(){ labelFull(); measureChrome(); });
+
+  function setLang(next){ if (next === lang) return; lang = next; langRemember(next); applyLang(); }
+
+  btn.first.addEventListener('click', restart);
+  btn.prev .addEventListener('click', function(){ manual(i-1); });
+  btn.next .addEventListener('click', function(){ manual(i+1); });
+  btn.play .addEventListener('click', function(){ toggleNarration(); });
+  btn.full .addEventListener('click', toggleFull);
+  btn.notes.addEventListener('click', function(){ setNotes(!notesOpen); });
+  document.getElementById('notesclose').addEventListener('click', function(){ setNotes(false); });
+  langDe.addEventListener('click', function(){ setLang('de'); });
+  langEn.addEventListener('click', function(){ setLang('en'); });
+
+  /* The deck is driven by the buttons. These keys stay because a presenter remote sends
+     them — it is a clicker pretending to be a keyboard — and are deliberately not
+     advertised anywhere on screen. */
+  document.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){ manual(i+1); e.preventDefault(); }
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){ manual(i-1); e.preventDefault(); }
+    else if(e.key==='Home'){ restart(); e.preventDefault(); }
+    else if(e.key==='End'){ manual(slides.length-1); e.preventDefault(); }
+  });
+
+  /* Swipe turns the page on touch. A mostly-vertical drag is someone scrolling a long
+     slide, which portrait layout makes routine, so only a decisively horizontal one counts. */
+  var tx = 0, ty = 0, tt = 0;
+  deck.addEventListener('touchstart', function(e){
+    if (e.touches.length !== 1) { tt = 0; return; }
+    tx = e.touches[0].clientX; ty = e.touches[0].clientY; tt = Date.now();
+  }, {passive:true});
+  deck.addEventListener('touchend', function(e){
+    if (!tt || Date.now() - tt > 700) return;
+    var t = e.changedTouches[0], dx = t.clientX - tx, dy = t.clientY - ty;
+    if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.4) return;
+    manual(dx < 0 ? i + 1 : i - 1);
+  }, {passive:true});
+
+  measureChrome();
+  setNotes(false);
+  applyLang();
+
+  /* ---------- narration ----------
+     The speaker notes mix stage directions with what is actually said: the <em class='cue'>
+     spans are Regie-Instruktionen ("the title stays up while I greet"), the rest is
+     Sprechtext. Only the latter is spoken.
+
+     A recorded clip is played when one exists (audio/<lang>/<nn>.mp3), and the browser's own
+     voice reads the note when one does not — so a half-recorded deck still plays end to end.
+
+     Nothing is timed either way. Each slide advances on the end event of whichever source spoke,
+     so the deck follows the voice rather than a clock, and stays correct when a note is edited or
+     a clip is re-recorded. The data-time cues are untouched: they are the presenter's pacing for
+     the live talk, which runs about three times longer than the narration and is a different
+     timeline entirely. */
+  var synth = window.speechSynthesis;
+  var clip = new Audio();
+  clip.preload = 'auto';
+  var playing = false, utter = null, gapTimer = null, msgTimer = null;
+
+  // audio needs no speech synthesis, so the control stays even where synthesis is missing
+
+  function labelPlay(){
+    var l = playing ? UI[lang].pause : UI[lang].play;
+    btn.play.setAttribute('aria-label', l);
+    btn.play.setAttribute('aria-pressed', playing ? 'true' : 'false');
+    btn.play.classList.toggle('on', !!playing);
+  }
+
+  /* The display window is where a player says NO DISC. A refusal that shows up there reads
+     as the machine answering, and needs no second label on the button. */
+  function lcdMessage(text){
+    clearTimeout(msgTimer);
+    lcdn.dataset.keep = lcdn.dataset.keep || lcdn.innerHTML;
+    lcdn.textContent = text;
+    lcdn.classList.add('msg');
+    msgTimer = setTimeout(function(){
+      lcdn.innerHTML = lcdn.dataset.keep;
+      lcdn.classList.remove('msg');
+      delete lcdn.dataset.keep;
+      cur = document.getElementById('cur');
+      render();
+    }, 2600);
+  }
+
+  // the hairline under the track number: how far into this slide's clip the voice is
+  function setClipProgress(f){ cliplen.style.width = Math.max(0, Math.min(1, f)) * 100 + '%'; }
+  clip.addEventListener('timeupdate', function(){
+    if (playing && clip.duration) setClipProgress(clip.currentTime / clip.duration);
+  });
+
+  /* The headline, read as the spoken lead-in. On screen it is the thing the eye lands on
+     first; in audio nothing announced it, so the argument arrived before its own point. */
+  function slideTitle(slide){
+    if (slide.dataset.sayTitle === 'no') return '';
+    var h = slide.querySelector('h1');
+    if (!h) return '';
+    var raw = (lang === 'en' && h.dataset.en) ? h.dataset.en : h.innerHTML;
+    var d = document.createElement('div'); d.innerHTML = raw;
+    return (d.textContent || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function spokenText(slide){
+    var raw = (lang === 'en' && slide.dataset.notesEn) ? slide.dataset.notesEn : slide.dataset.notes;
+    if (!raw) return '';
+    var d = document.createElement('div');
+    d.innerHTML = raw;
+    // only the directions: a bare <em> is emphasis inside the sentence and must be spoken,
+    // or the voice says "muss zuerst wissen, Gast" and loses the word the line turns on
+    d.querySelectorAll('em.cue').forEach(function(e){ e.remove(); });
+    var body = (d.textContent || '').replace(/\s+/g, ' ').trim();
+    var title = slideTitle(slide);
+    return title ? title + '\n\n' + body : body;
+  }
+
+  function pickVoice(){
+    var want = lang === 'de' ? 'de' : 'en';
+    var voices = synth.getVoices() || [];
+    var exact = voices.filter(function(v){ return v.lang && v.lang.toLowerCase().indexOf(want) === 0; });
+    if (!exact.length) return null;
+    // prefer a local voice: network voices stall the onend event the deck advances on
+    return exact.filter(function(v){ return v.localService; })[0] || exact[0];
+  }
+
+  function say(text, whenDone){
+    utter = new SpeechSynthesisUtterance(text);
+    var v = pickVoice();
+    if (v) utter.voice = v;
+    utter.lang = v ? v.lang : (lang === 'de' ? 'de-DE' : 'en-GB');
+    utter.rate = 0.98;
+    utter.onend = function(){ if (playing) whenDone(); };
+    utter.onerror = function(){ stopNarration(); };
+    // a throwing speak() would otherwise leave the deck stuck in a playing state that
+    // never advances, because onend can no longer fire
+    try { synth.speak(utter); } catch (e) { stopNarration(); }
+  }
+
+  function clipUrl(n){
+    var k = slides[n].querySelector('.kicker');
+    var id = k && k.dataset.n ? k.dataset.n : ('0' + n).slice(-2);
+    return 'audio/' + lang + '/' + id + '.mp3';
+  }
+
+  /* Fetch the next clip while this one plays, so the gap between slides is the pause we
+     intended rather than a download. */
+  function preloadNext(){
+    if (i + 1 >= slides.length) return;
+    var a = new Audio(); a.preload = 'auto'; a.src = clipUrl(i + 1);
+  }
+
+  function narrateCurrent(){
+    if (!playing) return;
+    setClipProgress(0);
+    var text = spokenText(slides[i]);
+    if (!text) { advanceOrStop(); return; }
+
+    clip.onended = function(){ if (playing) advanceOrStop(); };
+    clip.onerror = function(){
+      // no recording for this slide or this language — read the note instead
+      if (playing) say(text, advanceOrStop);
+    };
+    clip.src = clipUrl(i);
+    var started = clip.play();
+    if (started && started.catch) {
+      started.then(preloadNext).catch(function(){ if (playing) say(text, advanceOrStop); });
+    } else {
+      preloadNext();
+    }
+  }
+
+  /* Two pauses, doing different jobs. SETTLE sits on the slide that was just narrated, so the
+     point has a moment to land before it is taken away. READ sits on the new slide before the
+     voice starts, so it can be read first — a listener has no presenter to watch, and a slide
+     talked over from the first frame is a slide nobody reads. */
+  var SETTLE_MS = 5000;
+  var READ_MS   = 2000;
+
+  function advanceOrStop(){
+    if (!playing) return;
+    if (i >= slides.length - 1) { stopNarration(); return; }
+    gapTimer = setTimeout(function(){
+      if (!playing) return;
+      go(i + 1);
+      gapTimer = setTimeout(function(){ if (playing) narrateCurrent(); }, READ_MS);
+    }, SETTLE_MS);
+  }
+
+  function startNarration(){
+    // synthesis is only the fallback now, so its absence is not a reason to refuse
+    if (!synth) { playing = true; labelPlay(); narrateCurrent(); return; }
+    if (!pickVoice() && !hasClips()) {
+      lcdMessage(UI[lang].novoice);
+      return;
+    }
+    playing = true;
+    labelPlay();
+    narrateCurrent();
+  }
+
+  // silence whatever is speaking, without deciding whether the talk is over
+  function stopVoice(){
+    clearTimeout(gapTimer);
+    clip.pause();
+    clip.onended = clip.onerror = null;
+    if (synth) synth.cancel();
+    setClipProgress(0);
+  }
+
+  function stopNarration(){
+    playing = false;
+    stopVoice();
+    labelPlay();
+  }
+
+  /* Optimistic: if a clip exists we never need a voice installed. Checked lazily so the
+     deck makes no network request until someone actually presses play. */
+  var clipsSeen = null;
+  function hasClips(){
+    if (clipsSeen !== null) return clipsSeen;
+    clipsSeen = true;                       // assume yes; clip.onerror handles the truth
+    return clipsSeen;
+  }
+
+  function toggleNarration(){ playing ? stopNarration() : startNarration(); }
+
+  // voices load asynchronously in some browsers
+  if (synth && typeof synth.onvoiceschanged !== 'undefined') {
+    synth.addEventListener('voiceschanged', function(){ /* refresh list */ });
+  }
+  window.addEventListener('beforeunload', function(){ if (synth) synth.cancel(); });
+</script>
+
+<script>
+// Scale the 1600×900 canvas to the screen. Below the breakpoint the deck reflows
+// into a scrolling reading view instead, so the transform is cleared there.
+(function(){
+  var CH = 900;
+  var deck = document.getElementById("deck");
+  var small = window.matchMedia("(max-width: 860px), (max-aspect-ratio: 4/5)");
+  function fit(){
+    if (small.matches) { deck.style.transform = ""; deck.style.width = ""; return; }
+    // Height is the fixed dimension; width is whatever the screen's aspect asks
+    // for. The canvas then covers the viewport exactly — no bars, any aspect.
+    var s = window.innerHeight / CH;
+    deck.style.width = (window.innerWidth / s) + "px";
+    deck.style.transform = "scale(" + s + ")";
+  }
+  window.addEventListener("resize", fit);
+  if (small.addEventListener) small.addEventListener("change", fit);
+  fit();
+})();
+</script>
+</body>
+</html>

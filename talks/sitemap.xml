@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  The talk URLs, listed here because this repository owns the talks.
+
+  guestgraph.io/sitemap.xml is an index that points at this file; it never names a talk
+  itself, so there is no second copy of the list to drift. Adding a talk means adding it
+  to README.md and to this file.
+
+  No <lastmod>: without a build step it could only be hand-maintained, and a date that
+  lies is worse than no date — crawlers discount a lastmod they catch being wrong.
+
+  The PDFs are deliberately absent. They are the same talk in a second format — now in
+  two languages — and a PDF that competes with the deck for the same query is a
+  duplicate, not a page. The talks index links to them; the crawl map does not.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://guestgraph.io/talks/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://guestgraph.io/talks/intro/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+</urlset>

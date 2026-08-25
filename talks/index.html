@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://guestgraph.io/talks/">
+
+<!-- The head is English while the body is German, and that is deliberate. The body is
+     authored German-first and swapped by applyLang(); the head describes the page as it
+     is actually delivered, which is English by default — and applyLang() swaps the title
+     and the description too when a visitor picks German. -->
+<title>GuestGraph — talks on guest identity in hospitality</title>
+<meta id="metadesc" name="description" content="Talks on GuestGraph, the open-source guest identity graph for hospitality — in German and English.">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GuestGraph">
+<meta property="og:url" content="https://guestgraph.io/talks/">
+<meta property="og:title" content="GuestGraph — talks on guest identity in hospitality">
+<meta property="og:description" content="Talks on GuestGraph, the open-source guest identity graph for hospitality — in German and English.">
+<meta property="og:image" content="https://guestgraph.io/talks/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GuestGraph — talks on guest identity.">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="de_CH">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+/* Self-hosted, same origin — no third party sees a visitor, and the files resolve
+   from file:// as well as from the domain. */
+@font-face{font-family:"Bricolage Grotesque";src:url(fonts/Bricolage-var.woff2) format("woff2-variations"),url(fonts/Bricolage-var.woff2) format("woff2");font-weight:200 800;font-display:swap}
+@font-face{font-family:"Instrument Sans";src:url(fonts/InstrumentSans-var.woff2) format("woff2-variations"),url(fonts/InstrumentSans-var.woff2) format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"Plex Mono";src:url(fonts/PlexMono-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Plex Mono";src:url(fonts/PlexMono-600.woff2) format("woff2");font-weight:600;font-display:swap}
+
+  /* Shell, header, brand, nav and footer are guestgraph.io's, deliberately: the domain is
+     served by two repositories and a visitor crossing between them should not meet a seam.
+     What only exists here is the talk list — and the language control, because this is the
+     only bilingual page on the domain. */
+  /* ─── design tokens · v1 · keep in step across every repository that shares them ───
+     These sites share no stylesheet by design — a deck has to open from
+     file:// — so this block is a copy, and each repo's verify suite asserts
+     the copy still matches. Change it here, then run the checks.
+
+     Brightness is confidence. Each stop has exactly one job:
+       --c-weak  a candidate: considered, not accepted
+       --c-mid   anything interactive — links, controls, the brand accent
+       --c-firm  the resolved thing — the thesis, the current page
+       --c-flag  a reversal; at most one per page, never decoration
+  */
+  :root{
+    --ground:#0C0E13; --raise:#171A21; --rule:#232833;
+    --ink:#EFEDE8;    --dim:#8A8B86;
+    --c-weak:#3E5878; --c-mid:#7FA3D8; --c-firm:#B8D0FF; --c-flag:#D9A44F;
+  }
+  /* ─── end design tokens ─────────────────────────────────────────────── */
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{
+    font-family:"Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    background:var(--ground); color:var(--ink); line-height:1.5; min-height:100vh;
+    background-image:radial-gradient(120% 60% at 50% -10%, var(--raise) 0%, var(--ground) 60%);
+    -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column;
+  }
+  a{color:inherit}
+  .mono{font-family:"Plex Mono", ui-monospace, "SF Mono", Menlo, monospace}
+
+  .shell{width:100%; max-width:1180px; margin:0 auto; padding:0 7vw}
+
+  header{padding:2rem 0}
+  .bar{display:flex; align-items:center; justify-content:space-between; gap:2rem}
+  .brand{display:flex; align-items:center; gap:.7rem; text-decoration:none}
+  .brand svg{width:28px; height:28px; color:var(--c-mid); flex:0 0 auto}
+  .brand b{font-weight:600; font-size:1.06rem; letter-spacing:-.01em}
+  .brand b span{color:var(--c-mid)}
+  nav{display:flex; align-items:center; gap:1.9rem; font-size:.76rem; font-weight:500;
+      letter-spacing:.14em; text-transform:uppercase}
+  nav a{color:var(--dim); text-decoration:none; padding-bottom:.2rem; border-bottom:1px solid transparent}
+  nav a:hover, nav a:focus-visible{color:var(--ink); border-color:var(--c-mid)}
+  /* the bar is the same component on both sites, so this page says which one you are on
+     rather than dropping the item and leaving the header subtly different */
+  nav a[aria-current="page"]{color:var(--c-firm); border-color:var(--c-firm)}
+
+  /* The language control lives in the bar rather than floating over the page. The deck
+     keeps its fixed DE/EN indicator because a deck is presented; this is a page that is
+     clicked, and a visible control in the header explains itself without a key hint. */
+  .langind{font:inherit; letter-spacing:inherit; text-transform:inherit; background:none;
+           border:0; border-bottom:1px solid transparent; padding:0 0 .2rem; cursor:pointer;
+           color:var(--dim); white-space:nowrap}
+  .langind:hover{color:var(--ink)}
+  .langind .on{color:var(--c-mid); font-weight:700}
+
+  /* vertically centred, as on guestgraph.io: with a short list the alternative is a
+     column of content sitting above a screen-height void */
+  main{flex:1; display:flex; align-items:center; padding:2vh 0 5vh}
+
+  h1{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+     font-weight:700; line-height:1.04; letter-spacing:-.032em; font-size:clamp(2.1rem,5vw,3.9rem); max-width:21ch}
+  /* the wordmark, wherever it appears: Guest in ink, Graph in the brand accent */
+  h1 em{font-style:normal; color:var(--c-mid)}
+  .t em{font-style:normal; color:var(--c-mid)}
+  .lede{margin-top:1.6rem; font-size:clamp(1.05rem,1.6vw,1.35rem); color:var(--dim);
+        max-width:44ch}
+
+  .talks{margin-top:clamp(3rem,6vh,5rem)}
+  .talk{
+    display:grid; grid-template-columns:minmax(0,1fr) auto; gap:.5rem 2.5rem; align-items:baseline;
+    border-top:2px solid var(--rule); padding:clamp(1.6rem,3vh,2.4rem) 0;
+    text-decoration:none; color:inherit; transition:border-color .2s ease;
+  }
+  .talkrow{border-top:2px solid var(--rule)}
+  .talkrow:last-child{border-bottom:2px solid var(--rule)}
+  .talk{border-top:0 !important}
+  .dl{margin:0 0 clamp(1.6rem,3vh,2.4rem); font-size:.78rem; letter-spacing:.06em}
+  .dl a{color:var(--c-mid); text-decoration:none; border-bottom:1px solid transparent}
+  .dl a:hover, .dl a:focus-visible{border-color:var(--c-mid)}
+  /* the whole card is already a link to the talk; these name the two things you can do
+     with it, because a large invisible click target is not an affordance */
+  .dl .sep{color:var(--dim); margin:0 .7em}
+  .talk:hover, .talk:focus-visible{border-color:var(--c-mid)}
+  .talk:hover .t, .talk:focus-visible .t{color:var(--c-mid)}
+  .t{font-family:"Bricolage Grotesque",sans-serif; font-size:clamp(1.32rem,2.65vw,2rem); font-weight:700; line-height:1.2;
+     letter-spacing:-.015em; transition:color .2s ease}
+  .d{grid-column:1; margin-top:.7rem; color:var(--dim);
+     font-size:clamp(1rem,1.35vw,1.15rem); line-height:1.5; max-width:62ch}
+  .meta{
+    font-family:"Plex Mono",monospace; font-size:.78rem;
+    color:var(--dim); letter-spacing:.1em; white-space:nowrap; text-align:right;
+  }
+  .meta b{color:var(--ink); font-weight:600}
+
+  footer{padding:0 0 2rem; display:flex; flex-wrap:wrap; gap:.9rem 2.6rem; align-items:center;
+         font-family:"Plex Mono",monospace; font-size:.76rem; letter-spacing:.08em; color:var(--dim)}
+  footer a{color:var(--c-mid); text-decoration:none}
+  footer a:hover, footer a:focus-visible{text-decoration:underline}
+
+  :focus-visible{outline:2px solid var(--c-mid); outline-offset:3px; border-radius:3px}
+
+  @media (max-width:900px){
+    .lede{max-width:100%}
+    nav{gap:1.4rem}
+    /* the nav items and the wordmark do not fit a phone on one line. Letting the bar wrap
+       keeps them all legible; squeezing them instead broke „DE · EN" across two lines. */
+    .bar{flex-wrap:wrap; gap:1.1rem 1.4rem}
+    main{padding:1vh 0 4vh}
+    .talk{grid-template-columns:minmax(0,1fr); gap:.5rem}
+    .meta{grid-column:1; text-align:left; margin-top:.4rem}
+    .d{grid-column:1; max-width:100%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .talk, .t, nav a{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <header>
+    <div class="bar">
+      <a class="brand" href="https://guestgraph.io"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/><circle cx="6" cy="7.2" r="2.6" fill="#0C0E13"/><circle cx="6" cy="16" r="2.6" fill="#0C0E13"/><circle cx="6" cy="24.8" r="2.6" fill="#0C0E13"/></g><circle cx="24" cy="16" r="5.4" fill="currentColor"/></svg><b>Guest<span>Graph</span></b></a>
+      <nav>
+        <a href="./" aria-current="page" data-de="Vorträge">Talks</a>
+        <a href="https://guestgraph.io/billing/" data-de="Abrechnung">Billing</a>
+        <button class="langind" id="langind" type="button" aria-label="Sprache wechseln — switch language"><span id="lde">DE</span> · <span id="len">EN</span></button>
+      </nav>
+    </div>
+  </header>
+</div>
+
+<main>
+  <div class="shell">
+    <h1 data-de="Vorträge über Guest<em>Graph</em>.">Talks on Guest<em>Graph</em>.</h1>
+    <p class="lede" data-de="GuestGraph ist ein Open-Source-Identitätsgraph für Gäste in der Hotellerie: ein erklärbares, umkehrbares Gastprofil, abgeleitet aus Datensätzen, die über jedes System im Hotel verstreut liegen.">GuestGraph is an open-source guest identity graph for hospitality: one explainable, reversible guest profile derived from records scattered across every system in the hotel.</p>
+
+    <div class="talks">
+      <div class="talkrow">
+      <a class="talk" href="intro/">
+        <span class="t" data-de="Guest<em>Graph</em> — eine Einführung">Guest<em>Graph</em> — an introduction</span>
+        <span class="meta mono"><b>12 min</b></span>
+        <span class="d" data-de="Warum ein Stammgast wie fünf Fremde aussieht, was es kostet, sie falsch zusammenzuführen, und wie gestufte Sicherheit jede Entscheidung erklärbar und umkehrbar hält. Ein Vortrag, der um Gegenwind bittet, nicht um Applaus.">Why a returning guest looks like five strangers, what it costs to merge them wrongly, and how layered confidence keeps every decision explainable and reversible. A talk that asks for pushback, not applause.</span>
+      </a>
+      <p class="dl mono"><a href="intro/" data-de="Vortrag ansehen">Watch the talk</a><span class="sep">·</span><a href="intro/guestgraph-en.pdf" data-de-href="intro/guestgraph-de.pdf" data-de="PDF herunterladen">Download PDF</a></p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="shell">
+  <footer>
+    <span><a target="_blank" rel="noopener" href="https://github.com/guestgraph">github.com/guestgraph</a></span>
+    <span><a target="_blank" rel="noopener" href="https://github.com/guestgraph/engine/blob/HEAD/LICENSE">Apache 2.0</a></span>
+    <span><a target="_blank" rel="noopener" href="https://blust.ch/">Robert Blust</a></span>
+    <span><a href="https://guestgraph.io/privacy/" data-de="Datenschutz">Privacy</a></span>
+  </footer>
+</div>
+
+<script>
+  // English is the markup and German lives in data-de — the other way round from the
+  // decks, and deliberately. This page is delivered, shared and indexed in English, so
+  // English is what it says before a line of JS has run: no swap on load, no flash, and
+  // a crawler without JS reads the language the og tags promise.
+  //
+  // The choice is remembered per origin, so it carries between this page and
+  // guestgraph.io — one origin, one setting. Storage is guarded because file:// is an
+  // opaque origin in some browsers and throws: a page that cannot remember a preference
+  // must still work without one.
+  var KEY = 'gg-lang';
+  function stored(){ try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function remember(v){ try { localStorage.setItem(KEY, v); } catch (e) {} }
+
+  var lang = stored() === 'de' ? 'de' : 'en';
+  var i18n = Array.prototype.slice.call(document.querySelectorAll('[data-de]'));
+  i18n.forEach(function(el){ el.setAttribute('data-en', el.innerHTML); });
+
+  var UI = {
+    de:{ title:'GuestGraph — Vorträge über Gast-Identität in der Hotellerie',
+         desc:'Vorträge über GuestGraph, den Open-Source-Identitätsgraphen für Gäste in der Hotellerie — auf Deutsch und Englisch.' },
+    en:{ title:'GuestGraph — talks on guest identity in hospitality',
+         desc:'Talks on GuestGraph, the open-source guest identity graph for hospitality — in German and English.' }
+  };
+
+  function applyLang(){
+    i18n.forEach(function(el){ el.innerHTML = el.getAttribute('data-' + lang); });
+    // the PDF exists in both languages; the link points at the one being read
+    Array.prototype.forEach.call(document.querySelectorAll('[data-de-href]'), function(a){
+      if (!a.hasAttribute('data-en-href')) a.setAttribute('data-en-href', a.getAttribute('href'));
+      a.setAttribute('href', a.getAttribute('data-' + lang + '-href'));
+    });
+    document.title = UI[lang].title;
+    document.getElementById('metadesc').setAttribute('content', UI[lang].desc);
+    document.getElementById('lde').classList.toggle('on', lang === 'de');
+    document.getElementById('len').classList.toggle('on', lang === 'en');
+    document.documentElement.lang = lang;
+  }
+  function toggle(){ lang = (lang === 'de') ? 'en' : 'de'; remember(lang); applyLang(); }
+
+  // The key still works — a presenter remote and muscle memory both reach for it — but it
+  // is no longer advertised on screen, because the control in the header says it better.
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'l' || e.key === 'L'){ toggle(); }
+  });
+  document.getElementById('langind').addEventListener('click', toggle);
+  document.getElementById('lde').addEventListener('click', function(e){ e.stopPropagation(); if(lang!=='de') toggle(); });
+  document.getElementById('len').addEventListener('click', function(e){ e.stopPropagation(); if(lang!=='en') toggle(); });
+
+  applyLang();
+</script>
+</body>
+</html>
