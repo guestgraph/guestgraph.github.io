@@ -21,6 +21,13 @@ jobs:
         with:
           node-version: "22"
           cache: npm
+      # After setup-node for a known node, before npm ci because it installs nothing: neither
+      # step renders a page or needs a browser. A stale card is the one failure the browser
+      # suite cannot see — the card is a valid PNG of a page that has since moved on.
+      - name: The card check still works
+        run: npm run test:og
+      - name: Cards still show the page they render
+        run: npm run og:check
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - name: Serve the site

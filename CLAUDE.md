@@ -117,8 +117,63 @@ and nothing to drift.
 `index.html`. The PDF is deliberately not listed: it is the same talk in a second format and
 would compete with the deck for the same query.
 
-`npm run og` regenerates the 1200×630 share cards from the pages themselves. Re-run it after
-a visual change to either, and keep the `og:image:width`/`height` tags matching the file.
+`npm run og` regenerates the 1200×630 share cards from the pages themselves, and
+`npm run og:check` says whether they still match. Keep the `og:image:width`/`height` tags
+matching the file.
+
+## Share cards go stale silently, and nothing on the page says so
+
+`og.png` is not a banner someone drew: `npm run og` renders it from the page itself — the
+landing page and the talks index are their own cards, the deck's card is its title slide —
+so a link preview shows what the visitor is about to land on. The cost of that is a copy
+that has to be re-rendered whenever the page moves, and nothing about a stale card looks
+wrong. Two of the three here were stale when the check was added: the landing card predated
+the `Billing` nav item and the footer's `Privacy` link, the talks card predated the same
+footer link, and both had been serving guestgraph.io that way through several commits.
+
+- **`npm run og:check` compares the recipe, never the pixels.** Two machines rasterise the
+  same text differently, so a card compared by its bytes reports which machine rendered it.
+  The check re-derives a hash of what went *into* the card and compares it with the `og.sha`
+  committed beside it. It renders nothing, needs no browser, and runs in CI before `npm ci`.
+- **Three files, and the split is what makes the check testable.** `og-recipe.mjs` is pure and
+  has no side effects on import — the card list, the knobs, `sources()`, `recipe()`, `state()`.
+  `export-og.mjs` is the only one that needs playwright. `og-check.mjs` reports. An exporter
+  that renders on import cannot be loaded by a test file, which is why the knobs left it.
+- **The knobs live in `og-recipe.mjs`, not in the exporter.** A second copy of the frame or a
+  hide rule is a knob that can be edited without the hash moving — the one failure this whole
+  mechanism exists to make impossible. The recipe hashes the card object canonically, so a knob
+  added later enters the hash by existing rather than by someone remembering to list it.
+- **`npm run test:og` is the check's own suite** (`verify/og-recipe.test.mjs`, `node --test`,
+  no dependencies). It drives both directions — a moved page must come out stale, and a card
+  reported current after the page changed must be impossible — against a temporary tree rather
+  than against this repository, so it still means something after these pages change.
+- **The recipe is the page plus every local file the page renders plus the exporter's own
+  frame and hide rules.** Fonts count, and here there is one `fonts/` at the root shared by
+  all three pages — so a font swap marks **all three** cards stale in one go. On blust.ch,
+  where each deck carries its own fonts, the same edit moves only the index cards. Nothing
+  about the check changed; the dependency graph is simply flatter here.
+- **`<a href>` is excluded, and it is the one place the walk is not a plain attribute
+  sweep.** The talks index links two multi-megabyte PDFs of the same talk. A link target is
+  not something the page renders, so hashing it would report the talks card stale every
+  time `npm run pdf` ran, over a page that had not moved a pixel — noise that trains you
+  to stop reading the check.
+- **The three cards do not all hide the same things.** The talks cards drop the chrome — a
+  card with a progress bar and a play button on it advertises controls that do nothing
+  inside a PNG. The landing card keeps its header and drops `.figure`, which is why its
+  right half is empty. The rules are hashed per card, so changing one marks only its own
+  card stale.
+- **Both files are committed together.** `og.png` and `og.sha`, in the same commit as the
+  page that moved. The stamp is written after the screenshot, so an exporter that dies half
+  way leaves the card reported stale rather than reported current.
+- **It over-reports and never under-reports, deliberately.** Editing a comment in a page
+  marks its card stale even though the render would be identical. Clearing that is
+  `npm run og` and a commit — cheap, and the opposite error is a card nobody notices for
+  weeks.
+- **The setup is shared with `blust.ch` and `companygraph.io`,** which render their own cards
+  the same way. `og-recipe.mjs` differs between them only in the card list and the hide rules,
+  and `verify/og-recipe.test.mjs` is the same file in all three. Fixing a rule here means
+  fixing it there — like the design tokens above, it is a habit with a tripwire, not a
+  guarantee.
 
 ## The design system, and why it is a copy
 

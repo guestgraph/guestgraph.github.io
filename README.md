@@ -32,14 +32,20 @@ had to be unwound. Do not recreate one.
 - `privacy/index.html` — what this site collects (nothing) and how guest data will be handled.
 - `talks/index.html` — the talks index, carrying this site's chrome so a visitor crossing into
   it meets no seam.
-- `talks/intro/` — the deck: `index.html`, `audio/{en,de}/`, both PDFs, the exporters, and
+- `talks/intro/` — the deck: `index.html`, `audio/{en,de}/`, both PDFs, `export-pdf.mjs`, and
   `tts/generate.py`, which reads the deck's speaker notes as the single source for what is
   spoken.
 - `fonts/` — the self-hosted `.woff2` files, and the only copy. Every page and the deck point
   at them relatively, so the deck still opens from `file://`.
 - `sitemap.xml` — one flat list of every URL on the domain. It was an index pointing at a
   second sitemap while the talks lived elsewhere; there is one list now.
-- `verify/check.mjs` — the suite, covering all five pages in one run.
+- `verify/check.mjs` — the suite, covering all five pages in one run, and
+  `verify/og-recipe.test.mjs`, the share-card check's own tests.
+- `og.png`, `talks/og.png`, `talks/intro/og.png` — 1200×630 share cards, each rendered from the
+  page it belongs to, and an `og.sha` beside each one: a hash of everything that went into the
+  card, so `npm run og:check` can say whether it still shows its page. `og-recipe.mjs` defines
+  what that is, `export-og.mjs` renders all three and writes the stamps, `og-check.mjs` reports
+  them.
 - `logo.svg` — the mark: three open records resolving into one solid profile. Uses
   `currentColor`, so it inherits whatever colour it is placed in.
 - `favicon.svg`
@@ -61,8 +67,17 @@ the hero animates and the talk draws.
 No build step. Open `index.html`, or serve it:
 
 ```bash
-python3 -m http.server 8000    # → http://localhost:8000
+npm install                        # once, for Playwright
+npm run serve                      # → http://localhost:8000
+npm run verify                     # renders every page and asserts the DOM
+npm run og:check                   # do the three share cards still show their pages?
+npm run test:og                    # the card check's own tests (node --test, no deps)
+npm run og                         # re-renders all three cards after a visual change
 ```
+
+`og:check` needs no server and no browser — it re-derives each card's recipe and compares it
+with the `og.sha` committed beside it, which is why CI runs it before `npm ci`. Commit each
+`og.png` with its `og.sha`, in the commit that moved the page.
 
 ## What it says, and what it deliberately does not
 
