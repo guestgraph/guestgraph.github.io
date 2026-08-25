@@ -1,19 +1,37 @@
-# GuestGraph — Landing Page
+# guestgraph.io
 
-The landing page for **GuestGraph** — the open-source guest identity graph for hospitality.
+The site for **GuestGraph** — the open-source guest identity graph for hospitality.
 
 **Live:** https://guestgraph.io
 
-This is the organisation's GitHub Pages site, which is why the repository is named
-`guestgraph.github.io`. That name matters: setting the custom domain here makes every other
-Pages site in the org inherit it, so [`guestgraph/talks`](https://github.com/guestgraph/talks)
-serves at **guestgraph.io/talks/** with no configuration of its own.
+One repository serves the whole domain. It was two — the talks had their own — and the split
+cost more than it saved: the talks index copies this site's shell, header and footer, so every
+nav change had to land in both repositories in the same breath, with no CI on either side able
+to see the seam. They were merged, history and all, in August 2026.
+
+The repository is named `guestgraph.github.io` because that makes it the organisation's GitHub
+Pages site, which is what puts it on the custom domain in `CNAME`. **Renaming it or removing
+`CNAME` takes the whole domain down**, talks included.
+
+A repository named `talks` in this organisation would claim `guestgraph.io/talks/` the moment
+its Pages were enabled — shadowing the folder in this repository, which is how the old split
+had to be unwound. Do not recreate one.
 
 ## Contents
 
 - `index.html` — the landing page. Self-contained: even the fonts are served from `fonts/`.
 - `billing/index.html` — how the hosted service will bill. One meter, and it is arrivals.
 - `privacy/index.html` — what this site collects (nothing) and how guest data will be handled.
+- `talks/index.html` — the talks index, carrying this site's chrome so a visitor crossing into
+  it meets no seam.
+- `talks/intro/` — the deck: `index.html`, `audio/{en,de}/`, both PDFs, the exporters, and
+  `tts/generate.py`, which reads the deck's speaker notes as the single source for what is
+  spoken.
+- `fonts/` — the self-hosted `.woff2` files, and the only copy. Every page and the deck point
+  at them relatively, so the deck still opens from `file://`.
+- `sitemap.xml` — one flat list of every URL on the domain. It was an index pointing at a
+  second sitemap while the talks lived elsewhere; there is one list now.
+- `verify/check.mjs` — the suite, covering all five pages in one run.
 - `logo.svg` — the mark: three open records resolving into one solid profile. Uses
   `currentColor`, so it inherits whatever colour it is placed in.
 - `favicon.svg`
