@@ -10,7 +10,7 @@ import { DESIGN_CHECKS } from "./design.mjs";
 const BASE = process.env.BASE || "http://localhost:8000";
 
 const PAGES = [
-  { path: "/", seo: true, noNewTab: true, title: /GuestGraph/, lang: "en",
+  { path: "/", seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["Five strangers", "One guest", "GuestGraph"],
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
@@ -23,7 +23,7 @@ const PAGES = [
   // the unit must be stated exactly, and the page must keep saying the service is not
   // open. Drop that second sentence and the page stops describing an intention and
   // starts advertising a product that does not exist.
-  { path: "/billing/", seo: true, noNewTab: true, title: /GuestGraph/, lang: "en",
+  { path: "/billing/", seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["Not per record", "1 arrival = 1 reservation that checked in", "not open yet"],
     // no call to action here: the page ends on its argument, so the only outbound link
     // left to hold to the new-tab rule is the one in the footer.
@@ -36,7 +36,7 @@ const PAGES = [
   // trusting the prose: a page that says it makes no third-party request must make none,
   // and the suite's own `requestfailed`/`links` machinery cannot see that. If a font, an
   // analytics tag or an embed ever creeps in, this is what fails.
-  { path: "/privacy/", seo: true, noNewTab: true, title: /GuestGraph/, lang: "en",
+  { path: "/privacy/", seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["This site collects", "There is no imprint yet"],
     links: ["https://github.com/guestgraph"],
     sameTab: ["../talks/", "../", "../billing/", "./"],
@@ -78,8 +78,16 @@ const CHECKS = {
     const l = await page.evaluate(() => document.documentElement.lang);
     return l === spec.lang ? null : `lang=${l}, expected ${spec.lang}`;
   },
+  // The language declared before any JS runs. It used to be `de`, because the markup was
+  // German and JS swapped it to English on load — which meant a crawler without JS read
+  // German from a page whose og tags, share card and canonical content were all English.
+  // The markup is English-first now, so this asserts the page tells the truth cold.
+  //
+  // `lang` is not this check. That one reads documentElement.lang *after* applyLang() has
+  // run, so a page whose source said `de` would be corrected on load and pass anyway, while
+  // a crawler that runs no JS still read German. Only this one is fetched cold, which is why
+  // it belongs on every page and not just the decks.
   async sourceLang(page, spec) {
-    // lang before JS runs — the static attribute must describe the German markup
     const html = await (await fetch(spec.absolute)).text();
     const m = html.match(/<html lang="([a-z]+)"/);
     return m && m[1] === spec.sourceLang ? null : `static lang is ${m && m[1]}, expected ${spec.sourceLang}`;
