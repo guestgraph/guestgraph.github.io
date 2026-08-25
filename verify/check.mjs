@@ -15,7 +15,7 @@ const PAGES = [
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
     sameTab: ["talks/", "talks/intro/", "billing/", "privacy/"],
-    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, monoScope: true, contrast: true, tokenVersion: true,
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io", internalLinks: true },
 
   // The billing model. The only page here that makes a claim of its own rather than
@@ -29,7 +29,7 @@ const PAGES = [
     // left to hold to the new-tab rule is the one in the footer.
     links: ["https://github.com/guestgraph"],
     sameTab: ["../talks/", "../", "./", "../privacy/"],
-    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, monoScope: true, contrast: true, tokenVersion: true,
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io", internalLinks: true },
 
   // The privacy note. Its claims are checkable, so `verify` checks them rather than
@@ -41,7 +41,7 @@ const PAGES = [
     links: ["https://github.com/guestgraph"],
     sameTab: ["../talks/", "../", "../billing/", "./"],
     sameOrigin: true,
-    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, monoScope: true, contrast: true, tokenVersion: true,
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io", internalLinks: true },
 
   { path: "/talks/", noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
@@ -52,7 +52,7 @@ const PAGES = [
     // Billing lives in the guestgraph.github.io repository and this nav item is the only
     // link to it from here — it is shared chrome, so it stays in the tab like the rest.
     sameTab: ["intro/", "./", "../billing/", "../privacy/"],
-    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, monoScope: true, contrast: true, tokenVersion: true,
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io", internalLinks: true },
   { path: "/talks/intro/", noNewTab: true, footerVersion: true, title: /GuestGraph/, lang: "en", sourceLang: "en", wayOut: "../",
     // The footer's other two destinations. `landing` covers the lockup, which is relative and
@@ -62,7 +62,7 @@ const PAGES = [
     landing: "../../",
     links: ["https://blust.ch/"], sameTab: ["https://blust.ch/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true,
-    tokens: true, monoScope: true, contrast: true, tokenVersion: true,
+    tokens: true, sky: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: "https://guestgraph.io", internalLinks: true },
 ];
 
