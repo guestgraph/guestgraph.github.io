@@ -133,6 +133,18 @@ two-file obligation, which is the point.
 
   `verify/design.mjs` is byte-identical across the three and holds both `TOKEN_VERSION` and
   `FOOTER_VERSION`. Never edit it in one repo alone.
+- **The `blust.ch` credit in the page footer is a lockup, not a footer link.** It leaves the
+  footer's mono for the same treatment it has on every deck — the `rb` plate inlined, wordmark
+  with the second word in `--c-mid`. The rest of the row stays mono because the rest of the row
+  is data: a repository URL and a licence. A prose mention of the name inside a sentence stays
+  a plain link — the mark belongs in the footer row, not mid-paragraph.
+- **A link check that trusts the DOM inspects half the site.** The rendered DOM is only ever
+  one language; German lives in `data-de` as markup that does not exist until a visitor
+  switches. The privacy page's German credit kept `target='_blank'` — in single quotes, because
+  it is nested inside an attribute — and survived both a source-wide strip and the check.
+  `noNewTab` now parses every `[data-de]` value and reports what it finds with a `[de]` suffix;
+  any new link check must do the same. A translated link and its English original are two
+  separate attributes and nothing pairs them.
 - **Self-contained. No external asset at all** — the fonts are served from `fonts/`, and
   nothing else is fetched off-origin. Reference them relatively (`../fonts/…` from
   `billing/`): a root-absolute path works on the domain and breaks under `file://`, which
