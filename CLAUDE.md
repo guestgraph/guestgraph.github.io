@@ -414,6 +414,55 @@ that is never generated — indistinguishable from one that was already up to da
 `--dry-run` catches it: the slide count drops. Check it against the deck before reading a
 quiet run as a cached one.
 
+## The head is a contract, and `seo` is what holds it
+
+Canonical, description, the `og:` block, `twitter:card` and a JSON-LD graph, on every page.
+`verify`'s `seo` check asserts the lot. Three of its assertions exist because the thing they
+catch had already shipped green:
+
+- **The canonical is compared against the page's own URL**, not merely against `og:url`.
+  Agreeing with `og:url` proves two tags say the same thing, and both can say the same wrong
+  thing — a canonical pointing at another page removes this one from the index and hands its
+  signals over, silently, which is worse than any tag being absent.
+- **Every page points at its own share card.** `card` only asks whether the image resolves at
+  its declared size, and a borrowed card does. `/billing/` and `/privacy/` both advertised the landing
+  page's card, so a paste of either URL previewed the landing hero under the pasted title.
+- **Structured data has to resolve, not merely parse.** Every `@id` a page references must be
+  defined on that page — Google reads `@graph` within one document — and every same-origin URL
+  in the graph is fetched. `/billing/` and `/privacy/` each declared `isPartOf` a `#website` node neither carried.
+
+Two traps worth knowing before editing that check:
+
+- **`page.evaluate` runs in the browser, where `SITE` does not exist**, and it takes exactly
+  one argument. Both mistakes were made writing it. Pass `{ url, site }` as an object.
+- **Deriving the public origin from `BASE` makes the check vacuous off the default port.** It
+  used to rewrite the literal `http://localhost:8000`; run with `127.0.0.1` and the URL filter
+  matched nothing, so every graph URL was skipped and the check still printed ✓. Use the `SITE`
+  constant.
+
+`PAGES` is the single list: the sitemap's expected URLs derive from it, and the suite fails if
+any page lacks `seo: true` — the runner skips a check whose key is undefined, so deleting that
+one line would otherwise turn the contract off in silence. The suite also asserts that whatever
+is on `BASE` is actually this site: a sibling repository left serving on `:8000` produced a full
+run of failures belonging to a site nobody was testing.
+
+**`og:locale` is Open Graph only. No search engine reads it.** It is `en_US`, with
+`og:locale:alternate` `de_CH`, and the prose is American to match. Google reads `<html lang>`,
+which `sourceLang` fetches cold on every page — `lang` alone cannot, because it reads
+`documentElement.lang` after `applyLang()` has already corrected it.
+
+**No `hreflang`.** It names another address for the other language and there is none: one URL
+per page, German swapped in at runtime from `data-de`. It becomes correct the day `/de/` URLs
+ship, and not before.
+
+**The head contract is a third copy**, shared with `blust.ch` and `companygraph.io` and
+carrying no `· vN` tripwire, unlike the token block and the deck footer. Port changes by hand
+to all three.
+
+**`robots.txt` is checked too**: every `Sitemap:` line it names is fetched. It named three,
+and `sitemap-site.xml` and `talks/sitemap.xml` had been 404 in production since the talks
+moved out of `guestgraph/talks` and into this repository.
+
 ## Ownership (prevents drift)
 
 | Fact | Owner |

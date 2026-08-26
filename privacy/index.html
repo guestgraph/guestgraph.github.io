@@ -13,15 +13,17 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="GuestGraph">
 <meta property="og:url" content="https://guestgraph.io/privacy/">
-<meta property="og:image" content="https://guestgraph.io/og.png">
+<meta property="og:image" content="https://guestgraph.io/privacy/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="GuestGraph. Five strangers. One guest. — one explainable guest profile, from data scattered across every system in the hotel.">
-<meta property="og:locale" content="en_GB">
+<meta property="og:image:alt" content="This site collects nothing.">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="de_CH">
 <meta name="twitter:card" content="summary_large_image">
-
-<!-- Publisher and page, nothing about the product. The same rule the other two pages
-     follow: structured data is not a back door for claims the prose does not make. -->
+<!-- The publisher, the site and this page — nothing about what the software does or when
+     it does it, which is the same rule the prose follows. Each page carries the whole graph
+     it references: Google resolves @graph within one document, so a bare { "@id": ... }
+     naming a node defined on another page resolved to nothing, which is what this replaced. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -32,7 +34,19 @@
       "name": "GuestGraph",
       "url": "https://guestgraph.io/",
       "logo": "https://guestgraph.io/logo.svg",
-      "sameAs": ["https://github.com/guestgraph"]
+      "sameAs": [
+        "https://github.com/guestgraph"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://guestgraph.io/#website",
+      "name": "GuestGraph",
+      "url": "https://guestgraph.io/",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://guestgraph.io/#organization"
+      }
     },
     {
       "@type": "WebPage",
@@ -40,12 +54,38 @@
       "name": "Privacy",
       "url": "https://guestgraph.io/privacy/",
       "inLanguage": "en",
-      "isPartOf": { "@id": "https://guestgraph.io/#website" },
-      "publisher": { "@id": "https://guestgraph.io/#organization" }
+      "isPartOf": {
+        "@id": "https://guestgraph.io/#website"
+      },
+      "publisher": {
+        "@id": "https://guestgraph.io/#organization"
+      },
+      "breadcrumb": {
+        "@id": "https://guestgraph.io/privacy/#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://guestgraph.io/privacy/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://guestgraph.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Privacy",
+          "item": "https://guestgraph.io/privacy/"
+        }
+      ]
     }
   ]
 }
 </script>
+
 <style>
 /* Self-hosted, same origin — which is the subject of this page as well as a rule of it.
    Relative, because a root-absolute path breaks under file://. */
@@ -231,7 +271,7 @@
             <li><b data-de="Statistik und Tracking">Analytics</b><i data-de="Nichts zählt Sie, und niemandem wird gemeldet, dass Sie hier waren.">Nothing counts you, and nobody is told that you were here.</i></li>
             <li><b data-de="Anfragen an Dritte">Third-party requests</b><i data-de="Schriften, Bilder und Stile kommen alle von diesem Ursprung. Kein CDN sieht Ihre Adresse.">Fonts, images and styles all come from this origin. No CDN sees your address.</i></li>
             <li><b data-de="Formulare und Konten">Forms and accounts</b><i data-de="Nichts auszufüllen, nichts anzumelden, nichts zu speichern.">Nothing to fill in, nothing to sign up for, nothing to store.</i></li>
-            <li><b data-de="Wiedererkennung">Fingerprinting</b><i data-de="Es wird nicht versucht, Sie über Besuche hinweg wiederzuerkennen. Der Sprachschlüssel ist kein Merkmal dafür.">No attempt is made to recognise you across visits. The language key is not an identifier.</i></li>
+            <li><b data-de="Wiedererkennung">Fingerprinting</b><i data-de="Es wird nicht versucht, Sie über Besuche hinweg wiederzuerkennen. Der Sprachschlüssel ist kein Merkmal dafür.">No attempt is made to recognize you across visits. The language key is not an identifier.</i></li>
           </ul>
         </div>
       </div>
