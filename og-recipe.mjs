@@ -50,6 +50,11 @@ export const cards = [
   { dir: ".", ...FRAME, clipY: CLIP_Y, hide: HOME_HIDE, titleSlide: false, settle: "wait:900", from: "file" },
   { dir: "talks", ...FRAME, clipY: CLIP_Y, hide: DECK_HIDE, titleSlide: false, settle: "wait:900", from: "file" },
   { dir: "talks/intro", ...FRAME, clipY: CLIP_Y, hide: DECK_HIDE, titleSlide: true, settle: "wait:900", from: "file" },
+  // /billing/ and /privacy/ advertised the landing card until 2026-08-26 — a paste of either
+  // URL previewed the landing hero, buttons and all, under the pasted page's title. The seo
+  // check now asserts a page points at its own card, which is what surfaced these two.
+  { dir: "billing", ...FRAME, clipY: CLIP_Y, hide: HOME_HIDE, titleSlide: false, settle: "wait:900", from: "file" },
+  { dir: "privacy", ...FRAME, clipY: CLIP_Y, hide: HOME_HIDE, titleSlide: false, settle: "wait:900", from: "file" },
 ];
 
 export const cardFor = (dir) => cards.find((c) => c.dir === dir);

@@ -6,10 +6,12 @@
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://guestgraph.io/talks/">
 
-<!-- The head is English while the body is German, and that is deliberate. The body is
-     authored German-first and swapped by applyLang(); the head describes the page as it
-     is actually delivered, which is English by default — and applyLang() swaps the title
-     and the description too when a visitor picks German. -->
+<!-- lang="en" is the truth about this file: the markup is English, and German lives in
+     data-de until applyLang() swaps it, as the comment above this page's script says at
+     more length. It read the reverse until 2026-08-26 — "the body is authored German-first"
+     — describing the decks' arrangement, not this page's, and contradicting its own script
+     270 lines below. `sourceLang` now fetches this file cold on every run and fails if the
+     static attribute ever says otherwise. -->
 <title>GuestGraph — talks on guest identity in hospitality</title>
 <meta id="metadesc" name="description" content="Talks on GuestGraph, the open-source guest identity graph for hospitality — in German and English.">
 
