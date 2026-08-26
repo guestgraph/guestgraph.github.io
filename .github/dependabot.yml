@@ -10,15 +10,12 @@
 # its own, which is when it deserves reading.
 version: 2
 updates:
-  # Two package.json files, and only the root one is exercised by CI: ci.yml runs a single
-  # `npm ci` at the root before `npm run verify`. A bump under talks/intro therefore gets a
-  # green run that proves nothing about the directory it changed — the deck's PDF export is
-  # what uses those packages, and `npm run pdf` is not a CI step because it writes files this
-  # repository commits. Read those pull requests; do not merge them on the checkmark.
+  # One package.json, at the root. There used to be a second under talks/intro carrying the
+  # deck's `pdf` script and pdf-lib, which meant a bump there landed green having proved
+  # nothing — CI only ever ran `npm ci` at the root. The script and the dependency moved to
+  # the root on 2026-08-26, so there is one manifest and CI exercises it.
   - package-ecosystem: "npm"
-    directories:
-      - "/"
-      - "/talks/intro"
+    directory: "/"
     schedule:
       interval: "weekly"
     groups:
