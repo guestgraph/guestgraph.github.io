@@ -352,6 +352,23 @@ one line that fetches it.
 - **Two durations, both true.** ~6 min narrated, 12 min live. The live figure is the one
   quoted publicly; presenting involves pauses a recording does not take.
 
+### The deck has no package.json of its own
+
+`npm run pdf` is a **root** script and `pdf-lib` is a **root** devDependency. Until
+2026-08-26 both lived in `talks/intro/package.json`, which is why that file and its lockfile
+existed at all — the root had neither, so building the deck's PDFs meant
+`cd talks/intro && npm install` first.
+
+That second manifest cost more than the `cd`. CI only ever runs `npm ci` at the root, so
+nothing under `talks/intro` was ever installed or exercised by a check, and a Dependabot bump
+there arrived green having proved nothing about the directory it changed. `blust.ch` has had
+the single-manifest shape all along; this is the two sibling sites catching up.
+
+`export-pdf.mjs` resolves its own paths from `import.meta.url`, so it does not care where it
+is invoked from — the deck still opens from `file://`, and moving the script changed nothing
+about the file it renders. Verified by rebuilding both PDFs from the root: same page counts,
+and the only bytes that moved were pdf-lib's `CreationDate` and `ModDate`.
+
 ## Secrets
 
 `ELEVENLABS_API_KEY` is the only credential these decks need, and it lives in `~/.zshrc`.
