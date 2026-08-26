@@ -6,13 +6,12 @@
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://guestgraph.io/talks/intro/">
 
-<!-- lang="de" is the truth about this file: the slides are German markup, and English
-     lives in data-en until applyLang() swaps it. A crawler that runs JS then sees English
-     under lang="en"; one that does not sees German under lang="de". Either way the page
-     is coherent, which it was not when the German source claimed to be English.
-
-     The head is English because it describes the page as delivered — the deck opens in
-     English — and applyLang() swaps the title and description when a visitor picks German. -->
+<!-- lang="en" is the truth about this file: the markup is English, and German lives in
+     data-de until applyLang() swaps it. This comment said the reverse until 2026-08-26,
+     describing an arrangement that had already been inverted — `sourceLang` now fetches this
+     file cold on every run and fails if the attribute ever says otherwise. The speaker notes
+     are the one place the old story still holds: those are authored in German in data-notes,
+     with English in data-notes-en. -->
 <title>GuestGraph — an introduction · a talk by Robert Blust</title>
 <meta id="metadesc" name="description" content="A talk on why a returning guest looks like five strangers, and how layered confidence makes every merge explainable and reversible.">
 
@@ -25,9 +24,80 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="GuestGraph. One explainable guest profile, from data scattered across every system in the hotel.">
-<meta property="og:locale" content="en_GB">
+<meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="de_CH">
 <meta name="twitter:card" content="summary_large_image">
+<!-- The publisher, the site and this page — nothing about what the software does or when
+     it does it, which is the same rule the prose follows. Each page carries the whole graph
+     it references: Google resolves @graph within one document, so a bare { "@id": ... }
+     naming a node defined on another page resolved to nothing, which is what this replaced. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://guestgraph.io/#organization",
+      "name": "GuestGraph",
+      "url": "https://guestgraph.io/",
+      "logo": "https://guestgraph.io/logo.svg",
+      "sameAs": [
+        "https://github.com/guestgraph"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://guestgraph.io/#website",
+      "name": "GuestGraph",
+      "url": "https://guestgraph.io/",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://guestgraph.io/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://guestgraph.io/talks/intro/#webpage",
+      "name": "GuestGraph \u2014 an introduction",
+      "url": "https://guestgraph.io/talks/intro/",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://guestgraph.io/#website"
+      },
+      "publisher": {
+        "@id": "https://guestgraph.io/#organization"
+      },
+      "breadcrumb": {
+        "@id": "https://guestgraph.io/talks/intro/#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://guestgraph.io/talks/intro/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://guestgraph.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Talks",
+          "item": "https://guestgraph.io/talks/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "An introduction",
+          "item": "https://guestgraph.io/talks/intro/"
+        }
+      ]
+    }
+  ]
+}
+</script>
 <meta name="author" content="Robert Blust">
 <style>
 /* Self-hosted inside the deck directory, exactly as audio/ and the images are: the
@@ -650,9 +720,9 @@
   <section class="slide"
     data-time="7:40"
     data-notes="<em class='cue'>Das ist der Teil, bei dem technische Zuhörer aufhorchen.</em> Jede Entscheidung speichert schon heute ihren vollständigen Merkmalsvektor, und jede Review trägt ein Bestätigt oder Abgelehnt. Das heisst: Stewards erzeugen im normalen Arbeiten beschriftete Trainingsdaten — auf den eigenen Daten des Betriebs, nicht auf einem generischen Korpus. <em class='cue'>Ehrlich bleiben:</em> Es gibt kein Modell und keine Pipeline. Aber die Daten fallen in der richtigen Form an, und der Matcher hängt hinter genau einer Methode: Kandidaten rein, bewertete Entscheidungen raus. Ein Modell wäre die dritte Implementierung davon, nicht ein Umbau."
-    data-notes-en="<em class='cue'>This is the part where technical listeners lean in.</em> Every decision already stores its full feature vector, and every review carries a confirmed or rejected. Which means stewards produce labelled training data as a side effect of ordinary work — on the operation&#8217;s own data, not a generic corpus. <em class='cue'>Stay honest:</em> There is no model and no pipeline. But the data accrues in the right shape, and the matcher sits behind exactly one method: candidates in, scored decisions out. A model would be its third implementation, not a rebuild.">
+    data-notes-en="<em class='cue'>This is the part where technical listeners lean in.</em> Every decision already stores its full feature vector, and every review carries a confirmed or rejected. Which means stewards produce labeled training data as a side effect of ordinary work — on the operation&#8217;s own data, not a generic corpus. <em class='cue'>Stay honest:</em> There is no model and no pipeline. But the data accrues in the right shape, and the matcher sits behind exactly one method: candidates in, scored decisions out. A model would be its third implementation, not a rebuild.">
     <div class="kicker mono" data-n="07" data-de="Das Schwungrad">The flywheel</div>
-    <h1 data-de="Jede menschliche Entscheidung ist ein <em>beschriftetes Beispiel</em>.">Every human decision is a <em>labelled example</em>.</h1>
+    <h1 data-de="Jede menschliche Entscheidung ist ein <em>beschriftetes Beispiel</em>.">Every human decision is a <em>labeled example</em>.</h1>
     <div class="thennow">
       <div class="col now">
         <h4 data-de="Was schon anfällt">What already accrues</h4>
