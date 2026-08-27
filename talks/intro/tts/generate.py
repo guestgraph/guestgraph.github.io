@@ -14,12 +14,16 @@ by the player rather than requested from the model. Don't reach for `speed`.
 Skips a clip whose text has not changed since it was last generated, so editing
 one note does not cost a full regeneration.
 
+A clip that comes back stopping mid-waveform is faded before it is written; see
+polish() for why that is a second defect from the click `style` deals with.
+
   export ELEVENLABS_API_KEY=...
   ./generate.py [--voice ID] [--model eleven_v3] [--only 04] [--dry-run]
                                        # --voice overrides both languages; the
                                        # per-language default is VOICE below
 """
-import argparse, hashlib, html, json, os, pathlib, re, subprocess, sys, time
+import argparse, hashlib, html, json, math, os, pathlib, re, shutil, subprocess, sys, tempfile, time, wave
+import array
 
 DECK = pathlib.Path(__file__).resolve().parent.parent / "index.html"
 OUT = pathlib.Path(__file__).resolve().parent.parent / "audio"
@@ -164,6 +168,71 @@ def speak(text, voice, model, key):
         raise RuntimeError((r.stdout or r.stderr)[:160].decode(errors="replace"))
     return r.stdout
 
+# A clip sometimes comes back cut mid-waveform: full-amplitude one sample, digital
+# silence the next. The ear hears the step as a click, the same complaint `style` above
+# deals with but a different cause, and the two are independent — 04 DE arrived with both.
+# It is a per-generation lottery rather than a setting: the clip that started this measured
+# a step of 2077, regenerating it produced a clean taper, regenerating the whole deck put
+# the defect on three other clips instead. Nothing in the request predicts it, so it is
+# repaired on the way to disk rather than hoped away.
+#
+# Only a clip that actually has the step is touched. Everything else is written exactly as
+# the API sent it, which keeps a second MP3 generation off the twenty-odd clips that do not
+# need one.
+STEP_CLICK = 500      # end step above this is audible; a clean taper measures single digits
+FADE_MS    = 5.0      # raised cosine, long enough to kill the step and short enough to
+                      # leave the final consonant's attack intact
+TAIL_MS    = 150.0    # a beat of silence, so the clip ends rather than stops
+_FLOOR     = 100      # below this is decoder ringing, not signal
+
+def polish(mp3_bytes):
+    """Fade a truncated clip's tail. Returns the bytes unchanged if it ends cleanly.
+
+    lame does both directions, so the repair adds one dependency rather than two, and it
+    is optional: without lame the clip is written as it arrived and the run says so. That
+    is the right failure — an unfaded clip is the status quo, a missing clip is not.
+    """
+    if not shutil.which("lame"):
+        return mp3_bytes, None
+    wav = tempfile.mktemp(suffix=".wav")
+    src = tempfile.mktemp(suffix=".mp3")
+    try:
+        pathlib.Path(src).write_bytes(mp3_bytes)
+        subprocess.run(["lame", "--quiet", "--decode", src, wav], check=True)
+        w = wave.open(wav); sr, ch = w.getframerate(), w.getnchannels()
+        a = array.array("h"); a.frombytes(w.readframes(w.getnframes())); w.close()
+    except (subprocess.CalledProcessError, OSError, wave.Error):
+        return mp3_bytes, None
+    finally:
+        for f in (src, wav):
+            if os.path.exists(f) and f != wav: os.unlink(f)
+
+    end = next((i for i in range(len(a) - 1, -1, -1) if abs(a[i]) > _FLOOR), None)
+    step = abs(a[end] - (a[end + 1] if end is not None and end + 1 < len(a) else 0)) if end else 0
+    if end is None or step <= STEP_CLICK:
+        os.path.exists(wav) and os.unlink(wav)
+        return mp3_bytes, step
+
+    a = a[:end + 1]
+    n = int(sr * FADE_MS / 1000)
+    for i in range(n):
+        g = 0.5 * (1 + math.cos(math.pi * (i + 1) / n))
+        a[len(a) - n + i] = int(a[len(a) - n + i] * g)
+    a.extend([0] * int(sr * TAIL_MS / 1000) * ch)
+
+    out = tempfile.mktemp(suffix=".mp3")
+    try:
+        f = wave.open(wav, "wb"); f.setnchannels(ch); f.setsampwidth(2)
+        f.setframerate(sr); f.writeframes(a.tobytes()); f.close()
+        subprocess.run(["lame", "--quiet", "-m", "m", "-b", "128", "--cbr", "-q", "0",
+                        wav, out], check=True)
+        return pathlib.Path(out).read_bytes(), step
+    except (subprocess.CalledProcessError, OSError):
+        return mp3_bytes, step
+    finally:
+        for f in (wav, out):
+            if os.path.exists(f): os.unlink(f)
+
 def main():
     ap = argparse.ArgumentParser()
     # --voice overrides both languages at once, which is what auditioning wants
@@ -202,9 +271,11 @@ def main():
                       f"{text.count(chr(10)+chr(10))+1} paragraph(s)")
                 continue
             try:
-                mp3.write_bytes(speak(text, voice, a.model, key))
+                data, step = polish(speak(text, voice, a.model, key))
+                mp3.write_bytes(data)
                 stamp.write_text(sig)
-                print(f"  ✓ {lang}/{idx}.mp3  {mp3.stat().st_size//1024:4} KB  {len(text):4} chars")
+                note = "" if step is None or step <= STEP_CLICK else f"  faded (step {step})"
+                print(f"  ✓ {lang}/{idx}.mp3  {mp3.stat().st_size//1024:4} KB  {len(text):4} chars{note}")
                 made += 1
                 time.sleep(0.4)
             except Exception as e:
