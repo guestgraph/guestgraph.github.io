@@ -31,14 +31,32 @@ OUT = pathlib.Path(__file__).resolve().parent.parent / "audio"
 # the person do not sound like the same speaker.
 #
 # Changing either reprices only that language: the clip cache keys on
-# sha256(voice|model|text), so a new id invalidates that language's clips and leaves the
-# other alone. Check the bill first —
+# sha256(voice|model|settings|text), so a new id invalidates that language's clips and
+# leaves the other alone. Check the bill first —
 #   ./generate.py --dry-run
 # reports the exact character count without generating anything.
 VOICE = {
     "en": "XrExE9yKIg1WjnnlVkGX",   # Matilda — knowledgable, professional
     "de": "cgSgspJ2msm6clMCkdW9",   # Jessica — playful, bright, warm
 }
+
+# How the voices deliver, shared by both languages.
+#
+# `style` is 0 because of what it does to the ends of sentences. At 0.45 the model
+# over-articulates a final plosive into a release that detaches from the word: measured on
+# slide 04 DE ("...ausgeschaltet"), a 20 ms stop closure followed by a 120 ms burst of
+# noise, which the ear hears as a click rather than as a consonant. It is not damage to the
+# file — regenerating reproduces it, and it survives any amount of fading, because it is
+# speech. Three of the twenty-two clips showed it, all of them ending in "t", but which
+# draws it lands on is luck, so the setting is the only durable guard. At 0 the same
+# release measures 35 ms, the length of an ordinary spoken /t/.
+#
+# The cost is pace: the read is flatter and roughly 10% longer. Anything above 0 trades
+# clean endings back for expressiveness — audition on one slide before moving it,
+#   ./generate.py --only 04
+# and listen to the last half-second, which is where the difference lives.
+SETTINGS = {"stability": 0.4, "similarity_boost": 0.75,
+            "style": 0.0, "use_speaker_boost": True}
 
 def read_h1(block):
     """English content and the data-de attribute of the slide's <h1>.
@@ -134,9 +152,7 @@ def slides(deck_html):
 def speak(text, voice, model, key):
     """Via curl: this Python has no CA bundle, and curl uses the system trust store."""
     body = json.dumps({
-        "text": text, "model_id": model,
-        "voice_settings": {"stability": 0.4, "similarity_boost": 0.75,
-                           "style": 0.45, "use_speaker_boost": True},
+        "text": text, "model_id": model, "voice_settings": SETTINGS,
     })
     r = subprocess.run(
         ["curl", "-sS", "--fail-with-body", "-X", "POST",
@@ -172,7 +188,11 @@ def main():
             d.mkdir(parents=True, exist_ok=True)
             mp3, stamp = d / f"{idx}.mp3", d / f"{idx}.sha"
             voice = a.voice or VOICE[lang]
-            sig = hashlib.sha256(f"{voice}|{a.model}|{text}".encode()).hexdigest()
+            # SETTINGS is in the key: without it, changing `style` above would leave
+            # every clip looking current while the audio still carried the old delivery.
+            sig = hashlib.sha256(
+                f"{voice}|{a.model}|{json.dumps(SETTINGS, sort_keys=True)}|{text}"
+                .encode()).hexdigest()
             if mp3.exists() and stamp.exists() and stamp.read_text().strip() == sig:
                 skipped += 1
                 continue
