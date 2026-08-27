@@ -185,17 +185,61 @@ FADE_MS    = 5.0      # raised cosine, long enough to kill the step and short en
 TAIL_MS    = 150.0    # a beat of silence, so the clip ends rather than stops
 _FLOOR     = 100      # below this is decoder ringing, not signal
 
-def polish(mp3_bytes):
-    """Fade a truncated clip's tail. Returns the bytes unchanged if it ends cleanly.
+# The other half of the click, and the half `style` only shrinks rather than removes: a
+# word-final plosive whose release detaches from the word - a stop closure, then a burst of
+# noise the ear takes for a click. At style 0.45 it measured 120 ms on 04 DE; at style 0 it
+# is 20-70 ms, better and still audible.
+#
+# The treatment keeps the attack, which is what makes the consonant a /t/ rather than a
+# swallowed word, and collapses only the tail: an exponential decay plus a level trim. It
+# was chosen by listening, against a ladder that also tried cutting the burst at a fixed
+# point - cutting removed the click and the /t/ with it, and the word sounded unfinished.
+#
+# Two guards keep it off real speech, and both are needed. A final word after a rhetorical
+# pause has the same shape as a detached release and differs only in scale: 01 DE and 02 EN
+# carry one running 320-430 ms at within 5 dB of the clip's loudest point, where a release
+# is under 200 ms and at least 8 dB down. Treating one of those would chew the last word of
+# the slide, so a candidate has to satisfy both tests.
+BURST_MIN_MS =  25    # shorter than this is already an ordinary release; leave it be
+BURST_MAX_MS = 200    # longer is a word, not a consonant
+BURST_MIN_DB =   8    # and it must sit at least this far below the clip's peak
+BURST_TAU_MS =  35    # decay constant; the attack survives, the tail does not
+BURST_TRIM_DB =  6    # level trim on top of the decay
 
-    lame does both directions, so the repair adds one dependency rather than two, and it
-    is optional: without lame the clip is written as it arrived and the run says so. That
-    is the right failure — an unfaded clip is the status quo, a missing clip is not.
+def _find_burst(a, sr, end):
+    """Onset of a detached final burst, or None. Walks back looking for a closure gap."""
+    hop = int(sr * 0.005)
+    peak = lambda s, e: max((abs(x) for x in a[s:e]), default=0)
+    loudest = peak(0, len(a))
+    i, gap = end, 0
+    while i - hop > end - int(sr * 0.5):
+        if peak(i - hop, i) < max(300, loudest * 0.012):
+            gap += 1
+            if gap >= 4:                      # >= 20 ms of closure
+                start = i + gap * hop
+                if start >= end:
+                    return None
+                ms = (end - start) / sr * 1000
+                down = 20 * math.log10(max(peak(start, end), 1) / max(loudest, 1))
+                if BURST_MIN_MS <= ms <= BURST_MAX_MS and down <= -BURST_MIN_DB:
+                    return start
+                return None
+        else:
+            gap = 0
+        i -= hop
+    return None
+
+def polish(mp3_bytes):
+    """Tame a detached final consonant, fade a truncated tail. Both are ends-of-clip clicks.
+
+    Returns (bytes, note). The clip is re-encoded only if something was actually changed,
+    so a clip with neither defect is written exactly as the API sent it. lame does both
+    directions, and its absence degrades to writing the clip unfaded rather than to failing
+    - an untreated clip is the status quo, a missing clip is not.
     """
     if not shutil.which("lame"):
         return mp3_bytes, None
-    wav = tempfile.mktemp(suffix=".wav")
-    src = tempfile.mktemp(suffix=".mp3")
+    src = tempfile.mktemp(suffix=".mp3"); wav = tempfile.mktemp(suffix=".wav")
     try:
         pathlib.Path(src).write_bytes(mp3_bytes)
         subprocess.run(["lame", "--quiet", "--decode", src, wav], check=True)
@@ -204,14 +248,26 @@ def polish(mp3_bytes):
     except (subprocess.CalledProcessError, OSError, wave.Error):
         return mp3_bytes, None
     finally:
-        for f in (src, wav):
-            if os.path.exists(f) and f != wav: os.unlink(f)
+        os.path.exists(src) and os.unlink(src)
 
     end = next((i for i in range(len(a) - 1, -1, -1) if abs(a[i]) > _FLOOR), None)
-    step = abs(a[end] - (a[end + 1] if end is not None and end + 1 < len(a) else 0)) if end else 0
-    if end is None or step <= STEP_CLICK:
+    if end is None:
         os.path.exists(wav) and os.unlink(wav)
-        return mp3_bytes, step
+        return mp3_bytes, None
+    step = abs(a[end] - (a[end + 1] if end + 1 < len(a) else 0))
+
+    notes = []
+    burst = _find_burst(a, sr, end)
+    if burst is not None:
+        notes.append(f"burst {round((end - burst) / sr * 1000)}ms")
+        trim = 10 ** (-BURST_TRIM_DB / 20.0)
+        for i in range(burst, end + 1):
+            a[i] = int(a[i] * trim * math.exp(-((i - burst) / sr * 1000.0) / BURST_TAU_MS))
+    if step > STEP_CLICK:
+        notes.append(f"step {step}")
+    if not notes:
+        os.path.exists(wav) and os.unlink(wav)
+        return mp3_bytes, None
 
     a = a[:end + 1]
     n = int(sr * FADE_MS / 1000)
@@ -226,9 +282,9 @@ def polish(mp3_bytes):
         f.setframerate(sr); f.writeframes(a.tobytes()); f.close()
         subprocess.run(["lame", "--quiet", "-m", "m", "-b", "128", "--cbr", "-q", "0",
                         wav, out], check=True)
-        return pathlib.Path(out).read_bytes(), step
+        return pathlib.Path(out).read_bytes(), ", ".join(notes)
     except (subprocess.CalledProcessError, OSError):
-        return mp3_bytes, step
+        return mp3_bytes, None
     finally:
         for f in (wav, out):
             if os.path.exists(f): os.unlink(f)
@@ -271,10 +327,10 @@ def main():
                       f"{text.count(chr(10)+chr(10))+1} paragraph(s)")
                 continue
             try:
-                data, step = polish(speak(text, voice, a.model, key))
+                data, fixed = polish(speak(text, voice, a.model, key))
                 mp3.write_bytes(data)
                 stamp.write_text(sig)
-                note = "" if step is None or step <= STEP_CLICK else f"  faded (step {step})"
+                note = f"  treated ({fixed})" if fixed else ""
                 print(f"  ✓ {lang}/{idx}.mp3  {mp3.stat().st_size//1024:4} KB  {len(text):4} chars{note}")
                 made += 1
                 time.sleep(0.4)
