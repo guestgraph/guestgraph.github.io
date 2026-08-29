@@ -16,7 +16,7 @@ const BASE = process.env.BASE || "http://localhost:8000";
 const SITE = "https://guestgraph.io";
 
 const PAGES = [
-  { path: "/", seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/", navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["Five strangers", "One guest", "GuestGraph"],
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
@@ -29,7 +29,7 @@ const PAGES = [
   // the unit must be stated exactly, and the page must keep saying the service is not
   // open. Drop that second sentence and the page stops describing an intention and
   // starts advertising a product that does not exist.
-  { path: "/billing/", seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/billing/", navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["Not per record", "1 arrival = 1 reservation that checked in", "not open yet"],
     // no call to action here: the page ends on its argument, so the only outbound link
     // left to hold to the new-tab rule is the one in the footer.
@@ -42,7 +42,7 @@ const PAGES = [
   // trusting the prose: a page that says it makes no third-party request must make none,
   // and the suite's own `requestfailed`/`links` machinery cannot see that. If a font, an
   // analytics tag or an embed ever creeps in, this is what fails.
-  { path: "/privacy/", seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/privacy/", navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["This site collects", "There is no imprint yet"],
     links: ["https://github.com/guestgraph"],
     sameTab: ["../talks/", "../", "../billing/", "./"],
@@ -50,7 +50,7 @@ const PAGES = [
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: SITE, internalLinks: true },
 
-  { path: "/talks/", seo: true, noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
+  { path: "/talks/", navOrder: true, seo: true, noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
     contains: ["GuestGraph", "guest identity"],
     // the nav no longer carries a Code item — the footer's org link is the way to the
     // source from here, one click further out than it used to be
@@ -126,6 +126,42 @@ const CHECKS = {
   // same tab loses the deck, and no back-button muscle memory saves that in front of a room.
   // So the exception is about *where* a link sits, not where it points: this site has none
   // today, and companygraph's deck has two.
+  // The nav is one row across three sites, and it is written by hand on every page, so it
+  // drifted: blust.ch put Principles after Talks on four pages and before it on the fifth,
+  // and companygraph.io led with Talks while its siblings did not. Nothing caught it — the
+  // items were all present, and `contains` does not see order.
+  //
+  // The family's order, left to right, is Ideas, Principles, Model, Example, Talks, Billing,
+  // Privacy, then the language switcher. Read right to left it is the reverse, which is how
+  // the rule was given: the switcher sits at the edge, and the further left an item is, the
+  // more it is the site's own subject. A site skips what it does not have; no site may
+  // reorder what it does have, and nothing outside the list may appear in the row.
+  //
+  // Privacy is on the list but lives in the footer on all three sites today. That is a
+  // placement, not an exception: if it ever moves into the nav, this is where it goes.
+  //
+  // This function is a fourth copy, kept identical in all three suites the way the head
+  // contract and the no-new-tab check are. A rule that is one row for a visitor is worth
+  // asserting the same way everywhere.
+  async navOrder(page) {
+    const ORDER = ["Ideas", "Principles", "Model", "Example", "Talks", "Billing", "Privacy"];
+    return await page.evaluate(order => {
+      const nav = document.querySelector("nav");
+      if (!nav) return "there is no nav";
+      const items = [...nav.querySelectorAll("a")].map(a => a.textContent.trim());
+      const unknown = items.filter(i => !order.includes(i));
+      if (unknown.length) return "not named by the order rule: " + unknown.join(", ");
+      const want = order.filter(i => items.includes(i));
+      if (items.join(" ") !== want.join(" "))
+        return `order is ${items.join(" · ")}; the rule is ${want.join(" · ")}`;
+      // The switcher is the right-hand edge of the row, so nothing may follow it.
+      const kids = [...nav.children];
+      const sw = kids.findIndex(el => el.id === "langind" || el.classList.contains("langind"));
+      if (sw === -1) return "the language switcher is not in the nav";
+      if (sw !== kids.length - 1) return "something sits to the right of the language switcher";
+      return null;
+    }, ORDER);
+  },
   async noNewTab(page) {
     const bad = await page.evaluate(() => {
       const live = [...document.querySelectorAll('a[target="_blank"]')]
