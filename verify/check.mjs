@@ -16,7 +16,7 @@ const BASE = process.env.BASE || "http://localhost:8000";
 const SITE = "https://guestgraph.io";
 
 const PAGES = [
-  { path: "/", carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/", mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["Five strangers", "One guest", "GuestGraph"],
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
@@ -29,7 +29,7 @@ const PAGES = [
   // the unit must be stated exactly, and the page must keep saying the service is not
   // open. Drop that second sentence and the page stops describing an intention and
   // starts advertising a product that does not exist.
-  { path: "/billing/", carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/billing/", mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["Not per record", "1 arrival = 1 reservation that checked in", "not open yet"],
     // no call to action here: the page ends on its argument, so the only outbound link
     // left to hold to the new-tab rule is the one in the footer.
@@ -42,7 +42,7 @@ const PAGES = [
   // trusting the prose: a page that says it makes no third-party request must make none,
   // and the suite's own `requestfailed`/`links` machinery cannot see that. If a font, an
   // analytics tag or an embed ever creeps in, this is what fails.
-  { path: "/privacy/", carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/privacy/", mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["This site collects", "There is no imprint yet"],
     links: ["https://github.com/guestgraph"],
     sameTab: ["../talks/", "../", "../billing/", "./"],
@@ -50,7 +50,7 @@ const PAGES = [
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: SITE, internalLinks: true },
 
-  { path: "/talks/", carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
+  { path: "/talks/", mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
     contains: ["GuestGraph", "guest identity"],
     // the nav no longer carries a Code item — the footer's org link is the way to the
     // source from here, one click further out than it used to be
@@ -236,6 +236,64 @@ const CHECKS = {
     // Leave the page as this check found it, for whatever runs next.
     await page.evaluate(() => { try { localStorage.clear(); } catch (e) {} });
     await page.goto(spec.absolute, { waitUntil: "networkidle" });
+    return problems.length ? problems.join("; ") : null;
+  },
+  // The row at phone widths. Every page in the three sites used to answer this its own way
+  // — some wrapped the bar, some wrapped the nav, and the two whose `.bar` carried no
+  // `flex-wrap` let the wordmark itself break, so "rb Robert Blust" arrived on two lines.
+  //
+  // Checked at 360px, which is narrower than the phones in the analytics and wide enough
+  // that nothing here is a special case. The wordmark is measured against its own mark: if
+  // the name has dropped below it the brand is twice the mark's height, and no tolerance is
+  // needed to see it.
+  //
+  // The switcher is asserted visible on purpose. It would be easy to sweep it into the menu
+  // with everything else, and for a bilingual audience that is the wrong trade — a language
+  // control someone cannot find costs more than the tap it saves.
+  async mobileNav(page, spec) {
+    const problems = [];
+    await page.setViewportSize({ width: 360, height: 640 });
+    try {
+      await page.goto(spec.absolute, { waitUntil: "networkidle" });
+      const shut = await page.evaluate(() => {
+        const q = s => document.querySelector(s);
+        const seen = el => el && getComputedStyle(el).display !== "none";
+        const brand = q(".brand").getBoundingClientRect().height;
+        const mark = q(".brand svg").getBoundingClientRect().height;
+        return {
+          brand: Math.round(brand), mark: Math.round(mark),
+          wide: document.documentElement.scrollWidth > window.innerWidth,
+          links: seen(q("#navlinks")), burger: seen(q("#burger")), seg: seen(q("#langind")),
+        };
+      });
+      if (shut.brand > shut.mark)
+        problems.push(`the wordmark broke: the brand is ${shut.brand}px against a ${shut.mark}px mark`);
+      if (shut.wide) problems.push("the page scrolls sideways");
+      if (shut.links) problems.push("the links are still in the row at 360px");
+      if (!shut.burger) problems.push("there is no menu button");
+      if (!shut.seg) problems.push("the language control is not on the bar");
+
+      // Only drive the button if it is there to be driven: clicking a hidden one waits the
+      // full timeout and reports that instead of the thing actually wrong.
+      if (shut.burger) {
+      await page.click("#burger");
+      const open = await page.evaluate(() => ({
+        links: getComputedStyle(document.getElementById("navlinks")).display !== "none",
+        flag: document.getElementById("burger").getAttribute("aria-expanded"),
+      }));
+      if (!open.links) problems.push("pressing the button did not open the menu");
+      if (open.flag !== "true") problems.push(`the button reports aria-expanded=${open.flag} while open`);
+
+      await page.keyboard.press("Escape");
+      const closed = await page.evaluate(() =>
+        getComputedStyle(document.getElementById("navlinks")).display === "none");
+      if (!closed) problems.push("Escape did not close the menu");
+      }
+    } finally {
+      // Every other check runs at the desktop size; leave the page as they expect it.
+      await page.setViewportSize({ width: 1280, height: 720 });
+      await page.goto(spec.absolute, { waitUntil: "networkidle" });
+    }
     return problems.length ? problems.join("; ") : null;
   },
   async navOrder(page) {
