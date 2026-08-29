@@ -16,7 +16,7 @@ const BASE = process.env.BASE || "http://localhost:8000";
 const SITE = "https://guestgraph.io";
 
 const PAGES = [
-  { path: "/", navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/", headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["Five strangers", "One guest", "GuestGraph"],
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
@@ -29,7 +29,7 @@ const PAGES = [
   // the unit must be stated exactly, and the page must keep saying the service is not
   // open. Drop that second sentence and the page stops describing an intention and
   // starts advertising a product that does not exist.
-  { path: "/billing/", navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/billing/", headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["Not per record", "1 arrival = 1 reservation that checked in", "not open yet"],
     // no call to action here: the page ends on its argument, so the only outbound link
     // left to hold to the new-tab rule is the one in the footer.
@@ -42,7 +42,7 @@ const PAGES = [
   // trusting the prose: a page that says it makes no third-party request must make none,
   // and the suite's own `requestfailed`/`links` machinery cannot see that. If a font, an
   // analytics tag or an embed ever creeps in, this is what fails.
-  { path: "/privacy/", navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/privacy/", headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["This site collects", "There is no imprint yet"],
     links: ["https://github.com/guestgraph"],
     sameTab: ["../talks/", "../", "../billing/", "./"],
@@ -50,7 +50,7 @@ const PAGES = [
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: SITE, internalLinks: true },
 
-  { path: "/talks/", navOrder: true, seo: true, noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
+  { path: "/talks/", headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
     contains: ["GuestGraph", "guest identity"],
     // the nav no longer carries a Code item — the footer's org link is the way to the
     // source from here, one click further out than it used to be
@@ -143,6 +143,50 @@ const CHECKS = {
   // This function is a fourth copy, kept identical in all three suites the way the head
   // contract and the no-new-tab check are. A rule that is one row for a visitor is worth
   // asserting the same way everywhere.
+  // One line runs through the middle of every word in the header — the wordmark, each nav
+  // item, and both language segments. It did not before: nav is a flex row, its links
+  // stretched to the row's height with their text at the top, and the language control sat
+  // 5px lower than the words beside it.
+  //
+  // Measured on the text, not the boxes. A box can be centred while the text inside it is
+  // not — that is exactly the bug this replaced, and a check comparing boxes would have
+  // called it aligned.
+  //
+  // Two tolerances, because there are two fonts. The nav items and the language segments
+  // are the same face at the same size, so they must agree to within half a pixel; that is
+  // the pair the fix was about, and a loose bound there proved useless — with the link box
+  // already symmetric, undoing `align-items:center` still landed inside 1px. The wordmark
+  // is a different face, and where a line box falls inside its em box is the font's
+  // business and the platform's, so it gets 1.5px and is judged against the row, not
+  // against a single item of it.
+  async headerBaseline(page) {
+    return await page.evaluate(() => {
+      const mid = el => {
+        const n = [...el.childNodes].find(x => x.nodeType === 3 && x.textContent.trim());
+        const r = document.createRange(); r.selectNodeContents(n || el);
+        const b = r.getBoundingClientRect(); return (b.top + b.bottom) / 2;
+      };
+      const row = [];
+      document.querySelectorAll("nav a").forEach(a => row.push([a.textContent.trim(), mid(a)]));
+      for (const id of ["lde", "len"]) {
+        const el = document.getElementById(id);
+        if (el) row.push([el.textContent.trim(), mid(el)]);
+      }
+      if (row.length < 2) return "the nav row has fewer texts than a row";
+      const vals = row.map(r => r[1]);
+      const base = vals.reduce((a, b) => a + b, 0) / vals.length;
+      const spread = Math.max(...vals) - Math.min(...vals);
+      if (spread > 0.5)
+        return `nav texts are ${spread.toFixed(2)}px apart: ` +
+          row.map(([n, v]) => `${n} ${(v - base >= 0 ? "+" : "") + (v - base).toFixed(2)}`).join(", ");
+      const mark = document.querySelector(".brand b");
+      if (mark) {
+        const d = mid(mark) - base;
+        if (Math.abs(d) > 1.5) return `the wordmark sits ${d.toFixed(2)}px off the nav row`;
+      }
+      return null;
+    });
+  },
   async navOrder(page) {
     const ORDER = ["Ideas", "Principles", "Model", "Example", "Talks", "Billing", "Privacy"];
     return await page.evaluate(order => {

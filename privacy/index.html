@@ -132,15 +132,35 @@
   .brand svg{width:28px; height:28px; color:var(--c-mid); flex:0 0 auto}
   .brand b{font-weight:600; font-size:1.06rem; letter-spacing:-.01em}
   .brand b span{color:var(--c-mid)}
-  nav{display:flex; gap:1.9rem; font-size:.76rem; font-weight:500;
+  /* `align-items:center`, not the default `stretch`: a stretched link is a box the height of
+     the whole row with its text at the top, which put the words above the language control
+     beside them. Centred, each box is its own height and one line runs through every text. */
+  nav{display:flex; align-items:center; gap:1.9rem; font-size:.76rem; font-weight:500;
       letter-spacing:.14em; text-transform:uppercase}
-  nav a{color:var(--dim); text-decoration:none; padding-bottom:.2rem; border-bottom:1px solid transparent}
-  nav a:hover, nav a:focus-visible{color:var(--ink); border-color:var(--c-mid)}
-  .langind{font:inherit; letter-spacing:inherit; text-transform:inherit; background:none;
-           border:0; border-bottom:1px solid transparent; padding:0 0 .2rem; cursor:pointer;
-           color:var(--dim); white-space:nowrap}
-  .langind:hover{color:var(--ink)}
-  .langind .on{color:var(--c-firm); font-weight:700}
+  /* The hover underline hangs below the text, so the box is taller under the text than over
+     it. Mirror the space above, and the box is symmetric about its own text. */
+  nav a{color:var(--dim); text-decoration:none; padding:.2rem 0;
+        border-top:1px solid transparent; border-bottom:1px solid transparent}
+  /* Hover is an underline and nothing else: `border-bottom-color`, not `border-color`,
+     because the box now has a transparent border on both edges to keep its text centred,
+     and `border-color` painted a line above the word as well as under it.
+     The current page is not underlined — it is brighter. A page marks where you are with
+     a different weight of ink; the underline is what follows the pointer. When both used
+     the same line, the selected item read as permanently hovered. */
+  nav a:hover, nav a:focus-visible{border-bottom-color:var(--c-mid)}
+  nav a[aria-current="page"]{color:var(--c-firm)}
+  /* The segmented control the decks put in their transport, at nav scale. Two real buttons
+     in one bordered box, the pressed one filled — someone who has used the deck already
+     knows what it is. It replaces one button with two clickable spans inside it, which said
+     one thing to a pointer and another to a screen reader. */
+  .seg{display:inline-flex; border:1px solid var(--rule); border-radius:8px; overflow:hidden;
+       flex:0 0 auto}
+  .seg button{font:inherit; letter-spacing:inherit; text-transform:inherit; background:none;
+              border:0; cursor:pointer; padding:.26rem .5rem; color:var(--dim);
+              transition:color .15s ease, background-color .15s ease}
+  .seg button:hover{color:var(--ink)}
+  .seg button[aria-pressed="true"]{color:var(--c-mid); background:#1b2231; font-weight:600}
+  .seg button:focus-visible{outline:2px solid var(--c-mid); outline-offset:-2px}
 
   main{flex:1; padding:2vh 0 6vh}
 
@@ -242,7 +262,7 @@
       <nav>
         <a href="../talks/" data-de="Vorträge">Talks</a>
         <a href="../billing/" data-de="Abrechnung">Billing</a>
-        <button class="langind" id="langind" type="button" aria-label="Sprache wechseln — switch language"><span id="lde">DE</span> · <span id="len">EN</span></button>
+        <div class="seg" id="langind" role="group" aria-label="Sprache wechseln — switch language"><button type="button" id="lde" aria-pressed="false">DE</button><button type="button" id="len" aria-pressed="true">EN</button></div>
       </nav>
     </div>
   </header>
@@ -331,15 +351,14 @@
     i18n.forEach(function(el){ el.innerHTML = el.getAttribute("data-" + lang); });
     document.title = UI[lang].title;
     document.getElementById("metadesc").setAttribute("content", UI[lang].desc);
-    document.getElementById("lde").classList.toggle("on", lang === "de");
-    document.getElementById("len").classList.toggle("on", lang === "en");
+    document.getElementById("lde").setAttribute("aria-pressed", String(lang === "de"));
+    document.getElementById("len").setAttribute("aria-pressed", String(lang === "en"));
     document.documentElement.lang = lang;
   }
   function toggle(){ lang = (lang === "de") ? "en" : "de"; remember(lang); applyLang(); }
 
-  document.getElementById("langind").addEventListener("click", toggle);
-  document.getElementById("lde").addEventListener("click", function(e){ e.stopPropagation(); if(lang!=="de") toggle(); });
-  document.getElementById("len").addEventListener("click", function(e){ e.stopPropagation(); if(lang!=="en") toggle(); });
+  document.getElementById("lde").addEventListener("click", function(){ if (lang !== "de") toggle(); });
+  document.getElementById("len").addEventListener("click", function(){ if (lang !== "en") toggle(); });
   document.addEventListener("keydown", function(e){ if(e.key === "l" || e.key === "L") toggle(); });
 
   applyLang();
