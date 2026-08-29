@@ -16,7 +16,7 @@ const BASE = process.env.BASE || "http://localhost:8000";
 const SITE = "https://guestgraph.io";
 
 const PAGES = [
-  { path: "/", headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/", carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["Five strangers", "One guest", "GuestGraph"],
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
@@ -29,7 +29,7 @@ const PAGES = [
   // the unit must be stated exactly, and the page must keep saying the service is not
   // open. Drop that second sentence and the page stops describing an intention and
   // starts advertising a product that does not exist.
-  { path: "/billing/", headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/billing/", carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["Not per record", "1 arrival = 1 reservation that checked in", "not open yet"],
     // no call to action here: the page ends on its argument, so the only outbound link
     // left to hold to the new-tab rule is the one in the footer.
@@ -42,7 +42,7 @@ const PAGES = [
   // trusting the prose: a page that says it makes no third-party request must make none,
   // and the suite's own `requestfailed`/`links` machinery cannot see that. If a font, an
   // analytics tag or an embed ever creeps in, this is what fails.
-  { path: "/privacy/", headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/privacy/", carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["This site collects", "There is no imprint yet"],
     links: ["https://github.com/guestgraph"],
     sameTab: ["../talks/", "../", "../billing/", "./"],
@@ -50,7 +50,7 @@ const PAGES = [
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: SITE, internalLinks: true },
 
-  { path: "/talks/", headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
+  { path: "/talks/", carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
     contains: ["GuestGraph", "guest identity"],
     // the nav no longer carries a Code item — the footer's org link is the way to the
     // source from here, one click further out than it used to be
@@ -60,7 +60,7 @@ const PAGES = [
     sameTab: ["intro/", "./", "../billing/", "../privacy/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: SITE, internalLinks: true },
-  { path: "/talks/intro/", seo: true, noNewTab: true, footerVersion: true, title: /GuestGraph/, lang: "en", sourceLang: "en", wayOut: "../",
+  { path: "/talks/intro/", carriesLang: true, seo: true, noNewTab: true, footerVersion: true, title: /GuestGraph/, lang: "en", sourceLang: "en", wayOut: "../",
     // The footer's other two destinations. `landing` covers the lockup, which is relative and
     // therefore invisible to `links`; blust.ch is absolute, so `links` catches a typo in it and
     // `newTab` holds it to the rule the pages already follow — a talk the presenter navigates
@@ -186,6 +186,57 @@ const CHECKS = {
       }
       return null;
     });
+  },
+  // Three domains, three localStorages, one preference. A visitor reading German on one
+  // site and following a link to a sibling used to arrive in English, because an origin
+  // cannot see what another origin stored. The language travels in the link instead.
+  //
+  // Three things have to hold, and the middle one is the reason the implementation looks
+  // the way it does. A family link can live inside a data-de attribute, and switching
+  // language replaces that element whole, so an href decorated at load would be thrown
+  // away by the first toggle; decorating on mousedown survives it, and keeps the param
+  // out of the served markup — nothing crawlable or copyable carries it.
+  //
+  // Driven with mousedown rather than click on purpose: it is the event that fires before
+  // the browser follows a link, so it can be dispatched without navigating away.
+  async carriesLang(page, spec) {
+    const problems = [];
+    await page.goto(spec.absolute + "?lang=de", { waitUntil: "networkidle" });
+    const arrived = await page.evaluate(() => ({
+      lang: document.documentElement.lang, search: location.search,
+    }));
+    if (arrived.lang !== "de")
+      problems.push(`arriving with ?lang=de left the page in ${arrived.lang}`);
+    if (/lang=/.test(arrived.search))
+      problems.push(`the param stayed in the address bar as ${JSON.stringify(arrived.search)}`);
+
+    const probe = await page.evaluate(() => {
+      const pick = test => [...document.querySelectorAll("a[href]")].find(a => {
+        try { return test(new URL(a.href, location.href)); } catch (e) { return false; }
+      });
+      const press = a => {
+        const before = a.getAttribute("href");
+        a.dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
+        return { before, after: a.getAttribute("href") };
+      };
+      const FAMILY = /^(www\.)?(blust\.ch|companygraph\.io|guestgraph\.io)$/;
+      const out = { away: null, home: null };
+      const away = pick(u => u.origin !== location.origin && FAMILY.test(u.hostname));
+      if (away) out.away = press(away);
+      const home = pick(u => u.origin === location.origin);
+      if (home) out.home = press(home);
+      return out;
+    });
+    // A page with no link to a sibling domain simply has nothing to carry.
+    if (probe.away && !/[?&]lang=de(&|$)/.test(probe.away.after))
+      problems.push(`a link to ${probe.away.before} did not pick the language up: ${probe.away.after}`);
+    if (probe.home && probe.home.after !== probe.home.before)
+      problems.push(`a same-origin link was rewritten to ${probe.home.after}; it shares this storage already`);
+
+    // Leave the page as this check found it, for whatever runs next.
+    await page.evaluate(() => { try { localStorage.clear(); } catch (e) {} });
+    await page.goto(spec.absolute, { waitUntil: "networkidle" });
+    return problems.length ? problems.join("; ") : null;
   },
   async navOrder(page) {
     const ORDER = ["Ideas", "Principles", "Model", "Example", "Talks", "Billing", "Privacy"];
