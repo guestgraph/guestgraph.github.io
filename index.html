@@ -134,7 +134,9 @@
   /* three nav items plus the language control no longer fit beside the lockup on a
      phone: let the row wrap rather than clip the control off the right edge. */
   .bar{display:flex; align-items:center; justify-content:space-between; gap:1rem 2rem; flex-wrap:wrap}
-  .brand{display:flex; align-items:center; gap:.7rem; text-decoration:none}
+  /* The wordmark is one thing and never breaks: two pages had no wrap on the bar,
+     and it squeezed the mark and the name onto separate lines at phone widths. */
+  .brand{white-space:nowrap; flex:0 0 auto; display:flex; align-items:center; gap:.7rem; text-decoration:none}
   .brand svg{width:28px; height:28px; color:var(--c-mid); flex:0 0 auto}
   .brand b{font-weight:600; font-size:1.06rem; letter-spacing:-.01em}
   .brand b span{color:var(--c-mid)}
@@ -142,7 +144,22 @@
      the whole row with its text at the top, which put the words above the language control
      beside them. Centred, each box is its own height and one line runs through every text. */
   nav{display:flex; align-items:center; gap:1.9rem; font-size:.76rem; font-weight:500;
-      letter-spacing:.14em; text-transform:uppercase}
+      letter-spacing:.14em; text-transform:uppercase; position:relative}
+  .navlinks{display:flex; align-items:center; gap:1.9rem}
+  /* Hidden until the row runs out of width; the media query at the end of this sheet
+     is the only place it appears. The two icons swap on aria-expanded, the way the
+     deck's play button swaps its own. */
+  .burger{display:none; align-items:center; justify-content:center; width:40px; height:40px;
+          background:none; border:1px solid var(--rule); border-radius:8px;
+          color:var(--dim); cursor:pointer; padding:0;
+          transition:color .15s ease, border-color .15s ease}
+  .burger:hover{color:var(--ink); border-color:var(--c-mid)}
+  .burger svg{width:18px; height:18px; fill:none; stroke:currentColor;
+              stroke-width:1.7; stroke-linecap:round}
+  .burger .ix{display:none}
+  .burger[aria-expanded="true"]{color:var(--c-mid); border-color:var(--c-mid)}
+  .burger[aria-expanded="true"] .ibars{display:none}
+  .burger[aria-expanded="true"] .ix{display:block}
   /* The hover underline hangs below the text, so the box is taller under the text than over
      it. Mirror the space above, and the box is symmetric about its own text. */
   nav a{color:var(--dim); text-decoration:none; padding:.2rem 0;
@@ -282,6 +299,28 @@
     .chip,.profile{opacity:1; animation:none}
     .wire{stroke-dashoffset:0; animation:none}
   }
+
+  /* One mobile behaviour for the whole family. Below this width the links do not fit beside
+     the wordmark, and every page in the three sites used to answer that differently — some
+     wrapped the bar, some wrapped the nav, and the two whose `.bar` had no `flex-wrap` at
+     all let the wordmark itself break in half. They collapse behind a button instead.
+
+     The language control stays on the bar. It is two characters, it is used constantly by a
+     bilingual audience, and a language a visitor cannot find is worse than one menu tap
+     saved. The button sits to its left, which keeps the family's order: the switcher is
+     still the rightmost thing in the row, and the menu holds everything left of it. */
+  @media (max-width:640px){
+    nav{gap:.8rem}
+    .burger{display:inline-flex}
+    .navlinks{display:none; position:absolute; top:calc(100% + .85rem); right:0; z-index:30;
+              flex-direction:column; align-items:flex-start; gap:0;
+              min-width:11rem; padding:.3rem 1.1rem;
+              background:var(--raise); border:1px solid var(--rule); border-radius:10px}
+    .navlinks[data-open="true"]{display:flex}
+    /* Tall enough to be a comfortable target; the underline still hugs the word, because
+       each item is only as wide as its own text. */
+    .navlinks a{padding:.8rem 0}
+  }
 </style>
 </head>
 <body>
@@ -302,8 +341,15 @@
         <b>Guest<span>Graph</span></b>
       </a>
       <nav>
-        <a href="talks/" data-de="Vorträge">Talks</a>
-        <a href="billing/" data-de="Abrechnung">Billing</a>
+        <div class="navlinks" id="navlinks">
+          <a href="talks/" data-de="Vorträge">Talks</a>
+          <a href="billing/" data-de="Abrechnung">Billing</a>
+        </div>
+        <button class="burger" id="burger" type="button" aria-expanded="false"
+                aria-controls="navlinks" aria-label="Menü — menu">
+          <svg class="ibars" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="ix" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
         <div class="seg" id="langind" role="group" aria-label="Sprache wechseln — switch language"><button type="button" id="lde" aria-pressed="false">DE</button><button type="button" id="len" aria-pressed="true">EN</button></div>
       </nav>
     </div>
@@ -449,6 +495,26 @@
     document.documentElement.lang = lang;
   }
   function toggle(){ lang = (lang === "de") ? "en" : "de"; remember(lang); applyLang(); }
+
+
+  var burger = document.getElementById("burger"),
+      navlinks = document.getElementById("navlinks"),
+      navbar = document.querySelector("nav");
+  function setMenu(open){
+    burger.setAttribute("aria-expanded", String(open));
+    navlinks.setAttribute("data-open", String(open));
+  }
+  burger.addEventListener("click", function(){
+    setMenu(burger.getAttribute("aria-expanded") !== "true");
+  });
+  // A tap anywhere else closes it, as does Escape and following a link. The button's own
+  // click is inside nav, so it toggles rather than being closed out from under itself.
+  document.addEventListener("click", function(e){ if (!navbar.contains(e.target)) setMenu(false); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape") setMenu(false); });
+  navlinks.addEventListener("click", function(e){ if (e.target.closest("a")) setMenu(false); });
+  // Turning the phone can take the row back over the breakpoint, where the panel's own
+  // styles no longer apply; leaving it flagged open would strand aria-expanded as true.
+  window.addEventListener("resize", function(){ if (window.innerWidth > 640) setMenu(false); });
 
   document.getElementById("lde").addEventListener("click", function(){ if (lang !== "de") toggle(); });
   document.getElementById("len").addEventListener("click", function(){ if (lang !== "en") toggle(); });
