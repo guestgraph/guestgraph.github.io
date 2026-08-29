@@ -29,6 +29,16 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "Person",
+      "@id": "https://blust.ch/#person",
+      "name": "Robert Blust",
+      "url": "https://blust.ch/",
+      "sameAs": [
+        "https://github.com/robertblust",
+        "https://www.linkedin.com/in/robertblust/"
+      ]
+    },
+    {
       "@type": "Organization",
       "@id": "https://guestgraph.io/#organization",
       "name": "GuestGraph",
@@ -56,6 +66,9 @@
       "codeRepository": "https://github.com/guestgraph/engine",
       "license": "https://www.apache.org/licenses/LICENSE-2.0",
       "author": {
+        "@id": "https://blust.ch/#person"
+      },
+      "publisher": {
         "@id": "https://guestgraph.io/#organization"
       }
     },
