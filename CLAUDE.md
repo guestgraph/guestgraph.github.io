@@ -169,6 +169,40 @@ would compete with the deck for the same query.
 `npm run og:check` says whether they still match. Keep the `og:image:width`/`height` tags
 matching the file.
 
+## The header is a contract, and its copy carries a version
+
+The row across the top — wordmark, links, language control — is one design on three sites,
+and like the tokens it is a copy, because a deck opens from `file://` and there is no
+stylesheet to share. It is fenced in every page as `header contract · vN` and is
+**byte-identical on all fifteen pages** in the three repositories. Check it the way you
+check the tokens: change it here, run this repo's suite, and bump `vN` in all three.
+
+What the contract says:
+
+- **Order.** Ideas, Principles, Model, Example, Talks, Billing, Privacy, then the language
+  control. A site skips what it does not have and reorders nothing. Read right to left, the
+  switcher is at the edge and each step left is more the site's own subject.
+- **One baseline.** A single line runs through the middle of every text in the row. The
+  links carry equal space above and below: the hover underline hangs below the word, and
+  centring the boxes instead would ride the text high — which it did, by 5px, until the
+  language control sat next to it and made it visible.
+- **States are different things.** Hover is an underline and nothing else. The current page
+  is brighter ink and carries no line. When both drew the same line, the page you were on
+  read as permanently hovered.
+- **The wordmark never breaks.** It is `white-space:nowrap` and does not shrink. This one
+  sits *outside* the fence, because each site's mark has its own colours; the rule is the
+  outcome, not the declaration, and `mobileNav` asserts it.
+- **Under 640px the links collapse behind a button.** The language control stays on the bar
+  — two characters, reached for constantly by a bilingual audience, and one a visitor
+  cannot find costs more than the tap it saves. The button sits to its left, so the order
+  still reads. The links are *wrapped*, not duplicated: one list presented two ways, so
+  there is no second copy to drift.
+
+`navOrder`, `headerBaseline` and `mobileNav` assert all of it, per repository. What they
+cannot do is see a sibling — that is the whole reason the block carries a version. Before
+this was written down there were five different mobile behaviours across the family and
+eight different wordings of the same CSS, and nothing failed anywhere.
+
 ## Share cards go stale silently, and nothing on the page says so
 
 `og.png` is not a banner someone drew: `npm run og` renders it from the page itself — the
