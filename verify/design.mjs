@@ -21,7 +21,7 @@
 //   tokenVersion    the page's `design tokens · vN` marker matches this suite
 //   footerVersion   the deck's `deck footer · vN` marker matches this suite
 
-export const TOKEN_VERSION = "v2";
+export const TOKEN_VERSION = "v3";
 
 // The deck footer is copied across the three sites for the same reason the token block is:
 // a deck opens from file://, so there is nothing to import. What it holds is a contract, not
