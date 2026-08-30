@@ -16,7 +16,7 @@ const BASE = process.env.BASE || "http://localhost:8000";
 const SITE = "https://guestgraph.io";
 
 const PAGES = [
-  { path: "/", mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/", storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["Five strangers", "One guest", "GuestGraph"],
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
@@ -29,7 +29,7 @@ const PAGES = [
   // the unit must be stated exactly, and the page must keep saying the service is not
   // open. Drop that second sentence and the page stops describing an intention and
   // starts advertising a product that does not exist.
-  { path: "/billing/", mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/billing/", storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["Not per record", "1 arrival = 1 reservation that checked in", "not open yet"],
     // no call to action here: the page ends on its argument, so the only outbound link
     // left to hold to the new-tab rule is the one in the footer.
@@ -42,7 +42,7 @@ const PAGES = [
   // trusting the prose: a page that says it makes no third-party request must make none,
   // and the suite's own `requestfailed`/`links` machinery cannot see that. If a font, an
   // analytics tag or an embed ever creeps in, this is what fails.
-  { path: "/privacy/", mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/privacy/", storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["This site collects", "There is no imprint yet"],
     links: ["https://github.com/guestgraph"],
     sameTab: ["../talks/", "../", "../billing/", "./"],
@@ -50,7 +50,7 @@ const PAGES = [
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, contrast: true, tokenVersion: true,
     card: true, cardBase: SITE, internalLinks: true },
 
-  { path: "/talks/", mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
+  { path: "/talks/", storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
     contains: ["GuestGraph", "guest identity"],
     // the nav no longer carries a Code item — the footer's org link is the way to the
     // source from here, one click further out than it used to be
@@ -295,6 +295,36 @@ const CHECKS = {
       await page.goto(spec.absolute, { waitUntil: "networkidle" });
     }
     return problems.length ? problems.join("; ") : null;
+  },
+  // The privacy page says "that is everything that gets stored" and then lists the keys. It
+  // was true until the divider started remembering its width, and nothing noticed — the claim
+  // is prose and the keys are in a script, so the two could only be compared by hand.
+  //
+  // This drives the page instead of reading it: every write to localStorage is recorded, the
+  // page is then made to do the things that write — switch language, move the divider — and
+  // each key that turns up must be named on the privacy page. A key the page does not declare
+  // is the failure; a key it declares and never writes is not, because a claim to store
+  // something is not a claim anyone is harmed by.
+  async storageKeys(page, spec) {
+    const declared = await (await fetch(new URL("/privacy/", spec.absolute).href)).text();
+    await page.addInitScript(() => {
+      window.__keys = [];
+      const real = Storage.prototype.setItem;
+      Storage.prototype.setItem = function (k, v) { window.__keys.push(k); return real.call(this, k, v); };
+    });
+    await page.goto(spec.absolute, { waitUntil: "networkidle" });
+    // The two things on any page that write: the language control, and the divider where the
+    // page has one.
+    if (await page.$("#lde")) { await page.click("#lde"); await page.click("#len"); }
+    if (await page.$("#gutter")) { await page.focus("#gutter"); await page.keyboard.press("ArrowLeft"); }
+    const written = await page.evaluate(() => [...new Set(window.__keys)]);
+    const undeclared = written.filter((k) => !declared.includes(k));
+    // Leave the page as the rest of the suite expects it, storage included.
+    await page.evaluate(() => { try { localStorage.clear(); } catch (e) {} });
+    await page.goto(spec.absolute, { waitUntil: "networkidle" });
+    return undeclared.length
+      ? `writes ${undeclared.join(", ")}, which /privacy/ does not name`
+      : null;
   },
   async navOrder(page) {
     const ORDER = ["Ideas", "Principles", "Model", "Example", "Talks", "Billing", "Privacy"];
