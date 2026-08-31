@@ -131,6 +131,25 @@
     --c-path:#B8D0FF;
   }
   /* ─── end design tokens ─────────────────────────────────────────────── */
+  /* ─── prose reset · v1 · shared ────────────────────────────────────
+     Generated from @robertblust/design — edit it there and run `npm run design`.
+
+     The first thing every prose page declares, after its tokens and before
+     anything of its own. Five rules, and four of the five had drifted:
+
+       .mono   missing entirely from two landing pages, and one of those marked
+               an element as data and rendered it as prose, in production
+       a       missing from one
+       body    gained "Segoe UI" on five pages, and lost ui-sans-serif,
+               -apple-system and -webkit-font-smoothing on one
+
+     `*` and `.shell` agreed everywhere. They are here because the block is the
+     whole contiguous run, not the drifted subset of it — a fence that covered
+     only the rules that had gone wrong would leave the next drift uncovered.
+
+     Nothing here may name a family the sites do not ship. `fontsAvailable`
+     fails the build for it, and a name no machine has falls through silently to
+     whatever the OS picked. */
   *{box-sizing:border-box; margin:0; padding:0}
   body{
     font-family:"Instrument Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -142,6 +161,7 @@
   .mono{font-family:"Plex Mono", ui-monospace, "SF Mono", Menlo, monospace}
   a{color:inherit}
   .shell{width:100%; max-width:1180px; margin:0 auto; padding:0 7vw}
+  /* ─── end prose reset ───────────────────────────────────────────────────*/
 
   header{padding:2rem 0}
   /* three nav items plus the language control no longer fit beside the lockup on a
@@ -153,12 +173,12 @@
   .brand svg{width:28px; height:28px; color:var(--c-mid); flex:0 0 auto}
   .brand b{font-weight:600; font-size:1.06rem; letter-spacing:-.01em}
   .brand b span{color:var(--c-mid)}
-  /* ─── header contract · v2 · shared ──────────────────────────────────
+  /* ─── header contract · v3 · shared ──────────────────────────────────
      One row, three sites, and no stylesheet between them — a deck opens from file://, so
      this is a copy, generated from @robertblust/design. Editing it here has no effect — the
      next `npm run design` overwrites it. Change it in the package.
 
-     Inside the fence is the row's behaviour, byte-identical on all fifteen pages. Outside
+     Inside the fence is the row's behaviour, byte-identical on all sixteen pages. Outside
      it is each site's own: the brand mark's colours, the bar's gap. The wordmark's
      `white-space:nowrap` is outside for that reason — the contract is that it never breaks,
      not that every site declares it the same way, and `mobileNav` asserts the outcome.
@@ -334,14 +354,22 @@
   /* last, and only once every record has been joined */
   .profile{opacity:0; animation:pop .5s cubic-bezier(.2,.7,.2,1) forwards 2.35s}
 
+  /* ─── prose footer · v1 · credit ───────────────────────────────────
+     Generated from @robertblust/design — edit it there and run `npm run design`.
+
+     Two forms, and the difference is not styling. companygraph.io and
+     guestgraph.io credit blust.ch in their footer; blust.ch is that site and
+     does not credit itself. So `credit` carries the lockup and `plain` does
+     not, and a page declaring the wrong word is an error rather than a
+     preference — which is what the variant guard in planFences asserts.
+
+     The row is mono because the row is data: a repository URL and a licence.
+     The credit leaves that mono deliberately, because a brand is not a record
+     value. Both facts belong here rather than in sixteen page comments. */
   footer{padding:0 0 2rem; display:flex; flex-wrap:wrap; gap:.9rem 2.6rem; align-items:center;
          font-family:"Plex Mono",monospace; font-size:.76rem; letter-spacing:.08em; color:var(--dim)}
   footer a{color:var(--c-mid); text-decoration:none}
   footer a:hover, footer a:focus-visible{text-decoration:underline}
-  /* The blust.ch credit is a brand, not a record value, so it leaves the footer's mono and
-     takes the lockup it has on every deck: the rb plate inlined, wordmark with the second
-     word in --c-mid. The rest of the row stays mono because the rest of the row is data —
-     a repository URL and a licence. */
   footer .credit{display:inline-flex; align-items:center; gap:.5em; vertical-align:-.25em;
                  font-family:"Instrument Sans", ui-sans-serif, system-ui, sans-serif;
                  font-size:.84rem; letter-spacing:0; color:var(--ink)}
@@ -353,6 +381,8 @@
   footer .credit b em{font-style:normal; color:var(--c-mid)}
   footer .credit:hover, footer .credit:focus-visible{text-decoration:none}
   footer .credit:hover b em, footer .credit:focus-visible b em{color:var(--ink)}
+  footer a[aria-current="page"]{color:var(--c-firm)}
+  /* ─── end prose footer ──────────────────────────────────────────────────*/
 
   :focus-visible{outline:2px solid var(--c-mid); outline-offset:3px; border-radius:3px}
 
