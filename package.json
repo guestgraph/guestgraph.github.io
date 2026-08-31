@@ -14,7 +14,7 @@
     "test:og": "node --test verify/og-recipe.test.mjs"
   },
   "devDependencies": {
-    "@robertblust/design": "github:robertblust/design#1f9560b3b4a43be71c61b5b4712155d9f1121c07",
+    "@robertblust/design": "github:robertblust/design#v0.2.1",
     "pdf-lib": "^1.17.1",
     "playwright": "^1.49.1"
   }
