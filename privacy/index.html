@@ -374,7 +374,7 @@
       <!-- no data-de: this is the value itself, and it says the same thing in either language.
            Both cases are shown because pinning one would be wrong the moment you switch. -->
       <p class="unit mono">localStorage: gg-lang = "de" | "en"</p>
-      <p class="lede" data-de="Das ist alles, was gespeichert wird: Ihre Sprachwahl, zwei Buchstaben, damit die nächste Seite sie kennt. Sie erreicht keinen Server und identifiziert niemanden.">That is everything that gets stored: your choice of language, two letters, so the next page knows it. It reaches no server and identifies nobody.</p>
+      <p class="lede" data-de="Das ist alles, was gespeichert wird: Ihre Sprachwahl, zwei Buchstaben, damit die nächste Seite sie kennt. Sie erreicht keinen Server und identifiziert niemanden.">That is everything that gets langStored: your choice of language, two letters, so the next page knows it. It reaches no server and identifies nobody.</p>
       <div class="cols">
         <div class="card never wide">
           <h3 data-de="Gar nicht erst verwendet">Not used at all</h3>
@@ -424,9 +424,9 @@
 // thing before any JS runs, and the choice is remembered per origin. This page describes
 // that key, which is the only reason it is worth pointing at the code from here.
 (function(){
-  var KEY = "gg-lang";
-  function stored(){ try { return localStorage.getItem(KEY); } catch (e) { return null; } }
-  function remember(v){ try { localStorage.setItem(KEY, v); } catch (e) {} }
+  var LANG_KEY = "gg-lang";
+  function langStored(){ try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } }
+  function langRemember(v){ try { localStorage.setItem(LANG_KEY, v); } catch (e) {} }
 
   /* One language across three domains. Each origin keeps its own localStorage, so a
      visitor reading German here and following a link to a sibling site would arrive in
@@ -465,8 +465,8 @@
 
 
   var urlLang = langFromUrl();
-  if (urlLang) remember(urlLang);
-  var lang = urlLang || (stored() === "de" ? "de" : "en");
+  if (urlLang) langRemember(urlLang);
+  var lang = urlLang || (langStored() === "de" ? "de" : "en");
   var i18n = Array.prototype.slice.call(document.querySelectorAll("[data-de]"));
   i18n.forEach(function(el){ el.setAttribute("data-en", el.innerHTML); });
 
@@ -485,7 +485,7 @@
     document.getElementById("len").setAttribute("aria-pressed", String(lang === "en"));
     document.documentElement.lang = lang;
   }
-  function toggle(){ lang = (lang === "de") ? "en" : "de"; remember(lang); applyLang(); }
+  function toggle(){ lang = (lang === "de") ? "en" : "de"; langRemember(lang); applyLang(); }
 
 
   var burger = document.getElementById("burger"),

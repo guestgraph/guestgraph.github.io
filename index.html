@@ -477,11 +477,11 @@
 // per origin,
 // so it carries from here to the talks index and into the deck — all one origin. Every
 // storage access is guarded: file:// is an opaque origin in some browsers and throws,
-// and a page that cannot remember a preference must still work without one.
+// and a page that cannot langRemember a preference must still work without one.
 (function(){
-  var KEY = "gg-lang";
-  function stored(){ try { return localStorage.getItem(KEY); } catch (e) { return null; } }
-  function remember(v){ try { localStorage.setItem(KEY, v); } catch (e) {} }
+  var LANG_KEY = "gg-lang";
+  function langStored(){ try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } }
+  function langRemember(v){ try { localStorage.setItem(LANG_KEY, v); } catch (e) {} }
 
   /* One language across three domains. Each origin keeps its own localStorage, so a
      visitor reading German here and following a link to a sibling site would arrive in
@@ -520,8 +520,8 @@
 
 
   var urlLang = langFromUrl();
-  if (urlLang) remember(urlLang);
-  var lang = urlLang || (stored() === "de" ? "de" : "en");
+  if (urlLang) langRemember(urlLang);
+  var lang = urlLang || (langStored() === "de" ? "de" : "en");
   var i18n = Array.prototype.slice.call(document.querySelectorAll("[data-de]"));
   i18n.forEach(function(el){ el.setAttribute("data-en", el.innerHTML); });
 
@@ -540,7 +540,7 @@
     document.getElementById("len").setAttribute("aria-pressed", String(lang === "en"));
     document.documentElement.lang = lang;
   }
-  function toggle(){ lang = (lang === "de") ? "en" : "de"; remember(lang); applyLang(); }
+  function toggle(){ lang = (lang === "de") ? "en" : "de"; langRemember(lang); applyLang(); }
 
 
   var burger = document.getElementById("burger"),
