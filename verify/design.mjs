@@ -304,6 +304,26 @@ export const DESIGN_CHECKS = {
            `the .mono rule is missing or overridden`;
   },
 
+  // Discovery drives writing; PAGES drives coverage. `design sync` rewrites the fences it
+  // finds, so a page that loses one entirely is invisible to it — and was invisible to
+  // everything else too: deleting the header fence from a page left both `design:check` and
+  // this suite green. tokenVersion closed that hole for one fence out of four by asserting a
+  // marker it happens to look for. This closes it for all of them, from the site's own
+  // declaration of what it ships.
+  //
+  // Fetched raw rather than read from the DOM: a fence is a CSS comment, and comments do not
+  // survive into the rendered stylesheet.
+  async fences(page, spec) {
+    const res = await fetch(spec.absolute);
+    const html = await res.text();
+    const missing = spec.fences.filter(
+      (name) => !new RegExp(`─── ${name} · v\\d+`).test(html) ||
+                !new RegExp(`─── end ${name} ───`).test(html));
+    return missing.length
+      ? `carries no ${missing.map((m) => `\`${m}\``).join(", ")} fence`
+      : null;
+  },
+
   async contrast(page) {
     const bad = await page.evaluate(() => {
       const cs = getComputedStyle(document.documentElement);
