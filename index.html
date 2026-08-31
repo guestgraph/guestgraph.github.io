@@ -477,7 +477,7 @@
 // per origin,
 // so it carries from here to the talks index and into the deck — all one origin. Every
 // storage access is guarded: file:// is an opaque origin in some browsers and throws,
-// and a page that cannot langRemember a preference must still work without one.
+// and a page that cannot remember a preference must still work without one.
 (function(){
   var LANG_KEY = "gg-lang";
   function langStored(){ try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } }

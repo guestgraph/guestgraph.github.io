@@ -393,7 +393,7 @@
   //
   // The choice is remembered per origin, so it carries between this page and
   // guestgraph.io — one origin, one setting. Storage is guarded because file:// is an
-  // opaque origin in some browsers and throws: a page that cannot langRemember a preference
+  // opaque origin in some browsers and throws: a page that cannot remember a preference
   // must still work without one.
   var LANG_KEY = 'gg-lang';
   function langStored(){ try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } }
