@@ -19,6 +19,15 @@ updates:
     schedule:
       interval: "weekly"
     groups:
+      # Declared first on purpose: Dependabot puts a dependency in the FIRST group it matches,
+      # so naming the design package here keeps it out of minor-and-patch below. A design
+      # release is a minor by the package's own semver policy, so without this it would arrive
+      # bundled with a Playwright or pdf-lib bump — and this is the one pull request that has
+      # to be read rather than merged on sight: it goes red until someone runs `npm run design`
+      # and commits what changed.
+      design:
+        patterns:
+          - "@robertblust/design"
       minor-and-patch:
         update-types:
           - "minor"
