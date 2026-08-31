@@ -174,7 +174,7 @@ matching the file.
 The row across the top — wordmark, links, language control — is one design on three sites,
 and like the tokens it is a copy, because a deck opens from `file://` and there is no
 stylesheet to share. It is fenced in every page as `header contract · vN` and is
-**byte-identical on all fifteen pages** in the three repositories. Check it the way you
+**byte-identical on all sixteen pages** in the three repositories. Check it the way you
 check the tokens: change it here, run this repo's suite, and bump `vN` in all three.
 
 What the contract says:
