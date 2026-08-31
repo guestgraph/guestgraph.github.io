@@ -94,10 +94,11 @@
 @font-face{font-family:"Plex Mono";src:url(../fonts/PlexMono-600.woff2) format("woff2");font-weight:600;font-display:swap}
 @font-face{font-family:"Bricolage Grotesque";src:url(../fonts/Bricolage-var.woff2) format("woff2-variations"),url(../fonts/Bricolage-var.woff2) format("woff2");font-weight:200 800;font-display:swap}
 
-  /* ─── design tokens · v3 · keep in step across every repository that shares them ───
+  /* ─── design tokens · v4 · page ───────────────────────────────
      These sites share no stylesheet by design — a deck has to open from
-     file:// — so this block is a copy, and each repo's verify suite asserts
-     the copy still matches. Change it here, then run the checks.
+     file:// — so this block is a copy, generated from @robertblust/design.
+     Editing it here has no effect: the next `npm run design` overwrites it
+     from the package. Change it there, not here.
 
      Brightness is confidence. Each stop has exactly one job:
        --c-weak  a candidate: considered, not accepted
@@ -146,10 +147,10 @@
   .brand svg{width:28px; height:28px; color:var(--c-mid); flex:0 0 auto}
   .brand b{font-weight:600; font-size:1.06rem; letter-spacing:-.01em}
   .brand b span{color:var(--c-mid)}
-  /* ─── header contract · v1 · keep in step across every repository that shares it ───
+  /* ─── header contract · v2 · shared ──────────────────────────────────
      One row, three sites, and no stylesheet between them — a deck opens from file://, so
-     this is a copy like the tokens above it, and it carries a version for the same reason:
-     nothing here can tell you that a sibling repository is behind.
+     this is a copy, generated from @robertblust/design. Editing it here has no effect — the
+     next `npm run design` overwrites it. Change it in the package.
 
      Inside the fence is the row's behaviour, byte-identical on all fifteen pages. Outside
      it is each site's own: the brand mark's colours, the bar's gap. The wordmark's
