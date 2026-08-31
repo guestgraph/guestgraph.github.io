@@ -4,11 +4,11 @@
 // file://, so there is nothing to import. The tokens are therefore a copy inside every
 // page, and this file is what stops the copies drifting *within* a repository.
 //
-// Across repositories the check is deliberate rather than automatic. Every copy carries
-// a `design tokens · vN` marker and every repo records the N it expects below. Bumping
-// the system means bumping N in all three and running all three suites. `npm run verify`
-// will tell you which page in *this* repo is behind; nothing here can tell you that a
-// sibling repository is. That part is a habit, and this comment is the reminder.
+// The token, header and stage blocks are now generated from @robertblust/design and
+// asserted byte-for-byte by `design:check` against the one source the package ships.
+// That makes `tokenVersion` below no longer the tripwire — it is a second, cheaper
+// opinion, worth keeping because it catches a page the sync never visited at all,
+// which a byte comparison over the pages that exist cannot.
 //
 // What this file asserts, in the order the checks are defined below:
 //   fontsLoaded     a declared family is really loaded, measured rather than believed
@@ -21,7 +21,7 @@
 //   tokenVersion    the page's `design tokens · vN` marker matches this suite
 //   footerVersion   the deck's `deck footer · vN` marker matches this suite
 
-export const TOKEN_VERSION = "v3";
+export const TOKEN_VERSION = "v4";
 
 // The deck footer is copied across the three sites for the same reason the token block is:
 // a deck opens from file://, so there is nothing to import. What it holds is a contract, not
