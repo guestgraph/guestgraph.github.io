@@ -568,6 +568,15 @@ let failures = 0;
   const off = PAGES.filter(p => !p.seo).map(p => p.path);
   if (off.length) { console.log("✗ PAGES  seo is not enabled on: " + off.join(", ")); failures++; }
 }
+// And every page must opt into tokenVersion, for the same reason. The deleted page-against-page
+// block below asserted every page in PAGES unconditionally; tokenVersion alone does not, because
+// the runner skips any check whose key is undefined — a page added to PAGES with neither a
+// `design tokens` fence nor `tokenVersion: true` is invisible to design:check (discovery only
+// finds fences that exist) and to this suite alike. This line is what restores that half of it.
+{
+  const off = PAGES.filter(p => !p.tokenVersion).map(p => p.path);
+  if (off.length) { console.log("✗ PAGES  tokenVersion is not enabled on: " + off.join(", ")); failures++; }
+}
 
 // The token block used to be compared page-against-page here, because there was no
 // recorded source to compare it against and a hash would have been a second thing to

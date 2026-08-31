@@ -21,7 +21,15 @@
 //   tokenVersion    the page's `design tokens · vN` marker matches this suite
 //   footerVersion   the deck's `deck footer · vN` marker matches this suite
 
-export const TOKEN_VERSION = "v4";
+// Read from the package rather than kept in step by hand. TOKEN_VERSION used to be a fourth
+// hand-typed copy of the number in versions.json — the page's fence, the block's own opening
+// line, and this constant all had to agree, and they only did because someone typed them to
+// agree. A token release would bump the first two and leave this one behind until someone
+// hand-edited it in three repositories, which is precisely the habit generating the blocks was
+// supposed to retire. Deriving it means tokenVersion below now catches what it is meant to: a
+// page whose fence is behind the package, not a suite that quietly stopped agreeing with itself.
+import { FENCES } from "@robertblust/design/fences";
+export const TOKEN_VERSION = FENCES["design tokens"].version;
 
 // The deck footer is copied across the three sites for the same reason the token block is:
 // a deck opens from file://, so there is nothing to import. What it holds is a contract, not
