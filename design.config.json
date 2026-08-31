@@ -1,3 +1,6 @@
 {
-  "groups": ["fonts"]
+  "groups": [
+    "fonts"
+  ],
+  "langKey": "gg-lang"
 }

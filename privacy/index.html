@@ -424,9 +424,21 @@
 // thing before any JS runs, and the choice is remembered per origin. This page describes
 // that key, which is the only reason it is worth pointing at the code from here.
 (function(){
-  var KEY = "gg-lang";
-  function stored(){ try { return localStorage.getItem(KEY); } catch (e) { return null; } }
-  function remember(v){ try { localStorage.setItem(KEY, v); } catch (e) {} }
+  /* ─── language · v2 · page ─────────────────────────────────────────────
+     One language across three domains, and where it is remembered. Generated
+     from @robertblust/design — editing it here does nothing, because the next
+     `npm run design` overwrites it. Change it in the package.
+
+     This block has a contract with the page around it that `design:check` cannot see, because
+     the check only compares bytes between the markers. The page must declare a `lang` variable
+     in scope before this fence, and must call `langStored()` and `langRemember(v)` from
+     wherever it reads and writes the visitor's saved choice. Rename `lang` or drop those calls
+     and the fence still matches byte for byte — every check stays green — while a click throws
+     ReferenceError and the language silently stops crossing domains.
+  */
+  var LANG_KEY = "gg-lang";
+  function langStored(){ try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } }
+  function langRemember(v){ try { localStorage.setItem(LANG_KEY, v); } catch (e) {} }
 
   /* One language across three domains. Each origin keeps its own localStorage, so a
      visitor reading German here and following a link to a sibling site would arrive in
@@ -462,11 +474,12 @@
   // carries the language too; both fire before the browser follows the href.
   document.addEventListener("mousedown", carryLang, true);
   document.addEventListener("click", carryLang, true);
+  /* ─── end language ─────────────────────────────────────────────────── */
 
 
   var urlLang = langFromUrl();
-  if (urlLang) remember(urlLang);
-  var lang = urlLang || (stored() === "de" ? "de" : "en");
+  if (urlLang) langRemember(urlLang);
+  var lang = urlLang || (langStored() === "de" ? "de" : "en");
   var i18n = Array.prototype.slice.call(document.querySelectorAll("[data-de]"));
   i18n.forEach(function(el){ el.setAttribute("data-en", el.innerHTML); });
 
@@ -485,7 +498,7 @@
     document.getElementById("len").setAttribute("aria-pressed", String(lang === "en"));
     document.documentElement.lang = lang;
   }
-  function toggle(){ lang = (lang === "de") ? "en" : "de"; remember(lang); applyLang(); }
+  function toggle(){ lang = (lang === "de") ? "en" : "de"; langRemember(lang); applyLang(); }
 
 
   var burger = document.getElementById("burger"),
