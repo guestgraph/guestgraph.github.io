@@ -280,6 +280,30 @@ export const DESIGN_CHECKS = {
     return bad.length ? "monospace used outside data: " + bad.join(", ") : null;
   },
 
+  // monoScope asserts mono appears only on data. It cannot assert the converse — that an
+  // element the design system marks as data actually renders in mono — and the converse is
+  // where the bug was: companygraph.io's landing page carried `class="ctameta mono"` and
+  // defined no `.mono` rule at all, so the one element on the page marked as a record value
+  // rendered in the body sans face, in production, with every check green.
+  //
+  // Reading the computed style is the point. Asserting the rule text exists in the stylesheet
+  // would pass on a page that defines `.mono` after something that overrides it.
+  async monoDefined(page) {
+    const bad = await page.evaluate(() => {
+      const mono = [...document.querySelectorAll(".mono")];
+      if (!mono.length) return null;                 // nothing claims to be data: nothing to check
+      const fam = (el) => getComputedStyle(el).fontFamily;
+      const body = fam(document.body);
+      const same = mono.filter((el) => fam(el) === body);
+      return same.length
+        ? { count: same.length, total: mono.length, family: body }
+        : null;
+    });
+    if (!bad) return null;
+    return `${bad.count} of ${bad.total} .mono element(s) render in the body face (${bad.family}) — ` +
+           `the .mono rule is missing or overridden`;
+  },
+
   async contrast(page) {
     const bad = await page.evaluate(() => {
       const cs = getComputedStyle(document.documentElement);
