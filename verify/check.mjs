@@ -16,6 +16,27 @@ const BASE = process.env.BASE || "http://localhost:8000";
 // printed ✓ having fetched none of them.
 const SITE = "https://guestgraph.io";
 
+// Every fetch whose body this suite never reads goes through here.
+//
+// Node 22's bundled undici asserts — `assert(!this.paused)` inside `Parser.finish` — when a
+// socket ends while a response body is still unread. A status-only fetch leaks exactly that,
+// and the assertion is thrown from a socket `end` handler, so no try/catch at the call site
+// can reach it: the process dies with a stack trace into node internals and no mention of any
+// check. It killed the run after `✓ /` in CI, which reads as "the landing page broke" and is
+// nothing of the kind.
+//
+// It is a race against the single-threaded `python3 -m http.server` the suite is served from,
+// and it is not rare: **6 of 12 local runs crashed on node 22.23.2, 0 of 12 with this helper.**
+// CI is a coin flip per run. Node 25 never reproduces it, which is why it was invisible in
+// development for as long as it has existed and only ever appeared on a merge to `main`.
+//
+// So: never call `fetch` for a status alone. Read the body or cancel it.
+async function httpStatus(url) {
+  const res = await fetch(url);
+  await res.body?.cancel();
+  return res.status;
+}
+
 const PAGES = [
   { path: "/", storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     contains: ["Five strangers", "One guest", "GuestGraph"],
@@ -526,7 +547,7 @@ const CHECKS = {
     for (const u of urls) {
       if (!u.startsWith(SITE)) continue;              // off-site URLs are not ours to keep
       let status = 0;
-      try { status = (await fetch(u.replace(SITE, BASE))).status; } catch { status = 0; }
+      try { status = await httpStatus(u.replace(SITE, BASE)); } catch { status = 0; }
       if (status !== 200) problems.push(`ld+json names ${u} → HTTP ${status}`);
     }
 
@@ -634,8 +655,8 @@ await browser.close();
     } else {
       let unreachable = 0;
       for (const u of locs) {
-        const r = await fetch(u.replace(SITE, BASE));
-        if (!r.ok) { console.log(`✗ sitemap URL ${u} → ${r.status}`); failures++; unreachable++; }
+        const s = await httpStatus(u.replace(SITE, BASE));
+        if (s !== 200) { console.log(`✗ sitemap URL ${u} → ${s}`); failures++; unreachable++; }
       }
       if (!unreachable) console.log("✓ /sitemap.xml  " + locs.length + " urls, all reachable");
     }
@@ -649,8 +670,8 @@ await browser.close();
     else {
       const dead = [];
       for (const u of named) {
-        const r = await fetch(u.replace(SITE, BASE));
-        if (!r.ok) dead.push(`${u} → ${r.status}`);
+        const s = await httpStatus(u.replace(SITE, BASE));
+        if (s !== 200) dead.push(`${u} → ${s}`);
       }
       if (dead.length) { console.log("✗ /robots.txt  names sitemap(s) that do not exist: " + dead.join(", ")); failures++; }
       else console.log(`✓ /robots.txt  ${named.length} sitemap(s), all reachable`);
