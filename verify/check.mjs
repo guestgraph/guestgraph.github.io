@@ -599,6 +599,15 @@ let failures = 0;
   const off = PAGES.filter(p => !p.tokenVersion).map(p => p.path);
   if (off.length) { console.log("✗ PAGES  tokenVersion is not enabled on: " + off.join(", ")); failures++; }
 }
+// And every page must opt into `fences`, for the same reason. Task 2 added the check that
+// fails a page whose fences no longer include `prose reset` — but not this line, so deleting
+// `fences: [...]` from a page's spec (or adding a page to PAGES without it) turns that check
+// off for that page and design:check only finds fences that exist, so the whole suite stays
+// green while the page silently loses every fence it should have been checked against.
+{
+  const off = PAGES.filter(p => !p.fences).map(p => p.path);
+  if (off.length) { console.log("✗ PAGES  fences is not enabled on: " + off.join(", ")); failures++; }
+}
 
 // The token block used to be compared page-against-page here, because there was no
 // recorded source to compare it against and a hash would have been a second thing to

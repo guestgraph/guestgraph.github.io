@@ -174,8 +174,9 @@ matching the file.
 The row across the top — wordmark, links, language control — is one design on three sites,
 and like the tokens it is a copy, because a deck opens from `file://` and there is no
 stylesheet to share. It is fenced in every page as `header contract · vN` and is
-**byte-identical on all fifteen pages** in the three repositories. Check it the way you
-check the tokens: change it here, run this repo's suite, and bump `vN` in all three.
+**byte-identical on all sixteen pages** in the three repositories. It is generated, like the
+tokens: change it in `robertblust/design`, tag a release, then run `npm run design` here. Editing
+it in this file does nothing — the next sync overwrites it.
 
 What the contract says:
 
@@ -259,10 +260,14 @@ footer link, and both had been serving guestgraph.io that way through several co
 
 ## The design system, and why it is a copy
 
-Type and colour are shared across `blust.ch`, `guestgraph.io` and the talks repository.
+Type and colour are shared across `blust.ch`, `guestgraph.io` and `companygraph.io`.
 They share no stylesheet and cannot: a deck has to open from `file://`, so there is
 nothing to import. Every page therefore carries its own copy of the token block, fenced
 by `design tokens · vN` markers.
+
+**The copies have a source now.** They are generated from `@robertblust/design`, which this
+repository pins by tag, and `npm run design` writes them. What that changes about editing them is
+in *Changing a token* below, and it is the opposite of what this file said for most of its life.
 
 - **Brightness is confidence, and each stop has exactly one job.** `--c-weak` a candidate
   considered and not accepted; `--c-mid` anything interactive — links, controls, the brand
@@ -289,12 +294,46 @@ by `design tokens · vN` markers.
   type can utter. Weight says the same thing and never needs explaining. Do not reintroduce a
   degraded display face to make this point.
 
-### Changing a token
+### Changing a token, or anything else the package owns
 
-Edit the block, run `npm run verify`, and it will name any page in **this** repository that
-is behind. Nothing can tell you that a sibling repository is behind — that is why the block
-carries a version. Bumping `vN` means bumping it in all three repositories and running all
-three suites. The check is a habit with a tripwire, not a guarantee.
+**Do not edit a fenced block in place. The next `npm run design` overwrites it and nothing warns
+you.** This section used to say "edit the block, run `npm run verify`, bump `vN` in all three
+repositories". That was true while the blocks were maintained by hand. It is now the one
+instruction in this file that silently does nothing.
+
+Five blocks are generated here, and the fence markers name them: `design tokens`,
+`header contract`, `language`, `prose reset` and `prose footer`. Everything between and including a
+pair of markers belongs to the package. A sixth, `stage contract`, exists in the package and this
+site does not take it — it has no graph to draw yet. It arrives the day it grows one, which is the
+point of the stage having a source by then.
+
+```bash
+npm run design         # rewrite every fenced block from the pinned release
+npm run design:check   # report drift without writing — runs in CI, before the browser suite
+```
+
+To change one of them:
+
+1. Edit it in `robertblust/design` under `blocks/`, and bump both its entry in `versions.json` and
+   the version typed into the block's own first line. A test there fails if the two disagree — it
+   exists because nothing else reconciled them.
+2. Tag a release. The sites pin an exact **tag**, never a commit SHA: Dependabot's version detection
+   rejects a SHA, and this site would then never be told a release happened.
+3. Here: take the Dependabot pull request, run `npm run design && npm run og`, commit what changed.
+   The design package has its own Dependabot group so a design bump never arrives beside a
+   Playwright one — it is the pull request that has to be read rather than merged on sight.
+
+`design:check` runs in CI, so a page that drifts from the pinned release goes red without anyone
+remembering to look. That is the guarantee the old habit-with-a-tripwire never was.
+
+**Two escape hatches that are decisions, not build fixes.** Removing a fence's name from a page's
+`fences` array in `PAGES`, or a group from `design.config.json`, each clears a red `design:check`
+with a one-line diff. Either one means this site has decided to own that block and diverge. That is
+a real choice; make it deliberately, in a commit that says so.
+
+**Not everything is generated.** The deck footer is still a hand-maintained copy carrying its own
+version marker — see above, where the old discipline applies in full — and the `<head>` contract is
+a copy with no fence at all.
 
 This repository had no test suite at all before. `npm install && npm run verify` now runs
 the same assertions the other two do, against a served copy on `localhost:8000`.
