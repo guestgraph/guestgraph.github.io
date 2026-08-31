@@ -280,6 +280,50 @@ export const DESIGN_CHECKS = {
     return bad.length ? "monospace used outside data: " + bad.join(", ") : null;
   },
 
+  // monoScope asserts mono appears only on data. It cannot assert the converse — that an
+  // element the design system marks as data actually renders in mono — and the converse is
+  // where the bug was: companygraph.io's landing page carried `class="ctameta mono"` and
+  // defined no `.mono` rule at all, so the one element on the page marked as a record value
+  // rendered in the body sans face, in production, with every check green.
+  //
+  // Reading the computed style is the point. Asserting the rule text exists in the stylesheet
+  // would pass on a page that defines `.mono` after something that overrides it.
+  async monoDefined(page) {
+    const bad = await page.evaluate(() => {
+      const mono = [...document.querySelectorAll(".mono")];
+      if (!mono.length) return null;                 // nothing claims to be data: nothing to check
+      const fam = (el) => getComputedStyle(el).fontFamily;
+      const body = fam(document.body);
+      const same = mono.filter((el) => fam(el) === body);
+      return same.length
+        ? { count: same.length, total: mono.length, family: body }
+        : null;
+    });
+    if (!bad) return null;
+    return `${bad.count} of ${bad.total} .mono element(s) render in the body face (${bad.family}) — ` +
+           `the .mono rule is missing or overridden`;
+  },
+
+  // Discovery drives writing; PAGES drives coverage. `design sync` rewrites the fences it
+  // finds, so a page that loses one entirely is invisible to it — and was invisible to
+  // everything else too: deleting the header fence from a page left both `design:check` and
+  // this suite green. tokenVersion closed that hole for one fence out of four by asserting a
+  // marker it happens to look for. This closes it for all of them, from the site's own
+  // declaration of what it ships.
+  //
+  // Fetched raw rather than read from the DOM: a fence is a CSS comment, and comments do not
+  // survive into the rendered stylesheet.
+  async fences(page, spec) {
+    const res = await fetch(spec.absolute);
+    const html = await res.text();
+    const missing = spec.fences.filter(
+      (name) => !new RegExp(`─── ${name} · v\\d+`).test(html) ||
+                !new RegExp(`─── end ${name} ───`).test(html));
+    return missing.length
+      ? `carries no ${missing.map((m) => `\`${m}\``).join(", ")} fence`
+      : null;
+  },
+
   async contrast(page) {
     const bad = await page.evaluate(() => {
       const cs = getComputedStyle(document.documentElement);
