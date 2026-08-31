@@ -6,6 +6,7 @@
 // not guarantee.
 import { chromium } from "playwright";
 import { DESIGN_CHECKS } from "./design.mjs";
+import { FAMILY } from "@robertblust/design/family";
 
 const BASE = process.env.BASE || "http://localhost:8000";
 // The public origin, in one place. It was hardcoded in `card`, in the sitemap's expected
@@ -210,7 +211,7 @@ const CHECKS = {
     if (/lang=/.test(arrived.search))
       problems.push(`the param stayed in the address bar as ${JSON.stringify(arrived.search)}`);
 
-    const probe = await page.evaluate(() => {
+    const probe = await page.evaluate((src) => {
       const pick = test => [...document.querySelectorAll("a[href]")].find(a => {
         try { return test(new URL(a.href, location.href)); } catch (e) { return false; }
       });
@@ -219,14 +220,14 @@ const CHECKS = {
         a.dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
         return { before, after: a.getAttribute("href") };
       };
-      const FAMILY = /^(www\.)?(blust\.ch|companygraph\.io|guestgraph\.io)$/;
+      const FAMILY = new RegExp(src);
       const out = { away: null, home: null };
       const away = pick(u => u.origin !== location.origin && FAMILY.test(u.hostname));
       if (away) out.away = press(away);
       const home = pick(u => u.origin === location.origin);
       if (home) out.home = press(home);
       return out;
-    });
+    }, FAMILY.source);
     // A page with no link to a sibling domain simply has nothing to carry.
     if (probe.away && !/[?&]lang=de(&|$)/.test(probe.away.after))
       problems.push(`a link to ${probe.away.before} did not pick the language up: ${probe.away.after}`);

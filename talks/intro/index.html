@@ -897,7 +897,7 @@
      from @robertblust/design — editing it here does nothing, because the next
      `npm run design` overwrites it. Change it in the package.
   */
-  var LANG_KEY = 'gg-lang';
+  var LANG_KEY = "gg-lang";
   function langStored(){ try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } }
   function langRemember(v){ try { localStorage.setItem(LANG_KEY, v); } catch (e) {} }
 
@@ -918,23 +918,23 @@
     var m = /[?&]lang=(de|en)(&|$)/.exec(location.search);
     if (!m) return null;
     try {
-      var q = location.search.replace(/([?&])lang=(de|en)(&|$)/, '$1').replace(/[?&]$/, '');
-      history.replaceState(null, '', location.pathname + q + location.hash);
+      var q = location.search.replace(/([?&])lang=(de|en)(&|$)/, "$1").replace(/[?&]$/, "");
+      history.replaceState(null, "", location.pathname + q + location.hash);
     } catch (e) {}
     return m[1];
   }
   function carryLang(e){
-    var a = e.target && e.target.closest && e.target.closest('a[href]');
+    var a = e.target && e.target.closest && e.target.closest("a[href]");
     if (!a) return;
     var u; try { u = new URL(a.href, location.href); } catch (err) { return; }
     if (u.origin === location.origin || !FAMILY.test(u.hostname)) return;
-    u.searchParams.set('lang', lang);
+    u.searchParams.set("lang", lang);
     a.href = u.toString();
   }
   // mousedown as well as click, so a middle-click or a cmd-click opening a new tab
   // carries the language too; both fire before the browser follows the href.
-  document.addEventListener('mousedown', carryLang, true);
-  document.addEventListener('click', carryLang, true);
+  document.addEventListener("mousedown", carryLang, true);
+  document.addEventListener("click", carryLang, true);
   /* ─── end language ─────────────────────────────────────────────────── */
 
 
