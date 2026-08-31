@@ -424,6 +424,11 @@
 // thing before any JS runs, and the choice is remembered per origin. This page describes
 // that key, which is the only reason it is worth pointing at the code from here.
 (function(){
+  /* ─── language · v1 · page ─────────────────────────────────────────────
+     One language across three domains, and where it is remembered. Generated
+     from @robertblust/design — editing it here does nothing, because the next
+     `npm run design` overwrites it. Change it in the package.
+  */
   var LANG_KEY = "gg-lang";
   function langStored(){ try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } }
   function langRemember(v){ try { localStorage.setItem(LANG_KEY, v); } catch (e) {} }
@@ -462,6 +467,7 @@
   // carries the language too; both fire before the browser follows the href.
   document.addEventListener("mousedown", carryLang, true);
   document.addEventListener("click", carryLang, true);
+  /* ─── end language ─────────────────────────────────────────────────── */
 
 
   var urlLang = langFromUrl();
