@@ -568,39 +568,24 @@ let failures = 0;
   const off = PAGES.filter(p => !p.seo).map(p => p.path);
   if (off.length) { console.log("✗ PAGES  seo is not enabled on: " + off.join(", ")); failures++; }
 }
-
-// The token block is a copy on every page, and until now only its version was checked. That
-// is how three of them came to be in circulation at once: the ideas page had lost its
-// indentation and sat at column zero, and two more wordings arrived minutes apart from the
-// same edit run twice. A version says which release a page claims to be on; it cannot say
-// whether the page actually carries that release.
-//
-// Compared against each other rather than a recorded hash, because a hash is a second thing
-// to keep in step and would drift the same way. What this cannot see is a sibling repository
-// — that is what the version is for, and the two together are the whole guarantee.
-//
-// The slice stops at the last shared declaration. A deck's `:root` continues with tokens of
-// its own, so the brace after it belongs to the file and not to the block.
+// And every page must opt into tokenVersion, for the same reason. The deleted page-against-page
+// block below asserted every page in PAGES unconditionally; tokenVersion alone does not, because
+// the runner skips any check whose key is undefined — a page added to PAGES with neither a
+// `design tokens` fence nor `tokenVersion: true` is invisible to design:check (discovery only
+// finds fences that exist) and to this suite alike. This line is what restores that half of it.
 {
-  const START = /[ \t]*\/\* ─── design tokens · v\d+[\s\S]*?--c-path:#[0-9A-Fa-f]{6};\n/;
-  const seen = new Map();
-  for (const spec of PAGES) {
-    const res = await fetch(BASE + spec.path);
-    const html = res.ok ? await res.text() : "";
-    const m = html.match(START);
-    if (!m) { console.log(`✗ ${spec.path}  carries no design token block`); failures++; continue; }
-    const key = m[0];
-    if (!seen.has(key)) seen.set(key, []);
-    seen.get(key).push(spec.path);
-  }
-  if (seen.size > 1) {
-    const groups = [...seen.values()].sort((a, b) => b.length - a.length);
-    console.log(`✗ PAGES  ${seen.size} different token blocks are in circulation:`);
-    for (const g of groups) console.log(`    ${g.join(", ")}`);
-    failures++;
-  }
+  const off = PAGES.filter(p => !p.tokenVersion).map(p => p.path);
+  if (off.length) { console.log("✗ PAGES  tokenVersion is not enabled on: " + off.join(", ")); failures++; }
 }
 
+// The token block used to be compared page-against-page here, because there was no
+// recorded source to compare it against and a hash would have been a second thing to
+// keep in step. `design:check` is that source now: it asserts every page's fence
+// byte-for-byte against what @robertblust/design ships, which is strictly stronger than
+// pages merely agreeing with each other, and it reads the `page`/`deck` variant word off
+// each page rather than expecting every page to share one block. Keeping this check
+// alongside it would mean teaching a weaker check about every variant the stronger one
+// already handles for free — so it is deleted, not adjusted.
 
 for (const spec of PAGES) {
   const page = await browser.newPage();
