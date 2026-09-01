@@ -139,8 +139,12 @@ two-file obligation, which is the point.
   where each of the three links goes, and that none opens in a new tab — and `design:check`
   is what enforces it now, comparing each fence's bytes against the pinned release.
 
-  `verify/design.mjs` is byte-identical across the three and holds `TOKEN_VERSION`. Never
-  edit it in one repo alone.
+  `verify/design.mjs` now lives in `@robertblust/design`, alongside the nineteen shared page
+  checks — edited there, released as a tag, and taken here by re-pinning that tag in
+  `package.json`, exactly like the fences above. `verify/check.mjs` imports it by package
+  specifier, `@robertblust/design/verify/design`; a `verify/design.mjs` created in this
+  repository is never resolved by that import and would be silently ignored — the suite would
+  still report green, having run the pinned release's code instead of the one just edited.
 - **The `blust.ch` credit in the page footer is a lockup, not a footer link.** It leaves the
   footer's mono for the same treatment it has on every deck — the `rb` plate inlined, wordmark
   with the second word in `--c-mid`. The rest of the row stays mono because the rest of the row

@@ -64,6 +64,8 @@ const PAGES = [
     sameTab: ["intro/", "./", "../billing/", "../privacy/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, tokenVersion: true, fences: ["design tokens", "header contract", "language", "prose reset", "prose footer"],
     card: true, cardBase: SITE, internalLinks: true },
+  // opensFromFile resolves its file:// probe against process.cwd(), which npm sets to this
+  // repo's root — so the suite must be run with `npm run verify` from here, not from elsewhere.
   { path: "/talks/intro/", storageKeys: true, opensFromFile: true, carriesLang: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en", wayOut: "../",
     // The footer's other two destinations. `landing` covers the lockup, which is relative and
     // therefore invisible to `links`; blust.ch is absolute, so `links` catches a typo in it and
