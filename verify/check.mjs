@@ -335,15 +335,28 @@ const CHECKS = {
       Storage.prototype.setItem = function (k, v) { window.__keys.push(k); return real.call(this, k, v); };
     });
     await page.goto(spec.absolute, { waitUntil: "networkidle" });
-    // The two things on any page that write: the language control, and the divider where the
-    // page has one.
+    // The write paths this suite knows about, each present-or-skip: prose pages carry the
+    // language control as #lde/#len, a deck carries the same control as #langDe/#langEn, and
+    // the model page's divider is #gutter. A page matching none of these has nothing here to
+    // exercise its storage — the zero-writes check below is what actually catches that, so
+    // this list is free to be incomplete without the gap going silent again.
     if (await page.$("#lde")) { await page.click("#lde"); await page.click("#len"); }
+    if (await page.$("#langDe")) { await page.click("#langDe"); await page.click("#langEn"); }
     if (await page.$("#gutter")) { await page.focus("#gutter"); await page.keyboard.press("ArrowLeft"); }
     const written = await page.evaluate(() => [...new Set(window.__keys)]);
-    const undeclared = written.filter((k) => !declared.includes(k));
     // Leave the page as the rest of the suite expects it, storage included.
     await page.evaluate(() => { try { localStorage.clear(); } catch (e) {} });
     await page.goto(spec.absolute, { waitUntil: "networkidle" });
+    // This is the other half of the check, and the one a page armed with storageKeys used to
+    // have no way to fail: a page that writes nothing and a page whose trigger this check
+    // failed to find are indistinguishable from the outside, and both used to return a clean
+    // pass. Every page armed with storageKeys is here because it is known to write
+    // rb-lang/cg-lang/gg-lang on its language control, so zero observed writes means the
+    // control above was not found or not exercised — not that the page has nothing to declare.
+    if (!written.length)
+      return "no write path was exercised — none of #lde/#len, #langDe/#langEn or #gutter " +
+             "produced a write on this page; add its control to the list above";
+    const undeclared = written.filter((k) => !declared.includes(k));
     return undeclared.length
       ? `writes ${undeclared.join(", ")}, which /privacy/ does not name`
       : null;

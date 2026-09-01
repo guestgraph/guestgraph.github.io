@@ -332,8 +332,11 @@ export const DESIGN_CHECKS = {
 
   // The one guarantee a served page cannot test. A deck must present with no server: opened
   // from the filesystem, with the repository intact, it renders its first slide, loads its
-  // faces from the root `fonts/` by relative path, and its runtime runs. Relative paths
-  // upward are allowed and already used; what is forbidden is needing a server.
+  // faces from the root `fonts/` by relative path, and its runtime runs — checked by asking
+  // the canvas to have actually been scaled, since `fit()` running and doing nothing is
+  // exactly the failure a served page would never surface (see CLAUDE.md, "Slides are a
+  // canvas, not a page"). Relative paths upward are allowed and already used; what is
+  // forbidden is needing a server.
   //
   // Armed on decks only. `spec.opensFromFile` names nothing — the page's own path is enough,
   // because the check re-opens the same file the rest of the suite reached over http.
@@ -351,13 +354,18 @@ export const DESIGN_CHECKS = {
       await probe.evaluate(() => document.fonts.ready);
       const seen = await probe.evaluate(() => ({
         slides: document.querySelectorAll(".slide").length,
-        firstVisible: !!document.querySelector(".slide"),
         faceLoaded: [...document.fonts].some((f) => f.status === "loaded"),
+        // `.deck`'s fixed-height canvas is scaled to the viewport by a `fit()` that runs
+        // synchronously at load, with no server-only dependency — so this is stable under
+        // file:// and worth asserting, not just capturing. "none" means fit() never applied
+        // a transform: the deck would still show slides and loaded fonts, unscaled.
         scaled: getComputedStyle(document.querySelector(".deck") || document.body).transform,
       }));
       if (errors.length) return `opened from file:// with JS errors: ${errors.join(" | ")}`;
       if (!seen.slides) return "opened from file:// but rendered no slides";
       if (!seen.faceLoaded) return "opened from file:// but loaded no webfont — check the relative fonts/ path";
+      if (seen.scaled === "none")
+        return "opened from file:// but the canvas carries no transform — fit() did not run";
       return null;
     } finally {
       await probe.close();
