@@ -20,6 +20,7 @@
 //   contrast        the text colours clear their ratios on --ground
 //   tokenVersion    the page's `design tokens · vN` marker matches this suite
 //   fences          presence of every fence a page declares, version-blind
+//   fenceOrder      the fences a page declares appear in the order it says they must
 //   lockupCollapses at a narrow viewport, `.name` renders display:none — a cascade outcome,
 //                   asserted by rendering, not by reading which fence comes first
 //
@@ -329,6 +330,26 @@ export const DESIGN_CHECKS = {
     return missing.length
       ? `carries no ${missing.map((m) => `\`${m}\``).join(", ")} fence`
       : null;
+  },
+
+  // Two fences whose rules share a selector are order-dependent: equal specificity means
+  // the later one wins, and a media query adds none. That is not hypothetical — the deck
+  // lockup and the deck transport both carry a `.name` rule, and a release once shipped
+  // the lockup visible on mobile on two decks because one site emitted them in the
+  // opposite order. design:check compares each fence's bytes independently and cannot see
+  // it; `fences` asserts presence and cannot see it either.
+  //
+  // Fetched raw, like `fences`: a fence marker is a comment and comments do not survive
+  // into the rendered stylesheet.
+  async fenceOrder(page, spec) {
+    const res = await fetch(spec.absolute);
+    const html = await res.text();
+    const seen = [...html.matchAll(/─── ([a-z ]+?) · v\d+/g)].map((m) => m[1]);
+    const want = spec.fenceOrder;
+    const got = seen.filter((n) => want.includes(n));
+    return got.join(" → ") === want.join(" → ")
+      ? null
+      : `fences appear as ${got.join(" → ")}, expected ${want.join(" → ")}`;
   },
 
   // The class of defect `fences` and `design:check` cannot see: two fences whose CSS
