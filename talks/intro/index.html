@@ -897,7 +897,7 @@
     <div class="tside">
     <div class="tdiv"></div>
 
-    <div class="seg" id="lang">
+    <div class="seg" id="lang" role="group" aria-label="Sprache wechseln — switch language">
       <button type="button" id="langDe" aria-pressed="false">DE</button>
       <button type="button" id="langEn" aria-pressed="true">EN</button>
     </div>
@@ -1071,6 +1071,12 @@
       ntext.innerHTML = (lang === 'en' && d.notesEn) ? d.notesEn : d.notes;
       ntime.textContent = d.time || '';
     }
+    /* The ends of the deck, made visible. go() has always clamped, so these controls
+       were already no-ops here — this is the state saying so rather than a click that
+       does nothing. `first` goes with `prev`: at slide zero it is equally inert, and
+       dimming one while the other stays lit next to it reads as a bug. */
+    btn.prev.disabled = btn.first.disabled = (i === 0);
+    btn.next.disabled = (i === slides.length - 1);
     fitNotes();
   }
   window.addEventListener('resize', function(){ measureChrome(); fitNotes(); });
@@ -1157,8 +1163,7 @@
 
   /* ---------- narration ----------
      The speaker notes mix stage directions with what is actually said: the <em class='cue'>
-     spans are Regie-Instruktionen ("the title stays up while I greet"), the rest is
-     Sprechtext. Only the latter is spoken.
+     spans are Regie-Instruktionen, the rest is Sprechtext. Only the latter is spoken.
 
      A recorded clip is played when one exists (audio/<lang>/<nn>.mp3), and the browser's own
      voice reads the note when one does not — so a half-recorded deck still plays end to end.
@@ -1221,7 +1226,7 @@
     var d = document.createElement('div');
     d.innerHTML = raw;
     // only the directions: a bare <em> is emphasis inside the sentence and must be spoken,
-    // or the voice says "muss zuerst wissen, Gast" and loses the word the line turns on
+    // or the voice loses the word the line turns on
     d.querySelectorAll('em.cue').forEach(function(e){ e.remove(); });
     var body = (d.textContent || '').replace(/\s+/g, ' ').trim();
     var title = slideTitle(slide);
@@ -1327,14 +1332,12 @@
     labelPlay();
   }
 
-  /* Optimistic: if a clip exists we never need a voice installed. Checked lazily so the
-     deck makes no network request until someone actually presses play. */
-  var clipsSeen = null;
-  function hasClips(){
-    if (clipsSeen !== null) return clipsSeen;
-    clipsSeen = true;                       // assume yes; clip.onerror handles the truth
-    return clipsSeen;
-  }
+  /* Optimistic, and correct now that this deck has recorded clips: if a clip exists we
+     never need a voice installed, and clip.onerror handles the case where one is missing
+     by falling back to the browser voice. Reporting false here would refuse to play for
+     a viewer with no installed voice even though the recordings would play fine. */
+  var clipsSeen = true;
+  function hasClips(){ return clipsSeen; }
 
   function toggleNarration(){ playing ? stopNarration() : startNarration(); }
 
