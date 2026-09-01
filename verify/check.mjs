@@ -109,7 +109,7 @@ const CHECKS = {
   async title(page, spec) {
     const t = await page.title();
     if (!spec.title.test(t)) return `title ${JSON.stringify(t)} does not match ${spec.title}`;
-    if (t.length > 70) return `title is ${t.length} chars, over 70`;
+    if (t.length > 65) return `title is ${t.length} chars, over 65`;
     return null;
   },
   async lang(page, spec) {
@@ -416,17 +416,26 @@ const CHECKS = {
       [...document.querySelectorAll("a[href]")]
         .filter(a => hrefs.includes(a.getAttribute("href")))
         .filter(a => a.target === "_blank")
-        .map(a => a.getAttribute("href")), spec.sameTab);
+        .map(a => a.getAttribute("href")),
+      spec.sameTab);
     return bad.length ? "must stay in this tab: " + bad.join(", ") : null;
   },
   // `links` only sees a[href^='http'], so a root-absolute internal link — which breaks
   // under file:// — is invisible to it.
   async internalLinks(page) {
-    const bad = await page.evaluate(() =>
-      [...document.querySelectorAll("a[href]")]
-        .map(a => a.getAttribute("href"))
-        .filter(h => h && !/^(https?:|mailto:|tel:|#)/i.test(h) && h.startsWith("/")));
-    return bad.length ? `root-absolute internal link(s), break file://: ${bad.join(", ")}` : null;
+    const bad = await page.evaluate(() => {
+      const out = [...document.querySelectorAll("[href], [src]")]
+        .map(el => el.getAttribute("href") || el.getAttribute("src"))
+        .filter(v => v && v.startsWith("/"));
+      for (const sheet of document.styleSheets) {
+        let rules;
+        try { rules = sheet.cssRules; } catch (e) { continue; }  // unreadable: not ours
+        const css = [...rules].map(r => r.cssText).join("\n");
+        for (const m of css.matchAll(/url\(\s*["']?(\/[^"')]*)/g)) out.push(`url(${m[1]})`);
+      }
+      return out;
+    });
+    return bad.length ? "root-absolute internal path: " + bad.join(", ") : null;
   },
   // A page that claims it contacts nobody has to be held to it. Every request the page
   // makes is recorded and compared against its own origin; one off-origin fetch — a font
@@ -611,8 +620,8 @@ const CHECKS = {
       if (!defined.has(r)) problems.push(`ld+json references ${r}, which no node on this page defines`);
 
     // Fetched from Node against BASE, not in-page against location.origin: an origin carries
-    // no path, and `card` below documents a BASE that does (guestgraph.io/talks/). Nothing
-    // about these URLs needs a browser.
+    // no path, and a BASE can (the sibling sites are served under one). Nothing about these
+    // URLs needs a browser.
     for (const u of urls) {
       if (!u.startsWith(SITE)) continue;              // off-site URLs are not ours to keep
       let status = 0;
@@ -631,10 +640,9 @@ const CHECKS = {
       (document.querySelector('meta[property="og:image:width"]')  || {}).content,
       (document.querySelector('meta[property="og:image:height"]') || {}).content]);
     // Rewrite the card's absolute URL onto whatever is being tested — BASE, not
-    // location.origin. An origin carries no path, and this repository is served under one:
-    // locally it is the root of http://localhost:8000, live it is guestgraph.io/talks/.
-    // Using the origin dropped the /talks prefix, so `BASE=https://guestgraph.io/talks npm
-    // run verify` reported a card that serves perfectly as "not fetchable".
+    // location.origin. An origin carries no path, and a site served under one (a talks
+    // subdirectory, say) loses that prefix: a card that serves perfectly then reports
+    // "not fetchable" the first time the suite is pointed at production.
     const real = await page.evaluate(async ({ u, base, testBase }) => {
       const r = await fetch(base ? u.replace(base, testBase) : u.replace(/^https:\/\/[^/]+/, testBase));
       if (!r.ok) return null;
