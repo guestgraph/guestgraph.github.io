@@ -281,29 +281,6 @@
   .titlemark{color:var(--c-mid); display:flex; flex:0 0 auto}
   .titlemark svg{width:clamp(2.6rem,9cqmin,6.6rem); height:clamp(2.6rem,9cqmin,6.6rem); display:block}
   .titlelock h1{margin:0}
-  .name{display:flex; align-items:center; gap:.5em}
-  .name .lockup, .name .nperson{display:flex; align-items:center; gap:.6em}
-  /* blust.ch is a brand with a mark of its own, so it appears here as a full lockup and
-     not as a name in text. The plate is favicon.svg from that site, inlined rather than
-     linked: a deck has to open from file://, where a linked asset is a broken box. It
-     draws its colours from the tokens, and its face is "Plex Mono" — the name this deck
-     actually @font-faces. */
-  .name .rbmark{display:flex}
-  .name .rbmark svg{width:15px; height:15px; display:block}
-  .name .plate{fill:var(--raise); stroke:var(--rule); stroke-width:1.5}
-  .name .rb{fill:var(--c-mid)}
-  .name .namemark{color:var(--c-mid); display:flex}
-  .name .namemark svg{width:15px; height:15px; display:block}
-  .name b{color:var(--ink); font-weight:600; letter-spacing:.01em; text-transform:none}
-  .name b em{font-style:normal; color:var(--c-mid)}
-  /* the two trailing links are nav items, so they take the nav treatment the pages use --
-     dim until pointed at. The separators are not links and must not read as one. */
-  .name .nsep{color:var(--dim)}
-  /* "Talks" is a nav item and stays dim. "Robert Blust" is not — it is the other brand in
-     this row, so it takes the wordmark colours `.name b` already defines and reads as a peer
-     of the site's own lockup rather than as a person mentioned in passing. */
-  .name .nlink{color:var(--dim)}
-
   .title-slide{justify-content:center}
   .title-slide h1{font-size:clamp(2.8rem,11cqmin,7.2rem); max-width:20ch; line-height:1.02}
   .title-slide .sub{margin-top:4.2cqmin; max-width:54ch; font-size:clamp(1.3rem,3.4cqmin,2.6rem); color:var(--dim)}
@@ -369,15 +346,79 @@
      credit and nothing else. They are wrong for a row of links: mono on these sites means
      data, and this is navigation. The wordmark already opted out with text-transform:none;
      the person and the talks link had no such escape and rendered UPPERCASE MONO. */
-  /* ─── deck footer · v1 ──────────────────────────────────────────────────
-     Copied across blust.ch, guestgraph.io and companygraph.io — a deck opens from
-     file://, so there is nothing to import. The contract, not just the look: the
-     lockup goes to the landing page, the person to blust.ch, the third link to the
-     talks index, and none of them opens in a new tab. Bumping vN means bumping it in
-     all three repositories and running all three suites. */
+  /* ─── deck lockup · v1 · two ─────────────────────────────────────
+     Generated from @robertblust/design — edit it there and run `npm run design`.
+
+     The lockup that used to share the `deck footer` marker with the transport bar —
+     see `deck transport` for the rest of that story. This is the part that
+     legitimately differs: blust.ch is a one-tier lockup, mark plus **Robert Blust**
+     and nothing after it; companygraph.io and guestgraph.io are two tiers, the
+     product lockup then `· ROBERT BLUST`. The reason is a fact about the two
+     families, not a preference — on the product sites the product and the
+     presenter are different names, so the second tier introduces one; on
+     blust.ch they are the same name, and a second tier would read "Robert Blust
+     · ROBERT BLUST".
+
+     Only eight rules are byte-identical on all four decks and live here
+     unconditionally. Everything else — the corner's own position, the lockup's
+     own mark and its sizing, and the hover rule that names it — differs in real,
+     measured bytes between the two families (not just a size: blust.ch's own mark
+     carries no `color`, the product sites' does, because their mark's SVG paints
+     with `currentColor` and blust.ch's paints through classed elements instead).
+     Reconciling those into one shared number was tried once and rejected: it wrote
+     blust.ch's values over both other sites' marks. So each family's own rules live
+     in their own file — `deck-lockup-one.css`, `deck-lockup-two.css` — verified
+     byte-for-byte against what each pair of decks carries today, in the report for
+     this fence.
+
+     The mark is favicon.svg inlined rather than linked: a linked asset is a
+     broken box under file://, which is the one thing a deck has to survive. It
+     draws its colours from the tokens so a palette change moves it; the favicon
+     keeps its own hexes because it has to stand alone. The face is "Plex Mono" —
+     the name every deck in the family actually @font-faces. */
+  .name{display:flex; align-items:center; gap:.5em}
   .name{grid-column:1; justify-self:start;
         font-family:"Instrument Sans", ui-sans-serif, system-ui, sans-serif; font-size:.72rem}
+  .name .lockup, .name .nperson{display:flex; align-items:center; gap:.6em}
+  .name .rbmark{display:flex}
+  .name .rbmark svg{width:15px; height:15px; display:block}
+  .name .namemark{color:var(--c-mid); display:flex}
+  .name .namemark svg{width:15px; height:15px; display:block}
+  .name a:hover b em, .name a:focus-visible b em{color:var(--ink)}
+  .name .plate{fill:var(--raise); stroke:var(--rule); stroke-width:1.5}
+  .name .rb{fill:var(--c-mid)}
+  .name b{color:var(--ink); font-weight:600; letter-spacing:.01em; text-transform:none}
+  .name b em{font-style:normal; color:var(--c-mid)}
+  /* "Talks" is a nav item, so it takes the nav treatment the pages use — dim until
+     pointed at. The separators are not links and must not read as one. */
+  .name .nsep{color:var(--dim)}
+  .name .nlink{color:var(--dim)}
+  .name a{text-decoration:none; color:inherit; pointer-events:auto}
+  .name a:hover, .name a:focus-visible{color:var(--ink)}
+  /* ─── end deck lockup ───────────────────────────────────────────────────*/
 
+  /* ─── deck transport · v1 · shared ─────────────────────────────────
+     Generated from @robertblust/design — edit it there and run `npm run design`.
+
+     The transport bar and the chrome around it, byte-identical on all four decks
+     and now generated rather than copied. It was inside a marker that opened a
+     region and never closed it, which is why four copies of it could never be
+     compared. That is fixed here: this fence has both markers.
+
+     The lockup that used to share this marker is its own fence now — see
+     `deck lockup`. They were two components wearing one name, and only one of
+     them legitimately differs between sites.
+
+     This block holds 53 rules, not the round number a first read of the region
+     might suggest. The marker never closed, so "which rules are inside it" was
+     never a settled question; measured mechanically — everything from the
+     `---------- transport ----------` comment through the transport's own three
+     mobile breakpoints, minus the lockup's own rules, minus the one rule that shows
+     the LCD while it carries a message (staying per-deck), minus the speaker-notes drawer and the
+     slide-layout rules that happen to share the same breakpoints — 53 is what's
+     left, and all 53 are byte-identical on every deck. Anyone re-deriving this
+     should get the same 53; if a cut to a smaller, rounder number seems
+     obviously right, it wasn't obvious here and is worth writing down why. */
   .transport{
     grid-column:2; justify-self:center;
     display:flex; align-items:center; gap:.45rem;
@@ -428,11 +469,6 @@
   /* the exit is an <a>, so it works with no JS and the browser treats it as
      navigation — history, middle-click and "open in new tab" all behave. */
   a.tbtn{text-decoration:none}
-  .name a{text-decoration:none; color:inherit; pointer-events:auto}
-  .name a:hover, .name a:focus-visible{color:var(--ink)}
-  /* the wordmark sets its own colours, so the rule above cannot show its hover;
-     the accent brightening to full ink is what replaces it. */
-  .name a:hover b em, .name a:focus-visible b em{color:var(--ink)}
 
   .tdiv{width:1px; align-self:stretch; margin:.3rem .25rem; background:#333743; flex:0 0 auto}
 
@@ -449,6 +485,48 @@
   @media (prefers-reduced-motion: reduce){
     .tbtn, .seg button, .lcd .clip i{transition:none}
   }
+
+  /* the transport becomes the bottom edge itself: full width, flush, clear of the
+     home indicator. The lockup does not fit a collapsed single-column bar, so this is
+     the one `.name` rule that lives here rather than in `deck lockup` — it is not the
+     lockup's identity, it is the bar's own statement that the lockup drops out at this
+     width, and it is byte-identical on all four decks like the rest of this block. */
+  @media (max-width: 860px), (max-aspect-ratio: 4/5){
+    .name{display:none}
+    .transport{
+      grid-column:1; justify-self:stretch; width:100%;
+      background:none; border:0; border-radius:0; box-shadow:none;
+      padding:.45rem .5rem; gap:.2rem; justify-content:space-between;
+    }
+    .tmain{gap:.1rem}
+    .tside{gap:.2rem}
+    .tbtn{width:44px; height:44px}
+    .tbtn svg{width:20px; height:20px}
+    .tbtn.play{width:46px; height:46px}
+    .tdiv{margin:.4rem .1rem}
+    .seg button{padding:0 .5rem; min-width:38px; min-height:44px}
+    .lcd{padding:.42rem .5rem .36rem; margin-right:0}
+  }
+  /* below this the seven controls need every pixel */
+  @media (max-width: 400px){
+    .lcd{display:none}
+    .transport{padding:.45rem .35rem}
+    .tbtn{width:40px; height:40px}
+    .tside{gap:.1rem}
+    .tdiv{margin:.4rem .05rem}
+    .seg button{padding:0 .3rem; min-width:32px; min-height:40px; font-size:.6rem; letter-spacing:.08em}
+  }
+  /* the smallest phones still in use. body{overflow:hidden} hides a transport that is
+     wider than the screen instead of scrolling it, so this has to be measured, not assumed */
+  @media (max-width: 350px){
+    .transport{padding:.4rem .3rem}
+    .tbtn{width:36px; height:36px}
+    .tbtn svg{width:18px; height:18px}
+    .tbtn.play{width:42px; height:42px}
+    .tside{gap:.05rem}
+    .seg button{min-width:28px; min-height:36px; padding:0 .22rem}
+  }
+  /* ─── end deck transport ────────────────────────────────────────────────*/
 
   .notes{position:fixed; inset:auto 0 0 0; background:#17181c; color:#f1ede4; border-top:2px solid var(--c-mid); padding:3cqmin 4cqmin calc(var(--chromeH,0px) + 2cqmin); transform:translateY(101%); transition:transform .3s ease; z-index:20; max-height:56vh; overflow:auto}
   .notes.show{transform:none}
@@ -471,30 +549,13 @@
 
   /* mobile / portrait */
   @media (max-width: 860px), (max-aspect-ratio: 4/5){
-    /* the transport becomes the bottom edge itself: full width, flush, clear of the
-       home indicator. The name credit goes — at this width it is the first thing that
-       would push the controls off centre. */
     .chrome{
       grid-template-columns:1fr; padding:0;
       background:var(--slab); border-top:1px solid var(--rule);
       padding-bottom:env(safe-area-inset-bottom);
     }
-    .name{display:none}
     .notes{bottom:var(--chromeH,0px); padding-bottom:3cqmin;
            transform:translateY(calc(101% + var(--chromeH,0px)))}
-    .transport{
-      grid-column:1; justify-self:stretch; width:100%;
-      background:none; border:0; border-radius:0; box-shadow:none;
-      padding:.45rem .5rem; gap:.2rem; justify-content:space-between;
-    }
-    .tmain{gap:.1rem}
-    .tside{gap:.2rem}
-    .tbtn{width:44px; height:44px}
-    .tbtn svg{width:20px; height:20px}
-    .tbtn.play{width:46px; height:46px}
-    .tdiv{margin:.4rem .1rem}
-    .seg button{padding:0 .5rem; min-width:38px; min-height:44px}
-    .lcd{padding:.42rem .5rem .36rem; margin-right:0}
     /* the deck progress bar sits on the transport's top edge, not behind it */
     .bar{bottom:var(--chromeH,0px)}
     .deck{inset:0; width:auto; height:auto; transform:none; container-type:normal}
@@ -506,26 +567,6 @@
     .note{font-size:clamp(.9rem,3.6vw,1.2rem); max-width:100%}
     .thennow, .split, .split.even, .grid{grid-template-columns:1fr; gap:5vw; max-width:100%}
     .kicker{margin-bottom:5vw}
-  }
-  /* below this the seven controls need every pixel; the slide kicker and the progress
-     bar still say where you are */
-  @media (max-width: 400px){
-    .lcd{display:none}
-    .transport{padding:.45rem .35rem}
-    .tbtn{width:40px; height:40px}
-    .tside{gap:.1rem}
-    .tdiv{margin:.4rem .05rem}
-    .seg button{padding:0 .3rem; min-width:32px; min-height:40px; font-size:.6rem; letter-spacing:.08em}
-  }
-  /* the smallest phones still in use. body{overflow:hidden} hides a transport that is
-     wider than the screen instead of scrolling it, so this has to be measured, not assumed */
-  @media (max-width: 350px){
-    .transport{padding:.4rem .3rem}
-    .tbtn{width:36px; height:36px}
-    .tbtn svg{width:18px; height:18px}
-    .tbtn.play{width:42px; height:42px}
-    .tside{gap:.05rem}
-    .seg button{min-width:28px; min-height:36px; padding:0 .22rem}
   }
 
   /* ─── display face ────────────────────────────────────────────────────
@@ -1305,24 +1346,41 @@
 </script>
 
 <script>
-// Scale the 1600×900 canvas to the screen. Below the breakpoint the deck reflows
-// into a scrolling reading view instead, so the transform is cleared there.
-(function(){
-  var CH = 900;
-  var deck = document.getElementById("deck");
-  var small = window.matchMedia("(max-width: 860px), (max-aspect-ratio: 4/5)");
-  function fit(){
-    if (small.matches) { deck.style.transform = ""; deck.style.width = ""; return; }
-    // Height is the fixed dimension; width is whatever the screen's aspect asks
-    // for. The canvas then covers the viewport exactly — no bars, any aspect.
-    var s = window.innerHeight / CH;
-    deck.style.width = (window.innerWidth / s) + "px";
-    deck.style.transform = "scale(" + s + ")";
-  }
-  window.addEventListener("resize", fit);
-  if (small.addEventListener) small.addEventListener("change", fit);
-  fit();
-})();
+  /* ─── deck fit · v1 · shared ────────────────────────────────────────
+     Generated from @robertblust/design — edit it there and run `npm run design`.
+
+     The canvas scaler, last script in every deck. It lays the slides out once at
+     a fixed height and scales the whole plane to the screen, the way a
+     presentation tool does it rather than the way a web page does: a slide can
+     never scroll, because the canvas always fits, and the composition is
+     identical on every screen, because there is only one composition.
+
+     Only the height is pinned — the width follows the screen's own aspect, so
+     the canvas covers the viewport exactly and there are never letterbox bars.
+     Below the breakpoint the canvas is switched off and the deck reflows into
+     the scrolling reading view it always had.
+  */
+  // Scale the fixed-height canvas to the screen. Below the breakpoint the deck reflows
+  // into a scrolling reading view instead, so the transform is cleared there.
+  // Two of these decks once described this canvas by a fixed 16:9 size instead —
+  // the shape that letterboxed a 4:3 screen, not a design to restore.
+  (function(){
+    var CH = 900;
+    var deck = document.getElementById("deck");
+    var small = window.matchMedia("(max-width: 860px), (max-aspect-ratio: 4/5)");
+    function fit(){
+      if (small.matches) { deck.style.transform = ""; deck.style.width = ""; return; }
+      // Height is the fixed dimension; width is whatever the screen's aspect asks
+      // for. The canvas then covers the viewport exactly — no bars, any aspect.
+      var s = window.innerHeight / CH;
+      deck.style.width = (window.innerWidth / s) + "px";
+      deck.style.transform = "scale(" + s + ")";
+    }
+    window.addEventListener("resize", fit);
+    if (small.addEventListener) small.addEventListener("change", fit);
+    fit();
+  })();
+  /* ─── end deck fit ───────────────────────────────────────────────────────── */
 </script>
 </body>
 </html>
