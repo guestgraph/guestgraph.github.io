@@ -19,7 +19,19 @@
 //   monoScope       mono means data, and nothing else
 //   contrast        the text colours clear their ratios on --ground
 //   tokenVersion    the page's `design tokens · vN` marker matches this suite
-//   footerVersion   the deck's `deck footer · vN` marker matches this suite
+//   fences          presence of every fence a page declares, version-blind
+//   lockupCollapses at a narrow viewport, `.name` renders display:none — a cascade outcome,
+//                   asserted by rendering, not by reading which fence comes first
+//
+// footerVersion and its FOOTER_VERSION constant are gone, not retargeted. The deck footer's
+// old open-ended `deck footer · vN` marker is replaced by three closed fences — `deck
+// transport`, `deck lockup`, `deck fit` — and what now catches a deck whose fence lags the
+// pinned release is `design:check`, not a version check here: it compares each fence's bytes
+// against the installed package, and the version is part of those bytes. That is strictly
+// stronger than FOOTER_VERSION ever was, because the constant had to be hand-edited in three
+// repositories to stay true — the very drift it existed to catch. `fences` (below) still
+// matches only `· v\d+` and asserts presence, not version, exactly as it always has; the
+// version comparison lives in `design:check` alone.
 
 // Read from the package rather than kept in step by hand. TOKEN_VERSION used to be a fourth
 // hand-typed copy of the number in versions.json — the page's fence, the block's own opening
@@ -31,16 +43,11 @@
 import { FENCES } from "@robertblust/design/fences";
 export const TOKEN_VERSION = FENCES["design tokens"].version;
 
-// The deck footer is copied across the three sites for the same reason the token block is:
-// a deck opens from file://, so there is nothing to import. What it holds is a contract, not
-// just a look — the lockup goes to the landing page, the person to blust.ch, the third link
-// to the talks index, and none of them opens in a new tab. Change any of that on one site and
-// the other two are quietly describing a footer that no longer exists.
-//
-// This marker is the tripwire, the same habit-with-a-tripwire the tokens get. Bumping it means
-// bumping it in all three repositories and running all three suites. Nothing here can see a
-// sibling; that is exactly the gap it is compensating for.
-export const FOOTER_VERSION = "v1";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+// design.mjs lives in <site>/verify/, so the site root is one level up. Derived rather than
+// configured: a hardcoded path would differ per repository in a file that must not.
+const SITE_ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 
 export const TOKENS = {
   "--ground": "#0C0E13", "--raise": "#171A21", "--rule": "#232833",
@@ -324,6 +331,96 @@ export const DESIGN_CHECKS = {
       : null;
   },
 
+  // The class of defect `fences` and `design:check` cannot see: two fences whose CSS
+  // interacts once both are on the page. `deck transport` carries `.name{display:none}`
+  // inside a mobile media query; `deck lockup` carries `.name{ … display:flex … }` with no
+  // media query at all. Both selectors are `.name`, both are specificity (0,1,0), and a media
+  // query adds none — so whichever fence a page happens to emit *second* wins, on every
+  // viewport narrow enough for the media query to apply. That made fence order load-bearing
+  // without anything saying so: `design:check` proves each fence's bytes match the tag,
+  // order-independently by design, and `fences` proves a marker is present — neither one
+  // looks at what the two rules resolve to once both exist on the same page.
+  //
+  // So this renders instead of reading the stylesheet, which is the only way to see a cascade
+  // outcome rather than assume one: at a viewport narrow enough for the transport's own media
+  // query to apply, `.name` must compute to `display:none`. Two sizes, not one, because the
+  // measurement that caught this in review was taken at both and there is no reason to trust
+  // only the first.
+  async lockupCollapses(page, spec) {
+    const sizes = [{ width: 390, height: 844 }, { width: 340, height: 740 }];
+    const problems = [];
+    try {
+      for (const size of sizes) {
+        await page.setViewportSize(size);
+        await page.goto(spec.absolute, { waitUntil: "networkidle" });
+        const display = await page.evaluate(() => {
+          const el = document.querySelector(".name");
+          return el ? getComputedStyle(el).display : "(no .name element on the page)";
+        });
+        if (display !== "none")
+          problems.push(`${size.width}×${size.height}: .name computes to display:${display}, expected none`);
+      }
+    } finally {
+      // Every other check runs at the desktop size; leave the page as they expect it.
+      await page.setViewportSize({ width: 1280, height: 720 });
+      await page.goto(spec.absolute, { waitUntil: "networkidle" });
+    }
+    return problems.length ? problems.join("; ") : null;
+  },
+
+  // The one guarantee a served page cannot test. A deck must present with no server: opened
+  // from the filesystem, with the repository intact, it renders its first slide, loads its
+  // faces from the root `fonts/` by relative path, and its runtime runs — checked by asking
+  // the canvas to have actually been scaled, since `fit()` running and doing nothing is
+  // exactly the failure a served page would never surface (see CLAUDE.md, "Slides are a
+  // canvas, not a page"). Relative paths upward are allowed and already used; what is
+  // forbidden is needing a server.
+  //
+  // Armed on decks only. `spec.opensFromFile` names nothing — the page's own path is enough,
+  // because the check re-opens the same file the rest of the suite reached over http.
+  //
+  // What this does and does not reach, measured against mutated deck copies rather than
+  // guessed: removing the `deck fit` fence fails it, and so does rewriting `../../fonts/` to
+  // `/fonts/` — both break something this check actually looks at (the canvas transform, the
+  // relative font path). Removing the `deck transport` fence passes. Removing the `deck
+  // lockup` fence passes. A deck with its entire chrome CSS deleted still renders slides,
+  // loads a face and scales, because none of those three things depends on the chrome at all.
+  // Transport and lockup are real coverage elsewhere — `fences` (below) proves each is present,
+  // `design:check` proves its bytes match the tag — but neither is a render, and this isn't
+  // either one of those: this is a file:// smoke test for the deck's own runtime, not a chrome
+  // check wearing a bigger name than it earns.
+  async opensFromFile(page, spec) {
+    const file = "file://" + path.join(SITE_ROOT, spec.path.replace(/^\/|\/$/g, ""), "index.html");
+    const errors = [];
+    // page.context() here is the implicit single-page context browser.newPage() creates,
+    // and Playwright refuses a second page inside it ("Please use browser.newContext()").
+    // Going through the browser instead gives the probe its own implicit context, the same
+    // shape the outer page already has.
+    const probe = await page.context().browser().newPage();
+    probe.on("pageerror", (e) => errors.push(e.message));
+    try {
+      await probe.goto(file);
+      await probe.evaluate(() => document.fonts.ready);
+      const seen = await probe.evaluate(() => ({
+        slides: document.querySelectorAll(".slide").length,
+        faceLoaded: [...document.fonts].some((f) => f.status === "loaded"),
+        // `.deck`'s fixed-height canvas is scaled to the viewport by a `fit()` that runs
+        // synchronously at load, with no server-only dependency — so this is stable under
+        // file:// and worth asserting, not just capturing. "none" means fit() never applied
+        // a transform: the deck would still show slides and loaded fonts, unscaled.
+        scaled: getComputedStyle(document.querySelector(".deck") || document.body).transform,
+      }));
+      if (errors.length) return `opened from file:// with JS errors: ${errors.join(" | ")}`;
+      if (!seen.slides) return "opened from file:// but rendered no slides";
+      if (!seen.faceLoaded) return "opened from file:// but loaded no webfont — check the relative fonts/ path";
+      if (seen.scaled === "none")
+        return "opened from file:// but the canvas carries no transform — fit() did not run";
+      return null;
+    } finally {
+      await probe.close();
+    }
+  },
+
   async contrast(page) {
     const bad = await page.evaluate(() => {
       const cs = getComputedStyle(document.documentElement);
@@ -350,16 +447,5 @@ export const DESIGN_CHECKS = {
     if (!m) return "the page carries no `design tokens · vN` marker";
     return m[1] === TOKEN_VERSION ? null
       : `page says ${m[1]}, this suite expects ${TOKEN_VERSION}`;
-  },
-
-  // the same marker for the deck footer, which is copied across the three sites and which no
-  // suite can see on a sibling. Armed on deck pages only — the prose pages have no footer row.
-  async footerVersion(page, spec) {
-    const res = await fetch(spec.absolute);
-    const html = await res.text();
-    const m = html.match(/deck footer · (v\d+)/);
-    if (!m) return "the deck carries no `deck footer · vN` marker";
-    return m[1] === FOOTER_VERSION ? null
-      : `deck says ${m[1]}, this suite expects ${FOOTER_VERSION}`;
   },
 };
