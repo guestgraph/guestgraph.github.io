@@ -122,7 +122,7 @@
 @font-face{font-family:"Plex Mono";src:url(../fonts/PlexMono-600.woff2) format("woff2");font-weight:600;font-display:swap}
 @font-face{font-family:"Bricolage Grotesque";src:url(../fonts/Bricolage-var.woff2) format("woff2-variations"),url(../fonts/Bricolage-var.woff2) format("woff2");font-weight:200 800;font-display:swap}
 
-  /* ─── design tokens · v5 · page ───────────────────────────────
+  /* ─── design tokens · v6 · page ───────────────────────────────
      These sites share no stylesheet by design — a deck has to open from
      file:// — so this block is a copy, generated from @robertblust/design.
      Editing it here has no effect: the next `npm run design` overwrites it
@@ -154,12 +154,21 @@
      --c-weak is 2.37:1 and that is deliberate, exactly as its 2.64:1 on dark is: its job is
      "a candidate, considered but not accepted", and darkening it until it clears the 3:1 UI
      threshold stops it reading as tentative. It must never carry text, a border or an
-     outline on its own, in either theme. */
+     outline on its own, in either theme.
+
+     --press carries text now, not just a hover wash: `.seg button[aria-pressed="true"]`
+     paints --c-mid on it, and the pressed segment is how a visitor tells which language and
+     which theme is active. The palette had only ever been checked token-against-page-
+     background; nothing measured a text-bearing surface against the surface it actually
+     sits on. #E2E8F2 measured 4.35:1 against --c-mid here — under the 4.5 AA floor for the
+     12.16px/600 label — so it moves to #E7ECF4, which clears at 4.52:1. Counter-intuitively
+     lighter, not darker: darkening it moves it closer to --c-mid and away from AA, since
+     --c-mid is the darker of the two. Dark's pair is already 6.16:1 and is untouched. */
   :root[data-theme="light"]{
     --ground:#FAF9F5; --raise:#F2F0EA; --rule:#DFDCD3;
     --ink:#16181D;    --dim:#5F6058;
     --c-weak:#8FA6C2; --c-mid:#3A6DA6; --c-firm:#1C3E68; --c-flag:#8A5A12;
-    --c-path:#1C3E68; --press:#E2E8F2;
+    --c-path:#1C3E68; --press:#E7ECF4;
   }
   :root{
     --ground:#0C0E13; --raise:#171A21; --rule:#232833;
@@ -562,7 +571,7 @@
   if (urlLang) langRemember(urlLang);
   var lang = urlLang || (langStored() === "de" ? "de" : "en");
 
-  /* ─── theme · v1 · shared ────────────────────────────────────────────
+  /* ─── theme · v2 · shared ────────────────────────────────────────────
      One theme across three domains, and where it is remembered. Generated from
      @robertblust/design — editing it here does nothing.
 
@@ -570,7 +579,9 @@
      only compares bytes between the markers. The page must declare a `theme` variable in scope
      before this fence, and must carry two controls, `#thLight` and `#thDark`. Rename either and
      the fence still matches byte for byte — every check stays green — while the control stops
-     working. `storageKeys` is what actually holds this contract: it clicks both.
+     working. `mobileNav`'s presence assertion is what actually holds this contract, gated on
+     the page's own `noFlash` flag: a page that declares it and is missing either control fails
+     there.
   */
   var THEME_KEY = "rb-theme";
   function themeStored(){ try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } }
@@ -591,12 +602,23 @@
     } catch (e) {}
     return m[1];
   }
+  // Language gets away with always decorating a link because a visitor's language is always an
+  // explicit two-way choice. Theme is not: it has a default (dark), and a page that carries only
+  // the default is indistinguishable from a page whose visitor chose it. Carrying `theme` on
+  // every link exported that default as though it were a choice — a visitor who set light on one
+  // site and later opened a sibling fresh (dark, correct, untouched) would have that default
+  // carried back onto a link to the first site and silently overwrite their real, stored
+  // preference. Reading `themeStored()` rather than the in-memory `theme` variable is what keeps
+  // this to "only when the visitor actually chose": nothing stored means nothing carried, and no
+  // link is decorated.
   function carryTheme(e){
+    var stored = themeStored();
+    if (!stored) return;
     var a = e.target && e.target.closest && e.target.closest("a[href]");
     if (!a) return;
     var u; try { u = new URL(a.href, location.href); } catch (err) { return; }
     if (u.origin === location.origin || !THEME_FAMILY.test(u.hostname)) return;
-    u.searchParams.set("theme", theme);
+    u.searchParams.set("theme", stored);
     a.href = u.toString();
   }
   // mousedown as well as click, so a middle-click or cmd-click into a new tab carries it too.
