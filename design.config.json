@@ -2,5 +2,6 @@
   "groups": [
     "fonts"
   ],
-  "langKey": "gg-lang"
+  "langKey": "gg-lang",
+  "themeKey": "rb-theme"
 }

@@ -92,6 +92,34 @@
 }
 </script>
 
+<script>
+  /* ─── theme boot · v1 · shared ───────────────────────────────────────
+     Set the theme before anything paints. Generated from @robertblust/design —
+     editing it here does nothing, because the next `npm run design` overwrites it.
+
+     This is the only script on these pages that runs in <head>, and it has to: every other
+     script sits at the end of the body, which is after first paint. Language arriving late
+     costs a flash of English; a palette arriving late repaints the whole page in the wrong
+     one, on every navigation.
+
+     It duplicates the storage key and the URL pattern that `theme` also carries. That is
+     deliberate — nothing is in scope up here, and the block must stand alone. Both blocks are
+     generated from the same package, so the duplicate cannot drift.
+
+     Dark is the default and `prefers-color-scheme` is never read: dark is the design, and
+     light is something a visitor asks for. A visitor whose system is set to light still
+     arrives on dark until they say otherwise.
+  */
+  (function(){
+    try {
+      var m = /[?&]theme=(light|dark)(&|$)/.exec(location.search);
+      var t = m ? m[1] : localStorage.getItem("rb-theme");
+      if (t === "light") document.documentElement.setAttribute("data-theme", "light");
+    } catch (e) {}
+  })();
+  /* ─── end theme boot ─────────────────────────────────────────────────── */
+
+</script>
 <style>
 /* Self-hosted, same origin: no third party sees a visitor, and the files resolve
    from file:// as well as from the domain. */
@@ -100,7 +128,7 @@
 @font-face{font-family:"Plex Mono";src:url(fonts/PlexMono-600.woff2) format("woff2");font-weight:600;font-display:swap}
 @font-face{font-family:"Bricolage Grotesque";src:url(fonts/Bricolage-var.woff2) format("woff2-variations"),url(fonts/Bricolage-var.woff2) format("woff2");font-weight:200 800;font-display:swap}
 
-  /* ─── design tokens · v4 · page ───────────────────────────────
+  /* ─── design tokens · v5 · page ───────────────────────────────
      These sites share no stylesheet by design — a deck has to open from
      file:// — so this block is a copy, generated from @robertblust/design.
      Editing it here has no effect: the next `npm run design` overwrites it
@@ -123,12 +151,28 @@
      hue would have made colour mean two things at once. If it is ever wanted,
      this is the one line that changes.
   */
+  /* The same eleven names, re-picked. The ramp's axis flips: on dark, brightness is
+     confidence; on light, depth is — the candidate pales, the resolved thing deepens.
+     Reusing the dark stops here was measured and refused: --c-mid paints every link and
+     falls to 2.45:1 on this ground, --c-firm to 1.49:1. These clear AA on every text stop
+     (ink 16.86, dim 6.04, mid 5.09, firm 10.28, flag 5.61).
+
+     --c-weak is 2.37:1 and that is deliberate, exactly as its 2.64:1 on dark is: its job is
+     "a candidate, considered but not accepted", and darkening it until it clears the 3:1 UI
+     threshold stops it reading as tentative. It must never carry text, a border or an
+     outline on its own, in either theme. */
+  :root[data-theme="light"]{
+    --ground:#FAF9F5; --raise:#F2F0EA; --rule:#DFDCD3;
+    --ink:#16181D;    --dim:#5F6058;
+    --c-weak:#8FA6C2; --c-mid:#3A6DA6; --c-firm:#1C3E68; --c-flag:#8A5A12;
+    --c-path:#1C3E68; --press:#E2E8F2;
+  }
   :root{
     --ground:#0C0E13; --raise:#171A21; --rule:#232833;
     --sky:radial-gradient(120% 60% at 50% -10%, var(--raise) 0%, var(--ground) 60%);
     --ink:#EFEDE8;    --dim:#8A8B86;
     --c-weak:#3E5878; --c-mid:#7FA3D8; --c-firm:#B8D0FF; --c-flag:#D9A44F;
-    --c-path:#B8D0FF;
+    --c-path:#B8D0FF; --press:#1b2231;
   }
   /* ─── end design tokens ─────────────────────────────────────────────── */
   /* ─── prose reset · v1 · shared ────────────────────────────────────
@@ -173,7 +217,7 @@
   .brand svg{width:28px; height:28px; color:var(--c-mid); flex:0 0 auto}
   .brand b{font-weight:600; font-size:1.06rem; letter-spacing:-.01em}
   .brand b span{color:var(--c-mid)}
-  /* ─── header contract · v3 · shared ──────────────────────────────────
+  /* ─── header contract · v4 · shared ──────────────────────────────────
      One row, three sites, and no stylesheet between them — a deck opens from file://, so
      this is a copy, generated from @robertblust/design. Editing it here has no effect — the
      next `npm run design` overwrites it. Change it in the package.
@@ -243,8 +287,14 @@
               border:0; cursor:pointer; padding:.26rem .5rem; color:var(--dim);
               transition:color .15s ease, background-color .15s ease}
   .seg button:hover{color:var(--ink)}
-  .seg button[aria-pressed="true"]{color:var(--c-mid); background:#1b2231; font-weight:600}
+  .seg button[aria-pressed="true"]{color:var(--c-mid); background:var(--press); font-weight:600}
   .seg button:focus-visible{outline:2px solid var(--c-mid); outline-offset:-2px}
+  /* The theme control is a .seg like the language one, so it inherits the border, the radius
+     and the pressed treatment. Only the icons differ: 14px square, drawn with currentColor so
+     the pressed state colours them without a second rule. */
+  .seg.theme button{display:grid; place-items:center; padding:.26rem .48rem}
+  .seg.theme svg{width:14px; height:14px; display:block; fill:none; stroke:currentColor;
+                 stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
   /* The row narrows before it collapses. */
   @media (max-width:900px){
     nav{gap:1.4rem}
@@ -271,6 +321,7 @@
     .navlinks a{padding:.8rem 0}
   }
   /* ─── end header contract ───────────────────────────────────────────── */
+  .switchers{display:flex; align-items:center; gap:.6rem}
   /* The hover underline hangs below the text, so the box is taller under the text than over
      it. Mirror the space above, and the box is symmetric about its own text. */
   /* the language control is a nav item, not a floating badge: it belongs with the
@@ -310,7 +361,7 @@
   }
   .btn:hover, .btn:focus-visible{border-color:var(--c-mid); color:var(--c-mid)}
   .btn.primary{border-color:var(--c-mid); color:var(--c-mid)}
-  .btn.primary:hover, .btn.primary:focus-visible{background:#1b2333}
+  .btn.primary:hover, .btn.primary:focus-visible{background:var(--press)}
   .ctameta{margin-top:1.1rem; font-size:.78rem; color:var(--dim); letter-spacing:.05em}
 
   /* records resolving into one profile */
@@ -408,9 +459,9 @@
         <svg viewBox="0 0 32 32" aria-hidden="true">
           <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
             <path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/>
-            <circle cx="6" cy="7.2" r="2.6" fill="#0C0E13"/>
-            <circle cx="6" cy="16" r="2.6" fill="#0C0E13"/>
-            <circle cx="6" cy="24.8" r="2.6" fill="#0C0E13"/>
+            <circle cx="6" cy="7.2" r="2.6" fill="var(--ground)"/>
+            <circle cx="6" cy="16" r="2.6" fill="var(--ground)"/>
+            <circle cx="6" cy="24.8" r="2.6" fill="var(--ground)"/>
           </g>
           <circle cx="24" cy="16" r="5.4" fill="currentColor"/>
         </svg>
@@ -426,7 +477,7 @@
           <svg class="ibars" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
           <svg class="ix" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
-        <div class="seg" id="langind" role="group" aria-label="Sprache wechseln — switch language"><button type="button" id="lde" aria-pressed="false">DE</button><button type="button" id="len" aria-pressed="true">EN</button></div>
+        <div class="switchers" id="langind"><div class="seg" role="group" aria-label="Sprache wechseln — switch language"><button type="button" id="lde" aria-pressed="false">DE</button><button type="button" id="len" aria-pressed="true">EN</button></div><div class="seg theme" id="thmind" role="group" aria-label="Erscheinungsbild wechseln — switch appearance"><button type="button" id="thLight" aria-pressed="false" aria-label="Light"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button><button type="button" id="thDark" aria-pressed="true" aria-label="Dark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button></div></div>
       </nav>
     </div>
   </header>
@@ -565,6 +616,64 @@
   var urlLang = langFromUrl();
   if (urlLang) langRemember(urlLang);
   var lang = urlLang || (langStored() === "de" ? "de" : "en");
+
+  /* ─── theme · v1 · shared ────────────────────────────────────────────
+     One theme across three domains, and where it is remembered. Generated from
+     @robertblust/design — editing it here does nothing.
+
+     This block has a contract with the page that `design:check` cannot see, because the check
+     only compares bytes between the markers. The page must declare a `theme` variable in scope
+     before this fence, and must carry two controls, `#thLight` and `#thDark`. Rename either and
+     the fence still matches byte for byte — every check stays green — while the control stops
+     working. `storageKeys` is what actually holds this contract: it clicks both.
+  */
+  var THEME_KEY = "rb-theme";
+  function themeStored(){ try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } }
+  function themeRemember(v){ try { localStorage.setItem(THEME_KEY, v); } catch (e) {} }
+
+  /* Each origin keeps its own localStorage, so a visitor reading in light who followed a link
+     to a sibling site would arrive in dark — three copies of one preference, none of which can
+     see the others. The theme rides along instead, on the same terms as the language: the param
+     is added at click time, never at load, so no link in the served markup carries it and
+     nothing crawlable or bookmarkable does either. */
+  var THEME_FAMILY = /^(www\.)?(blust\.ch|companygraph\.io|guestgraph\.io)$/;
+  function themeFromUrl(){
+    var m = /[?&]theme=(light|dark)(&|$)/.exec(location.search);
+    if (!m) return null;
+    try {
+      var q = location.search.replace(/([?&])theme=(light|dark)(&|$)/, "$1").replace(/[?&]$/, "");
+      history.replaceState(null, "", location.pathname + q + location.hash);
+    } catch (e) {}
+    return m[1];
+  }
+  function carryTheme(e){
+    var a = e.target && e.target.closest && e.target.closest("a[href]");
+    if (!a) return;
+    var u; try { u = new URL(a.href, location.href); } catch (err) { return; }
+    if (u.origin === location.origin || !THEME_FAMILY.test(u.hostname)) return;
+    u.searchParams.set("theme", theme);
+    a.href = u.toString();
+  }
+  // mousedown as well as click, so a middle-click or cmd-click into a new tab carries it too.
+  // This runs alongside the language block's identical pair; the second listener reads the href
+  // the first rewrote, so the two compose into ?lang=de&theme=light rather than racing.
+  document.addEventListener("mousedown", carryTheme, true);
+  document.addEventListener("click", carryTheme, true);
+
+  function applyTheme(){
+    if (theme === "light") document.documentElement.setAttribute("data-theme", "light");
+    else document.documentElement.removeAttribute("data-theme");
+    var l = document.getElementById("thLight"), d = document.getElementById("thDark");
+    if (l) l.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
+    if (d) d.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+  }
+  function setTheme(v){ theme = v; themeRemember(v); applyTheme(); }
+  /* ─── end theme ──────────────────────────────────────────────────────── */
+
+
+  var urlTheme = themeFromUrl();
+  if (urlTheme) themeRemember(urlTheme);
+  var theme = urlTheme || (themeStored() === "light" ? "light" : "dark");
   var i18n = Array.prototype.slice.call(document.querySelectorAll("[data-de]"));
   i18n.forEach(function(el){ el.setAttribute("data-en", el.innerHTML); });
 
@@ -607,9 +716,12 @@
 
   document.getElementById("lde").addEventListener("click", function(){ if (lang !== "de") toggle(); });
   document.getElementById("len").addEventListener("click", function(){ if (lang !== "en") toggle(); });
+  document.getElementById("thLight").addEventListener("click", function(){ setTheme("light"); });
+  document.getElementById("thDark").addEventListener("click", function(){ setTheme("dark"); });
   document.addEventListener("keydown", function(e){ if(e.key === "l" || e.key === "L") toggle(); });
 
   applyLang();
+  applyTheme();
 })();
 </script>
 </body>
