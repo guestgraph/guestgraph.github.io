@@ -90,8 +90,8 @@ const PAGES = [
     landing: "../../",
     links: ["https://blust.ch/"], sameTab: ["https://blust.ch/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true,
-    tokens: true, sky: true, monoScope: true, contrast: true, tokenVersion: true, fences: ["design tokens", "language", "deck transport", "deck lockup", "deck fit"],
-    fenceOrder: ["design tokens", "deck lockup", "deck transport", "language", "deck fit"],
+    tokens: true, sky: true, monoScope: true, contrast: true, tokenVersion: true, fences: ["design tokens", "language", "deck transport", "deck lockup", "deck fit", "deck runtime"],
+    fenceOrder: ["design tokens", "deck lockup", "deck transport", "deck runtime", "language", "deck fit"],
     lockupCollapses: true,
     card: true, cardBase: SITE, internalLinks: true },
 ];
