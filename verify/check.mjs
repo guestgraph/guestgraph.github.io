@@ -91,6 +91,7 @@ const PAGES = [
     links: ["https://blust.ch/"], sameTab: ["https://blust.ch/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true,
     tokens: true, sky: true, monoScope: true, contrast: true, tokenVersion: true, fences: ["design tokens", "language", "deck transport", "deck lockup", "deck fit"],
+    lockupCollapses: true,
     card: true, cardBase: SITE, internalLinks: true },
 ];
 

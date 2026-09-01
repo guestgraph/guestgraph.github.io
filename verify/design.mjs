@@ -20,6 +20,8 @@
 //   contrast        the text colours clear their ratios on --ground
 //   tokenVersion    the page's `design tokens · vN` marker matches this suite
 //   fences          presence of every fence a page declares, version-blind
+//   lockupCollapses at a narrow viewport, `.name` renders display:none — a cascade outcome,
+//                   asserted by rendering, not by reading which fence comes first
 //
 // footerVersion and its FOOTER_VERSION constant are gone, not retargeted. The deck footer's
 // old open-ended `deck footer · vN` marker is replaced by three closed fences — `deck
@@ -329,6 +331,43 @@ export const DESIGN_CHECKS = {
       : null;
   },
 
+  // The class of defect `fences` and `design:check` cannot see: two fences whose CSS
+  // interacts once both are on the page. `deck transport` carries `.name{display:none}`
+  // inside a mobile media query; `deck lockup` carries `.name{ … display:flex … }` with no
+  // media query at all. Both selectors are `.name`, both are specificity (0,1,0), and a media
+  // query adds none — so whichever fence a page happens to emit *second* wins, on every
+  // viewport narrow enough for the media query to apply. That made fence order load-bearing
+  // without anything saying so: `design:check` proves each fence's bytes match the tag,
+  // order-independently by design, and `fences` proves a marker is present — neither one
+  // looks at what the two rules resolve to once both exist on the same page.
+  //
+  // So this renders instead of reading the stylesheet, which is the only way to see a cascade
+  // outcome rather than assume one: at a viewport narrow enough for the transport's own media
+  // query to apply, `.name` must compute to `display:none`. Two sizes, not one, because the
+  // measurement that caught this in review was taken at both and there is no reason to trust
+  // only the first.
+  async lockupCollapses(page, spec) {
+    const sizes = [{ width: 390, height: 844 }, { width: 340, height: 740 }];
+    const problems = [];
+    try {
+      for (const size of sizes) {
+        await page.setViewportSize(size);
+        await page.goto(spec.absolute, { waitUntil: "networkidle" });
+        const display = await page.evaluate(() => {
+          const el = document.querySelector(".name");
+          return el ? getComputedStyle(el).display : "(no .name element on the page)";
+        });
+        if (display !== "none")
+          problems.push(`${size.width}×${size.height}: .name computes to display:${display}, expected none`);
+      }
+    } finally {
+      // Every other check runs at the desktop size; leave the page as they expect it.
+      await page.setViewportSize({ width: 1280, height: 720 });
+      await page.goto(spec.absolute, { waitUntil: "networkidle" });
+    }
+    return problems.length ? problems.join("; ") : null;
+  },
+
   // The one guarantee a served page cannot test. A deck must present with no server: opened
   // from the filesystem, with the repository intact, it renders its first slide, loads its
   // faces from the root `fonts/` by relative path, and its runtime runs — checked by asking
@@ -339,6 +378,17 @@ export const DESIGN_CHECKS = {
   //
   // Armed on decks only. `spec.opensFromFile` names nothing — the page's own path is enough,
   // because the check re-opens the same file the rest of the suite reached over http.
+  //
+  // What this does and does not reach, measured against mutated deck copies rather than
+  // guessed: removing the `deck fit` fence fails it, and so does rewriting `../../fonts/` to
+  // `/fonts/` — both break something this check actually looks at (the canvas transform, the
+  // relative font path). Removing the `deck transport` fence passes. Removing the `deck
+  // lockup` fence passes. A deck with its entire chrome CSS deleted still renders slides,
+  // loads a face and scales, because none of those three things depends on the chrome at all.
+  // Transport and lockup are real coverage elsewhere — `fences` (below) proves each is present,
+  // `design:check` proves its bytes match the tag — but neither is a render, and this isn't
+  // either one of those: this is a file:// smoke test for the deck's own runtime, not a chrome
+  // check wearing a bigger name than it earns.
   async opensFromFile(page, spec) {
     const file = "file://" + path.join(SITE_ROOT, spec.path.replace(/^\/|\/$/g, ""), "index.html");
     const errors = [];

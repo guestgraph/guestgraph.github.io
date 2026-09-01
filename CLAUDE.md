@@ -110,6 +110,13 @@ two-file obligation, which is the point.
   site's lockup, which is the whole point of the row. *Talks* stays `--dim`: it is the one nav
   item among two brands, and that contrast is what makes the row legible at 15px.
 
+  That is the fact `.name .nlink{color:var(--dim)}` used to carry as its own inline comment,
+  before the deck's lockup became a fence the `@robertblust/design` package owns end to end:
+  `.nlink` is *Talks*, dimmed like any other nav item, and `Robert Blust` is deliberately not
+  styled through it — it takes the wordmark colours instead because it is the other brand in
+  the row, not a name mentioned in passing. The fence body is shared now and cannot carry a
+  guestgraph-only sentence, so this paragraph is where that fact lives instead.
+
   The plate is inlined rather than linked, like every mark on these sites — a deck opens from
   `file://`, where a linked asset is a broken box. Its face is `Plex Mono`, the name this deck
   actually `@font-face`s; naming the upstream `IBM Plex Mono` would render it in whatever mono
