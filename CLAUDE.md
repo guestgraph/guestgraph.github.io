@@ -131,15 +131,16 @@ two-file obligation, which is the point.
   there the brand and the person are the same name, so merging them is the only way not to
   print it twice.
 
-  It is fenced by a **`deck footer · vN` marker** and `footerVersion` asserts it — the same
-  habit-with-a-tripwire the token block gets, for the same reason: no suite can see a sibling.
-  What the marker covers is a contract, not a look — where each of the three links goes, and
-  that none opens in a new tab. Change any of that and bump `vN` in all three repositories,
-  then run all three suites. A suite fails both on a version it does not expect and on no
-  marker at all, so removing the fence is not a way around it.
+  It used to be fenced by its own `deck footer · vN` marker with a `footerVersion` check —
+  the same habit-with-a-tripwire the token block gets, for the same reason: no suite can see
+  a sibling. Both are gone now, not retargeted: retired in a previous plan and replaced by
+  the deck's chrome fences — `deck transport`, `deck lockup`, `deck fit` and `deck runtime` —
+  generated like the tokens. What the old marker covered is still a contract, not a look —
+  where each of the three links goes, and that none opens in a new tab — and `design:check`
+  is what enforces it now, comparing each fence's bytes against the pinned release.
 
-  `verify/design.mjs` is byte-identical across the three and holds both `TOKEN_VERSION` and
-  `FOOTER_VERSION`. Never edit it in one repo alone.
+  `verify/design.mjs` is byte-identical across the three and holds `TOKEN_VERSION`. Never
+  edit it in one repo alone.
 - **The `blust.ch` credit in the page footer is a lockup, not a footer link.** It leaves the
   footer's mono for the same treatment it has on every deck — the `rb` plate inlined, wordmark
   with the second word in `--c-mid`. The rest of the row stays mono because the rest of the row
@@ -308,11 +309,12 @@ you.** This section used to say "edit the block, run `npm run verify`, bump `vN`
 repositories". That was true while the blocks were maintained by hand. It is now the one
 instruction in this file that silently does nothing.
 
-Five blocks are generated here, and the fence markers name them: `design tokens`,
-`header contract`, `language`, `prose reset` and `prose footer`. Everything between and including a
-pair of markers belongs to the package. A sixth, `stage contract`, exists in the package and this
-site does not take it — it has no graph to draw yet. It arrives the day it grows one, which is the
-point of the stage having a source by then.
+Nine blocks are generated here, and the fence markers name them: `design tokens`,
+`header contract`, `language`, `prose reset`, `prose footer`, `deck transport`, `deck lockup`,
+`deck fit` and `deck runtime`. Everything between and including a pair of markers belongs to
+the package. A tenth, `stage contract`, exists in the package and this site does not take it —
+it has no graph to draw yet. It arrives the day it grows one, which is the point of the stage
+having a source by then.
 
 ```bash
 npm run design         # rewrite every fenced block from the pinned release
@@ -338,9 +340,9 @@ remembering to look. That is the guarantee the old habit-with-a-tripwire never w
 with a one-line diff. Either one means this site has decided to own that block and diverge. That is
 a real choice; make it deliberately, in a commit that says so.
 
-**Not everything is generated.** The deck footer is still a hand-maintained copy carrying its own
-version marker — see above, where the old discipline applies in full — and the `<head>` contract is
-a copy with no fence at all.
+**Not everything is generated.** The `<head>` contract is a copy with no fence at all. The deck
+footer used to belong here too, hand-maintained — see above, where its old version marker was
+replaced rather than kept.
 
 This repository had no test suite at all before. `npm install && npm run verify` now runs
 the same assertions the other two do, against a served copy on `localhost:8000`.
@@ -536,8 +538,8 @@ per page, German swapped in at runtime from `data-de`. It becomes correct the da
 ship, and not before.
 
 **The head contract is a third copy**, shared with `blust.ch` and `companygraph.io` and
-carrying no `· vN` tripwire, unlike the token block and the deck footer. Port changes by hand
-to all three.
+carrying no `· vN` tripwire, unlike the token block and the deck's other generated fences.
+Port changes by hand to all three.
 
 **`robots.txt` is checked too**: every `Sitemap:` line it names is fetched. It named three,
 and `sitemap-site.xml` and `talks/sitemap.xml` had been 404 in production since the talks
