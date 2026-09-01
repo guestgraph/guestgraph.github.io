@@ -82,7 +82,7 @@ const PAGES = [
     sameTab: ["intro/", "./", "../billing/", "../privacy/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, tokenVersion: true, fences: ["design tokens", "header contract", "language", "prose reset", "prose footer"],
     card: true, cardBase: SITE, internalLinks: true },
-  { path: "/talks/intro/", carriesLang: true, seo: true, noNewTab: true, footerVersion: true, title: /GuestGraph/, lang: "en", sourceLang: "en", wayOut: "../",
+  { path: "/talks/intro/", storageKeys: true, opensFromFile: true, carriesLang: true, seo: true, noNewTab: true, footerVersion: true, title: /GuestGraph/, lang: "en", sourceLang: "en", wayOut: "../",
     // The footer's other two destinations. `landing` covers the lockup, which is relative and
     // therefore invisible to `links`; blust.ch is absolute, so `links` catches a typo in it and
     // `newTab` holds it to the rule the pages already follow — a talk the presenter navigates

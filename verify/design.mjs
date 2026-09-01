@@ -31,6 +31,12 @@
 import { FENCES } from "@robertblust/design/fences";
 export const TOKEN_VERSION = FENCES["design tokens"].version;
 
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+// design.mjs lives in <site>/verify/, so the site root is one level up. Derived rather than
+// configured: a hardcoded path would differ per repository in a file that must not.
+const SITE_ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
+
 // The deck footer is copied across the three sites for the same reason the token block is:
 // a deck opens from file://, so there is nothing to import. What it holds is a contract, not
 // just a look — the lockup goes to the landing page, the person to blust.ch, the third link
@@ -322,6 +328,40 @@ export const DESIGN_CHECKS = {
     return missing.length
       ? `carries no ${missing.map((m) => `\`${m}\``).join(", ")} fence`
       : null;
+  },
+
+  // The one guarantee a served page cannot test. A deck must present with no server: opened
+  // from the filesystem, with the repository intact, it renders its first slide, loads its
+  // faces from the root `fonts/` by relative path, and its runtime runs. Relative paths
+  // upward are allowed and already used; what is forbidden is needing a server.
+  //
+  // Armed on decks only. `spec.opensFromFile` names nothing — the page's own path is enough,
+  // because the check re-opens the same file the rest of the suite reached over http.
+  async opensFromFile(page, spec) {
+    const file = "file://" + path.join(SITE_ROOT, spec.path.replace(/^\/|\/$/g, ""), "index.html");
+    const errors = [];
+    // page.context() here is the implicit single-page context browser.newPage() creates,
+    // and Playwright refuses a second page inside it ("Please use browser.newContext()").
+    // Going through the browser instead gives the probe its own implicit context, the same
+    // shape the outer page already has.
+    const probe = await page.context().browser().newPage();
+    probe.on("pageerror", (e) => errors.push(e.message));
+    try {
+      await probe.goto(file);
+      await probe.evaluate(() => document.fonts.ready);
+      const seen = await probe.evaluate(() => ({
+        slides: document.querySelectorAll(".slide").length,
+        firstVisible: !!document.querySelector(".slide"),
+        faceLoaded: [...document.fonts].some((f) => f.status === "loaded"),
+        scaled: getComputedStyle(document.querySelector(".deck") || document.body).transform,
+      }));
+      if (errors.length) return `opened from file:// with JS errors: ${errors.join(" | ")}`;
+      if (!seen.slides) return "opened from file:// but rendered no slides";
+      if (!seen.faceLoaded) return "opened from file:// but loaded no webfont — check the relative fonts/ path";
+      return null;
+    } finally {
+      await probe.close();
+    }
   },
 
   async contrast(page) {
