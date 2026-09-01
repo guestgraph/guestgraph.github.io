@@ -5,8 +5,6 @@ import { DESIGN_CHECKS } from "@robertblust/design/verify/design";
 import { httpStatus } from "@robertblust/design/verify/http";
 import { STAGE_CHECKS } from "@robertblust/design/verify/stage";
 import { pageChecks } from "@robertblust/design/verify/pages";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 
 const BASE = process.env.BASE || "http://localhost:8000";
 // The public origin, in one place. It was hardcoded in `card`, in the sitemap's expected
@@ -87,40 +85,6 @@ const CHECKS = {
   ...DESIGN_CHECKS,
   ...STAGE_CHECKS,
   ...pageChecks({ SITE, BASE }),
-  // Overrides the package's opensFromFile. That check derives its file:// root from its own
-  // import.meta.url, which was correct while design.mjs lived in this site's own verify/
-  // folder — one level up from the file was the site root. It is wrong now that the check
-  // runs from inside @robertblust/design's copy in node_modules: SITE_ROOT there resolves to
-  // the package's own directory, and the deck 404s at file://…/node_modules/@robertblust
-  // /design/talks/…/index.html. check.mjs itself still lives in <site>/verify/, so the same
-  // one-level-up computation, taken from here instead, gives the right root again. This is a
-  // site's decision to diverge from a package default, the same shape as the escape hatches
-  // documented for a fence or a design.config.json group — not a convenience, a documented
-  // workaround for a defect in @robertblust/design v0.9.0 that a future release should fix.
-  async opensFromFile(page, spec) {
-    const SITE_ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-    const file = "file://" + path.join(SITE_ROOT, spec.path.replace(/^\/|\/$/g, ""), "index.html");
-    const errors = [];
-    const probe = await page.context().browser().newPage();
-    probe.on("pageerror", (e) => errors.push(e.message));
-    try {
-      await probe.goto(file);
-      await probe.evaluate(() => document.fonts.ready);
-      const seen = await probe.evaluate(() => ({
-        slides: document.querySelectorAll(".slide").length,
-        faceLoaded: [...document.fonts].some((f) => f.status === "loaded"),
-        scaled: getComputedStyle(document.querySelector(".deck") || document.body).transform,
-      }));
-      if (errors.length) return `opened from file:// with JS errors: ${errors.join(" | ")}`;
-      if (!seen.slides) return "opened from file:// but rendered no slides";
-      if (!seen.faceLoaded) return "opened from file:// but loaded no webfont — check the relative fonts/ path";
-      if (seen.scaled === "none")
-        return "opened from file:// but the canvas carries no transform — fit() did not run";
-      return null;
-    } finally {
-      await probe.close();
-    }
-  },
 };
 
 const browser = await chromium.launch();
