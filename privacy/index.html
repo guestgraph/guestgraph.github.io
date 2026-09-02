@@ -86,6 +86,34 @@
 }
 </script>
 
+<script>
+  /* ─── theme boot · v2 · page ────────────────────────────────────
+     Set the theme before anything paints. Generated from @robertblust/design —
+     editing it here does nothing, because the next `npm run design` overwrites it.
+
+     This is the only script on these pages that runs in <head>, and it has to: every other
+     script sits at the end of the body, which is after first paint. Language arriving late
+     costs a flash of English; a palette arriving late repaints the whole page in the wrong
+     one, on every navigation.
+
+     It duplicates the storage key and the URL pattern that `theme` also carries. That is
+     deliberate — nothing is in scope up here, and the block must stand alone. Both blocks are
+     generated from the same package, so the duplicate cannot drift.
+
+     Dark is the default and `prefers-color-scheme` is never read: dark is the design, and
+     light is something a visitor asks for. A visitor whose system is set to light still
+     arrives on dark until they say otherwise.
+  */
+  (function(){
+    try {
+      var m = /[?&]theme=(light|dark)(&|$)/.exec(location.search);
+      var t = m ? m[1] : localStorage.getItem("rb-theme");
+      if (t === "light") document.documentElement.setAttribute("data-theme", "light");
+    } catch (e) {}
+  })();
+  /* ─── end theme boot ─────────────────────────────────────────────────── */
+
+</script>
 <style>
 /* Self-hosted, same origin — which is the subject of this page as well as a rule of it.
    Relative, because a root-absolute path breaks under file://. */
@@ -94,7 +122,7 @@
 @font-face{font-family:"Plex Mono";src:url(../fonts/PlexMono-600.woff2) format("woff2");font-weight:600;font-display:swap}
 @font-face{font-family:"Bricolage Grotesque";src:url(../fonts/Bricolage-var.woff2) format("woff2-variations"),url(../fonts/Bricolage-var.woff2) format("woff2");font-weight:200 800;font-display:swap}
 
-  /* ─── design tokens · v4 · page ───────────────────────────────
+  /* ─── design tokens · v9 · page ───────────────────────────────
      These sites share no stylesheet by design — a deck has to open from
      file:// — so this block is a copy, generated from @robertblust/design.
      Editing it here has no effect: the next `npm run design` overwrites it
@@ -117,12 +145,79 @@
      hue would have made colour mean two things at once. If it is ever wanted,
      this is the one line that changes.
   */
+  /* The same eleven names, re-picked. The ramp's axis flips: on dark, brightness is
+     confidence; on light, depth is — the candidate pales, the resolved thing deepens.
+     Reusing the dark stops here was measured and refused: --c-mid paints every link and
+     falls to 2.45:1 on this ground, --c-firm to 1.49:1. These clear AA on every text stop
+     (ink 16.86, dim 6.04, mid 5.09, firm 10.28, flag 5.61).
+
+     --c-weak is 2.37:1 and that is deliberate, exactly as its 2.64:1 on dark is: its job is
+     "a candidate, considered but not accepted", and darkening it until it clears the 3:1 UI
+     threshold stops it reading as tentative. It must never carry text, a border or an
+     outline on its own, in either theme.
+
+     --press carries text now, not just a hover wash: `.seg button[aria-pressed="true"]`
+     paints --c-mid on it, and the pressed segment is how a visitor tells which language and
+     which theme is active. The palette had only ever been checked token-against-page-
+     background; nothing measured a text-bearing surface against the surface it actually
+     sits on. #E2E8F2 measured 4.35:1 against --c-mid here — under the 4.5 AA floor for the
+     12.16px/600 label — so it moves to #E7ECF4, which clears at 4.52:1. Counter-intuitively
+     lighter, not darker: darkening it moves it closer to --c-mid and away from AA, since
+     --c-mid is the darker of the two. Dark's pair is already 6.16:1 and is untouched. */
+  :root[data-theme="light"]{
+    --ground:#FAF9F5; --raise:#F2F0EA; --rule:#DFDCD3;
+    --ink:#16181D;    --dim:#5F6058;
+    --c-weak:#8FA6C2; --c-mid:#3A6DA6; --c-firm:#1C3E68; --c-flag:#8A5A12;
+    --c-path:#1C3E68; --press:#E7ECF4;
+
+    /* The deck's own chrome. A transport is a physical object in this design — the source
+       calls --slab "the slab it is milled from" and --lcd "the recessed window the track
+       number sits in" — so the light theme makes the slab pale milled metal and leaves the
+       readout dark. A real machine with an aluminium body still has a dark display, and that
+       is the whole reason --lcd appears in both halves with the same value: it is a decision,
+       not an omission, and the next person to "complete" this palette should read this line
+       before adding a light one. */
+    --deck-accent:#2F5F96; --deck-paper:#1A1C21; --deck-mark:#3A6DA6;
+    --deck-well:#EDEAE2;   --deck-track:#D8D4CA; --deck-hover:#E4E0D6;
+    --deck-divider:#D2CEC3; --deck-edge:#DFDCD3; --deck-ring:#B9C4D6;
+    --deck-quiet:#5F6058;  --deck-warm:#6B6455;
+    --deck-lift:rgba(0,0,0,.04); --deck-drop:rgba(0,0,0,.10);
+    --deck-inset:rgba(0,0,0,.18); --deck-glow:rgba(58,109,166,.10);
+    --lcd:#0a0b0e; --lcd-ink:#7FA3D8; --lcd-faint:#7C8496; --lcd-flag:#D9A44F;
+    --lcd-track:#1e2029; --lcd-inset:rgba(0,0,0,.85); --lcd-glow:rgba(122,160,255,.1);
+    /* --slab was left behind when --lcd moved in: a deck page declared it on its own,
+       one value, no light variant, which put a dark bar back on a pale page. Pale milled
+       metal (1.14:1 against --ground, both a hair off white) with the LCD still a 16.37:1
+       recess inside it — the aluminium body, lit. --warn follows for the same reason: it
+       is deck-only chrome that must not be left for a page to restate. */
+    --slab:#EDEAE2; --warn:#BC3924;
+  }
   :root{
     --ground:#0C0E13; --raise:#171A21; --rule:#232833;
     --sky:radial-gradient(120% 60% at 50% -10%, var(--raise) 0%, var(--ground) 60%);
     --ink:#EFEDE8;    --dim:#8A8B86;
     --c-weak:#3E5878; --c-mid:#7FA3D8; --c-firm:#B8D0FF; --c-flag:#D9A44F;
-    --c-path:#B8D0FF;
+    --c-path:#B8D0FF; --press:#1b2231;
+
+    /* The deck's own chrome. A transport is a physical object in this design — the source
+       calls --slab "the slab it is milled from" and --lcd "the recessed window the track
+       number sits in" — so the light theme makes the slab pale milled metal and leaves the
+       readout dark. A real machine with an aluminium body still has a dark display, and that
+       is the whole reason --lcd appears in both halves with the same value: it is a decision,
+       not an omission, and the next person to "complete" this palette should read this line
+       before adding a light one. */
+    --deck-accent:#9db0ff; --deck-paper:#f1ede4; --deck-mark:#7aa0ff;
+    --deck-well:#17181c;   --deck-track:#1e2029; --deck-hover:#20242e;
+    --deck-divider:#333743; --deck-edge:#33353d; --deck-ring:#39435c;
+    --deck-quiet:#9a9dab;  --deck-warm:#b7b0a2;
+    --deck-lift:rgba(255,255,255,.055); --deck-drop:rgba(0,0,0,.5);
+    --deck-inset:rgba(0,0,0,.85); --deck-glow:rgba(122,160,255,.1);
+    --lcd:#0a0b0e; --lcd-ink:#7FA3D8; --lcd-faint:#7C8496; --lcd-flag:#D9A44F;
+    --lcd-track:#1e2029; --lcd-inset:rgba(0,0,0,.85); --lcd-glow:rgba(122,160,255,.1);
+    /* Unchanged from the value a deck page used to declare on its own: the readout stays
+       dark, and so does the slab it sits in. 1.11:1 against --lcd is not a mistake here —
+       both are near-black and the recess reads through the box-shadow, not raw contrast. */
+    --slab:#16181d; --warn:#e0705e;
   }
   /* ─── end design tokens ─────────────────────────────────────────────── */
   /* ─── prose reset · v1 · shared ────────────────────────────────────
@@ -167,7 +262,7 @@
   .brand svg{width:28px; height:28px; color:var(--c-mid); flex:0 0 auto}
   .brand b{font-weight:600; font-size:1.06rem; letter-spacing:-.01em}
   .brand b span{color:var(--c-mid)}
-  /* ─── header contract · v3 · shared ──────────────────────────────────
+  /* ─── header contract · v4 · shared ──────────────────────────────────
      One row, three sites, and no stylesheet between them — a deck opens from file://, so
      this is a copy, generated from @robertblust/design. Editing it here has no effect — the
      next `npm run design` overwrites it. Change it in the package.
@@ -237,8 +332,14 @@
               border:0; cursor:pointer; padding:.26rem .5rem; color:var(--dim);
               transition:color .15s ease, background-color .15s ease}
   .seg button:hover{color:var(--ink)}
-  .seg button[aria-pressed="true"]{color:var(--c-mid); background:#1b2231; font-weight:600}
+  .seg button[aria-pressed="true"]{color:var(--c-mid); background:var(--press); font-weight:600}
   .seg button:focus-visible{outline:2px solid var(--c-mid); outline-offset:-2px}
+  /* The theme control is a .seg like the language one, so it inherits the border, the radius
+     and the pressed treatment. Only the icons differ: 14px square, drawn with currentColor so
+     the pressed state colours them without a second rule. */
+  .seg.theme button{display:grid; place-items:center; padding:.26rem .48rem}
+  .seg.theme svg{width:14px; height:14px; display:block; fill:none; stroke:currentColor;
+                 stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
   /* The row narrows before it collapses. */
   @media (max-width:900px){
     nav{gap:1.4rem}
@@ -265,6 +366,7 @@
     .navlinks a{padding:.8rem 0}
   }
   /* ─── end header contract ───────────────────────────────────────────── */
+  .switchers{display:flex; align-items:center; gap:.6rem}
   /* The hover underline hangs below the text, so the box is taller under the text than over
      it. Mirror the space above, and the box is symmetric about its own text. */
 
@@ -365,9 +467,9 @@
         <svg viewBox="0 0 32 32" aria-hidden="true">
           <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
             <path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/>
-            <circle cx="6" cy="7.2" r="2.6" fill="#0C0E13"/>
-            <circle cx="6" cy="16" r="2.6" fill="#0C0E13"/>
-            <circle cx="6" cy="24.8" r="2.6" fill="#0C0E13"/>
+            <circle cx="6" cy="7.2" r="2.6" fill="var(--ground)"/>
+            <circle cx="6" cy="16" r="2.6" fill="var(--ground)"/>
+            <circle cx="6" cy="24.8" r="2.6" fill="var(--ground)"/>
           </g>
           <circle cx="24" cy="16" r="5.4" fill="currentColor"/>
         </svg>
@@ -383,7 +485,7 @@
           <svg class="ibars" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
           <svg class="ix" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
-        <div class="seg" id="langind" role="group" aria-label="Sprache wechseln — switch language"><button type="button" id="lde" aria-pressed="false">DE</button><button type="button" id="len" aria-pressed="true">EN</button></div>
+        <div class="switchers" id="langind"><div class="seg" role="group" aria-label="Sprache wechseln — switch language"><button type="button" id="lde" aria-pressed="false">DE</button><button type="button" id="len" aria-pressed="true">EN</button></div><div class="seg theme" id="thmind" role="group" aria-label="Erscheinungsbild wechseln — switch appearance"><button type="button" id="thLight" aria-pressed="false" aria-label="Light"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button><button type="button" id="thDark" aria-pressed="true" aria-label="Dark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button></div></div>
       </nav>
     </div>
   </header>
@@ -403,7 +505,8 @@
       <!-- no data-de: this is the value itself, and it says the same thing in either language.
            Both cases are shown because pinning one would be wrong the moment you switch. -->
       <p class="unit mono">localStorage: gg-lang = "de" | "en"</p>
-      <p class="lede" data-de="Das ist alles, was gespeichert wird: Ihre Sprachwahl, zwei Buchstaben, damit die nächste Seite sie kennt. Sie erreicht keinen Server und identifiziert niemanden.">That is everything that gets stored: your choice of language, two letters, so the next page knows it. It reaches no server and identifies nobody.</p>
+      <p class="unit mono">localStorage: rb-theme = "light" | "dark"</p>
+      <p class="lede" data-de="Das ist alles, was gespeichert wird: Ihre Sprachwahl, zwei Buchstaben, und Ihre Darstellungswahl, ein Wort, damit die nächste Seite sie kennt. Sie erreichen keinen Server und identifizieren niemanden.">That is everything that gets stored: your choice of language, two letters, and your choice of appearance, one word, so the next page knows them. They reach no server and identify nobody.</p>
       <div class="cols">
         <div class="card never wide">
           <h3 data-de="Gar nicht erst verwendet">Not used at all</h3>
@@ -509,6 +612,77 @@
   var urlLang = langFromUrl();
   if (urlLang) langRemember(urlLang);
   var lang = urlLang || (langStored() === "de" ? "de" : "en");
+
+  /* ─── theme · v3 · page ───────────────────────────────────────
+     One theme across three domains, and where it is remembered. Generated from
+     @robertblust/design — editing it here does nothing.
+
+     This block has a contract with the page that `design:check` cannot see, because the check
+     only compares bytes between the markers. The page must declare a `theme` variable in scope
+     before this fence, and must carry two controls, `#thLight` and `#thDark`. Rename either and
+     the fence still matches byte for byte — every check stays green — while the control stops
+     working. `mobileNav`'s presence assertion is what actually holds this contract, gated on
+     the page's own `noFlash` flag: a page that declares it and is missing either control fails
+     there.
+  */
+  var THEME_KEY = "rb-theme";
+  function themeStored(){ try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } }
+  function themeRemember(v){ try { localStorage.setItem(THEME_KEY, v); } catch (e) {} }
+
+  /* Each origin keeps its own localStorage, so a visitor reading in light who followed a link
+     to a sibling site would arrive in dark — three copies of one preference, none of which can
+     see the others. The theme rides along instead, on the same terms as the language: the param
+     is added at click time, never at load, so no link in the served markup carries it and
+     nothing crawlable or bookmarkable does either. */
+  var THEME_FAMILY = /^(www\.)?(blust\.ch|companygraph\.io|guestgraph\.io)$/;
+  function themeFromUrl(){
+    var m = /[?&]theme=(light|dark)(&|$)/.exec(location.search);
+    if (!m) return null;
+    try {
+      var q = location.search.replace(/([?&])theme=(light|dark)(&|$)/, "$1").replace(/[?&]$/, "");
+      history.replaceState(null, "", location.pathname + q + location.hash);
+    } catch (e) {}
+    return m[1];
+  }
+  // Language gets away with always decorating a link because a visitor's language is always an
+  // explicit two-way choice. Theme is not: it has a default (dark), and a page that carries only
+  // the default is indistinguishable from a page whose visitor chose it. Carrying `theme` on
+  // every link exported that default as though it were a choice — a visitor who set light on one
+  // site and later opened a sibling fresh (dark, correct, untouched) would have that default
+  // carried back onto a link to the first site and silently overwrite their real, stored
+  // preference. Reading `themeStored()` rather than the in-memory `theme` variable is what keeps
+  // this to "only when the visitor actually chose": nothing stored means nothing carried, and no
+  // link is decorated.
+  function carryTheme(e){
+    var stored = themeStored();
+    if (!stored) return;
+    var a = e.target && e.target.closest && e.target.closest("a[href]");
+    if (!a) return;
+    var u; try { u = new URL(a.href, location.href); } catch (err) { return; }
+    if (u.origin === location.origin || !THEME_FAMILY.test(u.hostname)) return;
+    u.searchParams.set("theme", stored);
+    a.href = u.toString();
+  }
+  // mousedown as well as click, so a middle-click or cmd-click into a new tab carries it too.
+  // This runs alongside the language block's identical pair; the second listener reads the href
+  // the first rewrote, so the two compose into ?lang=de&theme=light rather than racing.
+  document.addEventListener("mousedown", carryTheme, true);
+  document.addEventListener("click", carryTheme, true);
+
+  function applyTheme(){
+    if (theme === "light") document.documentElement.setAttribute("data-theme", "light");
+    else document.documentElement.removeAttribute("data-theme");
+    var l = document.getElementById("thLight"), d = document.getElementById("thDark");
+    if (l) l.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
+    if (d) d.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+  }
+  function setTheme(v){ theme = v; themeRemember(v); applyTheme(); }
+  /* ─── end theme ──────────────────────────────────────────────────────── */
+
+
+  var urlTheme = themeFromUrl();
+  if (urlTheme) themeRemember(urlTheme);
+  var theme = urlTheme || (themeStored() === "light" ? "light" : "dark");
   var i18n = Array.prototype.slice.call(document.querySelectorAll("[data-de]"));
   i18n.forEach(function(el){ el.setAttribute("data-en", el.innerHTML); });
 
@@ -551,9 +725,12 @@
 
   document.getElementById("lde").addEventListener("click", function(){ if (lang !== "de") toggle(); });
   document.getElementById("len").addEventListener("click", function(){ if (lang !== "en") toggle(); });
+  document.getElementById("thLight").addEventListener("click", function(){ setTheme("light"); });
+  document.getElementById("thDark").addEventListener("click", function(){ setTheme("dark"); });
   document.addEventListener("keydown", function(e){ if(e.key === "l" || e.key === "L") toggle(); });
 
   applyLang();
+  applyTheme();
 })();
 </script>
 </body>

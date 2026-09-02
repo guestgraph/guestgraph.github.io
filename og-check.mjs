@@ -9,7 +9,10 @@
 // It over-reports and never under-reports, deliberately. Editing a comment in a page marks its
 // card stale even though the render would be identical. Clearing that is `npm run og` and a
 // commit — cheap, and the opposite error is a card nobody notices for days.
-import { cards, state } from "./og-recipe.mjs";
+import fs from "node:fs";
+import path from "node:path";
+import zlib from "node:zlib";
+import { cards, state, REPO_ROOT } from "./og-recipe.mjs";
 
 const WHY = {
   unstamped: "never stamped",
@@ -30,3 +33,111 @@ if (stale.length) {
 }
 
 console.log("\n  every card matches the page it renders");
+
+// The recipe hash above proves a card was rendered from the current page; it says nothing
+// about what the page rendered *as*. Spec decision 5 pins every card to dark deliberately —
+// see the comment in export-og.mjs — and nothing before this checked that the pin actually
+// held. export-og.mjs once cleared "rb-theme" instead of setting it, which inherits whatever
+// the boot script's default happens to be rather than pinning anything; every card still
+// rendered dark only because the default was dark, and og:check's byte-hash comparison has no
+// way to see a colour. This reads the committed PNGs directly, the same way verify/pages.mjs's
+// `card` check reads a PNG's IHDR directly, so it stays dependency-free.
+//
+// A minimal PNG decoder: signature + IHDR for the shape, IDAT inflated with node's built-in
+// zlib, then the standard five-filter unfilter. Chromium's screenshot() writes 8-bit,
+// non-interlaced RGB or RGBA, which is what this supports — anything else is reported as an
+// error rather than silently misread.
+function decodePNG(buf) {
+  if (buf.readUInt32BE(0) !== 0x89504e47) throw new Error("not a PNG");
+  let width, height, bitDepth, colorType;
+  const idat = [];
+  let offset = 8;
+  while (offset < buf.length) {
+    const len = buf.readUInt32BE(offset);
+    const type = buf.toString("ascii", offset + 4, offset + 8);
+    const data = buf.subarray(offset + 8, offset + 8 + len);
+    if (type === "IHDR") {
+      width = data.readUInt32BE(0);
+      height = data.readUInt32BE(4);
+      bitDepth = data.readUInt8(8);
+      colorType = data.readUInt8(9);
+      if (data.readUInt8(12) !== 0) throw new Error("interlaced PNG not supported");
+    } else if (type === "IDAT") {
+      idat.push(data);
+    } else if (type === "IEND") {
+      break;
+    }
+    offset += 8 + len + 4;
+  }
+  if (bitDepth !== 8) throw new Error(`bit depth ${bitDepth} not supported`);
+  const channels = { 0: 1, 2: 3, 4: 2, 6: 4 }[colorType];
+  if (!channels) throw new Error(`color type ${colorType} not supported`);
+  const raw = zlib.inflateSync(Buffer.concat(idat));
+  const stride = width * channels;
+  const pixels = Buffer.alloc(stride * height);
+  let pos = 0;
+  for (let y = 0; y < height; y++) {
+    const filter = raw[pos]; pos += 1;
+    const rowStart = y * stride;
+    for (let x = 0; x < stride; x++) {
+      const rawByte = raw[pos + x];
+      const a = x >= channels ? pixels[rowStart + x - channels] : 0;
+      const b = y > 0 ? pixels[rowStart - stride + x] : 0;
+      const c = x >= channels && y > 0 ? pixels[rowStart - stride + x - channels] : 0;
+      let value;
+      switch (filter) {
+        case 0: value = rawByte; break;
+        case 1: value = rawByte + a; break;
+        case 2: value = rawByte + b; break;
+        case 3: value = rawByte + ((a + b) >> 1); break;
+        case 4: {
+          const p = a + b - c;
+          const pa = Math.abs(p - a), pb = Math.abs(p - b), pc = Math.abs(p - c);
+          const pr = pa <= pb && pa <= pc ? a : pb <= pc ? b : c;
+          value = rawByte + pr;
+          break;
+        }
+        default: throw new Error(`unknown filter type ${filter}`);
+      }
+      pixels[rowStart + x] = value & 0xff;
+    }
+    pos += stride;
+  }
+  return { width, height, at: (x, y) => {
+    const i = y * stride + x * channels;
+    return [pixels[i], pixels[i + 1], pixels[i + 2]];
+  } };
+}
+
+// WCAG relative luminance, on 0–255 channels rather than the 0–1 ratio used elsewhere in this
+// family — the check only needs light-vs-dark, not an accurate contrast ratio, so the simpler
+// unnormalised form is enough.
+const luminance = ([r, g, b]) => (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+// Dark ground (#0C0E13) is ~0.05; light ground (#FAF9F5) is ~0.98 — the midpoint is nowhere
+// near either, so a threshold here cannot mistake one for the other.
+const LIGHT_THRESHOLD = 0.5;
+const INSET = 4; // pixels in from each edge, clear of anti-aliasing at the card's border
+
+const lightCards = [];
+for (const c of cards) {
+  const file = path.join(REPO_ROOT, c.dir, "og.png");
+  if (!fs.existsSync(file)) continue; // already reported unstamped/stale above
+  const png = decodePNG(fs.readFileSync(file));
+  const corners = [
+    [INSET, INSET], [png.width - 1 - INSET, INSET],
+    [INSET, png.height - 1 - INSET], [png.width - 1 - INSET, png.height - 1 - INSET],
+  ];
+  const avg = corners.reduce((sum, [x, y]) => sum + luminance(png.at(x, y)), 0) / corners.length;
+  const light = avg > LIGHT_THRESHOLD;
+  console.log((light ? "  ✗ " : "  ✓ ") + path.join(c.dir, "og.png") +
+    `  background luminance ${avg.toFixed(2)}`);
+  if (light) lightCards.push(path.join(c.dir, "og.png"));
+}
+
+if (lightCards.length) {
+  console.log(`\n  ${lightCards.length} card(s) render with a light background, not the ` +
+    "pinned dark theme: " + lightCards.join(", "));
+  process.exit(1);
+}
+
+console.log("\n  every card renders dark");

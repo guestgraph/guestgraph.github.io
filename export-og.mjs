@@ -30,6 +30,12 @@ for (const c of cards) {
     viewport: { width: c.width, height: c.renderHeight },
     deviceScaleFactor: c.deviceScaleFactor,
   });
+  // Spec decision 5: cards are always dark, and pinned rather than inherited — a later change
+  // to the default must not silently restyle twenty committed PNGs. `removeItem` clears the
+  // key, which *inherits* whatever the boot script's default happens to be rather than pinning
+  // anything — it only ever looked pinned because the default was already dark. `setItem` is
+  // what actually pins it.
+  await page.addInitScript(() => { try { localStorage.setItem("rb-theme", "dark"); } catch (e) {} });
   await page.goto(pathToFileURL(path.join(REPO_ROOT, c.dir, "index.html")).href, { waitUntil: "networkidle" });
   // a card rendered in the fallback face is exactly the silent failure the design notes
   // describe: nothing errors, and the type is simply not the type the page declares.
