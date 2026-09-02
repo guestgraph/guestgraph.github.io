@@ -532,6 +532,14 @@ one line would otherwise turn the contract off in silence. The suite also assert
 is on `BASE` is actually this site: a sibling repository left serving on `:8000` produced a full
 run of failures belonging to a site nobody was testing.
 
+**`/favicon.svg` gets its own check, by fetch, not by rendering a page.** It's the one place the
+mark lives outside a page, so no DOM check reaches it — it can't `@font-face` a face and
+inherits none, so any face it names has to already be a platform face in `SYSTEM_FACES` or a
+generic keyword. This mark has no text in it at all, so right now it names no `font-family` and
+the check passes for that reason — HTTP 200 and nothing to reject, not a face checked against
+the list and cleared. Put lettering in the mark later and this starts doing its real job; until
+then a green result here is the weaker of the two things it can mean.
+
 **`og:locale` is Open Graph only. No search engine reads it.** It is `en_US`, with
 `og:locale:alternate` `de_CH`, and the prose is American to match. Google reads `<html lang>`,
 which `sourceLang` fetches cold on every page — `lang` alone cannot, because it reads
