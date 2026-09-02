@@ -72,6 +72,7 @@ const PAGES = [
     // `newTab` holds it to the rule the pages already follow — a talk the presenter navigates
     // away from mid-sentence is gone.
     landing: "../../",
+    transportFits: [320, 350, 360, 390, 393, 414, 430],
     links: ["https://blust.ch/"], sameTab: ["https://blust.ch/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true,
     tokens: true, sky: true, monoScope: true, contrast: true, noFlash: "rb-theme", tokenVersion: true,
