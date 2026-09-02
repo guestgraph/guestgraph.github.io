@@ -75,7 +75,7 @@ const PAGES = [
     transportFits: [320, 350, 360, 390, 393, 414, 430],
     links: ["https://blust.ch/"], sameTab: ["https://blust.ch/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true,
-    tokens: true, sky: true, monoScope: true, contrast: true, noFlash: "rb-theme", tokenVersion: true,
+    tokens: true, sky: true, monoScope: true, contrast: true, noFlash: "rb-theme", tokenVersion: true, readoutInvariant: true,
     // fences is presence-only and order-blind — deck runtime landing last here while
     // fenceOrder places it third, two lines down, is not the pair disagreeing.
     fences: ["design tokens", "language", "deck transport", "deck lockup", "deck fit", "deck runtime"],

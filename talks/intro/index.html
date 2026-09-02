@@ -136,7 +136,7 @@
 @font-face{font-family:"Plex Mono";src:url(../../fonts/PlexMono-400.woff2) format("woff2");font-weight:400;font-display:swap}
 @font-face{font-family:"Plex Mono";src:url(../../fonts/PlexMono-600.woff2) format("woff2");font-weight:600;font-display:swap}
 
-  /* ─── design tokens · v9 · deck ───────────────────────────────
+  /* ─── design tokens · v10 · deck ───────────────────────────────
      These sites share no stylesheet by design — a deck has to open from
      file:// — so this block is a copy, generated from @robertblust/design.
      Editing it here has no effect: the next `npm run design` overwrites it
@@ -197,7 +197,7 @@
     --deck-quiet:#5F6058;  --deck-warm:#6B6455;
     --deck-lift:rgba(0,0,0,.04); --deck-drop:rgba(0,0,0,.10);
     --deck-inset:rgba(0,0,0,.18); --deck-glow:rgba(58,109,166,.10);
-    --lcd:#0a0b0e; --lcd-ink:#7FA3D8; --lcd-faint:#7C8496; --lcd-flag:#D9A44F;
+    --lcd:#0a0b0e; --lcd-ink:#7FA3D8; --lcd-faint:#7C8496;
     --lcd-track:#1e2029; --lcd-inset:rgba(0,0,0,.85); --lcd-glow:rgba(122,160,255,.1);
     /* --slab was left behind when --lcd moved in: a deck page declared it on its own,
        one value, no light variant, which put a dark bar back on a pale page. Pale milled
@@ -226,7 +226,7 @@
     --deck-quiet:#9a9dab;  --deck-warm:#b7b0a2;
     --deck-lift:rgba(255,255,255,.055); --deck-drop:rgba(0,0,0,.5);
     --deck-inset:rgba(0,0,0,.85); --deck-glow:rgba(122,160,255,.1);
-    --lcd:#0a0b0e; --lcd-ink:#7FA3D8; --lcd-faint:#7C8496; --lcd-flag:#D9A44F;
+    --lcd:#0a0b0e; --lcd-ink:#7FA3D8; --lcd-faint:#7C8496;
     --lcd-track:#1e2029; --lcd-inset:rgba(0,0,0,.85); --lcd-glow:rgba(122,160,255,.1);
     /* Unchanged from the value a deck page used to declare on its own: the readout stays
        dark, and so does the slab it sits in. 1.11:1 against --lcd is not a mistake here —
@@ -486,7 +486,7 @@
   .name a:hover, .name a:focus-visible{color:var(--ink)}
   /* ─── end deck lockup ───────────────────────────────────────────────────*/
 
-  /* ─── deck transport · v7 · shared ─────────────────────────────────
+  /* ─── deck transport · v8 · shared ─────────────────────────────────
      Generated from @robertblust/design — edit it there and run `npm run design`.
 
      The transport bar and the chrome around it, byte-identical on all four decks
@@ -498,22 +498,27 @@
      `deck lockup`. They were two components wearing one name, and only one of
      them legitimately differs between sites.
 
-     This block holds 56 rules, not the round number a first read of the region
+     This block holds 55 rules, not the round number a first read of the region
      might suggest. The marker never closed, so "which rules are inside it" was
      never a settled question; measured mechanically — everything from the
      `---------- transport ----------` comment through the transport's own three
      mobile breakpoints, minus the lockup's own rules, minus the speaker-notes drawer
-     and the slide-layout rules that happen to share the same breakpoints — 56 is
-     what's left, and all 56 are byte-identical on every deck. v3 carried a 57th,
+     and the slide-layout rules that happen to share the same breakpoints — 55 is
+     what's left, and all 55 are byte-identical on every deck. v3 carried two more:
      `.lcd:has(.n.msg)`, which brought the LCD back below 400px while it held a
-     message from `lcdMessage()`. That rule was unreachable: `lcdMessage()` had one
-     call site, gated on `!pickVoice() && !hasClips()`, and `hasClips()` was
-     synchronous while every way to detect a clip is asynchronous — so it could only
-     ever return a constant `true`, and no deck added `.msg` to `#lcdn` at any width.
-     v4 of `deck runtime` deletes that whole fallback path; the rule went with it.
-     Anyone re-deriving this should get the same 56; if a cut to a smaller, rounder
-     number seems obviously right, it wasn't obvious here and is worth writing down
-     why.
+     message from `lcdMessage()`, and `.lcd .n.msg{color:var(--lcd-flag); ...}`,
+     which painted that message once it was there. Both were unreachable the same
+     way: `lcdMessage()` had one call site, gated on `!pickVoice() && !hasClips()`,
+     and `hasClips()` was synchronous while every way to detect a clip is
+     asynchronous — so it could only ever return a constant `true`, and no deck ever
+     added `.msg` to `#lcdn` at any width. v4 of `deck runtime` deleted `lcdMessage()`
+     and, with it, `.lcd:has(.n.msg)` — but `.lcd .n.msg{...}` was left behind,
+     unreachable the same way and for the same reason, because nothing that removal
+     touched still referenced it. v8 removes that survivor too, along with
+     `--lcd-flag`, the token only it ever painted: the whole message path this block
+     once carried is gone now, not merely most of it. Anyone re-deriving this should
+     get the same 55; if a cut to a smaller, rounder number seems obviously right, it
+     wasn't obvious here and is worth writing down why.
 
      v7 re-tunes the three breakpoints below for the theme control's two extra
      buttons. Nothing in that count changed since v6, but the pixel budget every
@@ -549,7 +554,6 @@
   }
   .lcd .n{font-size:.76rem; font-weight:600; letter-spacing:.09em; color:var(--lcd-ink); white-space:nowrap}
   .lcd .n .sep, .lcd .n #tot{color:var(--lcd-faint)}
-  .lcd .n.msg{color:var(--lcd-flag); font-size:.62rem; letter-spacing:.14em}
   .lcd .clip{width:100%; height:2px; background:var(--lcd-track); border-radius:2px; overflow:hidden}
   .lcd .clip i{display:block; height:100%; width:0; background:var(--lcd-ink); transition:width .25s linear}
 
