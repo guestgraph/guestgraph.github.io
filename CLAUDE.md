@@ -229,19 +229,34 @@ footer link, and both had been serving guestgraph.io that way through several co
 - **`npm run og:check` compares the recipe, never the pixels.** Two machines rasterise the
   same text differently, so a card compared by its bytes reports which machine rendered it.
   The check re-derives a hash of what went *into* the card and compares it with the `og.sha`
-  committed beside it. It renders nothing, needs no browser, and runs in CI before `npm ci`.
-- **Three files, and the split is what makes the check testable.** `og-recipe.mjs` is pure and
-  has no side effects on import — the card list, the knobs, `sources()`, `recipe()`, `state()`.
-  `export-og.mjs` is the only one that needs playwright. `og-check.mjs` reports. An exporter
-  that renders on import cannot be loaded by a test file, which is why the knobs left it.
-- **The knobs live in `og-recipe.mjs`, not in the exporter.** A second copy of the frame or a
-  hide rule is a knob that can be edited without the hash moving — the one failure this whole
-  mechanism exists to make impossible. The recipe hashes the card object canonically, so a knob
-  added later enters the hash by existing rather than by someone remembering to list it.
-- **`npm run test:og` is the check's own suite** (`verify/og-recipe.test.mjs`, `node --test`,
-  no dependencies). It drives both directions — a moved page must come out stale, and a card
-  reported current after the page changed must be impossible — against a temporary tree rather
-  than against this repository, so it still means something after these pages change.
+  committed beside it. It renders nothing and needs no browser, so it runs before the browser
+  install in CI — but after `npm ci`, which it did not used to need: the machinery it calls
+  now ships in `@robertblust/design` and is not on disk until then. Moved back above `npm ci`,
+  every push fails with `ERR_MODULE_NOT_FOUND`, and a local run cannot catch that because
+  `node_modules` is already there. `mv node_modules /tmp/nm && npm run og:check` is how you
+  see what CI sees.
+- **One file of knobs, three thin callers, and a shared harness.** `og-recipe.mjs` holds this
+  site's data — the card list, the frame, the hide rules — and binds the machinery with
+  `recipeFor(REPO_ROOT)`. `export-og.mjs`, `og-check.mjs` and `verify/og-recipe.test.mjs` are
+  four lines each: they hand that module to `exportCards`, `checkCards` and `checkRecipe` from
+  `@robertblust/design/cards/*`. `og-recipe.mjs` stays pure and side-effect-free on import,
+  which is what lets a test file load it; `export-og.mjs` is still the only one that needs
+  playwright, and it passes the browser in, because the package has no dependencies at all.
+- **The knobs live in `og-recipe.mjs`, and nowhere else.** Not in the exporter, and not in the
+  package: a second copy of the frame or a hide rule is a knob that can be edited without the
+  hash moving — the one failure this whole mechanism exists to make impossible. The recipe
+  hashes the card object canonically, so a knob added later enters the hash by existing rather
+  than by someone remembering to list it. The same canonical hash is why removing a key moves
+  every stamp on the site while the rendered PNGs stay byte-identical, which is exactly what
+  dropping the unread `from: "file"` key did.
+- **`REPO_ROOT` is derived here and passed in.** A module that works out where it is from its
+  own location points inside `node_modules` once it ships as a dependency, so the package
+  takes `root` on every call and never guesses.
+- **`npm run test:og` is the check's own suite**, and the assertions are the package's
+  (`@robertblust/design/cards/recipe-tests`), driven against this site's recipe. It drives
+  both directions — a moved page must come out stale, and a card reported current after the
+  page changed must be impossible — against a temporary tree rather than against this
+  repository, so it still means something after these pages change.
 - **The recipe is the page plus every local file the page renders plus the exporter's own
   frame and hide rules.** Fonts count, and here there is one `fonts/` at the root shared by
   all three pages — so a font swap marks **all three** cards stale in one go. On blust.ch,
@@ -265,10 +280,12 @@ footer link, and both had been serving guestgraph.io that way through several co
   `npm run og` and a commit — cheap, and the opposite error is a card nobody notices for
   weeks.
 - **The setup is shared with `blust.ch` and `companygraph.io`,** which render their own cards
-  the same way. `og-recipe.mjs` differs between them only in the card list and the hide rules,
-  and `verify/og-recipe.test.mjs` is the same file in all three. Fixing a rule here means
-  fixing it there — like the design tokens above, it is a habit with a tripwire, not a
-  guarantee.
+  the same way — and now literally share it. The exporter, the check and the test assertions
+  are one copy in `@robertblust/design`, so fixing a rule here fixes it there, with `npm ci`
+  rather than with a habit. What still differs per site is only the card list, the frame and
+  the hide rules, which is the part that should differ. The package is the union of the three
+  copies it replaced, never their intersection: `deviceScaleFactor` was only ever ours, and
+  consolidating onto what all three agreed on would have deleted it silently.
 
 ## The design system, and why it is a copy
 
