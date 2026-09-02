@@ -32,9 +32,8 @@ had to be unwound. Do not recreate one.
 - `privacy/index.html` — what this site collects (nothing) and how guest data will be handled.
 - `talks/index.html` — the talks index, carrying this site's chrome so a visitor crossing into
   it meets no seam.
-- `talks/intro/` — the deck: `index.html`, `audio/{en,de}/`, both PDFs, `export-pdf.mjs`, and
-  `tts/generate.py`, which reads the deck's speaker notes as the single source for what is
-  spoken.
+- `talks/intro/` — the deck: `index.html`, `audio/{en,de}/`, both PDFs, and `tts/generate.py`,
+  which reads the deck's speaker notes as the single source for what is spoken.
 - `fonts/` — the self-hosted `.woff2` files, and the only copy. Every page and the deck point
   at them relatively, so the deck still opens from `file://`.
 - `sitemap.xml` — one flat list of every URL on the domain. It was an index pointing at a
@@ -45,7 +44,8 @@ had to be unwound. Do not recreate one.
   page it belongs to, and an `og.sha` beside each one: a hash of everything that went into the
   card, so `npm run og:check` can say whether it still shows its page. `og-recipe.mjs` defines
   what that is, `export-og.mjs` renders all three and writes the stamps, `og-check.mjs` reports
-  them.
+  them. `export-pdf.mjs`, alongside it at the root, renders the deck's two PDFs into
+  `talks/intro/`.
 - `logo.svg` — the mark: three open records resolving into one solid profile. Uses
   `currentColor`, so it inherits whatever colour it is placed in.
 - `favicon.svg`

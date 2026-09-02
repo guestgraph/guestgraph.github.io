@@ -397,10 +397,10 @@ The decks live at `talks/`, served from this repository at guestgraph.io/talks/.
 ## Building and checking the decks
 
 ```bash
-cd intro && npm install && npx playwright install chromium
-python3 -m http.server 8000        # → localhost:8000/intro/  (audio autoplay is
+npm install && npx playwright install chromium
+npm run serve                      # → localhost:8000/talks/intro/  (audio autoplay is
                                    #   blocked on file:// in some browsers)
-node export-pdf.mjs                # PDF fallback, after slide edits
+npm run pdf                        # PDF fallback, after slide edits
 ```
 
 **Verify by rendering, never by reading the diff.** Three separate bugs in one session
@@ -467,10 +467,14 @@ nothing under `talks/intro` was ever installed or exercised by a check, and a De
 there arrived green having proved nothing about the directory it changed. `blust.ch` has had
 the single-manifest shape all along; this is the two sibling sites catching up.
 
-`export-pdf.mjs` resolves its own paths from `import.meta.url`, so it does not care where it
-is invoked from — the deck still opens from `file://`, and moving the script changed nothing
-about the file it renders. Verified by rebuilding both PDFs from the root: same page counts,
-and the only bytes that moved were pdf-lib's `CreationDate` and `ModDate`.
+`export-pdf.mjs` sits at the repository root, and `root` in the object it hands to
+`exportDecks` is derived from its own location — `path.dirname(fileURLToPath(import.meta.url))`
+— not from the deck. The deck is named relative to that root by the `decks` list:
+`{ dir: "talks/intro", slug: "guestgraph" }`. Moving the script back under `talks/intro/`
+would break this: `root` would become `talks/intro`, and `goto` would resolve
+`talks/intro/talks/intro/index.html`, which does not exist. Verified by rebuilding both PDFs
+from the root: same page counts, and the only bytes that moved were pdf-lib's `CreationDate`
+and `ModDate`.
 
 ## Secrets
 
