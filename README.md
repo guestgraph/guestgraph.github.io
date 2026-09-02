@@ -70,14 +70,15 @@ No build step. Open `index.html`, or serve it:
 npm install                        # once, for Playwright
 npm run serve                      # → http://localhost:8000
 npm run verify                     # renders every page and asserts the DOM
-npm run og:check                   # do the three share cards still show their pages?
-npm run test:og                    # the card check's own tests (node --test, no deps)
-npm run og                         # re-renders all three cards after a visual change
+npm run og:check                   # do the five share cards still show their pages?
+npm run test:og                    # the card check's own tests (node --test)
+npm run og                         # re-renders all five cards after a visual change
 ```
 
 `og:check` needs no server and no browser — it re-derives each card's recipe and compares it
-with the `og.sha` committed beside it, which is why CI runs it before `npm ci`. Commit each
-`og.png` with its `og.sha`, in the commit that moved the page.
+with the `og.sha` committed beside it, which is why CI runs it before installing one. It does
+need `npm ci` first: the machinery lives in `@robertblust/design`, shared with blust.ch and
+companygraph.io. Commit each `og.png` with its `og.sha`, in the commit that moved the page.
 
 ## What it says, and what it deliberately does not
 
