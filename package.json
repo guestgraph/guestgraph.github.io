@@ -8,13 +8,13 @@
     "design": "design sync",
     "design:check": "design sync --check",
     "verify": "node verify/check.mjs",
-    "pdf": "node talks/intro/export-pdf.mjs",
+    "pdf": "node export-pdf.mjs",
     "og": "node export-og.mjs",
     "og:check": "node og-check.mjs",
     "test:og": "node --test verify/og-recipe.test.mjs"
   },
   "devDependencies": {
-    "@robertblust/design": "github:robertblust/design#v0.13.0",
+    "@robertblust/design": "github:robertblust/design#v0.14.0",
     "pdf-lib": "^1.17.1",
     "playwright": "^1.49.1"
   }
