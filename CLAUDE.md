@@ -17,7 +17,7 @@ guestgraph.io is usually just not deployed yet.
 
 The landing page says what GuestGraph is and sends the visitor to the talk or the code.
 That is the whole scope of `index.html`. It deliberately makes **no claim about matching
-behaviour, roadmap, or status** — those are owned by the engine repository and go stale
+behavior, roadmap, or status** — those are owned by the engine repository and go stale
 here within a slice.
 
 This is not hypothetical: the org profile at `guestgraph/.github` once advertised "Core
@@ -36,7 +36,7 @@ The service does not exist yet, which is what makes one sentence on that page lo
 and advertising a product, and `verify` asserts the page still contains it. It comes out the
 day the service opens — not before, and not as tidying.
 
-This narrows the rule above; it does not repeal it. Product status, matching behaviour and
+This narrows the rule above; it does not repeal it. Product status, matching behavior and
 roadmap still belong to the engine repository. What this repo now owns is the commercial
 model, because nothing else does.
 
@@ -66,7 +66,7 @@ caught rather than merely warned about.
 
 It was written as a bare path first, to keep the footer strictly to data — the strip
 is set in the data face, and a bare word there looked like navigation in mono. That was the
-wrong reading of the rule. The strip is not URLs: `Apache 2.0` is a licence name and
+wrong reading of the rule. The strip is not URLs: `Apache 2.0` is a license name and
 `Robert Blust` is a person's name, and both are links. It is *identifiers that happen to be
 links*, and a page name belongs in that slot. What settled it is that someone looking for a
 privacy statement scans for the word, not for a path — on a page that exists to be found by
@@ -105,7 +105,7 @@ two-file obligation, which is the point.
   accident.
 
   `Robert Blust` is a **full lockup, not a name in text** — the `rb` plate from `blust.ch`
-  inlined beside the wordmark, taking the colours `.name b` already defines: ink with the
+  inlined beside the wordmark, taking the colors `.name b` already defines: ink with the
   second word in `--c-mid`. It is a brand with a mark of its own and reads as a peer of this
   site's lockup, which is the whole point of the row. *Talks* stays `--dim`: it is the one nav
   item among two brands, and that contrast is what makes the row legible at 15px.
@@ -113,7 +113,7 @@ two-file obligation, which is the point.
   That is the fact `.name .nlink{color:var(--dim)}` used to carry as its own inline comment,
   before the deck's lockup became a fence the `@robertblust/design` package owns end to end:
   `.nlink` is *Talks*, dimmed like any other nav item, and `Robert Blust` is deliberately not
-  styled through it — it takes the wordmark colours instead because it is the other brand in
+  styled through it — it takes the wordmark colors instead because it is the other brand in
   the row, not a name mentioned in passing. The fence body is shared now and cannot carry a
   guestgraph-only sentence, so this paragraph is where that fact lives instead.
 
@@ -148,7 +148,7 @@ two-file obligation, which is the point.
 - **The `blust.ch` credit in the page footer is a lockup, not a footer link.** It leaves the
   footer's mono for the same treatment it has on every deck — the `rb` plate inlined, wordmark
   with the second word in `--c-mid`. The rest of the row stays mono because the rest of the row
-  is data: a repository URL and a licence. A prose mention of the name inside a sentence stays
+  is data: a repository URL and a license. A prose mention of the name inside a sentence stays
   a plain link — the mark belongs in the footer row, not mid-paragraph.
 - **A link check that trusts the DOM inspects half the site.** The rendered DOM is only ever
   one language; German lives in `data-de` as markup that does not exist until a visitor
@@ -163,7 +163,7 @@ two-file obligation, which is the point.
   is the one failure mode nobody opens a browser to find. `verify` asserts the same for
   internal links.
 - **The avatar is uploaded by hand** — GitHub takes no SVG and offers no API for it.
-  Upload `avatar.png` (Organisation → Settings → Profile).
+  Upload `avatar.png` (Organization → Settings → Profile).
 
 ## Findability
 
@@ -197,13 +197,13 @@ What the contract says:
   switcher is at the edge and each step left is more the site's own subject.
 - **One baseline.** A single line runs through the middle of every text in the row. The
   links carry equal space above and below: the hover underline hangs below the word, and
-  centring the boxes instead would ride the text high — which it did, by 5px, until the
+  centering the boxes instead would ride the text high — which it did, by 5px, until the
   language control sat next to it and made it visible.
 - **States are different things.** Hover is an underline and nothing else. The current page
   is brighter ink and carries no line. When both drew the same line, the page you were on
   read as permanently hovered.
 - **The wordmark never breaks.** It is `white-space:nowrap` and does not shrink. This one
-  sits *outside* the fence, because each site's mark has its own colours; the rule is the
+  sits *outside* the fence, because each site's mark has its own colors; the rule is the
   outcome, not the declaration, and `mobileNav` asserts it.
 - **Under 640px the links collapse behind a button.** The language control stays on the bar
   — two characters, reached for constantly by a bilingual audience, and one a visitor
@@ -213,7 +213,7 @@ What the contract says:
 
 `navOrder`, `headerBaseline` and `mobileNav` assert all of it, per repository. What they
 cannot do is see a sibling — that is the whole reason the block carries a version. Before
-this was written down there were five different mobile behaviours across the family and
+this was written down there were five different mobile behaviors across the family and
 eight different wordings of the same CSS, and nothing failed anywhere.
 
 ## Share cards go stale silently, and nothing on the page says so
@@ -289,7 +289,7 @@ footer link, and both had been serving guestgraph.io that way through several co
 
 ## The design system, and why it is a copy
 
-Type and colour are shared across `blust.ch`, `guestgraph.io` and `companygraph.io`.
+Type and color are shared across `blust.ch`, `guestgraph.io` and `companygraph.io`.
 They share no stylesheet and cannot: a deck has to open from `file://`, so there is
 nothing to import. Every page therefore carries its own copy of the token block, fenced
 by `design tokens · vN` markers.
@@ -301,7 +301,7 @@ in *Changing a token* below, and it is the opposite of what this file said for m
 - **Brightness is confidence, and each stop has exactly one job.** `--c-weak` a candidate
   considered and not accepted; `--c-mid` anything interactive — links, controls, the brand
   accent; `--c-firm` the resolved thing — the thesis, the current page; `--c-flag` a
-  reversal, at most once per page and never decoration. Before adding a colour, ask which
+  reversal, at most once per page and never decoration. Before adding a color, ask which
   of the four jobs it is doing. If the answer is "none", it does not belong.
 - **Mono means data.** Record values, lengths, language pairs, URLs, code. Not navigation,
   not buttons, not prose. It was on all of those before, which is why it had stopped
@@ -420,6 +420,21 @@ from `file://` and a plain local server, not only the live domain.
 - **`<em class='cue'>` is a stage direction**, never spoken. `<em>` alone is emphasis.
   Keep them distinct: the directions outnumber the emphases roughly ten to one, so
   overloading one tag makes both meaningless.
+
+## A page is en-US; `data-de` and `data-notes` are de-CH
+
+One rule, positional, with no exceptions to remember: every word of a page is American
+English, and the values of `data-de` — and in a deck, `data-notes` — are Swiss German.
+`data-notes-en` is English and follows the page.
+
+It matters most to anything that rewrites text in bulk. `Organisation` inside a `data-de` is
+correct German, not a British spelling left behind, and renaming it produces German that is
+wrong in a way nothing here can catch: every DOM check reads the rendered page, and the
+rendered page is only ever one language. A sweep masks those two attributes and touches
+nothing else.
+
+This is core's R14 resolved for a bilingual page. R14 says what the spelling is; this says
+where it applies.
 
 ## Notes live inside HTML attributes — three ways that bites
 
@@ -585,7 +600,7 @@ moved out of `guestgraph/talks` and into this repository.
 | What the talk says, and the narration script | the deck's `index.html` |
 | Talk list, length, controls | `README.md` |
 | Narration mechanics and measurements | `intro/tts/generate.py` docstring |
-| Matching behaviour, thresholds, roadmap | the **engine** repo — link, never restate |
+| Matching behavior, thresholds, roadmap | the **engine** repo — link, never restate |
 | The talk URLs a crawler should find | `sitemap.xml` here — guestgraph.io only indexes it |
 
 Before writing a number or a claim about the product into a slide, ask where it is

@@ -17,7 +17,7 @@ const SITE = "https://guestgraph.io";
 // What every prose footer reads, left to right. The check compares this to the rendered DOM,
 // so it is the one place that decides the order — and the German labels never appear here
 // because the suite loads each page in its source language.
-const FOOTER = ["Robert Blust", "GitHub", "Licence", "Privacy"];
+const FOOTER = ["Robert Blust", "GitHub", "License", "Privacy"];
 
 const PAGES = [
   { path: "/", footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
