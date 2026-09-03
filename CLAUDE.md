@@ -413,8 +413,9 @@ screenshot, or query the DOM for what you claim to have fixed.
 One talk per directory, one `index.html` per talk, no external assets. Decks must work
 from `file://` and a plain local server, not only the live domain.
 
-- **Bilingual by attribute.** German is the element's content, English is `data-en`.
-  Speaker notes are `data-notes` (English) / `data-notes-de` (German) on the `<section>`.
+- **Bilingual by attribute.** English is the element's content, German is `data-de`;
+  `data-en` is never written by hand — `applyLang()` captures it on load. Speaker notes are
+  `data-notes` (English) / `data-notes-de` (German) on the `<section>`.
 - **Slide numbers are zero-based everywhere the viewer can see them** — the kicker on
   the slide, the counter, and the audio filename all say the same number.
 - **`<em class='cue'>` is a stage direction**, never spoken. `<em>` alone is emphasis.
@@ -440,6 +441,30 @@ nothing else.
 
 This is core's R14 resolved for a bilingual page. R14 says what the spelling is; this says
 where it applies.
+
+Three more places carry German, and none of their names ends in `-de`. The `UI.de` object on
+every prose page and `TALK.de` in every deck hold the German `<title>` and description; a deck's
+`UI.de` also holds its control labels; and `data-de-href` on a talks index holds the German
+PDF's path, a URL rather than a sentence. A sweep that masks only the two attributes rewrites
+the first two, so mask the `de:` branches of those objects as well. The `translates` specs in
+`verify/check.mjs` quote German too, and are the one place it is quoted on purpose.
+
+`<html lang>` carries the bare language, `en` in the source and `de` after a switch, and the
+region rides in `og:locale` alone. The rule's name says where the spelling and the grammar come
+from, not what the attribute says: every check that reads the language compares against `en`
+and `de`, and a regional tag would tell a crawler nothing `og:locale` does not already.
+
+A page generated from a pinned model — blust.ch's `/model/` and `/principles/`, companygraph.io's
+`/model/` and `/example/` — shows the model's own words in the one language the model is written
+in, and the German page shows them unchanged under `lang="de"`. Each of those pages says so in its
+note; the site's own words around them are bilingual like everything else. A translated copy would
+be a second thing to keep true, which is the argument the principles page makes against it.
+
+`translates` is the check that clicks. Every other DOM check reads the page as it first renders,
+which is English; this one presses DE, asserts the German is there and the English is gone — body
+text, `<title>`, meta description and, on a talks index, the PDF link — then presses EN and requires
+the page back exactly as it was. It is shared, in `@robertblust/design`, and every page in `PAGES`
+declares a spec for it, because a page without one is a page whose German half no test has seen.
 
 ## Notes live inside HTML attributes — three ways that bites
 

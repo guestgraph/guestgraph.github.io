@@ -21,6 +21,9 @@ const FOOTER = ["Robert Blust", "GitHub", "License", "Privacy"];
 
 const PAGES = [
   { path: "/", footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+    translates: { lang: "de", shows: ["Einführungsvortrag ansehen", "Zum Code", "VORTRÄGE", "ABRECHNUNG"], hides: ["Watch intro talk", "Read the code"],
+                  title: "GuestGraph — der Open-Source-Identitätsgraph für Gäste",
+                  desc: "Ein erklärbares Gastprofil, aus Daten, die über jedes System im Hotel verstreut liegen. Open Source, Apache 2.0." },
     contains: ["Five strangers", "One guest", "GuestGraph"],
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
@@ -34,6 +37,9 @@ const PAGES = [
   // open. Drop that second sentence and the page stops describing an intention and
   // starts advertising a product that does not exist.
   { path: "/billing/", footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+    translates: { lang: "de", shows: ["Ein einziger Zähler", "Alles andere ist kostenlos", "Wie sich die Rechnung verhält"], hides: ["One meter", "Everything else is free", "How the bill behaves"],
+                  title: "Abrechnung — GuestGraph",
+                  desc: "Wie der gehostete GuestGraph abrechnen wird: ein einziger Zähler, und das sind Anreisen. Datenzufuhr, Import, Speicher und Abfragen sind kostenlos." },
     contains: ["Not per record", "1 arrival = 1 reservation that checked in", "not open yet"],
     // no call to action here: the page ends on its argument, so the only outbound link
     // left to hold to the new-tab rule is the one in the footer.
@@ -47,6 +53,9 @@ const PAGES = [
   // and the suite's own `requestfailed`/`links` machinery cannot see that. If a font, an
   // analytics tag or an embed ever creeps in, this is what fails.
   { path: "/privacy/", footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+    translates: { lang: "de", shows: ["Was diese Seite tut", "Gastdaten, sobald es welche gibt", "Wer das betreibt"], hides: ["What this site does", "Guest data, when there is any", "Who runs this"],
+                  title: "Datenschutz — GuestGraph",
+                  desc: "Diese Seite setzt keine Cookies, führt keine Statistik und stellt keine Anfragen an Dritte. Wie der gehostete GuestGraph Gastdaten behandeln wird, aufgeschrieben, bevor es welche gibt." },
     contains: ["This site collects", "There is no imprint yet"],
     links: ["https://github.com/guestgraph"],
     sameTab: ["../talks/", "../", "../billing/", "./"],
@@ -55,6 +64,12 @@ const PAGES = [
     card: true, cardBase: SITE, internalLinks: true },
 
   { path: "/talks/", footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
+    // The German PDF is reached by data-de-href, which `sameTab` cannot see: it reads the href as
+    // delivered, and the swap happens only after a click. `dlHref` reads the first such link.
+    translates: { lang: "de", shows: ["Vorträge über Guest", "Vortrag ansehen", "PDF herunterladen"], hides: ["Watch the talk", "Download PDF"],
+                  dlHref: { de: "intro/guestgraph-de.pdf", en: "intro/guestgraph-en.pdf" },
+                  title: "GuestGraph — Vorträge über Gast-Identität in der Hotellerie",
+                  desc: "Vorträge über GuestGraph, den Open-Source-Identitätsgraphen für Gäste in der Hotellerie — auf Deutsch und Englisch." },
     contains: ["GuestGraph", "guest identity"],
     // the nav no longer carries a Code item — the footer's org link is the way to the
     // source from here, one click further out than it used to be
@@ -67,6 +82,11 @@ const PAGES = [
   // opensFromFile resolves its file:// probe against process.cwd(), which npm sets to this
   // repo's root — so the suite must be run with `npm run verify` from here, not from elsewhere.
   { path: "/talks/intro/", storageKeys: true, opensFromFile: true, carriesLang: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en", wayOut: "../",
+    // The deck's German is the whole second half of the talk, including every speaker note.
+    // "Architekt"/"Architect" is the pair: one letter apart, present in exactly one language each.
+    translates: { lang: "de", shows: ["Architekt", "Gastprofil"], hides: ["Architect"], id: "langDe", backId: "langEn",
+                  title: "GuestGraph — eine Einführung · ein Vortrag von Robert Blust",
+                  desc: "Ein Vortrag darüber, warum ein Stammgast wie fünf Fremde aussieht — und wie gestufte Sicherheit jede Zusammenführung erklärbar und umkehrbar macht." },
     // The footer's other two destinations. `landing` covers the lockup, which is relative and
     // therefore invisible to `links`; blust.ch is absolute, so `links` catches a typo in it and
     // `newTab` holds it to the rule the pages already follow — a talk the presenter navigates
