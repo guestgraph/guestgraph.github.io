@@ -414,18 +414,23 @@ One talk per directory, one `index.html` per talk, no external assets. Decks mus
 from `file://` and a plain local server, not only the live domain.
 
 - **Bilingual by attribute.** German is the element's content, English is `data-en`.
-  Speaker notes are `data-notes` / `data-notes-en` on the `<section>`.
+  Speaker notes are `data-notes` (English) / `data-notes-de` (German) on the `<section>`.
 - **Slide numbers are zero-based everywhere the viewer can see them** — the kicker on
   the slide, the counter, and the audio filename all say the same number.
 - **`<em class='cue'>` is a stage direction**, never spoken. `<em>` alone is emphasis.
   Keep them distinct: the directions outnumber the emphases roughly ten to one, so
   overloading one tag makes both meaningless.
 
-## A page is en-US; `data-de` and `data-notes` are de-CH
+## A page is en-US; a `-de` attribute is de-CH
 
 One rule, positional, with no exceptions to remember: every word of a page is American
-English, and the values of `data-de` — and in a deck, `data-notes` — are Swiss German.
-`data-notes-en` is English and follows the page.
+English, and the value of any attribute whose name ends `-de` is Swiss German — `data-de`,
+and in a deck `data-notes-de`.
+
+It reads as one line now because the attributes were made to agree. Notes used to invert the
+page's convention: `data-notes` held German and English was the suffixed `data-notes-en`, so
+the base attribute meant a different language depending on which pair you were reading.
+Design v0.25.0 swapped them, which is what leaves nothing here to remember.
 
 It matters most to anything that rewrites text in bulk. `Organisation` inside a `data-de` is
 correct German, not a British spelling left behind, and renaming it produces German that is

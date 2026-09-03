@@ -122,7 +122,11 @@ def slides(deck_html):
                     titles["en"] = h1["en"]
 
         texts = {}
-        for lang, attr in (("de", "data-notes"), ("en", "data-notes-en")):
+        # `data-notes` is English and `data-notes-de` the translation, matching `data-de` and
+        # the page's own convention; it used to be the other way round for notes alone. The
+        # attribute names moved, the text behind them did not, so every clip stays cached —
+        # a dry run that wants to write all of them means this mapping is inverted.
+        for lang, attr in (("de", "data-notes-de"), ("en", "data-notes")):
             m = re.search(attr + r'="([^"]*)"', block)
             if not m:
                 continue
