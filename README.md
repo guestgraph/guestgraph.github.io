@@ -9,11 +9,11 @@ cost more than it saved: the talks index copies this site's shell, header and fo
 nav change had to land in both repositories in the same breath, with no CI on either side able
 to see the seam. They were merged, history and all, in August 2026.
 
-The repository is named `guestgraph.github.io` because that makes it the organisation's GitHub
+The repository is named `guestgraph.github.io` because that makes it the organization's GitHub
 Pages site, which is what puts it on the custom domain in `CNAME`. **Renaming it or removing
 `CNAME` takes the whole domain down**, talks included.
 
-A repository named `talks` in this organisation would claim `guestgraph.io/talks/` the moment
+A repository named `talks` in this organization would claim `guestgraph.io/talks/` the moment
 its Pages were enabled — shadowing the folder in this repository, which is how the old split
 had to be unwound. Do not recreate one.
 
@@ -47,12 +47,12 @@ had to be unwound. Do not recreate one.
   them. `export-pdf.mjs`, alongside it at the root, renders the deck's two PDFs into
   `talks/intro/`.
 - `logo.svg` — the mark: three open records resolving into one solid profile. Uses
-  `currentColor`, so it inherits whatever colour it is placed in.
+  `currentColor`, so it inherits whatever color it is placed in.
 - `favicon.svg`
 - `avatar.svg` / `avatar.png` — the org avatar, 1024×1024. Full-bleed square on purpose:
   GitHub rounds org avatars itself, and a rounded rect here would show its corners through
   that mask. Upload the **PNG** — GitHub does not accept SVG for avatars, and there is no API
-  for it (Organisation → Settings → Profile → Upload new picture).
+  for it (Organization → Settings → Profile → Upload new picture).
 - `CNAME` — the custom domain
 
 ## The mark
@@ -87,7 +87,7 @@ landing page carries the title, the hook, and two links — nothing else. Everyt
 would ask next is answered in the [12-minute talk](https://guestgraph.io/talks/intro/), which
 is a better medium for it than a scrolling page of claims.
 
-That is also why it makes no claim about matching behaviour, roadmap, or status. Those live
+That is also why it makes no claim about matching behavior, roadmap, or status. Those live
 where they are maintained — in the core repository and in
 [`docs/matching.md`](https://github.com/guestgraph/engine/blob/main/docs/matching.md) — so a
 change there cannot leave this page quietly wrong.
