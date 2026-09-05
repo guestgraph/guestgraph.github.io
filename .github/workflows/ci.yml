@@ -17,6 +17,19 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
+      # First, because it needs nothing installed and it catches the one failure the browser
+      # cannot see: a note edited without regenerating its clip renders perfectly and speaks
+      # the old words. --dry-run bills nothing and needs no key. blust.ch has had this step
+      # since its clips existed; here ten stale clips sat on a green pull request before it did.
+      - name: Clips still say what the notes say
+        working-directory: talks/intro/tts
+        run: |
+          out=$(./generate.py --dry-run)
+          printf '%s\n' "$out"
+          if printf '%s\n' "$out" | grep -q 'would write'; then
+            echo "::error::narration is stale — run talks/intro/tts/generate.py and commit the clips"
+            exit 1
+          fi
       - uses: actions/setup-node@v7
         with:
           node-version: "22"
