@@ -21,9 +21,9 @@ const FOOTER = ["Robert Blust", "GitHub", "License", "Privacy"];
 
 const PAGES = [
   { path: "/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
-    translates: { lang: "de", shows: ["Einführungsvortrag ansehen", "Zum Code", "VORTRÄGE", "ABRECHNUNG"], hides: ["Watch intro talk", "Read the code"],
+    translates: { lang: "de", shows: ["Einführungsvortrag ansehen", "Code lesen", "VORTRÄGE", "ABRECHNUNG"], hides: ["Watch intro talk", "Read the code"],
                   title: "GuestGraph – der Open-Source-Identitätsgraph für Gäste",
-                  desc: "Ein erklärbares Gastprofil, aus Daten, die über jedes System im Hotel verstreut liegen. Open Source, Apache 2.0." },
+                  desc: "Ein erklärbares Gastprofil, aus Daten, die über jedes System im Hotel verstreut liegen. Quelloffen, Apache 2.0." },
     contains: ["Five strangers", "One guest", "GuestGraph"],
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
@@ -68,7 +68,7 @@ const PAGES = [
     // delivered, and the swap happens only after a click. `dlHref` reads the first such link.
     translates: { lang: "de", shows: ["Vorträge über Guest", "Vortrag ansehen", "PDF herunterladen"], hides: ["Watch the talk", "Download PDF"],
                   dlHref: { de: "intro/guestgraph-de.pdf", en: "intro/guestgraph-en.pdf" },
-                  title: "GuestGraph – Vorträge über Gast-Identität in der Hotellerie",
+                  title: "GuestGraph – Vorträge über Gastidentität in der Hotellerie",
                   desc: "Vorträge über GuestGraph, den Open-Source-Identitätsgraphen für Gäste in der Hotellerie – auf Deutsch und Englisch." },
     contains: ["GuestGraph", "guest identity"],
     // the nav no longer carries a Code item — the footer's org link is the way to the
