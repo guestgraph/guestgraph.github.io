@@ -93,7 +93,7 @@
 }
 </script>
 <script>
-  /* ─── theme boot · v2 · page ────────────────────────────────────
+  /* ─── theme boot · v3 · page ────────────────────────────────────
      Set the theme before anything paints. Generated from @robertblust/design —
      editing it here does nothing, because the next `npm run design` overwrites it.
 
@@ -113,7 +113,7 @@
   (function(){
     try {
       var m = /[?&]theme=(light|dark)(&|$)/.exec(location.search);
-      var t = m ? m[1] : localStorage.getItem("rb-theme");
+      var t = m ? m[1] : localStorage.getItem("theme");
       if (t === "light") document.documentElement.setAttribute("data-theme", "light");
     } catch (e) {}
   })();
@@ -592,7 +592,7 @@
   // guestgraph.io — one origin, one setting. Storage is guarded because file:// is an
   // opaque origin in some browsers and throws: a page that cannot remember a preference
   // must still work without one.
-  /* ─── language · v2 · page ─────────────────────────────────────────────
+  /* ─── language · v3 · page ─────────────────────────────────────────────
      One language across three domains, and where it is remembered. Generated
      from @robertblust/design — editing it here does nothing, because the next
      `npm run design` overwrites it. Change it in the package.
@@ -603,8 +603,12 @@
      wherever it reads and writes the visitor's saved choice. Rename `lang` or drop those calls
      and the fence still matches byte for byte — every check stays green — while a click throws
      ReferenceError and the language silently stops crossing domains.
+
+     The key is `lang`, the family's: one name on three origins, the same word the address
+     carries. A storage key is a promise to every visitor, and this one is made once, for the
+     family, by the package, so that no site can make it differently.
   */
-  var LANG_KEY = "gg-lang";
+  var LANG_KEY = "lang";
   function langStored(){ try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } }
   function langRemember(v){ try { localStorage.setItem(LANG_KEY, v); } catch (e) {} }
 
@@ -649,7 +653,7 @@
   if (urlLang) langRemember(urlLang);
   var lang = urlLang || (langStored() === 'de' ? 'de' : 'en');
 
-  /* ─── theme · v3 · page ───────────────────────────────────────
+  /* ─── theme · v4 · page ───────────────────────────────────────
      One theme across three domains, and where it is remembered. Generated from
      @robertblust/design — editing it here does nothing.
 
@@ -661,7 +665,7 @@
      the page's own `noFlash` flag: a page that declares it and is missing either control fails
      there.
   */
-  var THEME_KEY = "rb-theme";
+  var THEME_KEY = "theme";
   function themeStored(){ try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } }
   function themeRemember(v){ try { localStorage.setItem(THEME_KEY, v); } catch (e) {} }
 

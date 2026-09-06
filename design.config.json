@@ -1,7 +1,1 @@
-{
-  "groups": [
-    "fonts"
-  ],
-  "langKey": "gg-lang",
-  "themeKey": "rb-theme"
-}
+{ "groups": ["fonts"] }
