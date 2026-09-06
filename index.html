@@ -590,11 +590,11 @@
           <a href="billing/" data-de="Abrechnung">Billing</a>
         </div>
         <button class="burger" id="burger" type="button" aria-expanded="false"
-                aria-controls="navlinks" aria-label="Menü — menu">
+                aria-controls="navlinks" aria-label="menu" data-de-aria="Menü">
           <svg class="ibars" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
           <svg class="ix" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
-        <div class="switchers" id="langind"><div class="seg" role="group" aria-label="Sprache wechseln — switch language"><button type="button" id="lde" aria-pressed="false">DE</button><button type="button" id="len" aria-pressed="true">EN</button></div><div class="seg theme" id="thmind" role="group" aria-label="Erscheinungsbild wechseln — switch appearance"><button type="button" id="thLight" aria-pressed="false" aria-label="Light"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button><button type="button" id="thDark" aria-pressed="true" aria-label="Dark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button></div></div>
+        <div class="switchers" id="langind"><div class="seg" role="group" aria-label="switch language" data-de-aria="Sprache wechseln"><button type="button" id="lde" aria-pressed="false">DE</button><button type="button" id="len" aria-pressed="true">EN</button></div><div class="seg theme" id="thmind" role="group" aria-label="switch appearance" data-de-aria="Erscheinungsbild wechseln"><button type="button" id="thLight" aria-pressed="false" aria-label="Light" data-de-aria="Hell"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button><button type="button" id="thDark" aria-pressed="true" aria-label="Dark" data-de-aria="Dunkel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button></div></div>
       </nav>
     </div>
   </header>
@@ -677,7 +677,7 @@
 // storage access is guarded: file:// is an opaque origin in some browsers and throws,
 // and a page that cannot remember a preference must still work without one.
 (function(){
-  /* ─── language · v3 · page ─────────────────────────────────────────────
+  /* ─── language · v4 · page ─────────────────────────────────────────────
      One language across three domains, and where it is remembered. Generated
      from @robertblust/design — editing it here does nothing, because the next
      `npm run design` overwrites it. Change it in the package.
@@ -731,6 +731,27 @@
   // carries the language too; both fire before the browser follows the href.
   document.addEventListener("mousedown", carryLang, true);
   document.addEventListener("click", carryLang, true);
+
+  /* An aria-label is markup the switch cannot reach through innerHTML, so a label that had
+     to be read in both languages was written bilingual, "Menü — menu", and put an em-dash
+     into German. Every element that carries data-de-aria gets the label for the language
+     whenever <html lang> changes; the English is captured here on load, as data-en-aria, and
+     never written by hand. The block watches the attribute rather than being called, so a
+     page adds nothing to its own applyLang and the contract above does not grow. */
+  function ariaI18n(){ return Array.prototype.slice.call(document.querySelectorAll("[data-de-aria]")); }
+  function applyAria(){
+    var l = document.documentElement.lang === "de" ? "de" : "en";
+    ariaI18n().forEach(function(el){
+      if (!el.hasAttribute("data-en-aria")) el.setAttribute("data-en-aria", el.getAttribute("aria-label") || "");
+      el.setAttribute("aria-label", el.getAttribute("data-" + l + "-aria"));
+    });
+  }
+  function watchAria(){
+    applyAria();
+    if (window.MutationObserver)
+      new MutationObserver(applyAria).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", watchAria); else watchAria();
   /* ─── end language ─────────────────────────────────────────────────── */
 
 
