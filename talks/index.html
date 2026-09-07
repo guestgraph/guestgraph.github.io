@@ -452,21 +452,47 @@
      column of content sitting above a screen-height void */
   main{flex:1; display:flex; align-items:center; padding:2vh 0 5vh}
 
-  /* The title block every prose page in the family carries: the first clause light and dim,
-     the completion heavy under it, and a tagline at one measure below. The page's subject is
-     what changes between pages, never the shape. */
+  /* ─── title contract · v1 · shared ─────────────────────────────────
+     Generated from @robertblust/design — edit it there and run `npm run design`.
+
+     How every prose page in the family opens, and why it is one block and not fourteen
+     copies: the shape belongs to the family and the words belong to the page. Four of the
+     copies had already drifted into a different design — one line at weight 700 over a
+     smaller lede — and a visitor moving between pages met two headline treatments on one
+     site before anything failed anywhere.
+
+     What the contract says:
+       · the h1       two blocks, not two lines of one. The first clause reads light and
+                      dim, the completion heavy under it, so the break is the author's
+                      sentence and never the viewport's measure.
+       · the em       the accent, and at most one word per headline. A site whose em is a
+                      wordmark's second half rather than an emphasized word overrides this
+                      rule after the fence, where the divergence is written beside its
+                      reason.
+       · the tagline  46ch, and the full column once the column is narrower than that. The
+                      narrow rule is in here rather than in the page's own media block,
+                      because a fence that owns a measure wide and not narrow owns neither.
+
+     A landing page is not this block. Each site's front page is its one statement and is
+     sized for it — blust.ch at weight 200 under class names of its own, guestgraph a step
+     larger, companygraph on a container query — and folding three deliberate heroes into one
+     rule would be a decision this block has no business making. */
   .title h1{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
             letter-spacing:-.035em; line-height:1.0;
             font-size:clamp(2.2rem,6vw,4.6rem)}
   .title h1 .r70{display:block; font-weight:300; color:var(--dim)}
   .title h1 .rcl{display:block; font-weight:800}
-  /* The accent word in that block is --c-firm elsewhere. Here the em is not a word being
-     emphasized, it is the wordmark's second half, so it keeps the rule the wordmark keeps
-     wherever it appears: Guest in ink, Graph in the brand accent. */
-  h1 em{font-style:normal; color:var(--c-mid)}
-  .t em{font-style:normal; color:var(--c-mid)}
+  .title h1 em{font-style:normal; color:var(--c-firm)}
   .tagline{margin-top:1.6rem; font-size:clamp(1.1rem,1.9vw,1.4rem); color:var(--dim);
            max-width:46ch; line-height:1.4}
+  @media (max-width:900px){ .tagline{max-width:100%} }
+  /* ─── end title contract ────────────────────────────────────────────────── */
+  /* The wordmark's second half, wherever it appears: accent-colored, never italic. In the
+     headline that means overriding the em the contract above sets, which is the accent word
+     on every other page — and at the contract's own specificity, because `h1 em` alone loses
+     to `.title h1 em`. */
+  .title h1 em{color:var(--c-mid)}
+  .t em{font-style:normal; color:var(--c-mid)}
 
   .talks{margin-top:clamp(3rem,6vh,5rem)}
   .talk{
@@ -528,7 +554,6 @@
   :focus-visible{outline:2px solid var(--c-mid); outline-offset:3px; border-radius:3px}
 
   @media (max-width:900px){
-    .tagline{max-width:100%}
     /* the nav items and the wordmark do not fit a phone on one line. Letting the bar wrap
        keeps them all legible; squeezing them instead broke “DE · EN” across two lines. */
     main{padding:1vh 0 4vh}
