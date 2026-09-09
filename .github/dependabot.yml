@@ -18,6 +18,16 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    # Zero, stated, because Dependabot applies three days when the key is absent. The cooldown
+    # drops every release younger than that and offers the highest version left — the pinned
+    # release included, so for a package pinned by tag and released more than once a week the
+    # offer is a DOWNGRADE. It came on 2026-09-09 as v0.54.0 down to v0.30.0 in the design group,
+    # the newest release older than three days at that hour, and returned on the next run after
+    # its pull request was closed; a run is triggered by every change to this file. With zero,
+    # Dependabot sees the pinned release and proposes nothing. Nothing is lost: the pin is
+    # editorial and moves when the owner decides, so a cooldown protected nothing here.
+    cooldown:
+      default-days: 0
     groups:
       # Declared first on purpose: Dependabot puts a dependency in the FIRST group it matches,
       # so naming the design package here keeps it out of minor-and-patch below. A design
@@ -27,15 +37,7 @@ updates:
       # and commits what changed.
       #
       # A pull request from this group proposing a LOWER version is closed, never merged. The
-      # cause is Dependabot's release cooldown, not its tag ranking: it dates each git tag by
-      # that tag's GitHub Release and filters out anything released within three days. So a
-      # design release cut today is excluded as too fresh, while older tags carrying no Release
-      # have no date to filter on and all survive — leaving whichever of those ranks highest,
-      # which is how v0.54.0 was offered a downgrade to v0.27.0 on 2026-09-08. It stops once
-      # the release ages past the cooldown, and does not recur while every recent tag carries
-      # one. The sibling sites carry this warning against their meta-model group, which hit
-      # the same thing on 2026-09-02; it is written out here too rather than referenced,
-      # because a reader of this file is reading this file.
+      # cooldown block above says why one appears and what stops it.
       design:
         patterns:
           - "@robertblust/design"
