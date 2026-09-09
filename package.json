@@ -16,6 +16,6 @@
   "devDependencies": {
     "@robertblust/design": "github:robertblust/design#v0.54.0",
     "pdf-lib": "^1.17.1",
-    "playwright": "^1.49.1"
+    "playwright": "^1.63.0"
   }
 }
