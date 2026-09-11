@@ -24,6 +24,7 @@ had to be unwound. Do not recreate one.
 | `/talks/intro/` | The introduction — narrated, German and English, with a PDF in each. |
 | `/billing/` | How the hosted service will bill. One meter, and it is arrivals. |
 | `/privacy/` | What this site collects, which is nothing. |
+| `/problems/` | What each refusal type a GuestGraph service answers means, and what to do about it. |
 
 ## Contents
 
@@ -38,7 +39,7 @@ had to be unwound. Do not recreate one.
   at them relatively, so the deck still opens from `file://`.
 - `sitemap.xml` — one flat list of every URL on the domain. It was an index pointing at a
   second sitemap while the talks lived elsewhere; there is one list now.
-- `verify/check.mjs` — the suite, covering all five pages in one run, and
+- `verify/check.mjs` — the suite, covering all six pages in one run, and
   `verify/og-recipe.test.mjs`, the share-card check's own tests.
 - `og.png`, `talks/og.png`, `talks/intro/og.png` — 1200×630 share cards, each rendered from the
   page it belongs to, and an `og.sha` beside each one: a hash of everything that went into the
@@ -70,9 +71,9 @@ No build step. Open `index.html`, or serve it:
 npm install                        # once, for Playwright
 npm run serve                      # → http://localhost:8000
 npm run verify                     # renders every page and asserts the DOM
-npm run og:check                   # do the five share cards still show their pages?
+npm run og:check                   # do the six share cards still show their pages?
 npm run test:og                    # the card check's own tests (node --test)
-npm run og                         # re-renders all five cards after a visual change
+npm run og                         # re-renders all six cards after a visual change
 ```
 
 `og:check` needs no server and no browser — it re-derives each card's recipe and compares it
