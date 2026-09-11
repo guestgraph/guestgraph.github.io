@@ -66,9 +66,11 @@ const PAGES = [
   // The problems page. A refusal's `type` URI is this page's address with the slug as its
   // fragment, so every slug the two services answer must land on a heading here; the list is
   // the one the engine's shared-runtime contract names, and a service that adds a slug adds a
-  // section. `translates` joins this entry when the translator has made the German; until then
-  // every data-de is empty and the check would only report that.
+  // section.
   { path: "/problems/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+    translates: { lang: "de", shows: ["Jede Ablehnung", "Ungültige Anfrage", "Interner Serverfehler"], hides: ["Every refusal", "Invalid request", "Internal server error"],
+                  title: "Probleme – GuestGraph",
+                  desc: "Jede Ablehnung, mit der ein GuestGraph-Dienst antwortet, trägt einen Typ. Was jeder Typ bedeutet, welcher Dienst damit antwortet und was dagegen zu tun ist." },
     contains: ["Every refusal", "invalid-request", "invalid-actor-claim", "invalid-unmerge", "unauthorized", "not-found", "conflict", "review-already-decided", "run-in-progress", "guest-retired", "payload-too-large", "internal-error"],
     ids: ["invalid-request", "invalid-actor-claim", "invalid-unmerge", "unauthorized", "not-found", "conflict", "review-already-decided", "run-in-progress", "guest-retired", "payload-too-large", "internal-error"],
     links: ["https://github.com/guestgraph"],
