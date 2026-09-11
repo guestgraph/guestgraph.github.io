@@ -63,6 +63,19 @@ const PAGES = [
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: ["design tokens", "header contract", "title contract", "language", "prose reset", "prose footer"],
     card: true, cardBase: SITE, internalLinks: true },
 
+  // The problems page. A refusal's `type` URI is this page's address with the slug as its
+  // fragment, so every slug the two services answer must land on a heading here; the list is
+  // the one the engine's shared-runtime contract names, and a service that adds a slug adds a
+  // section. `translates` joins this entry when the translator has made the German; until then
+  // every data-de is empty and the check would only report that.
+  { path: "/problems/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+    contains: ["Every refusal", "invalid-request", "invalid-actor-claim", "invalid-unmerge", "unauthorized", "not-found", "conflict", "review-already-decided", "run-in-progress", "guest-retired", "payload-too-large", "internal-error"],
+    ids: ["invalid-request", "invalid-actor-claim", "invalid-unmerge", "unauthorized", "not-found", "conflict", "review-already-decided", "run-in-progress", "guest-retired", "payload-too-large", "internal-error"],
+    links: ["https://github.com/guestgraph"],
+    sameTab: ["../talks/", "../", "../billing/", "../privacy/"],
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: ["design tokens", "header contract", "title contract", "language", "prose reset", "prose footer"],
+    card: true, cardBase: SITE, internalLinks: true },
+
   { path: "/talks/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
     // The German PDF is reached by data-de-href, which `sameTab` cannot see: it reads the href as
     // delivered, and the swap happens only after a click. `dlHref` reads the first such link.
@@ -114,6 +127,12 @@ const CHECKS = {
   ...DESIGN_CHECKS,
   ...STAGE_CHECKS,
   ...pageChecks({ SITE, BASE }),
+  // A refusal's type URI ends in a fragment, and a fragment that lands on nothing is a
+  // reader left at the top of the page: every id the spec names must be an element's id.
+  async ids(page, spec) {
+    const missing = await page.evaluate(ids => ids.filter(id => !document.getElementById(id)), spec.ids);
+    return missing.length ? `no element carries the id ${missing.map(id => JSON.stringify(id)).join(", ")}` : null;
+  },
 };
 
 const browser = await chromium.launch();
