@@ -559,75 +559,75 @@
 <main>
   <div class="shell">
     <div class="title">
-      <h1 data-de=""><span class="r70">Every refusal</span><span class="rcl">carries a <em>type</em>.</span></h1>
-      <p class="tagline" data-de="">You read one in a problem-details body and followed it here. Each section below is one type: what it means, which service answers it and what to do next.</p>
-      <p class="lede intro" data-de="">A GuestGraph service refuses a request with an RFC 9457 problem detail: a <code class="mono">type</code>, a <code class="mono">title</code>, a <code class="mono">status</code> and a <code class="mono">detail</code>, sometimes an <code class="mono">instance</code>, and for a few problems named members beside them. The type is this page's address with the section's name as its fragment, so the URI in the body leads to the section that explains it. The engine and the connector answer from one list, and each section says which of them answers it.</p>
+      <h1 data-de="<span class='r70'>Jede Ablehnung</span><span class='rcl'>trägt einen <em>Typ</em>.</span>"><span class="r70">Every refusal</span><span class="rcl">carries a <em>type</em>.</span></h1>
+      <p class="tagline" data-de="Sie haben einen in einer Problem-Details-Antwort gelesen und sind ihm gefolgt. Jeder Abschnitt ist ein Typ: was er bedeutet, welcher Dienst damit antwortet und was jetzt zu tun ist.">You read one in a problem-details body and followed it here. Each section below is one type: what it means, which service answers it and what to do next.</p>
+      <p class="lede intro" data-de="Ein GuestGraph-Dienst lehnt eine Anfrage mit einem Problem Detail nach <a href='https://www.rfc-editor.org/rfc/rfc9457.html'>RFC 9457</a> ab: <code class='mono'>type</code>, <code class='mono'>title</code>, <code class='mono'>status</code> und <code class='mono'>detail</code>, manchmal <code class='mono'>instance</code>, und bei einigen Problemen benannte Felder daneben. Der Typ ist die Adresse dieser Seite, mit dem Namen des Abschnitts als Fragment. So führt die URI im Body zu dem Abschnitt, der ihn erklärt. Die Engine und der Connector antworten aus ein und derselben Liste, und jeder Abschnitt sagt, wer von beiden damit antwortet.">A GuestGraph service refuses a request with an <a href="https://www.rfc-editor.org/rfc/rfc9457.html">RFC 9457</a> problem detail: a <code class="mono">type</code>, a <code class="mono">title</code>, a <code class="mono">status</code> and a <code class="mono">detail</code>, sometimes an <code class="mono">instance</code>, and for a few problems named members beside them. The type is this page's address with the section's name as its fragment, so the URI in the body leads to the section that explains it. The engine and the connector answer from one list, and each section says which of them answers it.</p>
     </div>
 
     <section>
-      <h2 id="invalid-request" data-de="">Invalid request</h2>
+      <h2 id="invalid-request" data-de="Ungültige Anfrage">Invalid request</h2>
       <p class="meta mono">400 · invalid-request</p>
-      <p class="lede" data-de="">The request could not be used as sent. The detail says what was wrong. Every service answers it. Fix the request and send it again.</p>
+      <p class="lede" data-de="Die Anfrage war so, wie sie gesendet wurde, nicht verwendbar. Das Detail sagt, was falsch war. Jeder Dienst antwortet damit. Korrigieren Sie die Anfrage und senden Sie sie noch einmal.">The request could not be used as sent. The detail says what was wrong. Every service answers it. Fix the request and send it again.</p>
     </section>
 
     <section>
-      <h2 id="invalid-actor-claim" data-de="">Invalid actor claim</h2>
+      <h2 id="invalid-actor-claim" data-de="Ungültige Akteur-Angabe">Invalid actor claim</h2>
       <p class="meta mono">400 · invalid-actor-claim</p>
-      <p class="lede" data-de="">The request claimed an actor its credential does not grant. This is a malformed claim, not a failed authorization: the credential was accepted, and what it said about who is acting was not. The engine answers it. Send an actor claim the credential grants.</p>
+      <p class="lede" data-de="Die Anfrage hat einen Akteur angegeben, den ihre Zugangsdaten nicht erlauben. Das ist eine fehlerhafte Angabe, keine gescheiterte Autorisierung: Die Zugangsdaten wurden angenommen, die Angabe, wer handelt, nicht. Die Engine antwortet damit. Senden Sie eine Akteur-Angabe, die die Zugangsdaten erlauben.">The request claimed an actor its credential does not grant. This is a malformed claim, not a failed authorization: the credential was accepted, and what it said about who is acting was not. The engine answers it. Send an actor claim the credential grants.</p>
     </section>
 
     <section>
-      <h2 id="invalid-unmerge" data-de="">Invalid unmerge</h2>
+      <h2 id="invalid-unmerge" data-de="Ungültige Trennung">Invalid unmerge</h2>
       <p class="meta mono">400 · invalid-unmerge</p>
-      <p class="lede" data-de="">The requested unmerge cannot be carried out. A guest with a single record has nothing to split off, and a record that is not linked to the guest cannot be taken from it. The engine answers it. Read the guest, then ask for an unmerge it can perform.</p>
+      <p class="lede" data-de="Die gewünschte Trennung kann nicht ausgeführt werden. Ein Gast mit nur einem Datensatz hat nichts, was sich abtrennen liesse, und ein Datensatz, der nicht mit dem Gast verknüpft ist, lässt sich ihm nicht wegnehmen. Die Engine antwortet damit. Lesen Sie den Gast, und verlangen Sie dann eine Trennung, die er ausführen kann.">The requested unmerge cannot be carried out. A guest with a single record has nothing to split off, and a record that is not linked to the guest cannot be taken from it. The engine answers it. Read the guest, then ask for an unmerge it can perform.</p>
     </section>
 
     <section>
-      <h2 id="unauthorized" data-de="">Unauthorized</h2>
+      <h2 id="unauthorized" data-de="Nicht autorisiert">Unauthorized</h2>
       <p class="meta mono">401 · unauthorized</p>
-      <p class="lede" data-de="">The credential is missing, unknown or revoked. The engine reads the <code class="mono">X-API-Key</code> header; a token-guarded surface reads a bearer token in the <code class="mono">Authorization</code> header. Every service answers it. Check that the credential is sent in the header the service reads, and that it is still valid.</p>
+      <p class="lede" data-de="Die Zugangsdaten fehlen, sind unbekannt oder widerrufen. Die Engine liest den Header <code class='mono'>X-API-Key</code>; eine per Token geschützte Schnittstelle liest ein Bearer-Token im Header <code class='mono'>Authorization</code>. Jeder Dienst antwortet damit. Prüfen Sie, ob die Zugangsdaten in dem Header gesendet werden, den der Dienst liest, und ob sie noch gültig sind.">The credential is missing, unknown or revoked. The engine reads the <code class="mono">X-API-Key</code> header; a token-guarded surface reads a bearer token in the <code class="mono">Authorization</code> header. Every service answers it. Check that the credential is sent in the header the service reads, and that it is still valid.</p>
     </section>
 
     <section>
-      <h2 id="not-found" data-de="">Resource not found</h2>
+      <h2 id="not-found" data-de="Ressource nicht gefunden">Resource not found</h2>
       <p class="meta mono">404 · not-found</p>
-      <p class="lede" data-de="">Nothing with that id exists in the caller's tenant. An id that belongs to another tenant gets the same answer as one that never existed, on purpose: a refusal must not say whether an id is in use elsewhere. Every service answers it. Check the id, and check which tenant the credential belongs to.</p>
+      <p class="lede" data-de="Im Mandanten des Aufrufers gibt es nichts mit dieser ID. Eine ID aus einem anderen Mandanten bekommt mit Absicht dieselbe Antwort wie eine, die es nie gab: Eine Ablehnung darf nicht verraten, ob eine ID anderswo in Gebrauch ist. Jeder Dienst antwortet damit. Prüfen Sie die ID, und prüfen Sie, zu welchem Mandanten die Zugangsdaten gehören.">Nothing with that id exists in the caller's tenant. An id that belongs to another tenant gets the same answer as one that never existed, on purpose: a refusal must not say whether an id is in use elsewhere. Every service answers it. Check the id, and check which tenant the credential belongs to.</p>
     </section>
 
     <section>
-      <h2 id="conflict" data-de="">Conflict</h2>
+      <h2 id="conflict" data-de="Konflikt">Conflict</h2>
       <p class="meta mono">409 · conflict</p>
-      <p class="lede" data-de="">The thing already exists. A source system registered twice is the usual case: the second registration is refused rather than overwriting the first. The engine answers it. Read what is there before creating it again.</p>
+      <p class="lede" data-de="Was angelegt werden soll, gibt es schon. Der übliche Fall ist ein Quellsystem, das zweimal registriert wird: Die zweite Registrierung wird abgelehnt, statt die erste zu überschreiben. Die Engine antwortet damit. Lesen Sie, was da ist, bevor Sie es noch einmal anlegen.">The thing already exists. A source system registered twice is the usual case: the second registration is refused rather than overwriting the first. The engine answers it. Read what is there before creating it again.</p>
     </section>
 
     <section>
-      <h2 id="review-already-decided" data-de="">Conflict</h2>
+      <h2 id="review-already-decided" data-de="Konflikt">Conflict</h2>
       <p class="meta mono">409 · review-already-decided</p>
-      <p class="lede" data-de="">A match review is decided exactly once, and the first decision stands. A second decision on the same review is refused, whatever it says. The engine answers it. Read the review to see the decision that stands.</p>
+      <p class="lede" data-de="Ein Match-Review wird genau einmal entschieden, und die erste Entscheidung gilt. Eine zweite Entscheidung zum selben Review wird abgelehnt, was immer sie besagt. Die Engine antwortet damit. Lesen Sie das Review, um die Entscheidung zu sehen, die gilt.">A match review is decided exactly once, and the first decision stands. A second decision on the same review is refused, whatever it says. The engine answers it. Read the review to see the decision that stands.</p>
     </section>
 
     <section>
-      <h2 id="run-in-progress" data-de="">A run is in progress</h2>
+      <h2 id="run-in-progress" data-de="Ein Durchlauf ist im Gang">A run is in progress</h2>
       <p class="meta mono">409 · run-in-progress</p>
-      <p class="lede" data-de="">A full sync or a reconciliation is running on this connection, and a second run cannot start beside it. The connector answers it. Wait for the run to finish, or read the run to see where it stands.</p>
+      <p class="lede" data-de="Auf dieser Verbindung läuft ein Vollabgleich oder eine Reconciliation, und ein zweiter Durchlauf kann nicht daneben starten. Der Connector antwortet damit. Warten Sie, bis der Durchlauf fertig ist, oder lesen Sie den Durchlauf, um seinen Stand zu sehen.">A full sync or a reconciliation is running on this connection, and a second run cannot start beside it. The connector answers it. Wait for the run to finish, or read the run to see where it stands.</p>
     </section>
 
     <section>
-      <h2 id="guest-retired" data-de="">Guest id retired</h2>
+      <h2 id="guest-retired" data-de="Gast-ID stillgelegt">Guest id retired</h2>
       <p class="meta mono">410 · guest-retired</p>
-      <p class="lede" data-de="">The guest id was absorbed by a merge or emptied by a split, and nothing is read under it any more. The engine answers it, with three named members beside the detail: <code class="mono">guestId</code>, the id that was read; <code class="mono">resolutionStatus</code>, which is <code class="mono">MERGED</code>, <code class="mono">SPLIT</code> or <code class="mono">RETIRED</code>; and <code class="mono">currentGuestIds</code>, where the guest is now. Read the current guest. When there are several, the graph cannot say which one was meant, and a person has to.</p>
+      <p class="lede" data-de="Die Gast-ID wurde durch eine Zusammenführung aufgenommen oder durch eine Trennung geleert, und unter ihr wird nichts mehr gelesen. Die Engine antwortet damit, mit drei benannten Feldern neben dem Detail: <code class='mono'>guestId</code>, die gelesene ID; <code class='mono'>resolutionStatus</code>, also <code class='mono'>MERGED</code>, <code class='mono'>SPLIT</code> oder <code class='mono'>RETIRED</code>; und <code class='mono'>currentGuestIds</code>, wo der Gast jetzt ist. Lesen Sie den aktuellen Gast. Sind es mehrere, kann der Graph nicht sagen, welcher gemeint war – das muss ein Mensch.">The guest id was absorbed by a merge or emptied by a split, and nothing is read under it any more. The engine answers it, with three named members beside the detail: <code class="mono">guestId</code>, the id that was read; <code class="mono">resolutionStatus</code>, which is <code class="mono">MERGED</code>, <code class="mono">SPLIT</code> or <code class="mono">RETIRED</code>; and <code class="mono">currentGuestIds</code>, where the guest is now. Read the current guest. When there are several, the graph cannot say which one was meant, and a person has to.</p>
     </section>
 
     <section>
-      <h2 id="payload-too-large" data-de="">Payload too large</h2>
+      <h2 id="payload-too-large" data-de="Payload zu gross">Payload too large</h2>
       <p class="meta mono">413 · payload-too-large</p>
-      <p class="lede" data-de="">The body exceeds the service's cap. The detail names the cap in bytes. Every service answers it. Send less in one request.</p>
+      <p class="lede" data-de="Der Body überschreitet die Obergrenze des Dienstes. Das Detail nennt die Obergrenze in Bytes. Jeder Dienst antwortet damit. Senden Sie weniger auf einmal.">The body exceeds the service's cap. The detail names the cap in bytes. Every service answers it. Send less in one request.</p>
     </section>
 
     <section>
-      <h2 id="internal-error" data-de="">Internal server error</h2>
+      <h2 id="internal-error" data-de="Interner Serverfehler">Internal server error</h2>
       <p class="meta mono">500 · internal-error</p>
-      <p class="lede" data-de="">Something nobody foresaw. The detail says nothing of the cause on purpose; the server log has it in full. Every service answers it. Retry once. If it happens again, report it with the <code class="mono">instance</code> path and the time.</p>
+      <p class="lede" data-de="Etwas, das niemand vorhergesehen hat. Das Detail sagt mit Absicht nichts über die Ursache; das Server-Log hat sie vollständig. Jeder Dienst antwortet damit. Versuchen Sie es einmal erneut. Passiert es wieder, melden Sie es mit dem Pfad aus <code class='mono'>instance</code> und der Uhrzeit.">Something nobody foresaw. The detail says nothing of the cause on purpose; the server log has it in full. Every service answers it. Retry once. If it happens again, report it with the <code class="mono">instance</code> path and the time.</p>
     </section>
 
   </div>
@@ -803,8 +803,8 @@
   i18n.forEach(function(el){ el.setAttribute("data-en", el.innerHTML); });
 
   var UI = {
-    de:{ title:"",
-         desc:"" },
+    de:{ title:"Probleme – GuestGraph",
+         desc:"Jede Ablehnung, mit der ein GuestGraph-Dienst antwortet, trägt einen Typ. Was jeder Typ bedeutet, welcher Dienst damit antwortet und was dagegen zu tun ist." },
     en:{ title:"Problems — GuestGraph",
          desc:"Every refusal a GuestGraph service answers carries a type. What each type means, which service answers it and what to do about it." }
   };

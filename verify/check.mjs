@@ -66,13 +66,17 @@ const PAGES = [
   // The problems page. A refusal's `type` URI is this page's address with the slug as its
   // fragment, so every slug the two services answer must land on a heading here; the list is
   // the one the engine's shared-runtime contract names, and a service that adds a slug adds a
-  // section. `translates` joins this entry when the translator has made the German; until then
-  // every data-de is empty and the check would only report that.
+  // section.
   { path: "/problems/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+    translates: { lang: "de", shows: ["Jede Ablehnung", "Ungültige Anfrage", "Interner Serverfehler"], hides: ["Every refusal", "Invalid request", "Internal server error"],
+                  title: "Probleme – GuestGraph",
+                  desc: "Jede Ablehnung, mit der ein GuestGraph-Dienst antwortet, trägt einen Typ. Was jeder Typ bedeutet, welcher Dienst damit antwortet und was dagegen zu tun ist." },
     contains: ["Every refusal", "invalid-request", "invalid-actor-claim", "invalid-unmerge", "unauthorized", "not-found", "conflict", "review-already-decided", "run-in-progress", "guest-retired", "payload-too-large", "internal-error"],
     ids: ["invalid-request", "invalid-actor-claim", "invalid-unmerge", "unauthorized", "not-found", "conflict", "review-already-decided", "run-in-progress", "guest-retired", "payload-too-large", "internal-error"],
-    links: ["https://github.com/guestgraph"],
-    sameTab: ["../talks/", "../", "../billing/", "../privacy/"],
+    // The standard itself, linked where the page names it: a reader who wants the shape of a
+    // problem detail rather than this list goes to the source.
+    links: ["https://github.com/guestgraph", "https://www.rfc-editor.org/rfc/rfc9457.html"],
+    sameTab: ["../talks/", "../", "../billing/", "../privacy/", "https://www.rfc-editor.org/rfc/rfc9457.html"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: ["design tokens", "header contract", "title contract", "language", "prose reset", "prose footer"],
     card: true, cardBase: SITE, internalLinks: true },
 
