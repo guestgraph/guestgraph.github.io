@@ -165,7 +165,10 @@ function responses(doc, op) {
       ?? target?.content?.["application/problem+json"]?.schema;
     return {
       code,
-      description: (target?.description ?? "").trim().split("\n")[0],
+      // The shared Problem response describes itself as "RFC 9457 problem details", which is
+      // what every refusal on the page already is and what the type beside it says better.
+      // A response that carries its own sentence keeps it.
+      description: ref === "Problem" ? "" : (target?.description ?? "").trim().split("\n")[0],
       problems: error ? mapped[code] : [],
       shape: error ? null : (schema ? shape(doc, schema.type === "array" ? schema.items : schema) : null),
       many: !error && schema?.type === "array",
@@ -226,7 +229,7 @@ function panel(o) {
         const body = r.shape && (r.shape.name || r.shape.fields.length) ? fields(r.shape, r.many) : "";
         return (
           `<li><div class="line"><code class="mono c">${esc(r.code)}</code> ` +
-          `<span class="d">${text}${links ? ` · ${links}` : ""}</span></div>${body}</li>`
+          `<span class="d">${[text, links].filter(Boolean).join(" · ")}</span></div>${body}</li>`
         );
       })
       .join("");
