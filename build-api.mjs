@@ -92,6 +92,18 @@ function rows(ops) {
     .join("\n");
 }
 
+// The provenance line, the shape blust.ch's model page uses: the whole line is record — a
+// repository, a commit, the document read from it — so it is mono end to end, and the prose
+// between the links carries its German while the coordinates do not.
+function derived() {
+  const one = (name, src) =>
+    `<a href="https://github.com/${src.repo}/blob/${src.commit}/${src.spec}">${src.repo}</a>` +
+    `@<span>${src.commit.slice(0, 7)}</span>`;
+  return `      <p class="derived"><span data-de="Erzeugt aus">Generated from</span> ` +
+    `${one("engine", SOURCES.engine)} <span data-de="und">and</span> ${one("connector", SOURCES.connector)}` +
+    `<span data-de=", den Dokumenten, die diese Commits enthalten.">, the documents those commits hold.</span></p>`;
+}
+
 function sections(engine, connector) {
   const byId = new Map(engine.ops.map((o) => [o.id, o]));
   const out = new Map();
@@ -110,6 +122,7 @@ function sections(engine, connector) {
     });
     out.set(key, rows(ops));
   }
+  out.set("derived", derived());
 
   const stray = engine.ops.filter((o) => !placed.has(o.id));
   if (stray.length) {

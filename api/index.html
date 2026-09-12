@@ -520,6 +520,15 @@
     .ops li{grid-template-columns:3.6rem minmax(0,21rem) minmax(0,1fr)}
   }
 
+  /* The provenance line. Mono end to end, as blust.ch's model page sets its own: the line is
+     entirely record — two repositories, two commits, the documents read from them — and
+     setting only the links in mono leaves the sentence around them looking like prose that
+     happens to contain data. */
+  .derived{margin-top:2.6rem; font-family:"Plex Mono",monospace; font-size:.78rem;
+           letter-spacing:.06em; color:var(--dim)}
+  .derived a{color:inherit}
+  .derived a:hover, .derived a:focus-visible{color:var(--c-mid)}
+
   .out{margin-top:clamp(3rem,7vh,4.5rem)}
   .out ul{margin-top:1.1rem; list-style:none; display:grid; gap:.7rem; max-width:62ch}
   .out li{font-size:1rem; color:var(--dim)}
@@ -597,10 +606,11 @@
     <div class="title">
       <h1 data-de="<span class='r70'>Zwei APIs.</span><span class='rcl'>Eine ist der <em>Graph</em>.</span>"><span class="r70">Two APIs.</span><span class="rcl">One is the <em>graph</em>.</span></h1>
       <p class="tagline" data-de="Die eine hält den Gast-Graphen und beantwortet Fragen dazu. Die andere füllt ihn.">One holds the guest graph and answers questions about it. One fills it.</p>
-      <p class="lede intro" data-de="Die Engine ist die API, gegen die Sie entwickeln: Sie senden, was ein System über eine Person weiss, und sie antwortet mit der Person. Ein Connector ist ein Client dieser API und hat eine kleine eigene Schnittstelle – die ruft ein Betreiber auf, um ihn zu überwachen und einen Durchlauf zu starten. Jeder Aufruf unten wird aus dem OpenAPI-Dokument des jeweiligen Dienstes erzeugt, aus dem Commit, den diese Seite festhält. Ein Pfad hier ist deshalb ein Pfad, den es gibt.">The engine is the API you build against: you send what a system knows about a person, and it
+      <p class="lede intro" data-de="Die Engine ist die API, gegen die Sie entwickeln: Sie senden, was ein System über eine Person weiss, und sie antwortet mit der Person. Ein Connector ist ein Client dieser API und hat eine kleine eigene Schnittstelle – die ruft ein Betreiber auf, um ihn zu überwachen und einen Durchlauf zu starten. Jeder Aufruf unten wird aus dem OpenAPI-Dokument des jeweiligen Dienstes erzeugt, aus dem Commit, den diese Seite festhält. Ein Pfad hier ist deshalb ein Pfad, den es gibt. Diese Zeilen stehen in der einen Sprache, in der die Dokumente geschrieben sind. Der Rest dieser Seite ist zweisprachig.">The engine is the API you build against: you send what a system knows about a person, and it
         answers with the person. A connector is a client of that API with a small surface of its own, the one
         an operator uses to watch it and to start a run. Every call below is generated from the service's own
-        OpenAPI document at the commit this page pins, so a path here is a path that exists.</p>
+        OpenAPI document at the commit this page pins, so a path here is a path that exists. Those rows are in the one language the documents are
+        written in; the rest of this page is bilingual.</p>
       <p class="note" data-de="Es gibt keine Instanz, die Sie aufrufen können. GuestGraph ist Apache-2.0, und Sie betreiben es selbst. Die Pfade unten sind relativ zu Ihrer eigenen Installation, und eine laufende Instanz liefert ihr vollständiges Dokument unter <code class='mono'>/api-docs</code> aus, ohne Schlüssel.">There is no instance to call. GuestGraph is Apache-2.0 and you run it yourself; the
         paths below are relative to your own deployment, and a running instance serves its complete document at
         <code class="mono">/api-docs</code> with no key.</p>
@@ -696,6 +706,10 @@
       <li data-de="<b>Wie Identität entschieden wird</b> – <a href='https://github.com/guestgraph/engine/blob/main/docs/matching.md'>was zwei Datensätze zu einer Person macht</a> und <a href='https://github.com/guestgraph/engine/blob/main/docs/continuity.md'>was eine gespeicherte Gast-ID später bedeutet</a>"><b>How identity is decided</b> — <a href="https://github.com/guestgraph/engine/blob/main/docs/matching.md">what makes two records one person</a>, and <a href="https://github.com/guestgraph/engine/blob/main/docs/continuity.md">what a stored guest id means later</a></li>
     </ul>
   </section>
+
+    <!-- ops:derived -->
+      <p class="derived"><span data-de="Erzeugt aus">Generated from</span> <a href="https://github.com/guestgraph/engine/blob/c8b205c2f204ac8dd092b60a75dc97f427670cbf/src/main/resources/api/openapi.yaml">guestgraph/engine</a>@<span>c8b205c</span> <span data-de="und">and</span> <a href="https://github.com/guestgraph/connector-apaleo/blob/c7ca08adf9929ccc8472de8ed51cdd6b7effee40/src/main/resources/api/openapi.yaml">guestgraph/connector-apaleo</a>@<span>c7ca08a</span><span data-de=", den Dokumenten, die diese Commits enthalten.">, the documents those commits hold.</span></p>
+      <!-- end ops -->
 </main>
 
 <div class="shell">
