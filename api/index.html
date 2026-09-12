@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>API — GuestGraph</title>
+<meta id="metadesc" name="description" content="Two HTTP APIs: one holds the guest graph and answers questions about it, one fills it. What each call does, and what a refusal means.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://guestgraph.io/api/">
+
+<meta property="og:title" content="API — GuestGraph">
+<meta property="og:description" content="Two HTTP APIs: one holds the guest graph, one fills it. What each call does.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GuestGraph">
+<meta property="og:url" content="https://guestgraph.io/api/">
+<meta property="og:image" content="https://guestgraph.io/api/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Two APIs. One is the graph.">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="de_CH">
+<meta name="twitter:card" content="summary_large_image">
+<!-- The publisher, the site and this page — nothing about what the software does or when
+     it does it, which is the same rule the prose follows. Each page carries the whole graph
+     it references: Google resolves @graph within one document, so a bare { "@id": ... }
+     naming a node defined on another page resolved to nothing, which is what this replaced. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://guestgraph.io/#organization",
+      "name": "GuestGraph",
+      "url": "https://guestgraph.io/",
+      "logo": "https://guestgraph.io/logo.svg",
+      "sameAs": [
+        "https://github.com/guestgraph"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://guestgraph.io/#website",
+      "name": "GuestGraph",
+      "url": "https://guestgraph.io/",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://guestgraph.io/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://guestgraph.io/api/#webpage",
+      "name": "API",
+      "url": "https://guestgraph.io/api/",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://guestgraph.io/#website"
+      },
+      "publisher": {
+        "@id": "https://guestgraph.io/#organization"
+      },
+      "breadcrumb": {
+        "@id": "https://guestgraph.io/api/#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://guestgraph.io/api/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://guestgraph.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "API",
+          "item": "https://guestgraph.io/api/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+  /* ─── theme boot · v3 · page ────────────────────────────────────
+     Set the theme before anything paints. Generated from @robertblust/design —
+     editing it here does nothing, because the next `npm run design` overwrites it.
+
+     This is the only script on these pages that runs in <head>, and it has to: every other
+     script sits at the end of the body, which is after first paint. Language arriving late
+     costs a flash of English; a palette arriving late repaints the whole page in the wrong
+     one, on every navigation.
+
+     It duplicates the storage key and the URL pattern that `theme` also carries. That is
+     deliberate — nothing is in scope up here, and the block must stand alone. Both blocks are
+     generated from the same package, so the duplicate cannot drift.
+
+     Dark is the default and `prefers-color-scheme` is never read: dark is the design, and
+     light is something a visitor asks for. A visitor whose system is set to light still
+     arrives on dark until they say otherwise.
+  */
+  (function(){
+    try {
+      var m = /[?&]theme=(light|dark)(&|$)/.exec(location.search);
+      var t = m ? m[1] : localStorage.getItem("theme");
+      if (t === "light") document.documentElement.setAttribute("data-theme", "light");
+    } catch (e) {}
+  })();
+  /* ─── end theme boot ─────────────────────────────────────────────────── */
+
+</script>
+<style>
+/* Self-hosted, same origin: no third party sees a visitor, and the files resolve
+   from file:// as well as from the domain. Relative, because this page sits one
+   directory down and a root-absolute path would break the file:// case. */
+@font-face{font-family:"Instrument Sans";src:url(../fonts/InstrumentSans-var.woff2) format("woff2-variations"),url(../fonts/InstrumentSans-var.woff2) format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"Plex Mono";src:url(../fonts/PlexMono-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Plex Mono";src:url(../fonts/PlexMono-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Bricolage Grotesque";src:url(../fonts/Bricolage-var.woff2) format("woff2-variations"),url(../fonts/Bricolage-var.woff2) format("woff2");font-weight:200 800;font-display:swap}
+
+  /* ─── design tokens · v11 · page ───────────────────────────────
+     These sites share no stylesheet by design — a deck has to open from
+     file:// — so this block is a copy, generated from @robertblust/design.
+     Editing it here has no effect: the next `npm run design` overwrites it
+     from the package. Change it there, not here.
+
+     Brightness is confidence. Each stop has exactly one job:
+       --c-weak  a candidate: considered, not accepted
+       --c-mid   anything interactive — links, controls, the brand accent
+       --c-firm  the resolved thing — the thesis, the current page
+       --c-flag  a reversal; at most one per page, never decoration
+
+     And one name for a job the four stops do not cover:
+       --c-path  where you are and how you got here — in the drawing, the
+                 ancestors of the focused node and the line through them
+
+     It carries --c-firm's value, and naming it is the point: the places that
+     draw a path mean "the way back to the root", not "the resolved thing",
+     and the two only happen to look alike. A green was considered and
+     refused — the grammar here is one hue at four brightnesses, and a second
+     hue would have made color mean two things at once. If it is ever wanted,
+     this is the one line that changes.
+  */
+  /* The same eleven names, re-picked. The ramp's axis flips: on dark, brightness is
+     confidence; on light, depth is — the candidate pales, the resolved thing deepens.
+     Reusing the dark stops here was measured and refused: --c-mid paints every link and
+     falls to 2.45:1 on this ground, --c-firm to 1.49:1. These clear AA on every text stop
+     (ink 16.86, dim 6.04, mid 5.09, firm 10.28, flag 5.61).
+
+     --c-weak is 2.37:1 and that is deliberate, exactly as its 2.64:1 on dark is: its job is
+     "a candidate, considered but not accepted", and darkening it until it clears the 3:1 UI
+     threshold stops it reading as tentative. It must never carry text, a border or an
+     outline on its own, in either theme.
+
+     --press carries text now, not just a hover wash: `.seg button[aria-pressed="true"]`
+     paints --c-mid on it, and the pressed segment is how a visitor tells which language and
+     which theme is active. The palette had only ever been checked token-against-page-
+     background; nothing measured a text-bearing surface against the surface it actually
+     sits on. #E2E8F2 measured 4.35:1 against --c-mid here — under the 4.5 AA floor for the
+     12.16px/600 label — so it moves to #E7ECF4, which clears at 4.52:1. Counter-intuitively
+     lighter, not darker: darkening it moves it closer to --c-mid and away from AA, since
+     --c-mid is the darker of the two. Dark's pair is already 6.16:1 and is untouched. */
+  :root[data-theme="light"]{
+    --ground:#FAF9F5; --raise:#F2F0EA; --rule:#DFDCD3;
+    --ink:#16181D;    --dim:#5F6058;
+    --c-weak:#8FA6C2; --c-mid:#3A6DA6; --c-firm:#1C3E68; --c-flag:#8A5A12;
+    --c-path:#1C3E68; --press:#E7ECF4;
+
+    /* The deck's own chrome. A transport is a physical object in this design — the source
+       calls --slab "the slab it is milled from" and --lcd "the recessed window the track
+       number sits in" — so the light theme makes the slab pale milled metal and leaves the
+       readout dark. A real machine with an aluminum body still has a dark display, and that
+       is the whole reason --lcd appears in both halves with the same value: it is a decision,
+       not an omission, and the next person to "complete" this palette should read this line
+       before adding a light one. */
+    --deck-accent:#2F5F96; --deck-paper:#1A1C21; --deck-mark:#3A6DA6;
+    --deck-well:#EDEAE2;   --deck-track:#D8D4CA; --deck-hover:#E4E0D6;
+    --deck-divider:#D2CEC3; --deck-edge:#DFDCD3; --deck-ring:#B9C4D6;
+    --deck-quiet:#5F6058;  --deck-warm:#6B6455;
+    --deck-lift:rgba(0,0,0,.04); --deck-drop:rgba(0,0,0,.10);
+    --deck-inset:rgba(0,0,0,.18); --deck-glow:rgba(58,109,166,.10);
+    --lcd:#0a0b0e; --lcd-ink:#7FA3D8; --lcd-faint:#7C8496;
+    --lcd-track:#1e2029; --lcd-inset:rgba(0,0,0,.85); --lcd-glow:rgba(122,160,255,.1);
+    /* --slab was left behind when --lcd moved in: a deck page declared it on its own,
+       one value, no light variant, which put a dark bar back on a pale page. Pale milled
+       metal (1.14:1 against --ground, both a hair off white) with the LCD still a 16.37:1
+       recess inside it — the aluminum body, lit. --warn follows for the same reason: it
+       is deck-only chrome that must not be left for a page to restate. */
+    --slab:#EDEAE2; --warn:#BC3924;
+  }
+  :root{
+    --ground:#0C0E13; --raise:#171A21; --rule:#232833;
+    --sky:radial-gradient(120% 60% at 50% -10%, var(--raise) 0%, var(--ground) 60%);
+    --ink:#EFEDE8;    --dim:#8A8B86;
+    --c-weak:#3E5878; --c-mid:#7FA3D8; --c-firm:#B8D0FF; --c-flag:#D9A44F;
+    --c-path:#B8D0FF; --press:#1b2231;
+
+    /* The deck's own chrome. A transport is a physical object in this design — the source
+       calls --slab "the slab it is milled from" and --lcd "the recessed window the track
+       number sits in" — so the light theme makes the slab pale milled metal and leaves the
+       readout dark. A real machine with an aluminum body still has a dark display, and that
+       is the whole reason --lcd appears in both halves with the same value: it is a decision,
+       not an omission, and the next person to "complete" this palette should read this line
+       before adding a light one. */
+    --deck-accent:#9db0ff; --deck-paper:#f1ede4; --deck-mark:#7aa0ff;
+    --deck-well:#17181c;   --deck-track:#1e2029; --deck-hover:#20242e;
+    --deck-divider:#333743; --deck-edge:#33353d; --deck-ring:#39435c;
+    --deck-quiet:#9a9dab;  --deck-warm:#b7b0a2;
+    --deck-lift:rgba(255,255,255,.055); --deck-drop:rgba(0,0,0,.5);
+    --deck-inset:rgba(0,0,0,.85); --deck-glow:rgba(122,160,255,.1);
+    --lcd:#0a0b0e; --lcd-ink:#7FA3D8; --lcd-faint:#7C8496;
+    --lcd-track:#1e2029; --lcd-inset:rgba(0,0,0,.85); --lcd-glow:rgba(122,160,255,.1);
+    /* Unchanged from the value a deck page used to declare on its own: the readout stays
+       dark, and so does the slab it sits in. 1.11:1 against --lcd is not a mistake here —
+       both are near-black and the recess reads through the box-shadow, not raw contrast. */
+    --slab:#16181d; --warn:#e0705e;
+  }
+  /* ─── end design tokens ─────────────────────────────────────────────── */
+  /* ─── prose reset · v1 · shared ────────────────────────────────────
+     Generated from @robertblust/design — edit it there and run `npm run design`.
+
+     The first thing every prose page declares, after its tokens and before
+     anything of its own. Five rules, and four of the five had drifted:
+
+       .mono   missing entirely from two landing pages, and one of those marked
+               an element as data and rendered it as prose, in production
+       a       missing from one
+       body    gained "Segoe UI" on five pages, and lost ui-sans-serif,
+               -apple-system and -webkit-font-smoothing on one
+
+     `*` and `.shell` agreed everywhere. They are here because the block is the
+     whole contiguous run, not the drifted subset of it — a fence that covered
+     only the rules that had gone wrong would leave the next drift uncovered.
+
+     Nothing here may name a family the sites do not ship. `fontsAvailable`
+     fails the build for it, and a name no machine has falls through silently to
+     whatever the OS picked. */
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{
+    font-family:"Instrument Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    background:var(--ground); color:var(--ink); line-height:1.5; min-height:100vh;
+    background-image:var(--sky); background-repeat:no-repeat;
+    -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column;
+  }
+  .mono{font-family:"Plex Mono", ui-monospace, "SF Mono", Menlo, monospace}
+  a{color:inherit}
+  .shell{width:100%; max-width:1180px; margin:0 auto; padding:0 7vw}
+  /* ─── end prose reset ───────────────────────────────────────────────────*/
+
+  header{padding:2rem 0}
+  /* three nav items plus the language control no longer fit beside the lockup on a
+     phone: let the row wrap rather than clip the control off the right edge. */
+  .bar{display:flex; align-items:center; justify-content:space-between; gap:1rem 2rem; flex-wrap:wrap}
+  /* The wordmark is one thing and never breaks: two pages had no wrap on the bar,
+     and it squeezed the mark and the name onto separate lines at phone widths. */
+  .brand{white-space:nowrap; flex:0 0 auto; display:flex; align-items:center; gap:.7rem; text-decoration:none}
+  .brand svg{width:28px; height:28px; color:var(--c-mid); flex:0 0 auto}
+  .brand b{font-weight:600; font-size:1.06rem; letter-spacing:-.01em}
+  .brand b span{color:var(--c-mid)}
+  /* ─── header contract · v8 · shared ──────────────────────────────────
+     One row, three sites, and no stylesheet between them — a deck opens from file://, so
+     this is a copy, generated from @robertblust/design. Editing it here has no effect — the
+     next `npm run design` overwrites it. Change it in the package.
+
+     Inside the fence is the row's behavior, byte-identical on all sixteen pages. Outside
+     it is each site's own: the brand mark's colors, the bar's gap. The wordmark's
+     `white-space:nowrap` is outside for that reason — the contract is that it never breaks,
+     not that every site declares it the same way, and `mobileNav` asserts the outcome.
+
+     The contract:
+       · order      Ideas, Principles, Model, Timeline, Example, Talks, Billing, Privacy,
+                    then the language control. A site skips what it does not have and
+                    reorders nothing. Read right to left, the switcher is at the edge and
+                    each step left is more the site's own subject.
+       · baseline   One line runs through the middle of every text in the row. The links
+                    carry equal space above and below, because the hover underline hangs
+                    below and centering the boxes would otherwise ride the text high.
+       · states     Hover is an underline and nothing else. The current page is brighter
+                    ink and carries no line. When both drew a line, the page you were on
+                    read as permanently hovered.
+       · collapse   Under 640px the links go behind a button. The language control stays on
+                    the bar — two characters, reached for constantly by a bilingual
+                    audience — and the button takes the left-hand corner, where a thumb
+                    goes looking for it.
+       · height     The language control sets it. The theme control matches it rather than
+                    carrying a height of its own.
+
+     `navOrder`, `headerBaseline` and `mobileNav` in this repo's verify suite assert all of
+     it. They cannot see the other two repositories: that is what the version is for.
+  */
+  /* `align-items:center`, not the default `stretch`: a stretched link is a box the height of
+     the whole row with its text at the top, which put the words above the language control
+     beside them. Centered, each box is its own height and one line runs through every text. */
+  nav{display:flex; align-items:center; gap:1.9rem; font-size:.76rem; font-weight:500;
+      letter-spacing:.14em; text-transform:uppercase; position:relative}
+  .navlinks{display:flex; align-items:center; gap:1.9rem}
+  /* Hidden until the row runs out of width; the media query at the end of this sheet
+     is the only place it appears. The two icons swap on aria-expanded, the way the
+     deck's play button swaps its own. */
+  .burger{display:none; align-items:center; justify-content:center; width:40px; height:40px;
+          background:none; border:1px solid var(--rule); border-radius:8px;
+          color:var(--dim); cursor:pointer; padding:0;
+          transition:color .15s ease, border-color .15s ease}
+  .burger:hover{color:var(--ink); border-color:var(--c-mid)}
+  .burger svg{width:18px; height:18px; fill:none; stroke:currentColor;
+              stroke-width:1.7; stroke-linecap:round}
+  .burger .ix{display:none}
+  .burger[aria-expanded="true"]{color:var(--c-mid); border-color:var(--c-mid)}
+  .burger[aria-expanded="true"] .ibars{display:none}
+  .burger[aria-expanded="true"] .ix{display:block}
+  nav a{color:var(--dim); text-decoration:none; padding:.2rem 0;
+        border-top:1px solid transparent; border-bottom:1px solid transparent}
+  /* Hover is an underline and nothing else: `border-bottom-color`, not `border-color`,
+     because the box now has a transparent border on both edges to keep its text centered,
+     and `border-color` painted a line above the word as well as under it.
+     The current page is not underlined — it is brighter. A page marks where you are with
+     a different weight of ink; the underline is what follows the pointer. When both used
+     the same line, the selected item read as permanently hovered. */
+  nav a:hover, nav a:focus-visible{border-bottom-color:var(--c-mid)}
+  /* the bar is the same component on both pages, so this page says which one you are on
+     rather than dropping the item and leaving the header subtly different */
+  nav a[aria-current="page"]{color:var(--c-firm)}
+  /* The segmented control the decks put in their transport, at nav scale. Two real buttons
+     in one bordered box, the pressed one filled — someone who has used the deck already
+     knows what it is. It replaces one button with two clickable spans inside it, which said
+     one thing to a pointer and another to a screen reader. */
+  .seg{display:inline-flex; border:1px solid var(--rule); border-radius:8px; overflow:hidden;
+       flex:0 0 auto}
+  .seg button{font:inherit; letter-spacing:inherit; text-transform:inherit; background:none;
+              border:0; cursor:pointer; padding:.26rem .5rem; color:var(--dim);
+              transition:color .15s ease, background-color .15s ease}
+  .seg button:hover{color:var(--ink)}
+  .seg button[aria-pressed="true"]{color:var(--c-mid); background:var(--press); font-weight:600}
+  .seg button:focus-visible{outline:2px solid var(--c-mid); outline-offset:-2px}
+  /* The theme control is a .seg like the language one, so it inherits the border, the radius
+     and the pressed treatment. Only the icons differ: 14px square, drawn with currentColor so
+     the pressed state colors them without a second rule. */
+  /* The language control's buttons are as tall as the text line box inside them; these hold a
+     14px icon and came out 4px shorter, so the two controls sat at different heights in a row
+     whose whole point is one baseline. One line box is the floor here too, which keeps the
+     language control the base rather than copying a number off it: `em` first for anything
+     without `lh`, both resolving to the same 18.24px today. The padding is added back because
+     `box-sizing` is `border-box` here — a bare line box is smaller than the button already is
+     and would bind on nothing, which is exactly how the first attempt at this failed. */
+  .seg.theme button{display:grid; place-items:center; padding:.26rem .48rem;
+                    min-height:calc(1.5em + .52rem); min-height:calc(1lh + .52rem)}
+  .seg.theme svg{width:14px; height:14px; display:block; fill:none; stroke:currentColor;
+                 stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+  /* The row narrows before it collapses. */
+  @media (max-width:900px){
+    nav{gap:1.4rem}
+  }
+  /* One mobile behavior for the whole family. Below this width the links do not fit beside
+     the wordmark, and every page in the three sites used to answer that differently — some
+     wrapped the bar, some wrapped the nav, and the two whose `.bar` had no `flex-wrap` at
+     all let the wordmark itself break in half. They collapse behind a button instead.
+
+     The language control stays on the bar. It is two characters, it is used constantly by a
+     bilingual audience, and a language a visitor cannot find is worse than one menu tap
+     saved. It keeps the right-hand end of the row, with the theme control beside it; the menu
+     button holds the left-hand corner, which is where a thumb goes looking for it. */
+  @media (max-width:640px){
+    /* The menu button takes the left-hand corner. It cannot be moved in the DOM — the bar's
+       markup is written per page, sixteen of them across three repositories, while this fence
+       is CSS alone — so `nav` stops generating a box and its children become items of `.bar`
+       itself. The button then reaches the corner with `order`, in flow, aligned by the same
+       `align-items:center` as everything else in the row.
+
+       Absolute positioning was the first attempt and it fought the bar's own wrapping: `.bar`
+       has `flex-wrap` and already went to two rows at 360px before this button moved, so a
+       vertically centered button hung in the gap between them. Padding the wordmark clear of it
+       then inflated `.brand` enough that `mobileNav` reported a broken wordmark — correctly,
+       since that check reads the brand's height to find a wrapped one. `.bar` takes the
+       positioning `nav` gives up, so the panel still has something to hang from. */
+    .bar{position:relative; gap:12px}
+    nav{display:contents}
+    .burger{display:inline-flex; order:-1}
+    .brand{margin-right:auto}
+    /* The panel spans the bar rather than hugging its longest word, so the row of controls
+       above it and the panel below share one pair of edges. Its geometry is three custom
+       properties because the theme control has to land in its top-right corner while living
+       outside it in the DOM — see below — and a corner described twice is a corner that
+       drifts the first time either number is touched. */
+    .bar{--drawer-gap:.85rem; --drawer-pad-y:.55rem; --drawer-pad-x:1.1rem;
+         /* Half the difference between a link's box and the theme control's, so the control
+            and the first link read as one row instead of two things that nearly line up.
+            Measured, not derived — a link's height comes from its own padding and line box,
+            which CSS cannot subtract here. Changing `.navlinks a`'s padding or the control's
+            height moves it; the centers are 117 and 118 as it stands. */
+         --drawer-first-row:.5rem}
+    .navlinks{display:none; position:absolute; top:calc(100% + var(--drawer-gap));
+              left:0; right:0; z-index:30;
+              flex-direction:column; align-items:flex-start; gap:0;
+              padding:var(--drawer-pad-y) var(--drawer-pad-x);
+              background:var(--raise); border:1px solid var(--rule); border-radius:10px}
+    .navlinks[data-open="true"]{display:flex}
+    /* The theme control leaves the bar. Measured at 393px: the bar has 338px to spend and the
+       brand's 136 plus the button's 40 plus the switchers' 147 need 347 even at a 12px gap, so
+       the row wrapped on every phone width tested — 320 through 412 — and the header stood
+       101px tall before a word of content. The wordmark is the other lever and the contract
+       closes it: it is nowrap by rule, and `mobileNav` reads its height to catch one that
+       broke. Dropping the theme control is what is left, and it buys one row of 40px
+       everywhere down to 320.
+
+       It is not lost. Opening the menu drops it below the language control it belongs with —
+       positioned, not in flow, so the bar stays 40px and nothing above it moves. In flow it
+       pushed the language control onto a second row as the menu opened, which is a control
+       jumping out from under a thumb that was reaching for it.
+
+       `.bar .theme` and not `.theme`: the control is a `.seg` too, and `.seg{display:inline-flex}`
+       is the same specificity and sits later in the cascade, so the bare class lost and the
+       control stayed on the bar with the file looking correct. */
+    .bar .theme{display:none}
+    /* Positioned into the panel's top-right corner, not placed in it: `.switchers` is a
+       sibling of `.navlinks`, and the bar's markup is written per page — sixteen of them
+       across three repositories — while this fence is CSS alone. Anchoring it to the same
+       three properties the panel uses is what makes the two agree.
+       Above the panel's own z-index, or the panel paints over it. A tap on it does not close
+       the menu: the page's handler closes on a click outside `nav`, and `.switchers` is
+       inside `nav`. */
+    .navlinks[data-open="true"] ~ .switchers .theme{
+      display:inline-flex; position:absolute; z-index:31;
+      top:calc(100% + var(--drawer-gap) + var(--drawer-pad-y) + var(--drawer-first-row));
+      right:var(--drawer-pad-x)}
+    /* Tall enough to be a comfortable target; the underline still hugs the word, because
+       each item is only as wide as its own text. */
+    .navlinks a{padding:.8rem 0}
+  }
+  /* ─── end header contract ───────────────────────────────────────────── */
+  .switchers{display:flex; align-items:center; gap:.6rem}
+  /* The hover underline hangs below the text, so the box is taller under the text than over
+     it. Mirror the space above, and the box is symmetric about its own text. */
+
+  /* Not one screen: this page has an argument to make in order, so it scrolls and
+     starts at the top rather than centering itself the way the landing page does. */
+  main{flex:1; display:flex; align-items:center; padding:2vh 0 6vh}
+
+  /* ─── title contract · v1 · shared ─────────────────────────────────
+     Generated from @robertblust/design — edit it there and run `npm run design`.
+
+     How every prose page in the family opens, and why it is one block and not fourteen
+     copies: the shape belongs to the family and the words belong to the page. Four of the
+     copies had already drifted into a different design — one line at weight 700 over a
+     smaller lede — and a visitor moving between pages met two headline treatments on one
+     site before anything failed anywhere.
+
+     What the contract says:
+       · the h1       two blocks, not two lines of one. The first clause reads light and
+                      dim, the completion heavy under it, so the break is the author's
+                      sentence and never the viewport's measure.
+       · the em       the accent, and at most one word per headline. A site whose em is a
+                      wordmark's second half rather than an emphasized word overrides this
+                      rule after the fence, where the divergence is written beside its
+                      reason.
+       · the tagline  46ch, and the full column once the column is narrower than that. The
+                      narrow rule is in here rather than in the page's own media block,
+                      because a fence that owns a measure wide and not narrow owns neither.
+
+     A landing page is not this block. Each site's front page is its one statement and is
+     sized for it — blust.ch at weight 200 under class names of its own, guestgraph a step
+     larger, companygraph on a container query — and folding three deliberate heroes into one
+     rule would be a decision this block has no business making. */
+  .title h1{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+            letter-spacing:-.035em; line-height:1.0;
+            font-size:clamp(2.2rem,6vw,4.6rem)}
+  .title h1 .r70{display:block; font-weight:300; color:var(--dim)}
+  .title h1 .rcl{display:block; font-weight:800}
+  .title h1 em{font-style:normal; color:var(--c-firm)}
+  .tagline{margin-top:1.6rem; font-size:clamp(1.1rem,1.9vw,1.4rem); color:var(--dim);
+           max-width:46ch; line-height:1.4}
+  @media (max-width:900px){ .tagline{max-width:100%} }
+  /* ─── end title contract ────────────────────────────────────────────────── */
+
+  section{margin-top:clamp(2.6rem,6vh,4rem)}
+  h2{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+     font-weight:700; letter-spacing:-.025em; line-height:1.06;
+     font-size:clamp(1.35rem,2.3vw,1.8rem); scroll-margin-top:1.5rem}
+  .lede{margin-top:.9rem; font-size:1rem; color:var(--dim); max-width:62ch}
+  .intro{margin-top:2.4rem; font-size:clamp(1rem,1.3vw,1.1rem)}
+
+  /* The page's one reversal, and it earns the flag: everything below is an API with no
+     address. Said at the top it is the first thing a reader needs; said at the bottom it
+     would be the thing they find out after writing a client. */
+  .note{margin-top:2rem; max-width:56ch; padding-left:1rem;
+        border-left:2px solid var(--c-flag); color:var(--ink); font-size:1rem}
+
+  /* The spine. A record enters at the connector and moves down; the rule is the path it
+     takes, and each heading is a stop on it. One device, and it is the page's only drawing:
+     `--c-weak` is a candidate rather than a resolved thing, which is what a section of a
+     document is until you read it. It never carries text or an outline on its own. */
+  .spine{margin-top:clamp(3rem,7vh,4.5rem); border-left:1px solid var(--rule); padding-left:clamp(1.1rem,3vw,2rem)}
+  .spine section:first-child{margin-top:0}
+  .spine h2{position:relative}
+  .spine h2::before{content:""; position:absolute; left:calc(-1 * clamp(1.1rem,3vw,2rem) - 1px);
+                    top:.55em; width:9px; height:1px; background:var(--c-firm)}
+  .feeds{padding-bottom:.4rem}
+
+  /* One row per operation: the method and the path in the face this system keeps for data,
+     the summary in prose beside them. Three columns on a wide screen, stacked on a narrow
+     one, because a path and its summary both want the full width of a phone. */
+  .ops{margin-top:1.3rem; list-style:none; display:grid; gap:.55rem}
+  .ops li{display:grid; gap:.15rem .9rem; align-items:baseline;
+          grid-template-columns:minmax(0,1fr); padding:.5rem .75rem;
+          background:var(--raise); border:1px solid var(--rule); border-radius:8px}
+  .ops .m{font-size:.74rem; font-weight:600; letter-spacing:.08em; color:var(--c-mid)}
+  .ops .p{font-size:.9rem; color:var(--ink)}
+  .ops .s{font-size:.93rem; color:var(--dim)}
+  /* An operation that takes something back. The engine's claim is that a merge is
+     reversible, so the calls that do the reversing say so in a word rather than in a color:
+     --c-flag has one job on a page and it is spent above. */
+  .ops li.undo .s::after{content:" · undoes"; color:var(--c-firm); font-weight:600}
+  @media (min-width:780px){
+    .ops li{grid-template-columns:3.6rem minmax(0,21rem) minmax(0,1fr)}
+  }
+
+  .out{margin-top:clamp(3rem,7vh,4.5rem)}
+  .out ul{margin-top:1.1rem; list-style:none; display:grid; gap:.7rem; max-width:62ch}
+  .out li{font-size:1rem; color:var(--dim)}
+  .out b{font-weight:600; color:var(--ink)}
+
+  /* ─── prose footer · v1 · credit ───────────────────────────────────
+     Generated from @robertblust/design — edit it there and run `npm run design`.
+
+     Two forms, and the difference is not styling. companygraph.io and
+     guestgraph.io credit blust.ch in their footer; blust.ch is that site and
+     does not credit itself. So `credit` carries the lockup and `plain` does
+     not, and a page declaring the wrong word is an error rather than a
+     preference — which is what the variant guard in planFences asserts.
+
+     The row is mono because the row is data: a repository URL and a license.
+     The credit leaves that mono deliberately, because a brand is not a record
+     value. Both facts belong here rather than in sixteen page comments. */
+  footer{padding:0 0 2rem; display:flex; flex-wrap:wrap; gap:.9rem 2.6rem; align-items:center;
+         font-family:"Plex Mono",monospace; font-size:.76rem; letter-spacing:.08em; color:var(--dim)}
+  footer a{color:var(--c-mid); text-decoration:none}
+  footer a:hover, footer a:focus-visible{text-decoration:underline}
+  footer .credit{display:inline-flex; align-items:center; gap:.5em; vertical-align:-.25em;
+                 font-family:"Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+                 font-size:.84rem; letter-spacing:0; color:var(--ink)}
+  footer .credit .rbmark{display:flex}
+  footer .credit .rbmark svg{width:14px; height:14px; display:block}
+  footer .credit .plate{fill:var(--raise); stroke:var(--rule); stroke-width:1.5}
+  footer .credit .rb{fill:var(--c-mid)}
+  footer .credit b{font-weight:600}
+  footer .credit b em{font-style:normal; color:var(--c-mid)}
+  footer .credit:hover, footer .credit:focus-visible{text-decoration:none}
+  footer .credit:hover b em, footer .credit:focus-visible b em{color:var(--ink)}
+  footer a[aria-current="page"]{color:var(--c-firm)}
+  /* ─── end prose footer ──────────────────────────────────────────────────*/
+
+  :focus-visible{outline:2px solid var(--c-mid); outline-offset:3px; border-radius:3px}
+
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <header>
+    <div class="bar">
+      <a class="brand" href="../">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/>
+            <circle cx="6" cy="7.2" r="2.6" fill="var(--ground)"/>
+            <circle cx="6" cy="16" r="2.6" fill="var(--ground)"/>
+            <circle cx="6" cy="24.8" r="2.6" fill="var(--ground)"/>
+          </g>
+          <circle cx="24" cy="16" r="5.4" fill="currentColor"/>
+        </svg>
+        <b>Guest<span>Graph</span></b>
+      </a>
+      <nav>
+        <div class="navlinks" id="navlinks">
+          <a href="../talks/" data-de="Vorträge">Talks</a>
+          <a href="../billing/" data-de="Abrechnung">Billing</a>
+        </div>
+        <button class="burger" id="burger" type="button" aria-expanded="false"
+                aria-controls="navlinks" aria-label="menu" data-de-aria="Menü">
+          <svg class="ibars" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="ix" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <div class="switchers" id="langind"><div class="seg" role="group" aria-label="switch language" data-de-aria="Sprache wechseln"><button type="button" id="lde" aria-pressed="false">DE</button><button type="button" id="len" aria-pressed="true">EN</button></div><div class="seg theme" id="thmind" role="group" aria-label="switch appearance" data-de-aria="Erscheinungsbild wechseln"><button type="button" id="thLight" aria-pressed="false" aria-label="Light" data-de-aria="Hell"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button><button type="button" id="thDark" aria-pressed="true" aria-label="Dark" data-de-aria="Dunkel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button></div></div>
+      </nav>
+    </div>
+  </header>
+</div>
+
+<main>
+  <div class="shell">
+    <div class="title">
+      <h1 data-de=""><span class="r70">Two APIs.</span><span class="rcl">One is the <em>graph</em>.</span></h1>
+      <p class="tagline" data-de="">One holds the guest graph and answers questions about it. One fills it.</p>
+      <p class="lede intro" data-de="">The engine is the API you build against: you send what a system knows about a person, and it
+        answers with the person. A connector is a client of that API with a small surface of its own, the one
+        an operator uses to watch it and to start a run. Every call below is generated from the service's own
+        OpenAPI document at the commit this page pins, so a path here is a path that exists.</p>
+      <p class="note" data-de="">There is no instance to call. GuestGraph is Apache-2.0 and you run it yourself; the
+        paths below are relative to your own deployment, and a running instance serves its complete document at
+        <code class="mono">/api-docs</code> with no key.</p>
+    </div>
+
+  <div class="spine">
+  <section class="feeds">
+    <h2 id="connector" data-de="">One fills it</h2>
+    <p class="lede" data-de="">A connector is a client like any other: it reads one source system and submits what it
+      finds. Its own surface is what an operator calls, not what an integration calls, and it answers to a
+      bearer token rather than to a tenant's key.</p>
+    <ul class="ops"><!-- ops:connector -->
+      <li><code class="mono m">POST</code><code class="mono p">/<wbr>apaleo/<wbr>events/<wbr>{secret}</code><span class="s">Receive one Apaleo delivery, or its reachability check</span></li>
+      <li><code class="mono m">GET</code><code class="mono p">/<wbr>status</code><span class="s">Is this connector fine, connection by connection</span></li>
+      <li><code class="mono m">POST</code><code class="mono p">/<wbr>connections/<wbr>{connectionId}/<wbr>sync/<wbr>full</code><span class="s">Start a full sync of one connection's properties and bookings</span></li>
+      <li><code class="mono m">POST</code><code class="mono p">/<wbr>connections/<wbr>{connectionId}/<wbr>sync/<wbr>reconcile</code><span class="s">Start a reconciliation from one connection's sync points</span></li>
+      <li><code class="mono m">POST</code><code class="mono p">/<wbr>connections/<wbr>{connectionId}/<wbr>refresh</code><span class="s">Re-read one connection's held guest ids and apply the integrator rule</span></li>
+      <li><code class="mono m">GET</code><code class="mono p">/<wbr>connections/<wbr>{connectionId}/<wbr>runs/<wbr>{runId}</code><span class="s">One run's progress and outcome</span></li>
+      <!-- end ops --></ul>
+  </section>
+
+  <section>
+    <h2 id="arrives" data-de="">What arrives</h2>
+    <p class="lede" data-de="">A system registers itself, then sends what it knows about a person. Resolution happens
+      in the same request, so the answer names the guest the record turned out to belong to.</p>
+    <ul class="ops"><!-- ops:arrives -->
+      <li><code class="mono m">POST</code><code class="mono p">/<wbr>source-systems</code><span class="s">Register a source system for the caller's tenant</span></li>
+      <li><code class="mono m">POST</code><code class="mono p">/<wbr>records</code><span class="s">Ingest guest record(s); resolves synchronously</span></li>
+      <!-- end ops --></ul>
+  </section>
+
+  <section>
+    <h2 id="came-out" data-de="">What came out</h2>
+    <p class="lede" data-de="">One person, assembled from every record that turned out to be them, with the evidence
+      for it. A guest id you store keeps answering after a merge.</p>
+    <ul class="ops"><!-- ops:came-out -->
+      <li><code class="mono m">GET</code><code class="mono p">/<wbr>guests/<wbr>{guestId}</code><span class="s">Golden profile + identifiers, or where a retired id went</span></li>
+      <li><code class="mono m">GET</code><code class="mono p">/<wbr>guests/<wbr>{guestId}/<wbr>records</code><span class="s">The guest's source records, as originally received</span></li>
+      <li><code class="mono m">GET</code><code class="mono p">/<wbr>guests/<wbr>{guestId}/<wbr>explain</code><span class="s">Why these records are one guest — the full merge-event chain</span></li>
+      <li><code class="mono m">GET</code><code class="mono p">/<wbr>guests/<wbr>{guestId}/<wbr>timeline</code><span class="s">The guest's current business-object associations</span></li>
+      <li><code class="mono m">GET</code><code class="mono p">/<wbr>guests</code><span class="s">Look up guests by identifier value</span></li>
+      <li><code class="mono m">GET</code><code class="mono p">/<wbr>source-objects/<wbr>{sourceSystem}/<wbr>{objectType}/<wbr>{objectId}</code><span class="s">A business object's current roster and observation history</span></li>
+      <!-- end ops --></ul>
+  </section>
+
+  <section>
+    <h2 id="wrong" data-de="">When it is wrong</h2>
+    <p class="lede" data-de="">Every merge the engine makes can be taken back, and a steward's decision outlives the
+      next import rather than being overwritten by it.</p>
+    <ul class="ops"><!-- ops:wrong -->
+      <li class="undo"><code class="mono m">POST</code><code class="mono p">/<wbr>guests/<wbr>{guestId}/<wbr>unmerge</code><span class="s">Detach wrongly linked record(s) and replay resolution</span></li>
+      <li><code class="mono m">GET</code><code class="mono p">/<wbr>match-reviews</code><span class="s">Pending uncertain matches</span></li>
+      <li><code class="mono m">POST</code><code class="mono p">/<wbr>match-reviews/<wbr>{reviewId}</code><span class="s">Confirm or reject a queued match (exactly once)</span></li>
+      <li><code class="mono m">GET</code><code class="mono p">/<wbr>negative-rules</code><span class="s">Do-not-merge rules (written by unmerge and review rejections)</span></li>
+      <li class="undo"><code class="mono m">DELETE</code><code class="mono p">/<wbr>negative-rules/<wbr>{ruleId}</code><span class="s">Lift a do-not-merge rule (steward act) — the pair may merge on next evidence</span></li>
+      <!-- end ops --></ul>
+  </section>
+
+  <section>
+    <h2 id="tuning" data-de="">What the tenant decides</h2>
+    <p class="lede" data-de="">Thresholds and identifier trust are per tenant, because one brand's shared front-desk
+      number is another brand's real one.</p>
+    <ul class="ops"><!-- ops:tuning -->
+      <li><code class="mono m">GET</code><code class="mono p">/<wbr>config/<wbr>matching</code><span class="s">The tenant's matching thresholds</span></li>
+      <li><code class="mono m">PUT</code><code class="mono p">/<wbr>config/<wbr>matching</code><span class="s">Update the tenant's matching thresholds (transactional — all or nothing)</span></li>
+      <li><code class="mono m">GET</code><code class="mono p">/<wbr>config/<wbr>identifier-rules</code><span class="s">Identifier quality rules — tenant-added plus built-in defaults</span></li>
+      <li><code class="mono m">POST</code><code class="mono p">/<wbr>config/<wbr>identifier-rules</code><span class="s">Add a tenant identifier quality rule</span></li>
+      <li><code class="mono m">DELETE</code><code class="mono p">/<wbr>config/<wbr>identifier-rules/<wbr>{ruleId}</code><span class="s">Delete a tenant rule (built-ins are not deletable)</span></li>
+      <!-- end ops --></ul>
+  </section>
+  </div>
+
+  <section class="out">
+    <h2 id="refusals">When a call is refused</h2>
+    <p class="lede" data-de="">Both services answer a refusal the same way: an RFC 9457 problem detail whose
+      <code class="mono">type</code> is a section of the problems page. Follow it and you land on what that
+      type means and what to do about it, rather than on a status code you have to interpret.</p>
+    <ul>
+      <li><b><a href="../problems/">What each refusal type means</a></b> — eleven of them, with the service that answers each</li>
+      <li><b>The documents themselves</b> — <a href="https://github.com/guestgraph/engine/blob/main/src/main/resources/api/openapi.yaml">the engine's</a> and <a href="https://github.com/guestgraph/connector-apaleo/blob/main/src/main/resources/api/openapi.yaml">the connector's</a>, which this page is built from</li>
+      <li><b>How identity is decided</b> — <a href="https://github.com/guestgraph/engine/blob/main/docs/matching.md">what makes two records one person</a>, and <a href="https://github.com/guestgraph/engine/blob/main/docs/continuity.md">what a stored guest id means later</a></li>
+    </ul>
+  </section>
+</main>
+
+<div class="shell">
+  <footer>
+    <span><a class="credit" href="https://blust.ch/"><span class="rbmark"><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="plate" x=".75" y=".75" width="30.5" height="30.5" rx="7"/><text class="rb" x="16" y="22.5" text-anchor="middle" font-family="Plex Mono, ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17" font-weight="600">rb</text></svg></span><b>Robert <em>Blust</em></b></a></span>
+    <span><a href="https://github.com/guestgraph">GitHub</a></span>
+    <span><a href="https://github.com/guestgraph/engine/blob/HEAD/LICENSE" data-de="Lizenz">License</a></span>
+    <span><a href="../privacy/" data-de="Datenschutz">Privacy</a></span>
+  </footer>
+</div>
+
+<script>
+// Same mechanism as the landing page, and the same reason: English is the markup so the
+// page says the right thing before any JS runs, and the choice is remembered per origin —
+// so a visitor who switched to German on the landing page arrives here in German.
+(function(){
+  /* ─── language · v4 · page ─────────────────────────────────────────────
+     One language across three domains, and where it is remembered. Generated
+     from @robertblust/design — editing it here does nothing, because the next
+     `npm run design` overwrites it. Change it in the package.
+
+     This block has a contract with the page around it that `design:check` cannot see, because
+     the check only compares bytes between the markers. The page must declare a `lang` variable
+     in scope before this fence, and must call `langStored()` and `langRemember(v)` from
+     wherever it reads and writes the visitor's saved choice. Rename `lang` or drop those calls
+     and the fence still matches byte for byte — every check stays green — while a click throws
+     ReferenceError and the language silently stops crossing domains.
+
+     The key is `lang`, the family's: one name on three origins, the same word the address
+     carries. A storage key is a promise to every visitor, and this one is made once, for the
+     family, by the package, so that no site can make it differently.
+  */
+  var LANG_KEY = "lang";
+  function langStored(){ try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } }
+  function langRemember(v){ try { localStorage.setItem(LANG_KEY, v); } catch (e) {} }
+
+  /* One language across three domains. Each origin keeps its own localStorage, so a
+     visitor reading German here and following a link to a sibling site would arrive in
+     English — three copies of one preference, none of which can see the others. The
+     language rides along instead: a link to a family domain gets ?lang= at the moment it
+     is clicked, and a page that arrives with one adopts it, stores it, and takes it back
+     out of the address bar.
+
+     Decorated at click time, never at load. A family link can sit inside a data-de
+     attribute, and switching language replaces that element whole — an href rewritten at
+     load would be discarded by the first toggle. It also means no link in the served
+     markup carries the param, so nothing crawlable, copyable or bookmarkable does either;
+     the address bar is cleaned by replaceState the moment the page reads it. */
+  var FAMILY = /^(www\.)?(blust\.ch|companygraph\.io|guestgraph\.io)$/;
+  function langFromUrl(){
+    var m = /[?&]lang=(de|en)(&|$)/.exec(location.search);
+    if (!m) return null;
+    try {
+      var q = location.search.replace(/([?&])lang=(de|en)(&|$)/, "$1").replace(/[?&]$/, "");
+      history.replaceState(null, "", location.pathname + q + location.hash);
+    } catch (e) {}
+    return m[1];
+  }
+  function carryLang(e){
+    var a = e.target && e.target.closest && e.target.closest("a[href]");
+    if (!a) return;
+    var u; try { u = new URL(a.href, location.href); } catch (err) { return; }
+    if (u.origin === location.origin || !FAMILY.test(u.hostname)) return;
+    u.searchParams.set("lang", lang);
+    a.href = u.toString();
+  }
+  // mousedown as well as click, so a middle-click or a cmd-click opening a new tab
+  // carries the language too; both fire before the browser follows the href.
+  document.addEventListener("mousedown", carryLang, true);
+  document.addEventListener("click", carryLang, true);
+
+  /* An aria-label is markup the switch cannot reach through innerHTML, so a label that had
+     to be read in both languages was written bilingual, "Menü — menu", and put an em-dash
+     into German. Every element that carries data-de-aria gets the label for the language
+     whenever <html lang> changes; the English is captured here on load, as data-en-aria, and
+     never written by hand. The block watches the attribute rather than being called, so a
+     page adds nothing to its own applyLang and the contract above does not grow. */
+  function ariaI18n(){ return Array.prototype.slice.call(document.querySelectorAll("[data-de-aria]")); }
+  function applyAria(){
+    var l = document.documentElement.lang === "de" ? "de" : "en";
+    ariaI18n().forEach(function(el){
+      if (!el.hasAttribute("data-en-aria")) el.setAttribute("data-en-aria", el.getAttribute("aria-label") || "");
+      el.setAttribute("aria-label", el.getAttribute("data-" + l + "-aria"));
+    });
+  }
+  function watchAria(){
+    applyAria();
+    if (window.MutationObserver)
+      new MutationObserver(applyAria).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", watchAria); else watchAria();
+  /* ─── end language ─────────────────────────────────────────────────── */
+
+
+  var urlLang = langFromUrl();
+  if (urlLang) langRemember(urlLang);
+  var lang = urlLang || (langStored() === "de" ? "de" : "en");
+
+  /* ─── theme · v4 · page ───────────────────────────────────────
+     One theme across three domains, and where it is remembered. Generated from
+     @robertblust/design — editing it here does nothing.
+
+     This block has a contract with the page that `design:check` cannot see, because the check
+     only compares bytes between the markers. The page must declare a `theme` variable in scope
+     before this fence, and must carry two controls, `#thLight` and `#thDark`. Rename either and
+     the fence still matches byte for byte — every check stays green — while the control stops
+     working. `mobileNav`'s presence assertion is what actually holds this contract, gated on
+     the page's own `noFlash` flag: a page that declares it and is missing either control fails
+     there.
+  */
+  var THEME_KEY = "theme";
+  function themeStored(){ try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } }
+  function themeRemember(v){ try { localStorage.setItem(THEME_KEY, v); } catch (e) {} }
+
+  /* Each origin keeps its own localStorage, so a visitor reading in light who followed a link
+     to a sibling site would arrive in dark — three copies of one preference, none of which can
+     see the others. The theme rides along instead, on the same terms as the language: the param
+     is added at click time, never at load, so no link in the served markup carries it and
+     nothing crawlable or bookmarkable does either. */
+  var THEME_FAMILY = /^(www\.)?(blust\.ch|companygraph\.io|guestgraph\.io)$/;
+  function themeFromUrl(){
+    var m = /[?&]theme=(light|dark)(&|$)/.exec(location.search);
+    if (!m) return null;
+    try {
+      var q = location.search.replace(/([?&])theme=(light|dark)(&|$)/, "$1").replace(/[?&]$/, "");
+      history.replaceState(null, "", location.pathname + q + location.hash);
+    } catch (e) {}
+    return m[1];
+  }
+  // Language gets away with always decorating a link because a visitor's language is always an
+  // explicit two-way choice. Theme is not: it has a default (dark), and a page that carries only
+  // the default is indistinguishable from a page whose visitor chose it. Carrying `theme` on
+  // every link exported that default as though it were a choice — a visitor who set light on one
+  // site and later opened a sibling fresh (dark, correct, untouched) would have that default
+  // carried back onto a link to the first site and silently overwrite their real, stored
+  // preference. Reading `themeStored()` rather than the in-memory `theme` variable is what keeps
+  // this to "only when the visitor actually chose": nothing stored means nothing carried, and no
+  // link is decorated.
+  function carryTheme(e){
+    var stored = themeStored();
+    if (!stored) return;
+    var a = e.target && e.target.closest && e.target.closest("a[href]");
+    if (!a) return;
+    var u; try { u = new URL(a.href, location.href); } catch (err) { return; }
+    if (u.origin === location.origin || !THEME_FAMILY.test(u.hostname)) return;
+    u.searchParams.set("theme", stored);
+    a.href = u.toString();
+  }
+  // mousedown as well as click, so a middle-click or cmd-click into a new tab carries it too.
+  // This runs alongside the language block's identical pair; the second listener reads the href
+  // the first rewrote, so the two compose into ?lang=de&theme=light rather than racing.
+  document.addEventListener("mousedown", carryTheme, true);
+  document.addEventListener("click", carryTheme, true);
+
+  function applyTheme(){
+    if (theme === "light") document.documentElement.setAttribute("data-theme", "light");
+    else document.documentElement.removeAttribute("data-theme");
+    var l = document.getElementById("thLight"), d = document.getElementById("thDark");
+    if (l) l.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
+    if (d) d.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+  }
+  function setTheme(v){ theme = v; themeRemember(v); applyTheme(); }
+  /* ─── end theme ──────────────────────────────────────────────────────── */
+
+
+  var urlTheme = themeFromUrl();
+  if (urlTheme) themeRemember(urlTheme);
+  var theme = urlTheme || (themeStored() === "light" ? "light" : "dark");
+  var i18n = Array.prototype.slice.call(document.querySelectorAll("[data-de]"));
+  i18n.forEach(function(el){ el.setAttribute("data-en", el.innerHTML); });
+
+  var UI = {
+    de:{ title:"",
+         desc:"" },
+    en:{ title:"API — GuestGraph",
+         desc:"Two HTTP APIs: one holds the guest graph and answers questions about it, one fills it. What each call does, and what a refusal means." }
+  };
+
+  function applyLang(){
+    i18n.forEach(function(el){ el.innerHTML = el.getAttribute("data-" + lang); });
+    document.title = UI[lang].title;
+    document.getElementById("metadesc").setAttribute("content", UI[lang].desc);
+    document.getElementById("lde").setAttribute("aria-pressed", String(lang === "de"));
+    document.getElementById("len").setAttribute("aria-pressed", String(lang === "en"));
+    document.documentElement.lang = lang;
+  }
+  function toggle(){ lang = (lang === "de") ? "en" : "de"; langRemember(lang); applyLang(); }
+
+
+  var burger = document.getElementById("burger"),
+      navlinks = document.getElementById("navlinks"),
+      navbar = document.querySelector("nav");
+  function setMenu(open){
+    burger.setAttribute("aria-expanded", String(open));
+    navlinks.setAttribute("data-open", String(open));
+  }
+  burger.addEventListener("click", function(){
+    setMenu(burger.getAttribute("aria-expanded") !== "true");
+  });
+  // A tap anywhere else closes it, as does Escape and following a link. The button's own
+  // click is inside nav, so it toggles rather than being closed out from under itself.
+  document.addEventListener("click", function(e){ if (!navbar.contains(e.target)) setMenu(false); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape") setMenu(false); });
+  navlinks.addEventListener("click", function(e){ if (e.target.closest("a")) setMenu(false); });
+  // Turning the phone can take the row back over the breakpoint, where the panel's own
+  // styles no longer apply; leaving it flagged open would strand aria-expanded as true.
+  window.addEventListener("resize", function(){ if (window.innerWidth > 640) setMenu(false); });
+
+  document.getElementById("lde").addEventListener("click", function(){ if (lang !== "de") toggle(); });
+  document.getElementById("len").addEventListener("click", function(){ if (lang !== "en") toggle(); });
+  document.getElementById("thLight").addEventListener("click", function(){ setTheme("light"); });
+  document.getElementById("thDark").addEventListener("click", function(){ setTheme("dark"); });
+  document.addEventListener("keydown", function(e){ if(e.key === "l" || e.key === "L") toggle(); });
+
+  applyLang();
+  applyTheme();
+})();
+</script>
+</body>
+</html>

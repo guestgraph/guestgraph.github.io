@@ -47,7 +47,7 @@ const FRAME = { width: 1200, height: 630, renderHeight: 675, deviceScaleFactor: 
 const CLIP_Y = Math.round((FRAME.renderHeight - FRAME.height) / 2);
 
 // Every page here works from `file://` — the decks have to, and `verify` asserts the same of
-// the rest — so one exporter renders all six the same way and none of them needs a server.
+// the rest — so one exporter renders all seven the same way and none of them needs a server.
 export const cards = [
   { dir: ".", ...FRAME, clipY: CLIP_Y, hide: HOME_HIDE, titleSlide: false, settle: "wait:900" },
   { dir: "talks", ...FRAME, clipY: CLIP_Y, hide: DECK_HIDE, titleSlide: false, settle: "wait:900" },
@@ -58,6 +58,7 @@ export const cards = [
   { dir: "billing", ...FRAME, clipY: CLIP_Y, hide: HOME_HIDE, titleSlide: false, settle: "wait:900" },
   { dir: "privacy", ...FRAME, clipY: CLIP_Y, hide: HOME_HIDE, titleSlide: false, settle: "wait:900" },
   { dir: "problems", ...FRAME, clipY: CLIP_Y, hide: HOME_HIDE, titleSlide: false, settle: "wait:900" },
+  { dir: "api", ...FRAME, clipY: CLIP_Y, hide: HOME_HIDE, titleSlide: false, settle: "wait:900" },
 ];
 
 // Bound to this repository's root so the site's own callers can say `state(card)`. The package

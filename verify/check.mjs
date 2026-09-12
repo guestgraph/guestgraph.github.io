@@ -66,6 +66,19 @@ const PAGES = [
   // The problems page. A refusal's `type` URI is this page's address with the slug as its
   // fragment, so every slug the two services answer must land on a heading here; the list is
   // the one the engine's shared-runtime contract names, and a service that adds a slug adds a
+  // The API page. Its operation rows are generated from the two services' OpenAPI documents
+  // at the commits `api-sources.json` pins, so the assertions here are about the page's own
+  // shape: the spine, the one flagged note, and that a reader can reach the problems page from
+  // it. Whether the rows are current is `npm run api:check`, which CI runs beside this suite.
+  { path: "/api/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+    contains: ["Two APIs", "One fills it", "What arrives", "What came out", "When it is wrong",
+               "There is no instance to call", "POST", "/records", "/guests/{guestId}/explain"],
+    ids: ["connector", "arrives", "came-out", "wrong", "refusals"],
+    links: ["https://github.com/guestgraph"],
+    sameTab: ["../talks/", "../", "../billing/", "../privacy/", "../problems/"],
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: ["design tokens", "header contract", "title contract", "language", "prose reset", "prose footer"],
+    card: true, cardBase: SITE, internalLinks: true },
+
   // section.
   { path: "/problems/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     translates: { lang: "de", shows: ["Jede Ablehnung", "Ungültige Anfrage", "Interner Serverfehler"], hides: ["Every refusal", "Invalid request", "Internal server error"],

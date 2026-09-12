@@ -48,6 +48,11 @@ jobs:
       # rendered page.
       - name: The shared files are still what the package ships
         run: npm run design:check
+      # Same reason, one repository further out: the API page is written from two services'
+      # OpenAPI documents at the commits api-sources.json pins, so a page that has drifted
+      # from them is a page that describes calls nobody can make.
+      - name: The API page says what the pinned documents say
+        run: npm run api:check
       - run: npx playwright install --with-deps chromium
       - name: Serve the site
         run: python3 -m http.server 8000 > /dev/null 2>&1 &
