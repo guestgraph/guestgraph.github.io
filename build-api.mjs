@@ -97,6 +97,12 @@ async function load(name, src) {
   return res.text();
 }
 
+// Everything inside an operation is English, whichever language a visitor chose. The rows are
+// the documents' own words and the labels around them name the documents' own parts, so a half-
+// translated panel would read as though `Anfrage` were a field a caller sends. The page says so
+// in its intro, and blust.ch's model page keeps its generated half the same way. What is not
+// the API's — the headings, the ledes, the provenance line — carries its German as usual.
+//
 // One level of a schema, which is where the bound is. A named schema is shown by its name and
 // its own properties; a property that is itself a reference is shown by that reference's name
 // and not followed. The complete shape is in the document the provenance line links to, and a
@@ -201,11 +207,11 @@ function operations(doc) {
 function fields(form, many) {
   const head = form.name
     ? `<b class="mono">${esc(form.name)}</b>` +
-      (many ? ` <span class="t" data-de="einzeln oder als Liste">one or a list of them</span>` : "")
+      (many ? ` <span class="t">one or a list of them</span>` : "")
     : "";
   const list = form.fields
     .map((x) => `<li><code class="mono">${esc(x.name)}</code> <span class="t">${esc(x.type)}</span>` +
-                (x.required ? ` <span class="req" data-de="Pflicht">required</span>` : "") + `</li>`)
+                (x.required ? ` <span class="req">required</span>` : "") + `</li>`)
     .join("");
   return `<div class="form">${head}<ul class="fields">${list}</ul></div>`;
 }
@@ -216,7 +222,7 @@ function panel(o) {
 
   if (o.request?.length) {
     const forms = o.request.map((f) => fields(f, f.many)).join("");
-    bits.push(`        <h3 data-de="Anfrage">Request</h3>\n        <div class="forms">${forms}</div>`);
+    bits.push(`        <h3>Request</h3>\n        <div class="forms">${forms}</div>`);
   }
 
   if (o.responses?.length) {
@@ -225,7 +231,7 @@ function panel(o) {
         const text = esc(r.description);
         const links = r.problems
           .map((slug) => `<a href="../problems/#${slug}"><code class="mono">${slug}</code></a>`)
-          .join(" <span data-de='oder'>or</span> ");
+          .join(" or ");
         const body = r.shape && (r.shape.name || r.shape.fields.length) ? fields(r.shape, r.many) : "";
         return (
           `<li><div class="line"><code class="mono c">${esc(r.code)}</code> ` +
@@ -233,7 +239,7 @@ function panel(o) {
         );
       })
       .join("");
-    bits.push(`        <h3 data-de="Antworten">Responses</h3>\n        <ul class="codes">${rs}</ul>`);
+    bits.push(`        <h3>Responses</h3>\n        <ul class="codes">${rs}</ul>`);
   }
   return bits.join("\n");
 }
