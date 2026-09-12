@@ -71,6 +71,11 @@ const PAGES = [
   // shape: the spine, the one flagged note, and that a reader can reach the problems page from
   // it. Whether the rows are current is `npm run api:check`, which CI runs beside this suite.
   { path: "/api/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+    // The rows stay English in both languages: a method, a path and an operation summary are
+    // the document's own words. `hides` therefore names prose only, never a summary.
+    translates: { lang: "de", shows: ["Zwei APIs", "Was hereinkommt", "Wenn ein Aufruf abgelehnt wird"], hides: ["Two APIs", "What arrives", "When a call is refused"],
+                  title: "API – GuestGraph",
+                  desc: "Zwei HTTP-APIs: Die eine hält den Gast-Graphen und beantwortet Fragen dazu, die andere füllt ihn. Was jeder Aufruf tut und was eine Ablehnung bedeutet." },
     contains: ["Two APIs", "One fills it", "What arrives", "What came out", "When it is wrong",
                "There is no instance to call", "POST", "/records", "/guests/{guestId}/explain"],
     ids: ["connector", "arrives", "came-out", "wrong", "refusals"],
