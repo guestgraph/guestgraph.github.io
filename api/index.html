@@ -490,16 +490,13 @@
   .note{margin-top:2rem; max-width:56ch; padding-left:1rem;
         border-left:2px solid var(--c-flag); color:var(--ink); font-size:1rem}
 
-  /* The spine. A record enters at the connector and moves down; the rule is the path it
-     takes, and each heading is a stop on it. One device, and it is the page's only drawing:
-     `--c-weak` is a candidate rather than a resolved thing, which is what a section of a
-     document is until you read it. It never carries text or an outline on its own. */
-  .spine{margin-top:clamp(3rem,7vh,4.5rem); border-left:1px solid var(--rule); padding-left:clamp(1.1rem,3vw,2rem)}
-  .spine section:first-child{margin-top:0}
-  .spine h2{position:relative}
-  .spine h2::before{content:""; position:absolute; left:calc(-1 * clamp(1.1rem,3vw,2rem) - 1px);
-                    top:.55em; width:9px; height:1px; background:var(--c-firm)}
-  .feeds{padding-bottom:.4rem}
+  /* Each section says which service answers it, on the heading's own line and in the face
+     this system keeps for data. It is a link: a reader who wants the source of a call is one
+     click from the repository that serves it. */
+  .head{display:flex; flex-wrap:wrap; align-items:baseline; gap:.5rem 1rem; justify-content:space-between}
+  .origin{font-size:.82rem; color:var(--dim); text-decoration:none; border-bottom:1px solid var(--rule)}
+  .origin:hover, .origin:focus-visible{color:var(--c-mid); border-bottom-color:var(--c-mid)}
+
 
   /* One row per operation: the method and the path in the face this system keeps for data,
      the summary in prose beside them. Three columns on a wide screen, stacked on a narrow
@@ -605,9 +602,11 @@
         <code class="mono">/api-docs</code> with no key.</p>
     </div>
 
-  <div class="spine">
   <section class="feeds">
-    <h2 id="connector" data-de="">One fills it</h2>
+    <div class="head">
+      <h2 id="connector" data-de="">One fills it</h2>
+      <a class="origin mono" href="https://github.com/guestgraph/connector-apaleo">connector-apaleo</a>
+    </div>
     <p class="lede" data-de="">A connector is a client like any other: it reads one source system and submits what it
       finds. Its own surface is what an operator calls, not what an integration calls, and it answers to a
       bearer token rather than to a tenant's key.</p>
@@ -622,7 +621,10 @@
   </section>
 
   <section>
-    <h2 id="arrives" data-de="">What arrives</h2>
+    <div class="head">
+      <h2 id="arrives" data-de="">What arrives</h2>
+      <a class="origin mono" href="https://github.com/guestgraph/engine">engine</a>
+    </div>
     <p class="lede" data-de="">A system registers itself, then sends what it knows about a person. Resolution happens
       in the same request, so the answer names the guest the record turned out to belong to.</p>
     <ul class="ops"><!-- ops:arrives -->
@@ -632,7 +634,10 @@
   </section>
 
   <section>
-    <h2 id="came-out" data-de="">What came out</h2>
+    <div class="head">
+      <h2 id="came-out" data-de="">What came out</h2>
+      <a class="origin mono" href="https://github.com/guestgraph/engine">engine</a>
+    </div>
     <p class="lede" data-de="">One person, assembled from every record that turned out to be them, with the evidence
       for it. A guest id you store keeps answering after a merge.</p>
     <ul class="ops"><!-- ops:came-out -->
@@ -646,7 +651,10 @@
   </section>
 
   <section>
-    <h2 id="wrong" data-de="">When it is wrong</h2>
+    <div class="head">
+      <h2 id="wrong" data-de="">When it is wrong</h2>
+      <a class="origin mono" href="https://github.com/guestgraph/engine">engine</a>
+    </div>
     <p class="lede" data-de="">Every merge the engine makes can be taken back, and a steward's decision outlives the
       next import rather than being overwritten by it.</p>
     <ul class="ops"><!-- ops:wrong -->
@@ -659,7 +667,10 @@
   </section>
 
   <section>
-    <h2 id="tuning" data-de="">What the tenant decides</h2>
+    <div class="head">
+      <h2 id="tuning" data-de="">What the tenant decides</h2>
+      <a class="origin mono" href="https://github.com/guestgraph/engine">engine</a>
+    </div>
     <p class="lede" data-de="">Thresholds and identifier trust are per tenant, because one brand's shared front-desk
       number is another brand's real one.</p>
     <ul class="ops"><!-- ops:tuning -->
@@ -670,8 +681,6 @@
       <li><code class="mono m">DELETE</code><code class="mono p">/<wbr>config/<wbr>identifier-rules/<wbr>{ruleId}</code><span class="s">Delete a tenant rule (built-ins are not deletable)</span></li>
       <!-- end ops --></ul>
   </section>
-  </div>
-
   <section class="out">
     <h2 id="refusals">When a call is refused</h2>
     <p class="lede" data-de="">Both services answer a refusal the same way: an RFC 9457 problem detail whose
