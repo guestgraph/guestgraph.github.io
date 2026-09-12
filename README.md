@@ -25,6 +25,7 @@ had to be unwound. Do not recreate one.
 | `/billing/` | How the hosted service will bill. One meter, and it is arrivals. |
 | `/privacy/` | What this site collects, which is nothing. |
 | `/problems/` | What each refusal type a GuestGraph service answers means, and what to do about it. |
+| `/api/` | The two APIs, generated from the services' OpenAPI documents at pinned commits. |
 
 ## Contents
 
@@ -39,8 +40,14 @@ had to be unwound. Do not recreate one.
   at them relatively, so the deck still opens from `file://`.
 - `sitemap.xml` — one flat list of every URL on the domain. It was an index pointing at a
   second sitemap while the talks lived elsewhere; there is one list now.
-- `verify/check.mjs` — the suite, covering all six pages in one run, and
+- `verify/check.mjs` — the suite, covering all seven pages in one run, and
   `verify/og-recipe.test.mjs`, the share-card check's own tests.
+- `build-api.mjs` and `api-sources.json` — the API page's operation rows, written from the
+  engine's and the connector's own OpenAPI documents at the commits the pins name. `npm run api`
+  rewrites the rows, `npm run api:check` fails when the page has drifted from the pins, and CI
+  runs the check. The page's prose is hand-written around the rows and carries its German; an
+  operation the script does not place stops the build rather than vanishing from the page. The
+  pins are editorial, as every pin in this family is.
 - `og.png`, `talks/og.png`, `talks/intro/og.png` — 1200×630 share cards, each rendered from the
   page it belongs to, and an `og.sha` beside each one: a hash of everything that went into the
   card, so `npm run og:check` can say whether it still shows its page. `og-recipe.mjs` defines
@@ -71,9 +78,9 @@ No build step. Open `index.html`, or serve it:
 npm install                        # once, for Playwright
 npm run serve                      # → http://localhost:8000
 npm run verify                     # renders every page and asserts the DOM
-npm run og:check                   # do the six share cards still show their pages?
+npm run og:check                   # do the seven share cards still show their pages?
 npm run test:og                    # the card check's own tests (node --test)
-npm run og                         # re-renders all six cards after a visual change
+npm run og                         # re-renders all seven cards after a visual change
 ```
 
 `og:check` needs no server and no browser — it re-derives each card's recipe and compares it

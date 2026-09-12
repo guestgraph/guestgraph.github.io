@@ -1,0 +1,12 @@
+{
+  "engine": {
+    "repo": "guestgraph/engine",
+    "commit": "c8b205c2f204ac8dd092b60a75dc97f427670cbf",
+    "spec": "src/main/resources/api/openapi.yaml"
+  },
+  "connector": {
+    "repo": "guestgraph/connector-apaleo",
+    "commit": "c7ca08adf9929ccc8472de8ed51cdd6b7effee40",
+    "spec": "src/main/resources/api/openapi.yaml"
+  }
+}

@@ -6,6 +6,7 @@
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://guestgraph.io/</loc></url>
+  <url><loc>https://guestgraph.io/api/</loc></url>
   <url><loc>https://guestgraph.io/billing/</loc></url>
   <url><loc>https://guestgraph.io/privacy/</loc></url>
   <url><loc>https://guestgraph.io/problems/</loc></url>
