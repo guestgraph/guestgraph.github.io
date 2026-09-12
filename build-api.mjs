@@ -34,6 +34,44 @@ const CLOSE = "<!-- end ops -->";
 // one back, and the same call does both.
 const REVERSES = new Set(["unmergeGuest", "deleteNegativeRule"]);
 
+// Which problem type each refusal carries. The documents cannot say: every error response
+// points at one shared problem schema, so a 400 there is any of three types. This map is read
+// from the services' own code — the exceptions each operation raises — and an error response
+// with no entry stops the build, so a new refusal cannot quietly link to nothing.
+//
+// Two refusals are every operation's and are named once on the page instead of on every row:
+// a malformed actor claim, which the key filter raises as a 400 before an operation runs, and
+// a body over the size cap, which no document declares because no operation does.
+const PROBLEMS = {
+  // engine
+  registerSourceSystem: { 400: ["invalid-request"], 401: ["unauthorized"], 409: ["conflict"] },
+  ingestRecords: { 400: ["invalid-request"], 401: ["unauthorized"] },
+  getGuest: { 401: ["unauthorized"], 404: ["not-found"] },
+  getGuestRecords: { 401: ["unauthorized"], 404: ["not-found"], 410: ["guest-retired"] },
+  explainGuest: { 401: ["unauthorized"], 404: ["not-found"], 410: ["guest-retired"] },
+  unmergeGuest: { 400: ["invalid-unmerge"], 401: ["unauthorized"], 404: ["not-found"], 410: ["guest-retired"] },
+  lookupGuests: { 400: ["invalid-request"], 401: ["unauthorized"] },
+  listMatchReviews: { 401: ["unauthorized"] },
+  decideMatchReview: { 401: ["unauthorized"], 404: ["not-found"], 409: ["review-already-decided"] },
+  getMatchingConfig: { 401: ["unauthorized"] },
+  updateMatchingConfig: { 400: ["invalid-request"], 401: ["unauthorized"] },
+  listIdentifierRules: { 401: ["unauthorized"] },
+  addIdentifierRule: { 400: ["invalid-request"], 401: ["unauthorized"], 409: ["conflict"] },
+  deleteIdentifierRule: { 401: ["unauthorized"], 404: ["not-found"] },
+  listNegativeRules: { 401: ["unauthorized"] },
+  deleteNegativeRule: { 401: ["unauthorized"], 404: ["not-found"] },
+  getGuestTimeline: { 401: ["unauthorized"], 404: ["not-found"], 410: ["guest-retired"] },
+  getSourceObject: { 401: ["unauthorized"], 404: ["not-found"] },
+  // connector. Its webhook answers an unknown secret with a bare 404 and no body, so a probe
+  // learns nothing about which secrets exist; that one carries no problem type at all.
+  receiveApaleoEvent: { 400: ["invalid-request"], 404: [] },
+  getStatus: { 401: ["unauthorized"] },
+  startFullSync: { 401: ["unauthorized"], 404: ["not-found"], 409: ["run-in-progress"] },
+  startReconciliation: { 401: ["unauthorized"], 404: ["not-found"], 409: ["run-in-progress"] },
+  startRefresh: { 401: ["unauthorized"], 404: ["not-found"] },
+  getRun: { 401: ["unauthorized"], 404: ["not-found"] },
+};
+
 // The order a record moves through the engine, which is the page's spine. An operation not
 // named here keeps the document's own order, after the ones that are — a new endpoint appears
 // rather than disappearing.
@@ -111,18 +149,26 @@ function request(doc, op) {
 }
 
 function responses(doc, op) {
+  const mapped = PROBLEMS[op.operationId];
   return Object.entries(op.responses ?? {}).map(([code, body]) => {
     const ref = refName(body);
     const target = ref ? doc.components?.responses?.[ref] : body;
+    const error = Number(code) >= 400;
+    if (error && !mapped?.[code]) {
+      console.error(`✗ api: ${op.operationId} answers ${code} and PROBLEMS says nothing about it.`);
+      console.error("  Add the problem type(s) it carries to PROBLEMS in build-api.mjs, read");
+      console.error("  from the exceptions that operation raises. An empty list means the");
+      console.error("  refusal deliberately carries no problem detail.");
+      process.exit(1);
+    }
+    const schema = target?.content?.["application/json"]?.schema
+      ?? target?.content?.["application/problem+json"]?.schema;
     return {
       code,
-      // A response's description is the document's own sentence about it.
       description: (target?.description ?? "").trim().split("\n")[0],
-      // Which problem type a refusal carries depends on the case and not on the code — a 400
-      // is invalid-request, invalid-actor-claim or invalid-unmerge — so a code links to the
-      // page and not to a section. The one exception is the document's own Retired response,
-      // which names exactly one type.
-      problem: Number(code) >= 400 ? (ref === "Retired" ? "../problems/#guest-retired" : "../problems/") : null,
+      problems: error ? mapped[code] : [],
+      shape: error ? null : (schema ? shape(doc, schema.type === "array" ? schema.items : schema) : null),
+      many: !error && schema?.type === "array",
     };
   });
 }
@@ -149,24 +195,24 @@ function operations(doc) {
   return out;
 }
 
+function fields(form, many) {
+  const head = form.name
+    ? `<b class="mono">${esc(form.name)}</b>` +
+      (many ? ` <span class="t" data-de="einzeln oder als Liste">one or a list of them</span>` : "")
+    : "";
+  const list = form.fields
+    .map((x) => `<li><code class="mono">${esc(x.name)}</code> <span class="t">${esc(x.type)}</span>` +
+                (x.required ? ` <span class="req" data-de="Pflicht">required</span>` : "") + `</li>`)
+    .join("");
+  return `<div class="form">${head}<ul class="fields">${list}</ul></div>`;
+}
+
 function panel(o) {
   const bits = [];
   if (o.description) bits.push(`        <p class="desc">${esc(o.description)}</p>`);
 
   if (o.request?.length) {
-    const forms = o.request
-      .map((f) => {
-        const head = f.name
-          ? `<b class="mono">${esc(f.name)}</b>` +
-            (f.many ? ` <span class="t" data-de="einzeln oder als Liste">one or a list of them</span>` : "")
-          : "";
-        const fields = f.fields
-          .map((x) => `<li><code class="mono">${esc(x.name)}</code> <span class="t">${esc(x.type)}</span>` +
-                      (x.required ? ` <span class="req" data-de="Pflicht">required</span>` : "") + `</li>`)
-          .join("");
-        return `<div class="form">${head}<ul class="fields">${fields}</ul></div>`;
-      })
-      .join("");
+    const forms = o.request.map((f) => fields(f, f.many)).join("");
     bits.push(`        <h3 data-de="Anfrage">Request</h3>\n        <div class="forms">${forms}</div>`);
   }
 
@@ -174,10 +220,14 @@ function panel(o) {
     const rs = o.responses
       .map((r) => {
         const text = esc(r.description);
-        const said = r.problem
-          ? `<a href="${r.problem}">${text || "A problem detail"}</a>`
-          : text;
-        return `<li><code class="mono c">${esc(r.code)}</code> <span class="d">${said}</span></li>`;
+        const links = r.problems
+          .map((slug) => `<a href="../problems/#${slug}"><code class="mono">${slug}</code></a>`)
+          .join(" <span data-de='oder'>or</span> ");
+        const body = r.shape && (r.shape.name || r.shape.fields.length) ? fields(r.shape, r.many) : "";
+        return (
+          `<li><div class="line"><code class="mono c">${esc(r.code)}</code> ` +
+          `<span class="d">${text}${links ? ` · ${links}` : ""}</span></div>${body}</li>`
+        );
       })
       .join("");
     bits.push(`        <h3 data-de="Antworten">Responses</h3>\n        <ul class="codes">${rs}</ul>`);
