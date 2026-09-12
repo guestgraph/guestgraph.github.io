@@ -502,9 +502,18 @@
      the summary in prose beside them. Three columns on a wide screen, stacked on a narrow
      one, because a path and its summary both want the full width of a phone. */
   .ops{margin-top:1.3rem; list-style:none; display:grid; gap:.55rem}
-  .ops li{display:grid; gap:.15rem .9rem; align-items:baseline;
-          grid-template-columns:minmax(0,1fr); padding:.5rem .75rem;
-          background:var(--raise); border:1px solid var(--rule); border-radius:8px}
+  /* The direct children only: a nested list inside an opened panel is not another card, and
+     `.ops li` would have made it one. */
+  .ops > li{background:var(--raise); border:1px solid var(--rule); border-radius:8px}
+  /* The row is the control. A disclosure that looks like a row until you reach for it keeps
+     the page scannable at rest, which is what a reader deciding whether to build against this
+     needs first; the detail is for the one they stopped on. */
+  .ops summary, .ops .head{display:grid; gap:.15rem .9rem; align-items:baseline;
+                           grid-template-columns:minmax(0,1fr); padding:.5rem .75rem}
+  .ops summary{cursor:pointer; list-style:none}
+  .ops summary::-webkit-details-marker{display:none}
+  .ops summary:hover .s{color:var(--ink)}
+  .ops summary:focus-visible{outline:2px solid var(--c-mid); outline-offset:2px; border-radius:8px}
   .ops .m{font-size:.74rem; font-weight:600; letter-spacing:.08em; color:var(--c-mid)}
   .ops .p{font-size:.9rem; color:var(--ink)}
   .ops .s{font-size:.93rem; color:var(--dim)}
@@ -516,8 +525,26 @@
      word would stay English on the German page. The switch sets the root's lang, which is
      the one hook a stylesheet has on it. */
   :root[lang="de"] .ops li.undo .s::after{content:" · nimmt zurück"}
+
+  /* The opened panel. Indented to the path's column on a wide screen, so a reader's eye
+     stays where it was when the row opened. */
+  .ops details[open] summary{border-bottom:1px solid var(--rule)}
+  .ops details > :not(summary){padding:0 .75rem}
+  .ops details > :last-child{padding-bottom:.9rem}
+  .ops .desc{margin-top:.8rem; font-size:.93rem; color:var(--dim); max-width:70ch}
+  .ops h3{margin-top:.9rem; font-size:.78rem; font-weight:600; letter-spacing:.05em; color:var(--ink)}
+  .ops .forms{margin-top:.45rem; display:grid; gap:.6rem}
+  .ops .form b{font-size:.85rem; font-weight:600; color:var(--c-firm)}
+  .ops .fields, .ops .codes{margin-top:.3rem; list-style:none; display:grid; gap:.25rem}
+  .ops .fields > li, .ops .codes > li{font-size:.86rem; color:var(--dim); background:none; border:0; padding:0}
+  .ops .fields code{color:var(--ink)}
+  .ops .t{color:var(--dim)}
+  .ops .req{color:var(--c-firm); font-size:.78rem}
+  .ops .c{color:var(--ink); font-weight:600; min-width:2.6rem; display:inline-block}
+  .ops .codes a{color:var(--c-mid)}
   @media (min-width:780px){
-    .ops li{grid-template-columns:3.6rem minmax(0,21rem) minmax(0,1fr)}
+    .ops summary, .ops .head{grid-template-columns:3.6rem minmax(0,21rem) minmax(0,1fr)}
+    .ops details > :not(summary){padding-left:4.35rem}
   }
 
   /* The provenance line. Mono end to end, as blust.ch's model page sets its own: the line is
@@ -625,12 +652,39 @@
       finds. Its own surface is what an operator calls, not what an integration calls, and it answers to a
       bearer token rather than to a tenant's key.</p>
     <ul class="ops"><!-- ops:connector -->
-      <li><code class="mono m">POST</code><code class="mono p">/<wbr>apaleo/<wbr>events/<wbr>{secret}</code><span class="s">Receive one Apaleo delivery, or its reachability check</span></li>
-      <li><code class="mono m">GET</code><code class="mono p">/<wbr>status</code><span class="s">Is this connector fine, connection by connection</span></li>
-      <li><code class="mono m">POST</code><code class="mono p">/<wbr>connections/<wbr>{connectionId}/<wbr>sync/<wbr>full</code><span class="s">Start a full sync of one connection's properties and bookings</span></li>
-      <li><code class="mono m">POST</code><code class="mono p">/<wbr>connections/<wbr>{connectionId}/<wbr>sync/<wbr>reconcile</code><span class="s">Start a reconciliation from one connection's sync points</span></li>
-      <li><code class="mono m">POST</code><code class="mono p">/<wbr>connections/<wbr>{connectionId}/<wbr>refresh</code><span class="s">Re-read one connection's held guest ids and apply the integrator rule</span></li>
-      <li><code class="mono m">GET</code><code class="mono p">/<wbr>connections/<wbr>{connectionId}/<wbr>runs/<wbr>{runId}</code><span class="s">One run's progress and outcome</span></li>
+      <li><details>
+        <summary><code class="mono m">POST</code><code class="mono p">/<wbr>apaleo/<wbr>events/<wbr>{secret}</code><span class="s">Receive one Apaleo delivery, or its reachability check</span></summary>
+        <p class="desc">The secret names the connection: the delivery is stored under the connection whose webhook secret hash matches and answered at once; processing happens on the worker. A second delivery of the same id is acknowledged and ignored. An empty body is Apaleo's reachability check and is answered with 200. A secret that matches no connection is 404, indistinguishable from an unknown path.</p>
+        <h3 data-de="Anfrage">Request</h3>
+        <div class="forms"><div class="form"><b class="mono">ApaleoEvent</b><ul class="fields"><li><code class="mono">id</code> <span class="t">string</span> <span class="req" data-de="Pflicht">required</span></li><li><code class="mono">topic</code> <span class="t">string</span> <span class="req" data-de="Pflicht">required</span></li><li><code class="mono">type</code> <span class="t">string</span> <span class="req" data-de="Pflicht">required</span></li><li><code class="mono">accountId</code> <span class="t">string</span> <span class="req" data-de="Pflicht">required</span></li><li><code class="mono">propertyId</code> <span class="t">string</span> <span class="req" data-de="Pflicht">required</span></li><li><code class="mono">timestamp</code> <span class="t">string</span> <span class="req" data-de="Pflicht">required</span></li><li><code class="mono">clientId</code> <span class="t">string</span></li><li><code class="mono">subjectId</code> <span class="t">string</span></li><li><code class="mono">data</code> <span class="t">object</span></li></ul></div></div>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">Reachability check answered</span></li><li><code class="mono c">202</code> <span class="d">Delivery stored</span></li><li><code class="mono c">404</code> <span class="d"><a href="../problems/">Unknown path</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">GET</code><code class="mono p">/<wbr>status</code><span class="s">Is this connector fine, connection by connection</span></summary>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">The status document</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">Missing or wrong token</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">POST</code><code class="mono p">/<wbr>connections/<wbr>{connectionId}/<wbr>sync/<wbr>full</code><span class="s">Start a full sync of one connection's properties and bookings</span></summary>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">202</code> <span class="d">Started</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">Missing or wrong token</a></span></li><li><code class="mono c">404</code> <span class="d"><a href="../problems/">No such connection</a></span></li><li><code class="mono c">409</code> <span class="d"><a href="../problems/">A full sync is already running on this connection</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">POST</code><code class="mono p">/<wbr>connections/<wbr>{connectionId}/<wbr>sync/<wbr>reconcile</code><span class="s">Start a reconciliation from one connection's sync points</span></summary>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">202</code> <span class="d">Started</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">Missing or wrong token</a></span></li><li><code class="mono c">404</code> <span class="d"><a href="../problems/">No such connection</a></span></li><li><code class="mono c">409</code> <span class="d"><a href="../problems/">A run is already in progress on this connection</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">POST</code><code class="mono p">/<wbr>connections/<wbr>{connectionId}/<wbr>refresh</code><span class="s">Re-read one connection's held guest ids and apply the integrator rule</span></summary>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">202</code> <span class="d">Started</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">Missing or wrong token</a></span></li><li><code class="mono c">404</code> <span class="d"><a href="../problems/">No such connection</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">GET</code><code class="mono p">/<wbr>connections/<wbr>{connectionId}/<wbr>runs/<wbr>{runId}</code><span class="s">One run's progress and outcome</span></summary>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">The run</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">Missing or wrong token</a></span></li><li><code class="mono c">404</code> <span class="d"><a href="../problems/">No such connection or run</a></span></li></ul>
+      </details></li>
       <!-- end ops --></ul>
   </section>
 
@@ -642,8 +696,21 @@
     <p class="lede" data-de="Ein System registriert sich und sendet dann, was es über eine Person weiss. Die Auflösung geschieht in derselben Anfrage. Die Antwort nennt deshalb den Gast, zu dem der Datensatz gehört.">A system registers itself, then sends what it knows about a person. Resolution happens
       in the same request, so the answer names the guest the record turned out to belong to.</p>
     <ul class="ops"><!-- ops:arrives -->
-      <li><code class="mono m">POST</code><code class="mono p">/<wbr>source-systems</code><span class="s">Register a source system for the caller's tenant</span></li>
-      <li><code class="mono m">POST</code><code class="mono p">/<wbr>records</code><span class="s">Ingest guest record(s); resolves synchronously</span></li>
+      <li><details>
+        <summary><code class="mono m">POST</code><code class="mono p">/<wbr>source-systems</code><span class="s">Register a source system for the caller's tenant</span></summary>
+        <h3 data-de="Anfrage">Request</h3>
+        <div class="forms"><div class="form"><ul class="fields"><li><code class="mono">code</code> <span class="t">string</span> <span class="req" data-de="Pflicht">required</span></li><li><code class="mono">name</code> <span class="t">string</span> <span class="req" data-de="Pflicht">required</span></li></ul></div></div>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">201</code> <span class="d">Registered</span></li><li><code class="mono c">400</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">409</code> <span class="d"><a href="../problems/">Code already registered in this tenant</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">POST</code><code class="mono p">/<wbr>records</code><span class="s">Ingest guest record(s); resolves synchronously</span></summary>
+        <p class="desc">Accepts a single record or a batch (max 1000). Each record is stored immutably and resolved independently; one outcome is returned per record. Malformed-but-parseable records are stored flagged needs_review — never dropped. Only an unparseable request body is rejected as a whole.</p>
+        <h3 data-de="Anfrage">Request</h3>
+        <div class="forms"><div class="form"><b class="mono">IngestRecord</b> <span class="t" data-de="einzeln oder als Liste">one or a list of them</span><ul class="fields"><li><code class="mono">sourceSystem</code> <span class="t">string</span> <span class="req" data-de="Pflicht">required</span></li><li><code class="mono">externalKey</code> <span class="t">string</span> <span class="req" data-de="Pflicht">required</span></li><li><code class="mono">recordTimestamp</code> <span class="t">string</span></li><li><code class="mono">payload</code> <span class="t">object</span> <span class="req" data-de="Pflicht">required</span></li></ul></div></div>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">Per-record resolution outcomes (batch is never atomic)</span></li><li><code class="mono c">400</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li></ul>
+      </details></li>
       <!-- end ops --></ul>
   </section>
 
@@ -655,12 +722,39 @@
     <p class="lede" data-de="Eine Person, zusammengesetzt aus allen Datensätzen, die sich als diese Person erwiesen haben, mit den Belegen dafür. Eine Gast-ID, die Sie speichern, antwortet auch nach einer Zusammenführung weiter.">One person, assembled from every record that turned out to be them, with the evidence
       for it. A guest id you store keeps answering after a merge.</p>
     <ul class="ops"><!-- ops:came-out -->
-      <li><code class="mono m">GET</code><code class="mono p">/<wbr>guests/<wbr>{guestId}</code><span class="s">Golden profile + identifiers, or where a retired id went</span></li>
-      <li><code class="mono m">GET</code><code class="mono p">/<wbr>guests/<wbr>{guestId}/<wbr>records</code><span class="s">The guest's source records, as originally received</span></li>
-      <li><code class="mono m">GET</code><code class="mono p">/<wbr>guests/<wbr>{guestId}/<wbr>explain</code><span class="s">Why these records are one guest — the full merge-event chain</span></li>
-      <li><code class="mono m">GET</code><code class="mono p">/<wbr>guests/<wbr>{guestId}/<wbr>timeline</code><span class="s">The guest's current business-object associations</span></li>
-      <li><code class="mono m">GET</code><code class="mono p">/<wbr>guests</code><span class="s">Look up guests by identifier value</span></li>
-      <li><code class="mono m">GET</code><code class="mono p">/<wbr>source-objects/<wbr>{sourceSystem}/<wbr>{objectType}/<wbr>{objectId}</code><span class="s">A business object's current roster and observation history</span></li>
+      <li><details>
+        <summary><code class="mono m">GET</code><code class="mono p">/<wbr>guests/<wbr>{guestId}</code><span class="s">Golden profile + identifiers, or where a retired id went</span></summary>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">The guest, or the resolution of a retired id — told apart by status</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">404</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">GET</code><code class="mono p">/<wbr>guests/<wbr>{guestId}/<wbr>records</code><span class="s">The guest's source records, as originally received</span></summary>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">Source records</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">404</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">410</code> <span class="d"><a href="../problems/#guest-retired">The guest id was retired by a merge or a split. The problem details name the current guest or guests; read GET /guests/{guestId} on the retired id for the full resolution.</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">GET</code><code class="mono p">/<wbr>guests/<wbr>{guestId}/<wbr>explain</code><span class="s">Why these records are one guest — the full merge-event chain</span></summary>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">Decision chain, oldest first (includes events of absorbed guests)</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">404</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">410</code> <span class="d"><a href="../problems/#guest-retired">The guest id was retired by a merge or a split. The problem details name the current guest or guests; read GET /guests/{guestId} on the retired id for the full resolution.</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">GET</code><code class="mono p">/<wbr>guests/<wbr>{guestId}/<wbr>timeline</code><span class="s">The guest's current business-object associations</span></summary>
+        <p class="desc">Associations the guest currently holds, ordered by business start and falling back to the observation timestamp when the submitter supplied no business dates. An association is current while the object's newest version roster places this guest in that role. With includePast=true, associations the guest no longer holds are also returned with status ENDED, naming the successor when exactly one guest holds that role now.</p>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">Associations page</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">404</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">410</code> <span class="d"><a href="../problems/#guest-retired">The guest id was retired by a merge or a split. The problem details name the current guest or guests; read GET /guests/{guestId} on the retired id for the full resolution.</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">GET</code><code class="mono p">/<wbr>guests</code><span class="s">Look up guests by identifier value</span></summary>
+        <p class="desc">The value is normalized before matching. A miss returns an empty list. Without an explicit type, every type whose normalization accepts the value is tried — except ID_DOCUMENT, which is only matched when type=ID_DOCUMENT is given (pass the value as TYPE:NUMBER; it is hashed before matching).</p>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">Matching guests (usually 0 or 1; &gt;1 after a rejected shared-identifier review)</span></li><li><code class="mono c">400</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">GET</code><code class="mono p">/<wbr>source-objects/<wbr>{sourceSystem}/<wbr>{objectType}/<wbr>{objectId}</code><span class="s">A business object's current roster and observation history</span></summary>
+        <p class="desc">The object as the graph knows it: the newest version's roster — who is on it now, in which role, resolved to which guest — and every observation of the object in version order, including superseded ones and those belonging to guests no longer on it. The history is a property of the object, not of any one guest, because a reassignment spans two of them.</p>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">The object, its current roster, and its observations</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">404</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li></ul>
+      </details></li>
       <!-- end ops --></ul>
   </section>
 
@@ -672,11 +766,36 @@
     <p class="lede" data-de="Jede Zusammenführung der Engine lässt sich zurücknehmen. Und die Entscheidung eines Stewards überlebt den nächsten Import, statt von ihm überschrieben zu werden.">Every merge the engine makes can be taken back, and a steward's decision outlives the
       next import rather than being overwritten by it.</p>
     <ul class="ops"><!-- ops:wrong -->
-      <li class="undo"><code class="mono m">POST</code><code class="mono p">/<wbr>guests/<wbr>{guestId}/<wbr>unmerge</code><span class="s">Detach wrongly linked record(s) and replay resolution</span></li>
-      <li><code class="mono m">GET</code><code class="mono p">/<wbr>match-reviews</code><span class="s">Pending uncertain matches</span></li>
-      <li><code class="mono m">POST</code><code class="mono p">/<wbr>match-reviews/<wbr>{reviewId}</code><span class="s">Confirm or reject a queued match (exactly once)</span></li>
-      <li><code class="mono m">GET</code><code class="mono p">/<wbr>negative-rules</code><span class="s">Do-not-merge rules (written by unmerge and review rejections)</span></li>
-      <li class="undo"><code class="mono m">DELETE</code><code class="mono p">/<wbr>negative-rules/<wbr>{ruleId}</code><span class="s">Lift a do-not-merge rule (steward act) — the pair may merge on next evidence</span></li>
+      <li class="undo"><details>
+        <summary><code class="mono m">POST</code><code class="mono p">/<wbr>guests/<wbr>{guestId}/<wbr>unmerge</code><span class="s">Detach wrongly linked record(s) and replay resolution</span></summary>
+        <p class="desc">Removes the resolution links of the given source records, records an UNMERGE event (with an exclusion so identical re-ingest does not silently recreate the wrong merge), re-resolves the detached records, and recomputes the remaining guest's profile and identifiers. Source records are never altered.</p>
+        <h3 data-de="Anfrage">Request</h3>
+        <div class="forms"><div class="form"><ul class="fields"><li><code class="mono">sourceRecordIds</code> <span class="t">string[]</span> <span class="req" data-de="Pflicht">required</span></li></ul></div></div>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">Outcome of the replay</span></li><li><code class="mono c">400</code> <span class="d"><a href="../problems/">E.g. record not linked to this guest, or guest has a single record</a></span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">404</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">410</code> <span class="d"><a href="../problems/#guest-retired">The guest id was retired by a merge or a split. The problem details name the current guest or guests; read GET /guests/{guestId} on the retired id for the full resolution.</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">GET</code><code class="mono p">/<wbr>match-reviews</code><span class="s">Pending uncertain matches</span></summary>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">Review queue entries, oldest first</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">POST</code><code class="mono p">/<wbr>match-reviews/<wbr>{reviewId}</code><span class="s">Confirm or reject a queued match (exactly once)</span></summary>
+        <h3 data-de="Anfrage">Request</h3>
+        <div class="forms"><div class="form"><ul class="fields"><li><code class="mono">decision</code> <span class="t">string</span> <span class="req" data-de="Pflicht">required</span></li></ul></div></div>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">Decision applied; on CONFIRM the merge executed and was recorded</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">404</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">409</code> <span class="d"><a href="../problems/">Review already decided; the first decision stands</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">GET</code><code class="mono p">/<wbr>negative-rules</code><span class="s">Do-not-merge rules (written by unmerge and review rejections)</span></summary>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">Rules, newest first</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li></ul>
+      </details></li>
+      <li class="undo"><details>
+        <summary><code class="mono m">DELETE</code><code class="mono p">/<wbr>negative-rules/<wbr>{ruleId}</code><span class="s">Lift a do-not-merge rule (steward act) — the pair may merge on next evidence</span></summary>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">204</code> <span class="d">Lifted</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">404</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li></ul>
+      </details></li>
       <!-- end ops --></ul>
   </section>
 
@@ -688,11 +807,35 @@
     <p class="lede" data-de="Schwellenwerte und das Vertrauen in einzelne Identifikatoren gelten pro Mandant. Denn was bei der einen Marke die gemeinsame Nummer der Rezeption ist, ist bei der anderen eine echte.">Thresholds and identifier trust are per tenant, because one brand's shared front-desk
       number is another brand's real one.</p>
     <ul class="ops"><!-- ops:tuning -->
-      <li><code class="mono m">GET</code><code class="mono p">/<wbr>config/<wbr>matching</code><span class="s">The tenant's matching thresholds</span></li>
-      <li><code class="mono m">PUT</code><code class="mono p">/<wbr>config/<wbr>matching</code><span class="s">Update the tenant's matching thresholds (transactional — all or nothing)</span></li>
-      <li><code class="mono m">GET</code><code class="mono p">/<wbr>config/<wbr>identifier-rules</code><span class="s">Identifier quality rules — tenant-added plus built-in defaults</span></li>
-      <li><code class="mono m">POST</code><code class="mono p">/<wbr>config/<wbr>identifier-rules</code><span class="s">Add a tenant identifier quality rule</span></li>
-      <li><code class="mono m">DELETE</code><code class="mono p">/<wbr>config/<wbr>identifier-rules/<wbr>{ruleId}</code><span class="s">Delete a tenant rule (built-ins are not deletable)</span></li>
+      <li><details>
+        <summary><code class="mono m">GET</code><code class="mono p">/<wbr>config/<wbr>matching</code><span class="s">The tenant's matching thresholds</span></summary>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">Current configuration</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">PUT</code><code class="mono p">/<wbr>config/<wbr>matching</code><span class="s">Update the tenant's matching thresholds (transactional — all or nothing)</span></summary>
+        <h3 data-de="Anfrage">Request</h3>
+        <div class="forms"><div class="form"><b class="mono">MatchingConfig</b><ul class="fields"><li><code class="mono">autoMergeThreshold</code> <span class="t">number</span> <span class="req" data-de="Pflicht">required</span></li><li><code class="mono">reviewFloor</code> <span class="t">number</span> <span class="req" data-de="Pflicht">required</span></li><li><code class="mono">reviewThreshold</code> <span class="t">integer</span> <span class="req" data-de="Pflicht">required</span></li></ul></div></div>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">Applied; effective for subsequent resolutions, no restart</span></li><li><code class="mono c">400</code> <span class="d"><a href="../problems/">Invalid combination (e.g. reviewFloor &gt; autoMergeThreshold, values outside 0..1)</a></span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">GET</code><code class="mono p">/<wbr>config/<wbr>identifier-rules</code><span class="s">Identifier quality rules — tenant-added plus built-in defaults</span></summary>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">200</code> <span class="d">Rules; built-ins carry builtin=true and cannot be deleted</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">POST</code><code class="mono p">/<wbr>config/<wbr>identifier-rules</code><span class="s">Add a tenant identifier quality rule</span></summary>
+        <h3 data-de="Anfrage">Request</h3>
+        <div class="forms"><div class="form"><ul class="fields"><li><code class="mono">identifierType</code> <span class="t">string</span> <span class="req" data-de="Pflicht">required</span></li><li><code class="mono">matchKind</code> <span class="t">string</span> <span class="req" data-de="Pflicht">required</span></li><li><code class="mono">value</code> <span class="t">string</span> <span class="req" data-de="Pflicht">required</span></li><li><code class="mono">rule</code> <span class="t">string</span> <span class="req" data-de="Pflicht">required</span></li><li><code class="mono">note</code> <span class="t">string</span></li></ul></div></div>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">201</code> <span class="d">Created; effective for subsequent resolutions</span></li><li><code class="mono c">400</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">409</code> <span class="d"><a href="../problems/">Equivalent rule already exists</a></span></li></ul>
+      </details></li>
+      <li><details>
+        <summary><code class="mono m">DELETE</code><code class="mono p">/<wbr>config/<wbr>identifier-rules/<wbr>{ruleId}</code><span class="s">Delete a tenant rule (built-ins are not deletable)</span></summary>
+        <h3 data-de="Antworten">Responses</h3>
+        <ul class="codes"><li><code class="mono c">204</code> <span class="d">Deleted</span></li><li><code class="mono c">401</code> <span class="d"><a href="../problems/">RFC 9457 problem details</a></span></li><li><code class="mono c">404</code> <span class="d"><a href="../problems/">Unknown rule id — including built-ins, which carry no id and therefore cannot be addressed for deletion</a></span></li></ul>
+      </details></li>
       <!-- end ops --></ul>
   </section>
   <section class="out">

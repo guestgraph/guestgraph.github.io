@@ -59,6 +59,74 @@ async function load(name, src) {
   return res.text();
 }
 
+// One level of a schema, which is where the bound is. A named schema is shown by its name and
+// its own properties; a property that is itself a reference is shown by that reference's name
+// and not followed. The complete shape is in the document the provenance line links to, and a
+// page that reproduced it would be a worse copy of what a reader can already open.
+function refName(node) {
+  return node?.$ref ? node.$ref.split("/").pop() : null;
+}
+
+function typeOf(node) {
+  if (!node) return "";
+  const ref = refName(node);
+  if (ref) return ref;
+  if (node.oneOf) return node.oneOf.map(typeOf).filter(Boolean).join(" or ");
+  if (node.type === "array") return `${typeOf(node.items)}[]`;
+  if (Array.isArray(node.type)) return node.type.filter((t) => t !== "null").join(" or ");
+  return node.type ?? "";
+}
+
+function shape(doc, node) {
+  const ref = refName(node);
+  const target = ref ? doc.components?.schemas?.[ref] : node;
+  if (!target?.properties) return { name: ref, fields: [] };
+  const required = new Set(target.required ?? []);
+  return {
+    name: ref,
+    fields: Object.entries(target.properties).map(([k, v]) => ({
+      name: k,
+      type: typeOf(v),
+      required: required.has(k),
+    })),
+  };
+}
+
+function request(doc, op) {
+  const schema = op.requestBody?.content?.["application/json"]?.schema;
+  if (!schema) return null;
+  const parts = schema.oneOf ?? [schema];
+  const out = [];
+  for (const part of parts) {
+    const many = part.type === "array";
+    const form = shape(doc, many ? part.items : part);
+    if (!form.name && !form.fields.length) continue;
+    // `oneOf: [X, array of X]` is one shape a caller may send singly or in a batch, not two
+    // shapes. Listing it twice would read as a choice between two bodies.
+    const seen = out.find((f) => f.name === form.name);
+    if (seen) seen.many = seen.many || many;
+    else out.push({ ...form, many });
+  }
+  return out;
+}
+
+function responses(doc, op) {
+  return Object.entries(op.responses ?? {}).map(([code, body]) => {
+    const ref = refName(body);
+    const target = ref ? doc.components?.responses?.[ref] : body;
+    return {
+      code,
+      // A response's description is the document's own sentence about it.
+      description: (target?.description ?? "").trim().split("\n")[0],
+      // Which problem type a refusal carries depends on the case and not on the code — a 400
+      // is invalid-request, invalid-actor-claim or invalid-unmerge — so a code links to the
+      // page and not to a section. The one exception is the document's own Retired response,
+      // which names exactly one type.
+      problem: Number(code) >= 400 ? (ref === "Retired" ? "../problems/#guest-retired" : "../problems/") : null,
+    };
+  });
+}
+
 function operations(doc) {
   const out = [];
   for (const [p, item] of Object.entries(doc.paths ?? {})) {
@@ -71,6 +139,9 @@ function operations(doc) {
         summary: op.summary ?? "",
         id: op.operationId ?? "",
         tag: (op.tags ?? [])[0] ?? "",
+        description: (op.description ?? "").trim(),
+        request: request(doc, op),
+        responses: responses(doc, op),
         reverses: REVERSES.has(op.operationId),
       });
     }
@@ -78,17 +149,62 @@ function operations(doc) {
   return out;
 }
 
+function panel(o) {
+  const bits = [];
+  if (o.description) bits.push(`        <p class="desc">${esc(o.description)}</p>`);
+
+  if (o.request?.length) {
+    const forms = o.request
+      .map((f) => {
+        const head = f.name
+          ? `<b class="mono">${esc(f.name)}</b>` +
+            (f.many ? ` <span class="t" data-de="einzeln oder als Liste">one or a list of them</span>` : "")
+          : "";
+        const fields = f.fields
+          .map((x) => `<li><code class="mono">${esc(x.name)}</code> <span class="t">${esc(x.type)}</span>` +
+                      (x.required ? ` <span class="req" data-de="Pflicht">required</span>` : "") + `</li>`)
+          .join("");
+        return `<div class="form">${head}<ul class="fields">${fields}</ul></div>`;
+      })
+      .join("");
+    bits.push(`        <h3 data-de="Anfrage">Request</h3>\n        <div class="forms">${forms}</div>`);
+  }
+
+  if (o.responses?.length) {
+    const rs = o.responses
+      .map((r) => {
+        const text = esc(r.description);
+        const said = r.problem
+          ? `<a href="${r.problem}">${text || "A problem detail"}</a>`
+          : text;
+        return `<li><code class="mono c">${esc(r.code)}</code> <span class="d">${said}</span></li>`;
+      })
+      .join("");
+    bits.push(`        <h3 data-de="Antworten">Responses</h3>\n        <ul class="codes">${rs}</ul>`);
+  }
+  return bits.join("\n");
+}
+
 function rows(ops) {
   return ops
-    .map(
-      (o) =>
-        `      <li${o.reverses ? ' class="undo"' : ""}>` +
+    .map((o) => {
+      const body = panel(o);
+      const head =
         `<code class="mono m">${esc(o.method)}</code>` +
         // A path breaks after a segment or not at all: `overflow-wrap` alone splits
         // {connectionId} down the middle, which is unreadable in a column a reader scans.
         `<code class="mono p">${esc(o.path).replace(/\//g, "/<wbr>")}</code>` +
-        `<span class="s">${esc(o.summary)}</span></li>`
-    )
+        `<span class="s">${esc(o.summary)}</span>`;
+      // An operation with nothing more to say stays a row rather than becoming a control that
+      // opens on emptiness.
+      if (!body) return `      <li${o.reverses ? ' class="undo"' : ""}><div class="head">${head}</div></li>`;
+      return (
+        `      <li${o.reverses ? ' class="undo"' : ""}><details>\n` +
+        `        <summary>${head}</summary>\n` +
+        `${body}\n` +
+        `      </details></li>`
+      );
+    })
     .join("\n");
 }
 
