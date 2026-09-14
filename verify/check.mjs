@@ -89,8 +89,8 @@ const PAGES = [
     translates: { lang: "de", shows: ["Jede Ablehnung", "Ungültige Anfrage", "Interner Serverfehler"], hides: ["Every refusal", "Invalid request", "Internal server error"],
                   title: "Probleme – GuestGraph",
                   desc: "Jede Ablehnung, mit der ein GuestGraph-Dienst antwortet, trägt einen Typ. Was jeder Typ bedeutet, welcher Dienst damit antwortet und was dagegen zu tun ist." },
-    contains: ["Every refusal", "invalid-request", "invalid-actor-claim", "invalid-unmerge", "unauthorized", "not-found", "conflict", "review-already-decided", "run-in-progress", "guest-retired", "payload-too-large", "internal-error"],
-    ids: ["invalid-request", "invalid-actor-claim", "invalid-unmerge", "unauthorized", "not-found", "conflict", "review-already-decided", "run-in-progress", "guest-retired", "payload-too-large", "internal-error"],
+    contains: ["Every refusal", "invalid-request", "invalid-actor-claim", "invalid-unmerge", "unauthorized", "not-found", "conflict", "review-already-decided", "run-in-progress", "guest-retired", "payload-too-large", "apaleo-unreachable", "internal-error"],
+    ids: ["invalid-request", "invalid-actor-claim", "invalid-unmerge", "unauthorized", "not-found", "conflict", "review-already-decided", "run-in-progress", "guest-retired", "payload-too-large", "apaleo-unreachable", "internal-error"],
     // The standard itself, linked where the page names it: a reader who wants the shape of a
     // problem detail rather than this list goes to the source.
     links: ["https://github.com/guestgraph", "https://www.rfc-editor.org/rfc/rfc9457.html"],
