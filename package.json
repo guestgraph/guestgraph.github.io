@@ -13,10 +13,11 @@
     "og:check": "node og-check.mjs",
     "test:og": "node --test verify/og-recipe.test.mjs",
     "api": "node build-api.mjs",
-    "api:check": "node build-api.mjs --check"
+    "api:check": "node build-api.mjs --check",
+    "pin:check": "node pin-check.mjs"
   },
   "devDependencies": {
-    "@robertblust/design": "github:robertblust/design#v0.56.0",
+    "@robertblust/design": "github:robertblust/design#v0.57.0",
     "pdf-lib": "^1.17.1",
     "playwright": "^1.63.0",
     "yaml": "^2.8.1"
