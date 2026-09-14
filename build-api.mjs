@@ -70,6 +70,10 @@ const PROBLEMS = {
   startReconciliation: { 401: ["unauthorized"], 404: ["not-found"], 409: ["run-in-progress"] },
   startRefresh: { 401: ["unauthorized"], 404: ["not-found"] },
   getRun: { 401: ["unauthorized"], 404: ["not-found"] },
+  // A 502 is the one refusal on this page that is not the caller's doing: Apaleo refused or did
+  // not answer, so what was asked for did not happen.
+  removeSubscription: { 401: ["unauthorized"], 404: ["not-found"], 502: ["apaleo-unreachable"] },
+  restoreSubscription: { 401: ["unauthorized"], 404: ["not-found"], 502: ["apaleo-unreachable"] },
 };
 
 // The order a record moves through the engine, which is the page's spine. An operation not

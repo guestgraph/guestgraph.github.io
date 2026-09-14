@@ -6,7 +6,7 @@
   },
   "connector": {
     "repo": "guestgraph/connector-apaleo",
-    "commit": "c7ca08adf9929ccc8472de8ed51cdd6b7effee40",
+    "commit": "65d24ccfb3e669e57e6529547df8bcbded45e412",
     "spec": "src/main/resources/api/openapi.yaml"
   }
 }
