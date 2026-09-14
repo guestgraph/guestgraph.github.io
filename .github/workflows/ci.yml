@@ -53,6 +53,14 @@ jobs:
       # from them is a page that describes calls nobody can make.
       - name: The API page says what the pinned documents say
         run: npm run api:check
+      # The other half, and deliberately not a failure: api:check proves the page is what the
+      # pins say, this says whether the pins are still what the services say. A pin behind its
+      # service is a page publishing an older API on purpose, or an owner who has not looked
+      # lately, and only a person can tell those apart. The token is only for the rate limit.
+      - name: How far the API pins have fallen behind
+        run: npm run pin:check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npx playwright install --with-deps chromium
       - name: Serve the site
         run: python3 -m http.server 8000 > /dev/null 2>&1 &

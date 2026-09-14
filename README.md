@@ -47,7 +47,11 @@ had to be unwound. Do not recreate one.
   rewrites the rows, `npm run api:check` fails when the page has drifted from the pins, and CI
   runs the check. The page's prose is hand-written around the rows and carries its German; an
   operation the script does not place stops the build rather than vanishing from the page. The
-  pins are editorial, as every pin in this family is.
+  pins are editorial, as every pin in this family is, and `npm run pin:check` says how far each
+  has fallen behind the service it names. It never fails: a pin behind is a page publishing an
+  older API on purpose, or an owner who has not looked lately, and only a person tells those
+  apart. It prints a notice CI renders on the pull request, which is how a new operation stops
+  being something the page has never heard of.
 - `og.png`, `talks/og.png`, `talks/intro/og.png` — 1200×630 share cards, each rendered from the
   page it belongs to, and an `og.sha` beside each one: a hash of everything that went into the
   card, so `npm run og:check` can say whether it still shows its page. `og-recipe.mjs` defines
