@@ -458,10 +458,18 @@
            max-width:44ch; line-height:1.4}
 
   .figure{margin-top:clamp(2.6rem,6vh,4.6rem)}
-  /* five across is inherently wide: below the breakpoint the band scrolls inside its own
-     box rather than shrinking the record values past reading size. The page never scrolls
-     sideways — only the figure does. */
-  .figure{overflow-x:auto}
+  /* Five across is inherently wide, and a phone is not. The band used to keep its landscape
+     canvas below the breakpoint and scroll inside its own box; that put two of the five
+     records on screen and cut the profile they resolve into in half, so the one thing the
+     figure exists to say was the thing you had to swipe to find. It has two compositions
+     instead. Same records, same classes, same staged animation — only the coordinates
+     differ, so every rule below is written once and serves both.
+
+     The switch is at 900 because that is where the landscape canvas stops fitting: 884px is
+     the last viewport whose figure box still measures the 760 the band needs, which is the
+     exact width the old `min-width` was propping up. Nothing here scrolls sideways at any
+     width. */
+  .figure .tall{display:none}
   h2{font-weight:600; letter-spacing:-.025em; line-height:1.06; font-size:clamp(1.9rem,3.7vw,3rem)}
   h2 em{font-style:normal; color:var(--c-mid)}
   .lede{margin-top:2rem; font-size:clamp(1rem,1.3vw,1.14rem); color:var(--dim); max-width:64ch}
@@ -552,10 +560,19 @@
 
   @media (max-width:900px){
     main{padding:2vh 0 6vh}
-    .figure svg{min-width:760px}
     .tagline{max-width:100%}
-    .chip text{font-size:18px} .pname{font-size:26px} .pmeta{font-size:13.5px}
+    .figure .wide{display:none}
+    .figure .tall{display:block}
+    /* The portrait canvas is 344 wide, so on a 390px phone it renders at 0.975 and a 15px
+       record value lands at 14.6px on glass. The old arrangement rendered an 18px value at
+       11.4. The cap keeps that true upward: past 380 the chips only inflate, and a diagram
+       whose type grows with the window is the same bug pointing the other way. */
+    .figure .tall{max-width:380px}
     .chip rect{stroke-width:2}
+    /* A column is read down its left edge, so the values hang on one rather than centring
+       inside boxes of five different fullnesses. The ragged right that leaves is the point:
+       it is the five formats disagreeing, which is the argument the figure is making. */
+    .tall .chip text{text-anchor:start}
   }
   @media (prefers-reduced-motion:reduce){
     .chip,.profile{opacity:1; animation:none}
@@ -613,7 +630,7 @@
          looks like; boxed into a column beside the headline the two competed and
          neither won. The lede sits under it as the caption it always was. -->
     <div class="figure">
-      <svg viewBox="0 0 1200 286" role="img"
+      <svg class="wide" viewBox="0 0 1200 286" role="img"
            aria-label="Five differently-formatted records from five hotel systems, all resolving into one derived profile for Erika Muster">
         <g class="wires">
           <path class="wire" d="M110,74 C110,132 404,148 588,206" pathLength="1"/>
@@ -645,6 +662,50 @@
           <rect x="470" y="206" width="260" height="76" rx="15"/>
           <text class="pname" x="600" y="234">Erika Muster</text>
           <text class="pmeta" x="600" y="261" data-de="ein abgeleitetes Profil">one derived profile</text>
+        </g>
+      </svg>
+      <!-- The portrait composition. The same five records read down the page; their wires
+           turn into a five-lane gutter, descend in formation and enter the one profile
+           through its top edge. Landscape fans outward to a centre — this merges, which on
+           a phone is the clearer way to say the same thing, and the lanes make "five of
+           them" countable even where the boxes have scrolled off the top of the screen.
+
+           Class names are deliberately identical to the wide composition's, so every fill,
+           stroke, type rule and the whole staged animation above applies to both and only
+           the coordinates live here. Both carry the same aria-label: `display:none` takes
+           the inactive one out of the accessibility tree, so exactly one is ever read. -->
+      <svg class="tall" viewBox="0 0 344 600" role="img"
+           aria-label="Five differently-formatted records from five hotel systems, all resolving into one derived profile for Erika Muster">
+        <g class="wires">
+          <path class="wire" pathLength="1" d="M236,44 C288,44 332,54 332,88 L332,452 C332,484 200,492 200,512"/>
+          <path class="wire" pathLength="1" d="M236,132 C280,132 316,142 316,176 L316,452 C316,484 184,492 184,512"/>
+          <path class="wire" pathLength="1" d="M236,220 C271,220 300,230 300,264 L300,452 C300,484 168,492 168,512"/>
+          <path class="wire" pathLength="1" d="M236,308 C262,308 284,318 284,352 L284,452 C284,484 152,492 152,512"/>
+          <path class="wire" pathLength="1" d="M236,396 C253,396 268,406 268,440 L268,452 C268,484 136,492 136,512"/>
+        </g>
+
+        <g class="chips">
+        <g class="chip"><text class="src" x="0" y="12">PMS</text>
+          <rect x="0" y="22" width="236" height="44" rx="9"/>
+          <text x="14" y="44">MUSTER/ERIKA MRS</text></g>
+        <g class="chip"><text class="src" x="0" y="100">BOOKING.COM</text>
+          <rect x="0" y="110" width="236" height="44" rx="9"/>
+          <text x="14" y="132">e.muster@example.com</text></g>
+        <g class="chip"><text class="src" x="0" y="188">POS</text>
+          <rect x="0" y="198" width="236" height="44" rx="9"/>
+          <text x="14" y="220">Table 12</text></g>
+        <g class="chip"><text class="src" x="0" y="276">WLAN</text>
+          <rect x="0" y="286" width="236" height="44" rx="9"/>
+          <text x="14" y="308">+41 79 ••• 12</text></g>
+        <g class="chip"><text class="src" x="0" y="364">REVIEWS</text>
+          <rect x="0" y="374" width="236" height="44" rx="9"/>
+          <text x="14" y="396">“E. M.”</text></g>
+        </g>
+
+        <g class="profile">
+          <rect x="52" y="512" width="240" height="76" rx="15"/>
+          <text class="pname" x="172" y="540">Erika Muster</text>
+          <text class="pmeta" x="172" y="567" data-de="ein abgeleitetes Profil">one derived profile</text>
         </g>
       </svg>
       <p class="lede" data-de="Dieselbe Person bucht, checkt ein, isst, meldet sich im WLAN an und schreibt eine Bewertung – und jedes System speichert eine andere Person. GuestGraph führt diese Datensätze zu einem Profil zusammen und kann jederzeit sagen, warum.">
