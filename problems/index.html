@@ -221,7 +221,7 @@
     --slab:#16181d; --warn:#e0705e;
   }
   /* ─── end design tokens ─────────────────────────────────────────────── */
-  /* ─── prose reset · v1 · shared ────────────────────────────────────
+  /* ─── prose reset · v2 · shared ────────────────────────────────────
      Generated from @robertblust/design — edit it there and run `npm run design`.
 
      The first thing every prose page declares, after its tokens and before
@@ -250,7 +250,17 @@
   }
   .mono{font-family:"Plex Mono", ui-monospace, "SF Mono", Menlo, monospace}
   a{color:inherit}
-  .shell{width:100%; max-width:1180px; margin:0 auto; padding:0 7vw}
+  /* The gutter is proportional until it has enough, and then it stops. `box-sizing` is
+     border-box here, so the padding comes out of the max-width rather than sitting outside it:
+     with a bare `7vw` the column got narrower the wider the screen got — 1001px at 1280,
+     906 at 1960, 822 at 2560 — and never reached 1180 at any width at all. It peaked at
+     1015px on a 1180px viewport and shrank in both directions from there.
+     A page that narrows as its window widens is wrong on its own, and it broke the header a
+     second time on a large screen: measured, the German nav row needs 1000px, and above 2000
+     the column no longer had it. The cap is 80px because that is where `7vw` lands at 1143px,
+     so every width below the widest laptop is unchanged to the pixel and only the screens
+     where this was broken move. */
+  .shell{width:100%; max-width:1180px; margin:0 auto; padding:0 min(7vw, 80px)}
   /* ─── end prose reset ───────────────────────────────────────────────────*/
 
   header{padding:2rem 0}
@@ -263,7 +273,7 @@
   .brand svg{width:28px; height:28px; color:var(--c-mid); flex:0 0 auto}
   .brand b{font-weight:600; font-size:1.06rem; letter-spacing:-.01em}
   .brand b span{color:var(--c-mid)}
-  /* ─── header contract · v8 · shared ──────────────────────────────────
+  /* ─── header contract · v11 · shared ──────────────────────────────────
      One row, three sites, and no stylesheet between them — a deck opens from file://, so
      this is a copy, generated from @robertblust/design. Editing it here has no effect — the
      next `npm run design` overwrites it. Change it in the package.
@@ -274,10 +284,12 @@
      not that every site declares it the same way, and `mobileNav` asserts the outcome.
 
      The contract:
-       · order      Ideas, Principles, Model, Timeline, Example, Talks, Billing, Privacy,
-                    then the language control. A site skips what it does not have and
-                    reorders nothing. Read right to left, the switcher is at the edge and
-                    each step left is more the site's own subject.
+       · order      Team, API, Ideas, Principles, Model, Timeline, Example, Talks, Billing,
+                    Privacy, then the language control. A site skips what it does not have
+                    and reorders nothing. Read right to left, the switcher is at the edge
+                    and each step left is more the site's own subject. API was missing from
+                    this list for one release while the check enforced it; the test that
+                    compares the two lists is what stops that happening again.
        · baseline   One line runs through the middle of every text in the row. The links
                     carry equal space above and below, because the hover underline hangs
                     below and centering the boxes would otherwise ride the text high.
@@ -352,86 +364,113 @@
                     min-height:calc(1.5em + .52rem); min-height:calc(1lh + .52rem)}
   .seg.theme svg{width:14px; height:14px; display:block; fill:none; stroke:currentColor;
                  stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
-  /* The row narrows before it collapses. */
-  @media (max-width:900px){
+  /* The row narrows before it collapses, and this is the band where that happens. It used to
+     sit at 900px — below the collapse, where `nav` is `display:contents` and a gap on it does
+     nothing at all. The rule was dead for as long as it has existed. */
+  @media (max-width:1200px){
     nav{gap:1.4rem}
+    .navlinks{gap:1.4rem}
   }
   /* One mobile behavior for the whole family. Below this width the links do not fit beside
      the wordmark, and every page in the three sites used to answer that differently — some
      wrapped the bar, some wrapped the nav, and the two whose `.bar` had no `flex-wrap` at
      all let the wordmark itself break in half. They collapse behind a button instead.
 
+     1000px, measured on blust.ch rather than chosen. This said 640 until 2026-09-16, and
+     between 641 and 1035 the bar wrapped in English and to 1099 in German: the brand on one
+     row and the nav orphaned under it, no rule, no alignment. It was not a German problem and
+     it did not arrive with a sixth nav item — five items already wrapped from 641 to 850 in
+     English. It went unseen because the checks that watch this row read page-level sideways
+     scroll and the wordmark's height, and a wrapped bar causes neither.
+
+     The number is the longest language's, not the shortest: German needs 1000 with the row
+     narrowed, English 920. One number for the family, set by whichever language needs most,
+     because a header that collapses at a different width per language is a header a visitor
+     cannot predict. Every width this newly collapses was already broken, so nothing that
+     worked has been taken away.
+
      The language control stays on the bar. It is two characters, it is used constantly by a
      bilingual audience, and a language a visitor cannot find is worse than one menu tap
      saved. It keeps the right-hand end of the row, with the theme control beside it; the menu
      button holds the left-hand corner, which is where a thumb goes looking for it. */
-  @media (max-width:640px){
-    /* The menu button takes the left-hand corner. It cannot be moved in the DOM — the bar's
-       markup is written per page, sixteen of them across three repositories, while this fence
-       is CSS alone — so `nav` stops generating a box and its children become items of `.bar`
-       itself. The button then reaches the corner with `order`, in flow, aligned by the same
-       `align-items:center` as everything else in the row.
+  /* The row collapses when it does not fit, and `data-nav` is how the page says so. It used to
+     be a width — 640 until 2026-09-16, then 1000 — and a width cannot be right for three sites
+     whose navs hold three, four and six items. Measured, German needed 720 on guestgraph.io,
+     900 on companygraph.io and 1000 on blust.ch, so any single number gave two of them a menu
+     button where a row would have read perfectly well.
 
-       Absolute positioning was the first attempt and it fought the bar's own wrapping: `.bar`
-       has `flex-wrap` and already went to two rows at 360px before this button moved, so a
-       vertically centered button hung in the gap between them. Padding the wordmark clear of it
-       then inflated `.brand` enough that `mobileNav` reported a broken wordmark — correctly,
-       since that check reads the brand's height to find a wrapped one. `.bar` takes the
-       positioning `nav` gives up, so the panel still has something to hang from. */
-    .bar{position:relative; gap:12px}
-    nav{display:contents}
-    .burger{display:inline-flex; order:-1}
-    .brand{margin-right:auto}
-    /* The panel spans the bar rather than hugging its longest word, so the row of controls
-       above it and the panel below share one pair of edges. Its geometry is three custom
-       properties because the theme control has to land in its top-right corner while living
-       outside it in the DOM — see below — and a corner described twice is a corner that
-       drifts the first time either number is touched. */
-    .bar{--drawer-gap:.85rem; --drawer-pad-y:.55rem; --drawer-pad-x:1.1rem;
-         /* Half the difference between a link's box and the theme control's, so the control
-            and the first link read as one row instead of two things that nearly line up.
-            Measured, not derived — a link's height comes from its own padding and line box,
-            which CSS cannot subtract here. Changing `.navlinks a`'s padding or the control's
-            height moves it; the centers are 117 and 118 as it stands. */
-         --drawer-first-row:.5rem}
-    .navlinks{display:none; position:absolute; top:calc(100% + var(--drawer-gap));
-              left:0; right:0; z-index:30;
-              flex-direction:column; align-items:flex-start; gap:0;
-              padding:var(--drawer-pad-y) var(--drawer-pad-x);
-              background:var(--raise); border:1px solid var(--rule); border-radius:10px}
-    .navlinks[data-open="true"]{display:flex}
-    /* The theme control leaves the bar. Measured at 393px: the bar has 338px to spend and the
-       brand's 136 plus the button's 40 plus the switchers' 147 need 347 even at a 12px gap, so
-       the row wrapped on every phone width tested — 320 through 412 — and the header stood
-       101px tall before a word of content. The wordmark is the other lever and the contract
-       closes it: it is nowrap by rule, and `mobileNav` reads its height to catch one that
-       broke. Dropping the theme control is what is left, and it buys one row of 40px
-       everywhere down to 320.
+     The number is gone. The nav-fit block measures what the row needs against what it has and
+     sets the attribute, so this is right for every site, every language, and the next nav item
+     nobody has added yet. See blocks/nav-fit.js for how it measures without a flash.
 
-       It is not lost. Opening the menu drops it below the language control it belongs with —
-       positioned, not in flow, so the bar stays 40px and nothing above it moves. In flow it
-       pushed the language control onto a second row as the menu opened, which is a control
-       jumping out from under a thumb that was reaching for it.
+     Without JavaScript the attribute is never set and the row stays wide, wrapping on a narrow
+     screen. That is not a regression: with JavaScript off the button here has never opened
+     anything, so a visitor went from six unreachable links to six wrapped but reachable ones. */
+  /* The menu button takes the left-hand corner. It cannot be moved in the DOM — the bar's
+     markup is written per page, sixteen of them across three repositories, while this fence
+     is CSS alone — so `nav` stops generating a box and its children become items of `.bar`
+     itself. The button then reaches the corner with `order`, in flow, aligned by the same
+     `align-items:center` as everything else in the row.
 
-       `.bar .theme` and not `.theme`: the control is a `.seg` too, and `.seg{display:inline-flex}`
-       is the same specificity and sits later in the cascade, so the bare class lost and the
-       control stayed on the bar with the file looking correct. */
-    .bar .theme{display:none}
-    /* Positioned into the panel's top-right corner, not placed in it: `.switchers` is a
-       sibling of `.navlinks`, and the bar's markup is written per page — sixteen of them
-       across three repositories — while this fence is CSS alone. Anchoring it to the same
-       three properties the panel uses is what makes the two agree.
-       Above the panel's own z-index, or the panel paints over it. A tap on it does not close
-       the menu: the page's handler closes on a click outside `nav`, and `.switchers` is
-       inside `nav`. */
-    .navlinks[data-open="true"] ~ .switchers .theme{
-      display:inline-flex; position:absolute; z-index:31;
-      top:calc(100% + var(--drawer-gap) + var(--drawer-pad-y) + var(--drawer-first-row));
-      right:var(--drawer-pad-x)}
-    /* Tall enough to be a comfortable target; the underline still hugs the word, because
-       each item is only as wide as its own text. */
-    .navlinks a{padding:.8rem 0}
-  }
+     Absolute positioning was the first attempt and it fought the bar's own wrapping: `.bar`
+     has `flex-wrap` and already went to two rows at 360px before this button moved, so a
+     vertically centered button hung in the gap between them. Padding the wordmark clear of it
+     then inflated `.brand` enough that `mobileNav` reported a broken wordmark — correctly,
+     since that check reads the brand's height to find a wrapped one. `.bar` takes the
+     positioning `nav` gives up, so the panel still has something to hang from. */
+  :root[data-nav="compact"] .bar{position:relative; gap:12px}
+  :root[data-nav="compact"] nav{display:contents}
+  :root[data-nav="compact"] .burger{display:inline-flex; order:-1}
+  :root[data-nav="compact"] .brand{margin-right:auto}
+  /* The panel spans the bar rather than hugging its longest word, so the row of controls
+     above it and the panel below share one pair of edges. Its geometry is three custom
+     properties because the theme control has to land in its top-right corner while living
+     outside it in the DOM — see below — and a corner described twice is a corner that
+     drifts the first time either number is touched. */
+  :root[data-nav="compact"] .bar{--drawer-gap:.85rem; --drawer-pad-y:.55rem; --drawer-pad-x:1.1rem;
+       /* Half the difference between a link's box and the theme control's, so the control
+          and the first link read as one row instead of two things that nearly line up.
+          Measured, not derived — a link's height comes from its own padding and line box,
+          which CSS cannot subtract here. Changing `.navlinks a`'s padding or the control's
+          height moves it; the centers are 117 and 118 as it stands. */
+       --drawer-first-row:.5rem}
+  :root[data-nav="compact"] .navlinks{display:none; position:absolute; top:calc(100% + var(--drawer-gap));
+            left:0; right:0; z-index:30;
+            flex-direction:column; align-items:flex-start; gap:0;
+            padding:var(--drawer-pad-y) var(--drawer-pad-x);
+            background:var(--raise); border:1px solid var(--rule); border-radius:10px}
+  :root[data-nav="compact"] .navlinks[data-open="true"]{display:flex}
+  /* The theme control leaves the bar. Measured at 393px: the bar has 338px to spend and the
+     brand's 136 plus the button's 40 plus the switchers' 147 need 347 even at a 12px gap, so
+     the row wrapped on every phone width tested — 320 through 412 — and the header stood
+     101px tall before a word of content. The wordmark is the other lever and the contract
+     closes it: it is nowrap by rule, and `mobileNav` reads its height to catch one that
+     broke. Dropping the theme control is what is left, and it buys one row of 40px
+     everywhere down to 320.
+
+     It is not lost. Opening the menu drops it below the language control it belongs with —
+     positioned, not in flow, so the bar stays 40px and nothing above it moves. In flow it
+     pushed the language control onto a second row as the menu opened, which is a control
+     jumping out from under a thumb that was reaching for it.
+
+     `.bar .theme` and not `.theme`: the control is a `.seg` too, and `.seg{display:inline-flex}`
+     is the same specificity and sits later in the cascade, so the bare class lost and the
+     control stayed on the bar with the file looking correct. */
+  :root[data-nav="compact"] .bar .theme{display:none}
+  /* Positioned into the panel's top-right corner, not placed in it: `.switchers` is a
+     sibling of `.navlinks`, and the bar's markup is written per page — sixteen of them
+     across three repositories — while this fence is CSS alone. Anchoring it to the same
+     three properties the panel uses is what makes the two agree.
+     Above the panel's own z-index, or the panel paints over it. A tap on it does not close
+     the menu: the page's handler closes on a click outside `nav`, and `.switchers` is
+     inside `nav`. */
+  :root[data-nav="compact"] .navlinks[data-open="true"] ~ .switchers .theme{
+    display:inline-flex; position:absolute; z-index:31;
+    top:calc(100% + var(--drawer-gap) + var(--drawer-pad-y) + var(--drawer-first-row));
+    right:var(--drawer-pad-x)}
+  /* Tall enough to be a comfortable target; the underline still hugs the word, because
+     each item is only as wide as its own text. */
+  :root[data-nav="compact"] .navlinks a{padding:.8rem 0}
   /* ─── end header contract ───────────────────────────────────────────── */
   .switchers{display:flex; align-items:center; gap:.6rem}
   /* The hover underline hangs below the text, so the box is taller under the text than over
@@ -805,6 +844,70 @@
   }
   function setTheme(v){ theme = v; themeRemember(v); applyTheme(); }
   /* ─── end theme ──────────────────────────────────────────────────────── */
+
+  /* ─── nav fit · v1 · page ──────────────────────────────────────
+     Whether the header row fits, measured rather than declared. Generated from
+     @robertblust/design — editing it here does nothing, because the next `npm run design`
+     overwrites it. Change it in the package.
+
+     The header contract used to collapse at a width. A width cannot be right for three sites
+     whose navs hold three, four and six items: measured, the German row needed 720px on
+     guestgraph.io, 900 on companygraph.io and 1000 on blust.ch, so one number gave two of them
+     a menu button where a row would have read perfectly well. And a number set from today's
+     nav is a number that is wrong the day an item is added, which is exactly how blust.ch came
+     to wrap on every page from 641px up without anything noticing.
+
+     So the page asks the question instead of answering it in advance. `data-nav="compact"` on
+     the root is what the contract keys off; this is the only thing that sets it.
+
+     Measuring has to happen in the wide state, because in the compact one the row holds a
+     button where the links were and the theme control is gone — measure that and the answer is
+     always "it fits", which is the state it is already in. So the attribute comes off, the row
+     is read, and the attribute goes back on, all in one synchronous run: the browser paints
+     once, at the end of the task, and never shows the intermediate row.
+
+     `flex-wrap` comes off for the read too. The bar wraps by rule, and a wrapped child reports
+     the width it was given rather than the width it wants, so a wrapped row measures as
+     fitting. With `nowrap` the overflow is real and `scrollWidth` is the width the row needs.
+
+     It runs on load, on resize, when the fonts arrive — a row measured in the fallback face is
+     measured at the wrong width — and when `<html lang>` changes, which is the case that
+     started this: the same six links are 561px in German and 428 in English.
+  */
+  (function(){
+    var root = document.documentElement, bar = document.querySelector(".bar");
+    // Loud, because the quiet version cost an afternoon. This fence belongs at the end of the
+    // body, beside `theme`; put in the head beside `theme boot` — one marker's worth of
+    // difference, and `end theme` is a prefix of `end theme boot` — the row is not in the DOM
+    // yet, and a block that returned here would leave every page uncollapsed with nothing
+    // anywhere saying why. An uncaught exception is reported by every suite's pageerror
+    // listener, which is the difference between a wasted hour and a red check.
+    if (!bar) {
+      throw new Error("nav fit: this page has no .bar yet. The block belongs at the end of " +
+        "the body, after the theme fence, not in the head beside theme boot.");
+    }
+    var pending = false;
+    function fit(){
+      pending = false;
+      root.removeAttribute("data-nav");
+      var wrap = bar.style.flexWrap;
+      bar.style.flexWrap = "nowrap";
+      var over = bar.scrollWidth > bar.clientWidth;
+      bar.style.flexWrap = wrap;
+      if (over) root.setAttribute("data-nav", "compact");
+    }
+    // One read per frame at most: a drag across the breakpoint fires resize continuously, and
+    // each run forces layout twice.
+    function soon(){ if (!pending) { pending = true; requestAnimationFrame(fit); } }
+    window.addEventListener("resize", soon);
+    // The language switch rewrites the links through innerHTML, so the row's width changes
+    // without anything resizing. Watching the attribute rather than being called keeps this
+    // block out of every page's own applyLang.
+    new MutationObserver(soon).observe(root, { attributes: true, attributeFilter: ["lang"] });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    fit();
+  })();
+  /* ─── end nav fit ─────────────────────────────────────────────────────── */
 
 
   var urlTheme = themeFromUrl();
