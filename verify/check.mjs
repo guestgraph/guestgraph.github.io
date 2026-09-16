@@ -20,7 +20,7 @@ const SITE = "https://guestgraph.io";
 const FOOTER = ["Robert Blust", "GitHub", "License", "Privacy"];
 
 const PAGES = [
-  { path: "/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     translates: { lang: "de", shows: ["Einführungsvortrag ansehen", "Code lesen", "VORTRÄGE", "ABRECHNUNG"], hides: ["Watch intro talk", "Read the code"],
                   title: "GuestGraph – der Open-Source-Identitätsgraph für Gäste",
                   desc: "Ein erklärbares Gastprofil, aus Daten, die über jedes System im Hotel verstreut liegen. Quelloffen, Apache 2.0." },
@@ -36,7 +36,7 @@ const PAGES = [
   // the unit must be stated exactly, and the page must keep saying the service is not
   // open. Drop that second sentence and the page stops describing an intention and
   // starts advertising a product that does not exist.
-  { path: "/billing/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/billing/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     translates: { lang: "de", shows: ["Ein einziger Zähler", "Alles andere ist kostenlos", "Wie sich die Rechnung verhält"], hides: ["One meter", "Everything else is free", "How the bill behaves"],
                   title: "Abrechnung – GuestGraph",
                   desc: "Wie der gehostete GuestGraph abrechnen wird: ein einziger Zähler, und das sind Anreisen. Datenzufuhr, Import, Speicher und Abfragen sind kostenlos." },
@@ -52,7 +52,7 @@ const PAGES = [
   // trusting the prose: a page that says it makes no third-party request must make none,
   // and the suite's own `requestfailed`/`links` machinery cannot see that. If a font, an
   // analytics tag or an embed ever creeps in, this is what fails.
-  { path: "/privacy/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/privacy/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     translates: { lang: "de", shows: ["Was diese Seite tut", "Gastdaten, sobald es welche gibt", "Wer das betreibt"], hides: ["What this site does", "Guest data, when there is any", "Who runs this"],
                   title: "Datenschutz – GuestGraph",
                   desc: "Diese Seite setzt keine Cookies, führt keine Statistik und stellt keine Anfragen an Dritte. Wie der gehostete GuestGraph Gastdaten behandeln wird, aufgeschrieben, bevor es welche gibt." },
@@ -70,7 +70,7 @@ const PAGES = [
   // at the commits `api-sources.json` pins, so the assertions here are about the page's own
   // shape: the spine, the one flagged note, and that a reader can reach the problems page from
   // it. Whether the rows are current is `npm run api:check`, which CI runs beside this suite.
-  { path: "/api/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/api/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     // The rows stay English in both languages: a method, a path and an operation summary are
     // the document's own words. `hides` therefore names prose only, never a summary.
     translates: { lang: "de", shows: ["Zwei APIs", "Was hereinkommt", "Wenn ein Aufruf abgelehnt wird"], hides: ["Two APIs", "What arrives", "When a call is refused"],
@@ -85,7 +85,7 @@ const PAGES = [
     card: true, cardBase: SITE, internalLinks: true },
 
   // section.
-  { path: "/problems/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+  { path: "/problems/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     translates: { lang: "de", shows: ["Jede Ablehnung", "Ungültige Anfrage", "Interner Serverfehler"], hides: ["Every refusal", "Invalid request", "Internal server error"],
                   title: "Probleme – GuestGraph",
                   desc: "Jede Ablehnung, mit der ein GuestGraph-Dienst antwortet, trägt einen Typ. Was jeder Typ bedeutet, welcher Dienst damit antwortet und was dagegen zu tun ist." },
@@ -98,7 +98,7 @@ const PAGES = [
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: ["design tokens", "header contract", "title contract", "language", "prose reset", "prose footer"],
     card: true, cardBase: SITE, internalLinks: true },
 
-  { path: "/talks/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, seo: true, noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
+  { path: "/talks/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
     // The German PDF is reached by data-de-href, which `sameTab` cannot see: it reads the href as
     // delivered, and the swap happens only after a click. `dlHref` reads the first such link.
     translates: { lang: "de", shows: ["Vorträge über", "Vortrag ansehen", "PDF herunterladen"], hides: ["Watch the talk", "Download PDF"],
