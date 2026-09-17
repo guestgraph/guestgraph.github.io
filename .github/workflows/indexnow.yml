@@ -1,0 +1,47 @@
+name: IndexNow
+
+# After Pages has published, not on push: a ping sent while the deploy is still running has the
+# engines fetch the page it replaces. `pages-build-deployment` is the workflow GitHub runs to
+# publish this site, and it is only this event that waits for it.
+on:
+  workflow_run:
+    workflows: [pages-build-deployment]
+    types: [completed]
+  # To resend by hand, for a deploy whose run failed or for a range of commits.
+  workflow_dispatch:
+    inputs:
+      base:
+        description: Commit before the change
+        required: true
+      head:
+        description: Commit that was deployed
+        required: true
+        default: main
+
+permissions:
+  contents: read
+
+jobs:
+  indexnow:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # The diff needs the deployed commit's parent, which a shallow clone does not have.
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+      # The command arrives from @robertblust/design, which decides for all three sites which
+      # pages a range changed.
+      - run: npm ci
+      # Every change reaches main as a merge commit, so its first parent is what was deployed
+      # before it and the diff between the two is the whole pull request.
+      - name: Send the pages this deploy changed
+        env:
+          BASE: ${{ inputs.base || format('{0}^1', github.event.workflow_run.head_sha) }}
+          HEAD: ${{ inputs.head || github.event.workflow_run.head_sha }}
+        run: npx design indexnow "$BASE" "$HEAD"

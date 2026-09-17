@@ -17,6 +17,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
+        with:
+          # The sitemap's dates are read from each page's last commit, and a shallow clone has
+          # only one commit to name for every page.
+          fetch-depth: 0
       # First, because it needs nothing installed and it catches the one failure the browser
       # cannot see: a note edited without regenerating its clip renders perfectly and speaks
       # the old words. --dry-run bills nothing and needs no key. blust.ch has had this step
@@ -48,6 +52,11 @@ jobs:
       # rendered page.
       - name: The shared files are still what the package ships
         run: npm run design:check
+      # A lastmod is used only while it is accurate, so the dates are written from git and held
+      # to it here: a page committed without `npm run sitemap` fails on the date it now bears.
+      # After npm ci because the command arrives from the package.
+      - name: The sitemap's dates are still each page's last change
+        run: npm run sitemap:check
       # Same reason, one repository further out: the API page is written from two services'
       # OpenAPI documents at the commits api-sources.json pins, so a page that has drifted
       # from them is a page that describes calls nobody can make.
