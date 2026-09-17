@@ -85,6 +85,8 @@ npm run verify                     # renders every page and asserts the DOM
 npm run og:check                   # do the seven share cards still show their pages?
 npm run test:og                    # the card check's own tests (node --test)
 npm run og                         # re-renders all seven cards after a visual change
+npm run sitemap                    # date each sitemap URL from its page's last commit — run before committing a page
+npm run sitemap:check              # are those dates still what git says?
 ```
 
 `og:check` needs no server and no browser — it re-derives each card's recipe and compares it
