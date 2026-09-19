@@ -18,7 +18,7 @@ its Pages were enabled — shadowing the folder in this repository, which is how
 had to be unwound. Do not recreate one.
 
 | Path | |
-|---|---|
+| --- | --- |
 | `/` | The landing page. |
 | `/talks/` | The talks index. |
 | `/talks/intro/` | The introduction — narrated, German and English, with a PDF in each. |

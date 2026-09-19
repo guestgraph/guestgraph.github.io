@@ -1,4 +1,4 @@
-<!-- conventions · v1.17.0 -->
+<!-- conventions · v1.19.0 -->
 Shared conventions of the robertblust, guestgraph and companygraph organizations live in
 `conventions/`, vendored from robertblust/conventions at the release `conventions.json`
 names. Read them before writing or committing anything here.
@@ -11,8 +11,9 @@ names. Read them before writing or committing anything here.
 
 Everything below this block is this repository's own. `sh conventions/conventions-sync check`
 says whether the copy matches the release, `sync` brings it to the release the pin names, and
-`sh conventions/conventions-check` holds this repository's own Markdown to `WRITING.md`. Edit
-a shared file in robertblust/conventions, never here.
+`sh conventions/conventions-check` holds this repository's own Markdown to `WRITING.md`, and
+`sh conventions/conventions-format` to its one form, which `fix` writes. Edit a shared file in
+robertblust/conventions, never here.
 <!-- end conventions -->
 
 # guestgraph.io — working conventions
@@ -646,7 +647,7 @@ moved out of `guestgraph/talks` and into this repository.
 ## Ownership (prevents drift)
 
 | Fact | Owner |
-|---|---|
+| --- | --- |
 | What the talk says, and the narration script | the deck's `index.html` |
 | Talk list, length, controls | `README.md` |
 | Narration mechanics and measurements | `intro/tts/generate.py` docstring |
@@ -686,4 +687,3 @@ because there is only one composition.
 The scale is driven by one `fit()` function at the end of each deck. Both exporters ride on
 it unchanged: the share card renders at 1200×675 and the PDF at 1280×720, and in each case
 the canvas fills the frame exactly with no bars.
-
