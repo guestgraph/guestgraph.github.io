@@ -1,4 +1,4 @@
-<!-- conventions · v1.20.0 -->
+<!-- conventions · v1.21.0 -->
 Shared conventions of the robertblust, guestgraph and companygraph organizations live in
 `conventions/`, vendored from robertblust/conventions at the release `conventions.json`
 names. Read them before writing or committing anything here.
@@ -385,6 +385,7 @@ replaced rather than kept.
 
 This repository had no test suite at all before. `npm install && npm run verify` now runs
 the same assertions the other two do, against a served copy on `localhost:8000`.
+
 ## Crawlers
 
 - **`.github/workflows/indexnow.yml` tells Bing and the other IndexNow engines which pages a
