@@ -83,3 +83,5 @@ jobs:
           exit 1
       - name: Assert what it renders
         run: npm run verify
+      - name: Every own link resolves
+        run: npx design links
