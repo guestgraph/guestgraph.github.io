@@ -1,0 +1,19 @@
+# .github/workflows/links.yml
+name: links
+on:
+  schedule: [{ cron: "0 6 * * 1" }]
+  workflow_dispatch:
+permissions: { contents: read, issues: write }
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with: { node-version: "22", cache: npm }
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: python3 -m http.server 8000 > /dev/null 2>&1 &
+      - env: { GITHUB_TOKEN: "${{ github.token }}" }
+        run: npx design links --external
