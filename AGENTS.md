@@ -75,16 +75,19 @@ The billing page carries no call to action and so no copy of the length: it ends
   item among two brands, and that contrast is what makes the row legible at 15px.
 
   That is the fact `.name .nlink{color:var(--dim)}` used to carry as its own inline comment,
-  before the deck's lockup became a fence the `@robertblust/design` package owns end to end:
-  `.nlink` is *Talks*, dimmed like any other nav item, and `Robert Blust` is deliberately not
-  styled through it — it takes the wordmark colors instead because it is the other brand in
-  the row, not a name mentioned in passing. The fence body is shared now and cannot carry a
-  guestgraph-only sentence, so this paragraph is where that fact lives instead.
+  before the deck's lockup became part of `deck.css`, the whole file the `@robertblust/design`
+  package owns end to end: `.nlink` is *Talks*, dimmed like any other nav item, and
+  `Robert Blust` is deliberately not styled through it — it takes the wordmark colors instead
+  because it is the other brand in the row, not a name mentioned in passing. The file's rules
+  are shared now and cannot carry a guestgraph-only sentence, so this paragraph is where that
+  fact lives instead.
 
-  The plate is inlined rather than linked, like every mark on these sites — a deck opens from
-  `file://`, where a linked asset is a broken box. Its face is `Plex Mono`, the name this deck
-  actually `@font-face`s; naming the upstream `IBM Plex Mono` would render it in whatever mono
-  the visitor's OS happens to have.
+  The plate is inlined rather than linked, like every mark on these sites. A deck no longer
+  has to open from `file://` — it links `tokens.css` and `deck.css` and is normally read
+  served, off the domain — but `verify`'s `opensFromFile` is kept armed as a courtesy smoke
+  test of the deck's own runtime, and a linked SVG would be a broken box under that check. Its
+  face is `Plex Mono`, the name this deck actually `@font-face`s; naming the upstream
+  `IBM Plex Mono` would render it in whatever mono the visitor's OS happens to have.
 
   Three checks share the row and none covers another's link. `wayOut` takes the index link,
   `links` takes `blust.ch` (presence only — it no longer asserts anything about tabs), and
@@ -97,18 +100,19 @@ The billing page carries no call to action and so no copy of the length: it ends
 
   It used to be fenced by its own `deck footer · vN` marker with a `footerVersion` check —
   the same habit-with-a-tripwire the token block gets, for the same reason: no suite can see
-  a sibling. Both are gone now, not retargeted: retired in a previous plan and replaced by
-  the deck's chrome fences — `deck transport`, `deck lockup`, `deck fit` and `deck runtime` —
-  generated like the tokens. What the old marker covered is still a contract, not a look —
+  a sibling. That marker was retired in a previous plan and replaced by the deck's chrome
+  fences — `deck transport`, `deck lockup`, `deck fit` and `deck runtime` — and those fences
+  are retired in turn now, folded into the whole files `deck.css` and `deck.js` that a deck
+  links instead of carrying. What the old marker covered is still a contract, not a look —
   where each of the three links goes, and that none opens in a new tab — and `design:check`
-  is what enforces it now, comparing each fence's bytes against the pinned release.
+  is what enforces it now, comparing the assembled file's bytes against the pinned release.
 
-  `verify/design.mjs` now lives in `@robertblust/design`, alongside the nineteen shared page
-  checks — edited there, released as a tag, and taken here by re-pinning that tag in
-  `package.json`, exactly like the fences above. `verify/check.mjs` imports it by package
-  specifier, `@robertblust/design/verify/design`; a `verify/design.mjs` created in this
-  repository is never resolved by that import and would be silently ignored — the suite would
-  still report green, having run the pinned release's code instead of the one just edited.
+  `verify/design.mjs` lives in `@robertblust/design`, alongside the shared page checks —
+  edited there, released as a tag, and taken here by re-pinning that tag in `package.json`,
+  exactly like the files above. `verify/check.mjs` imports it by package specifier,
+  `@robertblust/design/verify/design`; a `verify/design.mjs` created in this repository is
+  never resolved by that import and would be silently ignored — the suite would still report
+  green, having run the pinned release's code instead of the one just edited.
 - **The `blust.ch` credit in the page footer is a lockup, not a footer link.** It leaves the
   footer's mono for the same treatment it has on every deck — the `rb` plate inlined, wordmark
   with the second word in `--c-mid`. The rest of the row stays mono because the rest of the row
@@ -139,7 +143,7 @@ The billing page carries no call to action and so no copy of the length: it ends
 
 ## The header is a contract, and its copy carries a version
 
-The row across the top — wordmark, links, language control — is one design on three sites, and like the tokens it is a copy, because a deck opens from `file://` and there is no stylesheet to share. It is fenced in every page as `header contract · vN` and is **byte-identical on all sixteen pages** in the three repositories. It is generated, like the tokens: change it in `robertblust/design`, tag a release, then run `npm run design` here. Editing it in this file does nothing — the next sync overwrites it.
+The row across the top — wordmark, links, language control — is one design on three sites, and like the tokens it is a copy: each site pins the same release and takes what it writes rather than importing it live. `page.css` carries it here, one of the blocks `assemble()` folds into that file, rather than a `header contract · vN` fence in the page's own markup. Fence or file, it is **byte-identical wherever a page carries it**, because both forms are the same pinned release's own bytes. It is generated, like the tokens: change it in `robertblust/design`, tag a release, then run `npm run design` here. Editing it in this file does nothing — the next sync overwrites it.
 
 What the contract says:
 
@@ -153,9 +157,9 @@ What the contract says:
 - **States are different things.** Hover is an underline and nothing else. The current page
   is brighter ink and carries no line. When both drew the same line, the page you were on
   read as permanently hovered.
-- **The wordmark never breaks.** It is `white-space:nowrap` and does not shrink. This one
-  sits *outside* the fence, because each site's mark has its own colors; the rule is the
-  outcome, not the declaration, and `mobileNav` asserts it.
+- **The wordmark never breaks.** It is `white-space:nowrap` and does not shrink. This rule
+  sits *outside* `page.css`, in the page's own markup, because each site's mark has its own
+  colors; the rule is the outcome, not the declaration, and `mobileNav` asserts it.
 - **Under 640px the links collapse behind a button.** The language control stays on the bar
   — two characters, reached for constantly by a bilingual audience, and one a visitor
   cannot find costs more than the tap it saves. The button sits to its left, so the order
@@ -201,7 +205,7 @@ What the contract says:
   repository, so it still means something after these pages change.
 - **The recipe is the page plus every local file the page renders plus the exporter's own
   frame and hide rules.** Fonts count, and here there is one `fonts/` at the root shared by
-  all three pages — so a font swap marks **all three** cards stale in one go. On blust.ch,
+  every page — so a font swap marks **every** card stale in one go. On blust.ch,
   where each deck carries its own fonts, the same edit moves only the index cards. Nothing
   about the check changed; the dependency graph is simply flatter here.
 - **`<a href>` is excluded, and it is the one place the walk is not a plain attribute
@@ -209,7 +213,7 @@ What the contract says:
   not something the page renders, so hashing it would report the talks card stale every
   time `npm run pdf` ran, over a page that had not moved a pixel — noise that trains you
   to stop reading the check.
-- **The three cards do not all hide the same things.** The talks cards drop the chrome — a
+- **The cards do not all hide the same things.** The talks cards drop the chrome — a
   card with a progress bar and a play button on it advertises controls that do nothing
   inside a PNG. The landing card keeps its header and drops `.figure`, which is why its
   right half is empty. The rules are hashed per card, so changing one marks only its own
@@ -231,7 +235,7 @@ What the contract says:
 
 ## The design system, and why it is a copy
 
-Type and color are shared across `blust.ch`, `guestgraph.io` and `companygraph.io`. They share no stylesheet and cannot: a deck has to open from `file://`, so there is nothing to import. Every page therefore carries its own copy of the token block, fenced by `design tokens · vN` markers.
+Type and color are shared across `blust.ch`, `guestgraph.io` and `companygraph.io`, and the sharing is a copy rather than an import: each site pins `@robertblust/design` by tag and `npm run design` writes what it names into the repository, so nothing is fetched across an origin at request time. It used to have to be a copy pasted into every page's own `<style>` and `<script>`, fenced by markers, because a deck had to open from `file://` with nothing to import. That requirement is dropped: five names — `tokens.css`, `page.css`, `page.js`, `deck.css` and `deck.js` — are whole files now, written once at the repository root. A prose page links or loads three of them, `tokens.css`, `page.css` and `page.js`; a deck links or loads the other three, `tokens.css`, `deck.css` and `deck.js`.
 
 **The copies have a source now.** They are generated from `@robertblust/design`, which this repository pins by tag, and `npm run design` writes them. What that changes about editing them is in *Changing a token* below, and it is the opposite of what this file said for most of its life.
 
@@ -262,12 +266,16 @@ Type and color are shared across `blust.ch`, `guestgraph.io` and `companygraph.i
 
 ### Changing a token, or anything else the package owns
 
-**Do not edit a fenced block in place. The next `npm run design` overwrites it and nothing warns you.** This section used to say "edit the block, run `npm run verify`, bump `vN` in all three repositories". That was true while the blocks were maintained by hand. It is now the one instruction in this file that silently does nothing.
+**Do not edit a generated file, or a fenced block, in place. The next `npm run design` overwrites both and nothing warns you.** This section used to say "edit the block, run `npm run verify`, bump `vN` in all three repositories". That was true while the blocks were maintained by hand. It is now the one instruction in this file that silently does nothing.
 
-Nine blocks are generated here, and the fence markers name them: `design tokens`, `header contract`, `language`, `prose reset`, `prose footer`, `deck transport`, `deck lockup`, `deck fit` and `deck runtime`. Everything between and including a pair of markers belongs to the package. A tenth, `stage contract`, exists in the package and this site does not take it — it has no graph to draw yet. It arrives the day it grows one, which is the point of the stage having a source by then.
+What used to be a fenced block in every page is a whole file now: `tokens.css`, `page.css` and `page.js` carry what `design tokens`, `header contract`, `title contract`, `prose reset`, `prose footer`, `language`, `theme` and `nav fit` used to fence into every prose page; `deck.css` and `deck.js` carry `deck transport`, `deck lockup`, `deck fit` and `deck runtime` — the last with a `language` and a `theme` fence nested inside it — for a deck. One fence remains in every page and every deck: `theme boot`, the one script that has to run inline and synchronously in `<head>`, before the first paint, so it is the sole copy left in the source. A `stage contract` fence exists in the package and this site does not take it — it has no graph to draw yet.
+
+A page still declares the hook the files read, because a file has no way to see the page's own scope. Before its `<script src="page.js">`, a prose page's own inline script sets `window.rbPage = { lang, applyLang }` inside the closure where those two names actually live; a deck does the same with `window.rbDeck = { talk: TALK, ui: UI }` before `deck.js`. A page taking the files drops its own trailing call to apply the language: the file makes that call now.
+
+Two of the five files take a variant, read from `design.config.json` rather than from a page's own fence line: `"footer"` chooses `page.css`'s credit lockup, `"credit"` here, and `"lockup"` chooses `deck.css`'s, `"two"` here — the same two words a page's own marker used to carry.
 
 ```bash
-npm run design         # rewrite every fenced block from the pinned release
+npm run design         # rewrite every generated file and fenced block from the pinned release
 npm run design:check   # report drift without writing — runs in CI, before the browser suite
 ```
 
@@ -284,9 +292,11 @@ To change one of them:
 
 `design:check` runs in CI, so a page that drifts from the pinned release goes red without anyone remembering to look. That is the guarantee the old habit-with-a-tripwire never was.
 
-**Two escape hatches that are decisions, not build fixes.** Removing a fence's name from a page's `fences` array in `PAGES`, or a group from `design.config.json`, each clears a red `design:check` with a one-line diff. Either one means this site has decided to own that block and diverge. That is a real choice; make it deliberately, in a commit that says so.
+**A page and the files it links are never on the same release by the same commit, and that gap is accepted, not a bug to close.** The pin here names a tag already cut in `robertblust/design`; this repository's own commit that takes it — running `npm run design`, committing what changed — always lands after. So no release may ask for both halves at once: a rule renamed, a class dropped, or a selector a page starts relying on that the current pinned tag does not yet carry is two releases, never one — the file first, tagged in `robertblust/design`, and the page after, once that tag is pinned here. Writing a page against a rule the pinned tag has not shipped yet is writing against a file that is not there.
 
-**Not everything is generated.** The `<head>` contract is a copy with no fence at all. The deck footer used to belong here too, hand-maintained — see above, where its old version marker was replaced rather than kept.
+**Two escape hatches that are decisions, not build fixes.** Removing a fence's name from a page's `fences` array in `PAGES`, or a group from `design.config.json`, each clears a red `design:check` with a one-line diff. Neither describes a page that links the `files` group and declares an empty `fences: []` — every page here does, and that page has nothing left to fence, which is the point: `design:check`'s comparison of the generated files it does carry is what still holds it to the release. The escape hatch is a fence whose name comes off a page's list while the fence itself stays in its markup, unread by the suite: that is a real choice to diverge, and it belongs in a commit that says so.
+
+**Not everything is generated.** The `<head>` contract is a copy with no fence at all — see below. The deck footer used to belong here too, hand-maintained — see above, where its old version marker was replaced rather than kept.
 
 This repository had no test suite at all before. `npm install && npm run verify` now runs the same assertions the other two do, against a served copy on `localhost:8000`.
 
@@ -327,7 +337,7 @@ npm run pdf                        # PDF fallback, after slide edits
 
 ## Deck conventions
 
-One talk per directory, one `index.html` per talk, no external assets. Decks must work from `file://` and a plain local server, not only the live domain.
+One talk per directory, one `index.html` per talk, no external assets. A talk is normally read on the site, served, and links `tokens.css` and `deck.css` rather than carrying its own copy — a deck is no longer required to open from `file://`. The relative paths it links happen to still resolve that way too, and `opensFromFile` is kept armed as a courtesy smoke test of the deck's own runtime; it does not check that `tokens.css` or `deck.css` resolved.
 
 - **Bilingual by attribute.** English is the element's content, German is `data-de`;
   `data-en` is never written by hand — `applyLang()` captures it on load. Speaker notes are

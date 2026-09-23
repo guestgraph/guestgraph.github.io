@@ -28,7 +28,10 @@ const PAGES = [
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
     sameTab: ["talks/", "talks/intro/", "billing/", "privacy/"],
-    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: ["design tokens", "header contract", "language", "prose reset", "prose footer"],
+    // This page links tokens.css and page.css instead of fencing design tokens, header
+    // contract, prose reset and prose footer, so fences is empty; tokenVersion reads
+    // tokens.css's own opening comment instead of a page marker.
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: [],
     card: true, cardBase: SITE, internalLinks: true },
 
   // The billing model. The only page here that makes a claim of its own rather than
@@ -45,7 +48,10 @@ const PAGES = [
     // left to hold to the new-tab rule is the one in the footer.
     links: ["https://github.com/guestgraph"],
     sameTab: ["../talks/", "../", "./", "../privacy/"],
-    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: ["design tokens", "header contract", "title contract", "language", "prose reset", "prose footer"],
+    // This page links tokens.css and page.css instead of fencing design tokens, header
+    // contract, title contract, prose reset and prose footer, so fences is empty;
+    // tokenVersion reads tokens.css's own opening comment instead of a page marker.
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: [],
     card: true, cardBase: SITE, internalLinks: true },
 
   // The privacy note. Its claims are checkable, so `verify` checks them rather than
@@ -60,7 +66,10 @@ const PAGES = [
     links: ["https://github.com/guestgraph"],
     sameTab: ["../talks/", "../", "../billing/", "./"],
     sameOrigin: true,
-    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: ["design tokens", "header contract", "title contract", "language", "prose reset", "prose footer"],
+    // This page links tokens.css and page.css instead of fencing design tokens, header
+    // contract, title contract, prose reset and prose footer, so fences is empty;
+    // tokenVersion reads tokens.css's own opening comment instead of a page marker.
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: [],
     card: true, cardBase: SITE, internalLinks: true },
 
   // The problems page. A refusal's `type` URI is this page's address with the slug as its
@@ -81,7 +90,10 @@ const PAGES = [
     ids: ["connector", "arrives", "came-out", "wrong", "refusals"],
     links: ["https://github.com/guestgraph"],
     sameTab: ["../talks/", "../", "../billing/", "../privacy/", "../problems/"],
-    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: ["design tokens", "header contract", "title contract", "language", "prose reset", "prose footer"],
+    // This page links tokens.css and page.css instead of fencing design tokens, header
+    // contract, title contract, prose reset and prose footer, so fences is empty;
+    // tokenVersion reads tokens.css's own opening comment instead of a page marker.
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: [],
     card: true, cardBase: SITE, internalLinks: true },
 
   // section.
@@ -95,7 +107,10 @@ const PAGES = [
     // problem detail rather than this list goes to the source.
     links: ["https://github.com/guestgraph", "https://www.rfc-editor.org/rfc/rfc9457.html"],
     sameTab: ["../talks/", "../", "../billing/", "../privacy/", "https://www.rfc-editor.org/rfc/rfc9457.html"],
-    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: ["design tokens", "header contract", "title contract", "language", "prose reset", "prose footer"],
+    // This page links tokens.css and page.css instead of fencing design tokens, header
+    // contract, title contract, prose reset and prose footer, so fences is empty;
+    // tokenVersion reads tokens.css's own opening comment instead of a page marker.
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: [],
     card: true, cardBase: SITE, internalLinks: true },
 
   { path: "/talks/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /talks/i, lang: "en", sourceLang: "en",
@@ -112,7 +127,10 @@ const PAGES = [
     // Billing lives in the guestgraph.github.io repository and this nav item is the only
     // link to it from here — it is shared chrome, so it stays in the tab like the rest.
     sameTab: ["intro/", "./", "../billing/", "../privacy/"],
-    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: ["design tokens", "header contract", "title contract", "language", "prose reset", "prose footer"],
+    // This page links tokens.css and page.css instead of fencing design tokens, header
+    // contract, title contract, prose reset and prose footer, so fences is empty;
+    // tokenVersion reads tokens.css's own opening comment instead of a page marker.
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: [],
     card: true, cardBase: SITE, internalLinks: true },
   // opensFromFile resolves its file:// probe against process.cwd(), which npm sets to this
   // repo's root — so the suite must be run with `npm run verify` from here, not from elsewhere.
@@ -136,11 +154,17 @@ const PAGES = [
     transportBaseline: [320, 360, 430, 500, 900, 1280],
     links: ["https://blust.ch/"], sameTab: ["https://blust.ch/"],
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true,
+    // This deck links tokens.css and deck.css instead of fencing design tokens, deck
+    // transport, deck lockup, deck fit and deck runtime, so fences is empty (fenceOrder no
+    // longer applies — there is nothing left to order) and tokenVersion reads tokens.css's
+    // own opening comment, exactly as the prose pages' note explains. readoutInvariant stays
+    // armed: design:check only proves tokens.css itself matches the pinned release byte for
+    // byte, which says nothing about the roughly ninety rules this deck still carries in its
+    // own <style> — a `.lcd`-targeting rule added there, outside anything the package owns,
+    // is exactly what readoutInvariant exists to catch. lockupCollapses stays armed too: it
+    // reads the deck's own rendered layout, not a fence.
     tokens: true, sky: true, monoScope: true, contrast: true, noFlash: "theme", tokenVersion: true, readoutInvariant: true,
-    // fences is presence-only and order-blind — deck runtime landing last here while
-    // fenceOrder places it third, two lines down, is not the pair disagreeing.
-    fences: ["design tokens", "language", "deck transport", "deck lockup", "deck fit", "deck runtime"],
-    fenceOrder: ["design tokens", "deck lockup", "deck transport", "deck runtime", "language", "deck fit"],
+    fences: [],
     lockupCollapses: true,
     card: true, cardBase: SITE, internalLinks: true },
 ];
