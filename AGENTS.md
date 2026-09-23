@@ -205,7 +205,7 @@ What the contract says:
   repository, so it still means something after these pages change.
 - **The recipe is the page plus every local file the page renders plus the exporter's own
   frame and hide rules.** Fonts count, and here there is one `fonts/` at the root shared by
-  all three pages — so a font swap marks **all three** cards stale in one go. On blust.ch,
+  every page — so a font swap marks **every** card stale in one go. On blust.ch,
   where each deck carries its own fonts, the same edit moves only the index cards. Nothing
   about the check changed; the dependency graph is simply flatter here.
 - **`<a href>` is excluded, and it is the one place the walk is not a plain attribute
@@ -213,7 +213,7 @@ What the contract says:
   not something the page renders, so hashing it would report the talks card stale every
   time `npm run pdf` ran, over a page that had not moved a pixel — noise that trains you
   to stop reading the check.
-- **The three cards do not all hide the same things.** The talks cards drop the chrome — a
+- **The cards do not all hide the same things.** The talks cards drop the chrome — a
   card with a progress bar and a play button on it advertises controls that do nothing
   inside a PNG. The landing card keeps its header and drops `.figure`, which is why its
   right half is empty. The rules are hashed per card, so changing one marks only its own
@@ -268,7 +268,7 @@ Type and color are shared across `blust.ch`, `guestgraph.io` and `companygraph.i
 
 **Do not edit a generated file, or a fenced block, in place. The next `npm run design` overwrites both and nothing warns you.** This section used to say "edit the block, run `npm run verify`, bump `vN` in all three repositories". That was true while the blocks were maintained by hand. It is now the one instruction in this file that silently does nothing.
 
-What used to be nine fenced blocks are whole files now: `tokens.css`, `page.css` and `page.js` carry what `design tokens`, `header contract`, `title contract`, `prose reset`, `prose footer`, `language`, `theme` and `nav fit` used to fence into every prose page; `deck.css` and `deck.js` carry `deck transport`, `deck lockup`, `deck fit` and `deck runtime` — the last with a `language` and a `theme` fence nested inside it — for a deck. One fence remains in every page and every deck: `theme boot`, the one script that has to run inline and synchronously in `<head>`, before the first paint, so it is the sole copy left in the source. A `stage contract` fence exists in the package and this site does not take it — it has no graph to draw yet.
+What used to be a fenced block in every page is a whole file now: `tokens.css`, `page.css` and `page.js` carry what `design tokens`, `header contract`, `title contract`, `prose reset`, `prose footer`, `language`, `theme` and `nav fit` used to fence into every prose page; `deck.css` and `deck.js` carry `deck transport`, `deck lockup`, `deck fit` and `deck runtime` — the last with a `language` and a `theme` fence nested inside it — for a deck. One fence remains in every page and every deck: `theme boot`, the one script that has to run inline and synchronously in `<head>`, before the first paint, so it is the sole copy left in the source. A `stage contract` fence exists in the package and this site does not take it — it has no graph to draw yet.
 
 A page still declares the hook the files read, because a file has no way to see the page's own scope. Before its `<script src="page.js">`, a prose page's own inline script sets `window.rbPage = { lang, applyLang }` inside the closure where those two names actually live; a deck does the same with `window.rbDeck = { talk: TALK, ui: UI }` before `deck.js`. A page taking the files drops its own trailing call to apply the language: the file makes that call now.
 

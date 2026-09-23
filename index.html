@@ -218,6 +218,9 @@
   @keyframes pop{from{opacity:0; transform:translateY(9px)} to{opacity:1; transform:none}}
 
   .wire{stroke-dasharray:1; stroke-dashoffset:1; animation:draw .30s ease forwards}
+  /* The diagram's group is `rwires`, not `wires`: page.css carries the family's `.wires` rules
+     for the surfaces lineage this site never draws, which would grey these wires and hide the
+     whole figure under 640px. A shared name met here is a shared rule met here. */
   .rwires .wire:nth-of-type(1){animation-delay:.95s}
   .rwires .wire:nth-of-type(2){animation-delay:1.21s}
   .rwires .wire:nth-of-type(3){animation-delay:1.47s}

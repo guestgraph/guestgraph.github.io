@@ -29,6 +29,7 @@ A repository named `talks` in this organization would claim `guestgraph.io/talks
   it meets no seam.
 - `talks/intro/` — the deck: `index.html`, `audio/{en,de}/`, both PDFs, and `tts/generate.py`,
   which reads the deck's speaker notes as the single source for what is spoken.
+- `tokens.css`, `page.css`, `page.js`, `deck.css`, `deck.js` — what `@robertblust/design` shares, written here by `npm run design` and never edited here; the pages link them.
 - `fonts/` — the self-hosted `.woff2` files, and the only copy. Every page and the deck point
   at them relatively, so the deck's relative links to `tokens.css`, `deck.css` and `deck.js`
   still resolve under `file://` too, even though a deck is no longer required to open that way.
