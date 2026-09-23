@@ -30,7 +30,8 @@ A repository named `talks` in this organization would claim `guestgraph.io/talks
 - `talks/intro/` — the deck: `index.html`, `audio/{en,de}/`, both PDFs, and `tts/generate.py`,
   which reads the deck's speaker notes as the single source for what is spoken.
 - `fonts/` — the self-hosted `.woff2` files, and the only copy. Every page and the deck point
-  at them relatively, so the deck still opens from `file://`.
+  at them relatively, so the deck's relative links to `tokens.css`, `deck.css` and `deck.js`
+  still resolve under `file://` too, even though a deck is no longer required to open that way.
 - `sitemap.xml` — one flat list of every URL on the domain. It was an index pointing at a
   second sitemap while the talks lived elsewhere; there is one list now.
 - `verify/check.mjs` — the suite, covering all seven pages in one run, and
