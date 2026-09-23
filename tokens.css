@@ -1,0 +1,78 @@
+/* @robertblust/design v0.80.3 — tokens.css, assembled from the shared blocks
+   and copied into this site by `npm run design`. Editing it here does nothing: the
+   next `npm run design` overwrites it from the package. Change it there instead. */
+
+/* The same eleven names, re-picked. The ramp's axis flips: on dark, brightness is
+   confidence; on light, depth is — the candidate pales, the resolved thing deepens.
+   Reusing the dark stops here was measured and refused: --c-mid paints every link and
+   falls to 2.45:1 on this ground, --c-firm to 1.49:1. These clear AA on every text stop
+   (ink 16.86, dim 6.04, mid 5.09, firm 10.28, flag 5.61).
+
+   --c-weak is 2.37:1 and that is deliberate, exactly as its 2.64:1 on dark is: its job is
+   "a candidate, considered but not accepted", and darkening it until it clears the 3:1 UI
+   threshold stops it reading as tentative. It must never carry text, a border or an
+   outline on its own, in either theme.
+
+   --press carries text now, not just a hover wash: `.seg button[aria-pressed="true"]`
+   paints --c-mid on it, and the pressed segment is how a visitor tells which language and
+   which theme is active. The palette had only ever been checked token-against-page-
+   background; nothing measured a text-bearing surface against the surface it actually
+   sits on. #E2E8F2 measured 4.35:1 against --c-mid here — under the 4.5 AA floor for the
+   12.16px/600 label — so it moves to #E7ECF4, which clears at 4.52:1. Counter-intuitively
+   lighter, not darker: darkening it moves it closer to --c-mid and away from AA, since
+   --c-mid is the darker of the two. Dark's pair is already 6.16:1 and is untouched. */
+:root[data-theme="light"]{
+  --ground:#FAF9F5; --raise:#F2F0EA; --rule:#DFDCD3;
+  --ink:#16181D;    --dim:#5F6058;
+  --c-weak:#8FA6C2; --c-mid:#3A6DA6; --c-firm:#1C3E68; --c-flag:#8A5A12;
+  --c-path:#1C3E68; --press:#E7ECF4;
+
+  /* The deck's own chrome. A transport is a physical object in this design — the source
+     calls --slab "the slab it is milled from" and --lcd "the recessed window the track
+     number sits in" — so the light theme makes the slab pale milled metal and leaves the
+     readout dark. A real machine with an aluminum body still has a dark display, and that
+     is the whole reason --lcd appears in both halves with the same value: it is a decision,
+     not an omission, and the next person to "complete" this palette should read this line
+     before adding a light one. */
+  --deck-accent:#2F5F96; --deck-paper:#1A1C21; --deck-mark:#3A6DA6;
+  --deck-well:#EDEAE2;   --deck-track:#D8D4CA; --deck-hover:#E4E0D6;
+  --deck-divider:#D2CEC3; --deck-edge:#DFDCD3; --deck-ring:#B9C4D6;
+  --deck-quiet:#5F6058;  --deck-warm:#6B6455;
+  --deck-lift:rgba(0,0,0,.04); --deck-drop:rgba(0,0,0,.10);
+  --deck-inset:rgba(0,0,0,.18); --deck-glow:rgba(58,109,166,.10);
+  --lcd:#0a0b0e; --lcd-ink:#7FA3D8; --lcd-faint:#7C8496;
+  --lcd-track:#1e2029; --lcd-inset:rgba(0,0,0,.85); --lcd-glow:rgba(122,160,255,.1);
+  /* --slab was left behind when --lcd moved in: a deck page declared it on its own,
+     one value, no light variant, which put a dark bar back on a pale page. Pale milled
+     metal (1.14:1 against --ground, both a hair off white) with the LCD still a 16.37:1
+     recess inside it — the aluminum body, lit. --warn follows for the same reason: it
+     is deck-only chrome that must not be left for a page to restate. */
+  --slab:#EDEAE2; --warn:#BC3924;
+}
+:root{
+  --ground:#0C0E13; --raise:#171A21; --rule:#232833;
+  --sky:radial-gradient(120% 60% at 50% -10%, var(--raise) 0%, var(--ground) 60%);
+  --ink:#EFEDE8;    --dim:#8A8B86;
+  --c-weak:#3E5878; --c-mid:#7FA3D8; --c-firm:#B8D0FF; --c-flag:#D9A44F;
+  --c-path:#B8D0FF; --press:#1b2231;
+
+  /* The deck's own chrome. A transport is a physical object in this design — the source
+     calls --slab "the slab it is milled from" and --lcd "the recessed window the track
+     number sits in" — so the light theme makes the slab pale milled metal and leaves the
+     readout dark. A real machine with an aluminum body still has a dark display, and that
+     is the whole reason --lcd appears in both halves with the same value: it is a decision,
+     not an omission, and the next person to "complete" this palette should read this line
+     before adding a light one. */
+  --deck-accent:#9db0ff; --deck-paper:#f1ede4; --deck-mark:#7aa0ff;
+  --deck-well:#17181c;   --deck-track:#1e2029; --deck-hover:#20242e;
+  --deck-divider:#333743; --deck-edge:#33353d; --deck-ring:#39435c;
+  --deck-quiet:#9a9dab;  --deck-warm:#b7b0a2;
+  --deck-lift:rgba(255,255,255,.055); --deck-drop:rgba(0,0,0,.5);
+  --deck-inset:rgba(0,0,0,.85); --deck-glow:rgba(122,160,255,.1);
+  --lcd:#0a0b0e; --lcd-ink:#7FA3D8; --lcd-faint:#7C8496;
+  --lcd-track:#1e2029; --lcd-inset:rgba(0,0,0,.85); --lcd-glow:rgba(122,160,255,.1);
+  /* Unchanged from the value a deck page used to declare on its own: the readout stays
+     dark, and so does the slab it sits in. 1.11:1 against --lcd is not a mistake here —
+     both are near-black and the recess reads through the box-shadow, not raw contrast. */
+  --slab:#16181d; --warn:#e0705e;
+}

@@ -60,7 +60,10 @@ const PAGES = [
     links: ["https://github.com/guestgraph"],
     sameTab: ["../talks/", "../", "../billing/", "./"],
     sameOrigin: true,
-    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: ["design tokens", "header contract", "title contract", "language", "prose reset", "prose footer"],
+    // This page links tokens.css and page.css instead of fencing design tokens, header
+    // contract, title contract, prose reset and prose footer, so fences is empty;
+    // tokenVersion reads tokens.css's own opening comment instead of a page marker.
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: [],
     card: true, cardBase: SITE, internalLinks: true },
 
   // The problems page. A refusal's `type` URI is this page's address with the slug as its

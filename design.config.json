@@ -1,1 +1,1 @@
-{ "groups": ["fonts"] }
+{ "groups": ["fonts", "files"], "footer": "credit", "lockup": "two" }
