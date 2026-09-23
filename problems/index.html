@@ -273,7 +273,7 @@
   .brand svg{width:28px; height:28px; color:var(--c-mid); flex:0 0 auto}
   .brand b{font-weight:600; font-size:1.06rem; letter-spacing:-.01em}
   .brand b span{color:var(--c-mid)}
-  /* ─── header contract · v13 · shared ──────────────────────────────────
+  /* ─── header contract · v14 · shared ──────────────────────────────────
      One row, three sites, and no stylesheet between them — a deck opens from file://, so
      this is a copy, generated from @robertblust/design. Editing it here has no effect — the
      next `npm run design` overwrites it. Change it in the package.
@@ -284,10 +284,12 @@
      not that every site declares it the same way, and `mobileNav` asserts the outcome.
 
      The contract:
-       · order      Team, Principles, Surfaces, API, Ideas, Model, Timeline, Example, Talks,
-                    Billing, Privacy, then the language control. A site skips what it does
-                    not have and reorders nothing. Read right to left, the switcher is at the
-                    edge and each step left is more the site's own subject. Principles is
+       · order      CLI, Team, Principles, Surfaces, API, Ideas, Model, Timeline, Example,
+                    Talks, Billing, Privacy, then the language control. A site skips what it
+                    does not have and reorders nothing. Read right to left, the switcher is at
+                    the edge and each step left is more the site's own subject. CLI is the
+                    one exception and leads, because a reader who came to set the thing up
+                    wants the command before anything the site says about it. Principles is
                     second because what the work is held to belongs to a site as closely as
                     who does it, and comes before where any of it is published. API was
                     missing from this list for one release while the check enforced it; the
@@ -699,17 +701,19 @@
 // page says the right thing before any JS runs, and the choice is remembered per origin —
 // so a visitor who switched to German on the landing page arrives here in German.
 (function(){
-  /* ─── language · v4 · page ─────────────────────────────────────────────
+  /* ─── language · v5 · page ─────────────────────────────────────────────
      One language across three domains, and where it is remembered. Generated
      from @robertblust/design — editing it here does nothing, because the next
      `npm run design` overwrites it. Change it in the package.
 
-     This block has a contract with the page around it that `design:check` cannot see, because
-     the check only compares bytes between the markers. The page must declare a `lang` variable
-     in scope before this fence, and must call `langStored()` and `langRemember(v)` from
-     wherever it reads and writes the visitor's saved choice. Rename `lang` or drop those calls
-     and the fence still matches byte for byte — every check stays green — while a click throws
-     ReferenceError and the language silently stops crossing domains.
+     A fenced copy sits inside the page's own script and sees whatever the page declared above
+     it; a copy loaded as `page.js` or `deck.js` is its own file and sees nothing of the page
+     at all. So this block takes `lang` from `window.rbPage.lang` when a page declares one,
+     falls back to a `lang` already in scope when a fenced page still declares its own, and
+     defaults to `"en"` when neither exists — read with `typeof lang !== "undefined"`, never a
+     bare `lang`, so the absence of either throws nothing. Once decided, it calls
+     `window.rbPage.applyLang(lang)` when the page declared one, the same way guarded: a page
+     with no `data-de` needs no `applyLang` and gets none called.
 
      The key is `lang`, the family's: one name on three origins, the same word the address
      carries. A storage key is a promise to every visitor, and this one is made once, for the
@@ -718,6 +722,9 @@
   var LANG_KEY = "lang";
   function langStored(){ try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } }
   function langRemember(v){ try { localStorage.setItem(LANG_KEY, v); } catch (e) {} }
+  var lang = (window.rbPage && typeof window.rbPage.lang !== "undefined") ? window.rbPage.lang
+    : (typeof lang !== "undefined" ? lang : "en");
+  if (window.rbPage && typeof window.rbPage.applyLang === "function") window.rbPage.applyLang(lang);
 
   /* One language across three domains. Each origin keeps its own localStorage, so a
      visitor reading German here and following a link to a sibling site would arrive in
@@ -741,12 +748,27 @@
     } catch (e) {}
     return m[1];
   }
+  /* `lang` above is read once, when this script runs. That is fine for the fenced form, where
+     it is the page's own variable and the page's own toggle mutates it directly — but a copy
+     loaded as `page.js` or `deck.js` runs inside its own closure, so its `lang` is a private
+     snapshot nothing after load ever updates. A visitor who switches language after the file
+     has already run kept having every family link decorated with the language the page
+     arrived with, forever after — measured on blust.ch's /ideas/, where a link to a sibling
+     site carried the stale value once the file shape shipped there.
+
+     `document.documentElement.lang` is the live truth instead: every page's own `applyLang`
+     sets it, fenced or filed, so reading it at click time sees a switch the instant it
+     happens. The captured `lang` is kept only as a fallback, for the one case the attribute
+     cannot answer — a page that has not called `applyLang` at all, or set the attribute to
+     something outside the two languages the family carries. */
   function carryLang(e){
     var a = e.target && e.target.closest && e.target.closest("a[href]");
     if (!a) return;
     var u; try { u = new URL(a.href, location.href); } catch (err) { return; }
     if (u.origin === location.origin || !FAMILY.test(u.hostname)) return;
-    u.searchParams.set("lang", lang);
+    var docLang = document.documentElement.lang;
+    var live = (docLang === "de" || docLang === "en") ? docLang : lang;
+    u.searchParams.set("lang", live);
     a.href = u.toString();
   }
   // mousedown as well as click, so a middle-click or a cmd-click opening a new tab
@@ -781,21 +803,25 @@
   if (urlLang) langRemember(urlLang);
   var lang = urlLang || (langStored() === "de" ? "de" : "en");
 
-  /* ─── theme · v4 · page ───────────────────────────────────────
+  /* ─── theme · v5 · page ───────────────────────────────────────
      One theme across three domains, and where it is remembered. Generated from
      @robertblust/design — editing it here does nothing.
 
-     This block has a contract with the page that `design:check` cannot see, because the check
-     only compares bytes between the markers. The page must declare a `theme` variable in scope
-     before this fence, and must carry two controls, `#thLight` and `#thDark`. Rename either and
-     the fence still matches byte for byte — every check stays green — while the control stops
-     working. `mobileNav`'s presence assertion is what actually holds this contract, gated on
-     the page's own `noFlash` flag: a page that declares it and is missing either control fails
-     there.
+     A fenced copy sees a `theme` variable the page declared above it; a copy loaded as
+     `page.js` or `deck.js` sees no such page scope, so this block falls back instead to what
+     `document.documentElement`'s own `data-theme` attribute already says — the same attribute
+     `theme boot` set before this script ever runs — read with `typeof theme !== "undefined"`,
+     never a bare `theme`, so a page declaring neither throws nothing. The page must still
+     carry two controls, `#thLight` and `#thDark`. Rename either and the fence still matches
+     byte for byte — every check stays green — while the control stops working. `mobileNav`'s
+     presence assertion is what actually holds this contract, gated on the page's own `noFlash`
+     flag: a page that declares it and is missing either control fails there.
   */
   var THEME_KEY = "theme";
   function themeStored(){ try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } }
   function themeRemember(v){ try { localStorage.setItem(THEME_KEY, v); } catch (e) {} }
+  var theme = (typeof theme !== "undefined") ? theme
+    : (document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark");
 
   /* Each origin keeps its own localStorage, so a visitor reading in light who followed a link
      to a sibling site would arrive in dark — three copies of one preference, none of which can
