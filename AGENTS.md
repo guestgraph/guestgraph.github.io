@@ -340,7 +340,7 @@ One talk per directory, one `index.html` per talk, no external assets. Decks mus
 
 ## A page is en-US; a `-de` attribute is de-CH
 
-One rule, positional, with no exceptions to remember: every word of a page is American English, and the value of any attribute whose name ends `-de` is Swiss German — `data-de`, and in a deck `data-notes-de`.
+One rule, positional, with no exceptions to remember: every word of a page is American English, and the value of any attribute whose name ends `-de` is Swiss Standard German — `data-de`, and in a deck `data-notes-de`.
 
 It reads as one line now because the attributes were made to agree. Notes used to invert the page's convention: `data-notes` held German and English was the suffixed `data-notes-en`, so the base attribute meant a different language depending on which pair you were reading. Design v0.25.0 swapped them, which is what leaves nothing here to remember.
 
