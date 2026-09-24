@@ -29,7 +29,7 @@ export const REPO_ROOT = path.dirname(fileURLToPath(import.meta.url));
 // the header bar on the landing page and the talks index — and hiding it is what the talks
 // cards want, but the overlap is accidental: rename either one and the other's rule here stops
 // applying, silently.
-const DECK_HIDE = `.chrome,.bar,.notes,.langind,.hint{display:none!important}
+const DECK_HIDE = `.chrome,.bar,.notes,.langind,.hint,.rbchat-open{display:none!important}
   /* a still image should not be waiting out a transition it does not want */
   .slide.active > *{animation:none!important}`;
 
@@ -37,10 +37,12 @@ const DECK_HIDE = `.chrome,.bar,.notes,.langind,.hint{display:none!important}
 // figure. Not for want of room: the card's job is the headline and the two buttons, the part a
 // reader takes in before deciding to care. The figure is the five-record argument that leads
 // there, and an argument does not survive being glanced at in a feed.
-const HOME_HIDE = `.figure{display:none!important}`;
+// `.rbchat-open` is the chat's button, fixed to the viewport's corner: a card is a still image,
+// and a button nobody can press has no place on it.
+const HOME_HIDE = `.figure{display:none!important} .rbchat-open{display:none!important}`;
 // The model page's stage is a drawing to explore, not a picture: cut at the card's edge it reads
 // as a broken figure, so the card is the title block alone, as on every other page here.
-const MODEL_HIDE = `.figure-section{display:none!important}`;
+const MODEL_HIDE = `.figure-section{display:none!important} .rbchat-open{display:none!important}`;
 
 // Rendered at 16:9 and the middle band taken: these pages size themselves against the
 // viewport's shorter side, so squeezed straight into 1.9:1 they shrink and leave the frame

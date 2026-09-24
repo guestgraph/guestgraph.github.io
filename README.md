@@ -47,6 +47,10 @@ A repository named `talks` in this organization would claim `guestgraph.io/talks
   parses to, and CI runs the check. The pin is editorial, and `npm run pin:check` reports how far
   it has fallen behind, beside the API pins. `stage.js`, `stage.css`, `card.js` and the vendored
   d3 are the design package's `stage` group, which draws it.
+- `chat.js`, `chat.css` and `octicons.LICENSE.txt` — the design package's `chat` group: the button at
+  the foot of every prose page and the panel it opens, answered by chat.guestgraph.io, whose cites
+  and names open on `/model/`. Each page carries one script tag naming the endpoint, and
+  `/privacy/` says what leaves the browser once a visitor presses send.
 - `build/pages.mjs` — every region derived from `model.json`, written by the design package's
   renderers: `npm run pages` rewrites them, `npm run pages:check` fails when one has drifted, and
   CI runs the check. It refuses a `model.json` whose commit is not the pin.

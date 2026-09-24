@@ -213,6 +213,7 @@
 
 </style>
 <link rel="stylesheet" href="../stage.css">
+<link rel="stylesheet" href="../chat.css">
 <!-- The model this page draws. The stage finds it by the data-stage attribute and fetches the
      href, so the page names its data once. crossorigin is not decoration: without it the
      browser will not use the preload for the fetch and asks for the file twice. -->
@@ -412,8 +413,8 @@
   document.getElementById("len").addEventListener("click", function(){ if (lang !== "en") toggle(); });
   document.getElementById("thLight").addEventListener("click", function(){ setTheme("light"); });
   document.getElementById("thDark").addEventListener("click", function(){ setTheme("dark"); });
-  // L switches the language, but never while the visitor is typing: a letter typed into a field
-  // is text, and the language changes only when the visitor asks for it.
+  // L switches the language, but never while the visitor is typing: a letter typed into a field,
+  // the chat's among them, is text, and the language changes only when the visitor asks for it.
   document.addEventListener("keydown", function(e){
     if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
     var t = e.target;
@@ -433,5 +434,8 @@
 <script src="../d3.v7.min.js"></script>
 <script src="../card.js"></script>
 <script src="../stage.js"></script>
+
+<!-- The chat: one tag, the design package's widget. It loads nothing and sends nothing until a visitor opens it; the privacy page says what leaves the browser then. -->
+<script src="../chat.js" data-chat="https://chat.guestgraph.io/chat" data-model="/model/" defer></script>
 </body>
 </html>
