@@ -34,7 +34,7 @@ const check = process.argv.includes("--check");
 // renderer refuses the build if a name leaves the model.
 const RENDERERS = [
   writePrinciples,
-  (d, o) => writeTeam(d, { ...o, order: ["Delivery", "Contribution", "Feature request", "Answering"] }),
+  (d, o) => writeTeam(d, { ...o, order: ["Delivery", "Contribution", "Feature request", "Answering", "Narrating"] }),
   writeSurfaces,
 ];
 
