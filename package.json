@@ -9,6 +9,8 @@
     "design:check": "design sync --check",
     "sitemap": "design sitemap",
     "sitemap:check": "design sitemap --check",
+    "model": "node build/model.mjs",
+    "model:check": "node build/model.mjs --check",
     "verify": "node verify/check.mjs",
     "pdf": "node export-pdf.mjs",
     "og": "node export-og.mjs",
@@ -20,6 +22,7 @@
   },
   "devDependencies": {
     "@robertblust/design": "github:robertblust/design#v0.84.2",
+    "companygraph-meta-model": "github:companygraph/meta-model#v0.46.1",
     "pdf-lib": "^1.17.1",
     "playwright": "^1.63.0",
     "yaml": "^2.8.1"

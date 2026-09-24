@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Privacy — GuestGraph</title>
-<meta id="metadesc" name="description" content="This site sets no cookies, runs no analytics and makes no third-party requests. How the hosted GuestGraph will treat guest data, written down before there is any.">
+<title>Model — GuestGraph</title>
+<meta id="metadesc" name="description" content="GuestGraph described in CompanyGraph and drawn as the graph its files form: vision, values, products, concepts and the way the work is done.">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<link rel="canonical" href="https://guestgraph.io/privacy/">
+<link rel="canonical" href="https://guestgraph.io/model/">
 
-<meta property="og:title" content="Privacy — GuestGraph">
-<meta property="og:description" content="This site sets no cookies, runs no analytics and makes no third-party requests.">
+<meta property="og:title" content="Model — GuestGraph">
+<meta property="og:description" content="GuestGraph described in CompanyGraph and drawn as the graph its files form: vision, values, products, concepts and the way the work is done.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="GuestGraph">
-<meta property="og:url" content="https://guestgraph.io/privacy/">
-<meta property="og:image" content="https://guestgraph.io/privacy/og.png">
+<meta property="og:url" content="https://guestgraph.io/model/">
+<meta property="og:image" content="https://guestgraph.io/model/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="This site collects nothing.">
+<meta property="og:image:alt" content="GuestGraph, described.">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="de_CH">
 <meta name="twitter:card" content="summary_large_image">
@@ -50,9 +50,9 @@
     },
     {
       "@type": "WebPage",
-      "@id": "https://guestgraph.io/privacy/#webpage",
-      "name": "Privacy",
-      "url": "https://guestgraph.io/privacy/",
+      "@id": "https://guestgraph.io/model/#webpage",
+      "name": "Model",
+      "url": "https://guestgraph.io/model/",
       "inLanguage": "en",
       "isPartOf": {
         "@id": "https://guestgraph.io/#website"
@@ -61,12 +61,12 @@
         "@id": "https://guestgraph.io/#organization"
       },
       "breadcrumb": {
-        "@id": "https://guestgraph.io/privacy/#breadcrumb"
+        "@id": "https://guestgraph.io/model/#breadcrumb"
       }
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://guestgraph.io/privacy/#breadcrumb",
+      "@id": "https://guestgraph.io/model/#breadcrumb",
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -77,8 +77,27 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Privacy",
-          "item": "https://guestgraph.io/privacy/"
+          "name": "Model",
+          "item": "https://guestgraph.io/model/"
+        }
+      ]
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://guestgraph.io/model/#dataset",
+      "name": "GuestGraph — mental model",
+      "description": "GuestGraph described in CompanyGraph: its vision, values, objectives and strategies, the products it ships and the concepts they use, how its work is done, and where the model is published.",
+      "url": "https://guestgraph.io/model/",
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "isBasedOn": "https://github.com/guestgraph/mental-model",
+      "creator": {
+        "@id": "https://guestgraph.io/#organization"
+      },
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "encodingFormat": "application/json",
+          "contentUrl": "https://guestgraph.io/model.json"
         }
       ]
     }
@@ -140,8 +159,7 @@
 
   main{flex:1; display:flex; align-items:center; padding:2vh 0 6vh}
 
-  /* The page's one reversal, and the only honest place for it: the headline says nothing
-     leaves, and one thing does — the request itself, to whoever serves the file. */
+  /* The page's one marked sentence: what the figure is drawn from, and what it does not hold. */
   .note{margin-top:2rem; max-width:54ch; padding-left:1rem;
         border-left:2px solid var(--c-flag); color:var(--ink); font-size:1rem}
 
@@ -153,26 +171,7 @@
   .lede{margin-top:1.2rem; font-size:clamp(1rem,1.3vw,1.1rem); color:var(--dim); max-width:64ch}
   .lede a{color:var(--c-mid)}
 
-  /* the billable-unit box from the billing page, doing the same job: one datum, stated
-     once, in the face this system reserves for data */
-  .unit{margin-top:1.8rem; display:inline-block; padding:1rem 1.35rem; border-radius:10px;
-        background:var(--raise); border:1.5px solid var(--c-firm);
-        font-size:clamp(.95rem,1.6vw,1.2rem); color:var(--ink); letter-spacing:.02em}
 
-  .cols{margin-top:2rem; display:grid; gap:1.1rem; align-items:start;
-        grid-template-columns:repeat(auto-fit, minmax(280px, 1fr))}
-  .card{background:var(--raise); border:1.5px solid var(--rule); border-radius:12px;
-        padding:1.5rem 1.6rem}
-  .card h3{font-size:.76rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
-           color:var(--dim)}
-  .card ul{margin-top:1.1rem; list-style:none; display:grid; gap:.95rem}
-  .card li{font-size:.98rem; line-height:1.45}
-  .card li b{font-weight:600}
-  .card li i{font-style:normal; display:block; color:var(--dim); font-size:.88rem; margin-top:.2rem}
-  .card li i .mono{font-size:.95em; color:var(--ink)}
-  /* five short items across a full-width card read as a list, not a column of stubs */
-  .wide ul{grid-template-columns:repeat(auto-fit, minmax(255px, 1fr)); gap:1.3rem 1.8rem}
-  /* the .never card (declined options): terms use plain --ink like any other card, no separate treatment needed */
 
   .rules{margin-top:2rem; display:grid; gap:1.6rem; max-width:68ch}
   .rules p{color:var(--dim); font-size:1rem}
@@ -181,7 +180,43 @@
 
   :focus-visible{outline:2px solid var(--c-mid); outline-offset:3px; border-radius:3px}
 
+  /* ─── stage contract · v2 · shared ───────────────────────────────────
+     `stage.css` styles the drawing, the card and the dialog, and says in its own header that
+     the page keeps `.figure-section`, `.figcap` and its prose. This is that remainder: the few
+     rules a page must bring for a stage to sit on it properly. They are generated from
+     @robertblust/design, like the tokens and the header above them. Editing them here has no
+     effect — the next `npm run design` overwrites them. Change them in the package.
+
+     What the contract says:
+       · the figure     gets its own air above it, and its caption sits clear of the canvas
+                        rather than hard against it, at a measure prose can be read at.
+       · the hint       how to move the drawing is not a sentence about the drawing, so it is
+                        its own line above the caption rather than a clause inside it. Small
+                        and dim: subordinate to the caption, and read first only by someone
+                        looking for a control. Not mono — mono means data here, and an
+                        instruction is prose. `monoScope` would not catch it either way: it
+                        inspects a fixed list of selectors and this class is not on one.
+       · the provenance mono end to end. It is the one line on the page that is entirely
+                        record — a repository, a commit, the folder the block was read from —
+                        and setting only the link and the commit in mono left the sentence
+                        around them looking like prose that happened to contain data.
+
+     The drawing's own behavior is in `stage.js` and `stage.css`, which are byte-identical
+     copies too. A page that carries a stage carries all of it. */
+  .figure-section{margin-top:clamp(2rem,5vh,3.5rem)}
+  .figcap{margin-top:1.1rem; color:var(--dim); font-size:clamp(1rem,1.3vw,1.14rem); line-height:1.5; max-width:68ch}
+  .figcap b{color:var(--ink); font-weight:600}
+  .stagehint{margin-top:.7rem; font-size:.82rem; color:var(--dim)}
+  .derived{margin-top:2.6rem; font-family:"Plex Mono",monospace; font-size:.78rem;
+           letter-spacing:.06em; color:var(--dim)}
+  /* ─── end stage contract ────────────────────────────────────────────────── */
+
 </style>
+<link rel="stylesheet" href="../stage.css">
+<!-- The model this page draws. The stage finds it by the data-stage attribute and fetches the
+     href, so the page names its data once. crossorigin is not decoration: without it the
+     browser will not use the preload for the fetch and asks for the file twice. -->
+<link rel="preload" as="fetch" href="../model.json" data-stage data-images="../images/" crossorigin>
 </head>
 <body>
 
@@ -203,7 +238,7 @@
       <nav>
         <div class="navlinks" id="navlinks">
           <a href="../api/">API</a>
-          <a href="../model/" data-de="Modell">Model</a>
+          <a href="./" aria-current="page" data-de="Modell">Model</a>
           <a href="../talks/" data-de="Vorträge">Talks</a>
           <a href="../billing/" data-de="Abrechnung">Billing</a>
         </div>
@@ -221,50 +256,53 @@
 <main>
   <div class="shell">
     <div class="title">
-      <h1 data-de="<span class='r70'>Diese Website sammelt</span><span class='rcl'><em>nichts</em>.</span>"><span class="r70">This site collects</span><span class="rcl"><em>nothing</em>.</span></h1>
-      <p class="tagline" data-de="Keine Cookies, keine Webanalyse, keine Anfragen an Dritte. Die Liste dessen, was Ihren Browser verlässt, ist kurz genug, um sie hier abzudrucken.">No cookies, no analytics, no third-party requests. The list of what leaves your browser is short enough to print here.</p>
-      <p class="note" data-de="Eine Ausnahme, und es steht uns nicht zu, sie zu entfernen: GitHub liefert diese Seiten aus und sieht dabei – wie jeder Hoster – die Anfrage, mit der sie abgerufen werden.">One exception, and it is not ours to remove: GitHub serves these pages and, like any host, sees the request that fetches them.</p>
+      <h1 data-de="<span class='r70'>GuestGraph,</span><span class='rcl'><em>beschrieben</em>.</span>"><span class="r70">GuestGraph,</span><span class="rcl"><em>described</em>.</span></h1>
+      <p class="tagline" data-de="Was wir sind, wohin wir wollen und wie wir arbeiten – im Vokabular von CompanyGraph geschrieben und als der Graph gezeichnet, den unsere Dateien bilden.">What we are, where we are going and how we work, written in CompanyGraph's vocabulary and drawn as the graph its files form.</p>
+      <p class="note" data-de="Nichts hier wurde für diese Seite geschrieben: Alles wird aus unserem Modell erzeugt, auf dem Stand des Commits, der neben dem Diagramm steht. Das Modell beschreibt das Projekt und enthält keine Gastdaten.">Nothing here was written for this page: it is generated from our model, at the commit named beside the figure. The model describes the project and holds no guest's data.</p>
     </div>
-
-    <section>
-      <h2 data-de="Was diese Website tut">What this site does</h2>
-      <p class="lede" data-de="Alles, was diese Seite braucht, kommt von guestgraph.io – auch die Schriften. Nichts wird anderswo geholt, also erfährt kein Dritter, dass Sie hier waren.">Everything this page needs comes from guestgraph.io, fonts included. Nothing is fetched from anywhere else, so no third party learns that you were here.</p>
-      <!-- no data-de: this is the value itself, and it says the same thing in either language.
-           Both cases are shown because pinning one would be wrong the moment you switch. -->
-      <p class="unit mono"><b>localStorage</b><br>lang = "de" | "en"<br>theme = "light" | "dark"</p>
-      <p class="lede" data-de="Das ist alles, was gespeichert wird: Ihre Sprachwahl, zwei Buchstaben, und Ihre Darstellungswahl, ein Wort, damit die nächste Seite sie kennt. Beide erreichen keinen Server und identifizieren niemanden.">That is everything that gets stored: your choice of language, two letters, and your choice of appearance, one word, so the next page knows them. They reach no server and identify nobody.</p>
-      <div class="cols">
-        <div class="card never wide">
-          <h3 data-de="Gar nicht erst verwendet">Not used at all</h3>
-          <ul>
-            <li><b data-de="Cookies">Cookies</b><i data-de="Keine, gleich welcher Art. Es gibt kein Banner, weil es nichts gibt, dem Sie zustimmen müssten.">None, of any kind. There is no banner because there is nothing to consent to.</i></li>
-            <li><b data-de="Webanalyse">Analytics</b><i data-de="Nichts zählt Ihre Besuche, und niemandem wird mitgeteilt, dass Sie hier waren.">Nothing counts you, and nobody is told that you were here.</i></li>
-            <li><b data-de="Anfragen an Dritte">Third-party requests</b><i data-de="Schriften, Bilder und Stylesheets kommen alle von dieser Domain. Kein CDN sieht Ihre Adresse.">Fonts, images and styles all come from this origin. No CDN sees your address.</i></li>
-            <li><b data-de="Formulare und Konten">Forms and accounts</b><i data-de="Nichts auszufüllen, keine Anmeldung, nichts zu speichern.">Nothing to fill in, nothing to sign up for, nothing to store.</i></li>
-            <li><b data-de="Fingerprinting">Fingerprinting</b><i data-de="Es wird nicht versucht, Sie über Besuche hinweg wiederzuerkennen. Die gespeicherte Sprach- und Darstellungswahl ist kein Erkennungsmerkmal.">No attempt is made to recognize you across visits. The language and theme keys are not identifiers.</i></li>
-          </ul>
+    <section class="figure-section">
+      <div class="stagehead" id="stagehead">
+        <p class="path mono" id="path"></p>
+        <button type="button" class="expand" id="expand" data-de="Vergrössern">Expand</button>
+      </div>
+      <div class="stage" id="stage">
+        <div class="canvas">
+          <svg id="fig" role="group" aria-labelledby="figcap"></svg>
+          <button class="recenter" id="recenter" type="button" data-de="Neu zentrieren">recenter</button>
         </div>
+        <button class="gutter" id="gutter" type="button"
+                aria-label="Resize the details panel" data-de-aria="Detailbereich verkleinern oder vergrössern"></button>
+        <aside class="card" id="card" aria-live="polite">
+          <div class="cbody" id="cbody"></div>
+          <div class="cfoot" id="cfoot">
+            <span id="cfootlink"></span>
+          </div>
+        </aside>
       </div>
-    </section>
+      <p class="stagehint" data-de="Ziehen bewegt das Diagramm · ⌘- oder Ctrl-Scrollen zoomt">Drag to move · ⌘- or Ctrl-scroll to zoom</p>
+      <p class="figcap" id="figcap" data-de="Eine durchgezogene Linie bedeutet <b>besitzt</b>. Eine gestrichelte bedeutet <b>verweist per Namen auf</b>. Ein umrandeter Kasten ist ein Ordner, ein gefülltes Quadrat eine Seite. Ein Klick auf einen Kasten oder ein Quadrat rückt es in die Mitte.">A solid line means <b>owns</b>. A dashed line means <b>refers to by name</b>. An outlined box is a folder, a filled square is a page. Click to bring it to the center.</p>
 
+      <!-- The stage, expanded. Not a copy: Expand moves .stagehead and .stage in here — the
+           same #path, #fig and #card — and moves them back on close. The URL does not
+           change when it opens. -->
+      <dialog id="stagemodal" class="modal" aria-label="The model, expanded" data-de-aria="Das Modell, vergrössert">
+        <button type="button" class="close" id="modalclose" aria-label="Close" data-de-aria="Schliessen">×</button>
+      </dialog>
+    </section>
     <section>
-      <h2 data-de="Gastdaten, sobald es welche gibt">Guest data, when there is any</h2>
-      <p class="lede" data-de="Der gehostete Dienst läuft noch nicht, also liegen dort keine Gastdaten. So werden sie behandelt, sobald es sie gibt – jetzt aufgeschrieben, weil ein Hotel diese Frage vor der nach dem Preis stellt.">The hosted service is not running yet, so there is no guest data in it. This is how it will be handled when there is — written down now, because a hotel asks this before it asks the price.</p>
+      <h2 data-de="Was hier steht">What is in it</h2>
       <div class="rules">
-        <p data-de="<b>Das Hotel ist Verantwortlicher, GuestGraph ist Auftragsbearbeiter (DSGVO: Auftragsverarbeiter).</b> Sie entscheiden, was erhoben wird und wofür. Bearbeitet werden die Daten auf Ihre Weisung, für Ihre Zwecke und für nichts sonst."><b>The hotel is the controller; GuestGraph is the processor.</b> You decide what is collected and why. It is processed on your instruction, for your purposes and for nothing else.</p>
-        <p data-de="<b>Ein Auftragsbearbeitungsvertrag (DSGVO: Auftragsverarbeitungsvertrag), auf Anfrage.</b> Das revidierte Schweizer DSG und die DSGVO gelten beide – Schweizer Hotels und deutsche oder österreichische sind hier derselbe Markt. Mit dem Angemessenheitsbeschluss für die Schweiz ist die Datenübermittlung zwischen der Schweiz und der EU weniger hinderlich, als oft angenommen wird."><b>A data-processing agreement, on request.</b> The revised Swiss DSG and the GDPR both apply — Swiss hotels and German or Austrian ones are one market here. Switzerland's adequacy decision makes data moving between the two less of an obstacle than it is often assumed to be.</p>
-        <p data-de="<b>Die Cloud ist noch nicht gewählt.</b> Kein Anbieter, keine Region, keine Gastdaten – weil nichts läuft. Worauf die Wahl fällt, wird auf dieser Seite genannt, bevor der erste Datensatz bearbeitet wird, nicht danach."><b>The cloud is not chosen yet.</b> No provider, no region, no guest data — because nothing is running. Whichever it turns out to be will be named on this page before the first record is processed, not after.</p>
-        <p data-de="<b>Wer GuestGraph selbst betreibt, den betrifft nichts davon.</b> Apache 2.0, Ihre Infrastruktur, Ihre Daten: Nichts verlässt das Haus, und es gibt niemanden, mit dem ein Vertrag zu schliessen wäre."><b>Self-host and none of this applies.</b> Apache 2.0, your infrastructure, your data: nothing leaves the building, and there is nobody to sign an agreement with.</p>
+        <p data-de="<b>Eine Vision, Werte und die Ziele und Strategien, die ihnen untergeordnet sind.</b> Jede Seite nennt ihre Quelle, und diese Quelle ist das eigene Repository des Modells: Eine Tatsache wird dort korrigiert und sonst nirgends."><b>A vision, values and the objectives and strategies under them.</b> Every page names its source, and that source is the model's own repository: a fact is corrected there and nowhere else.</p>
+        <p data-de="<b>Was wir ausliefern, und die Begriffe, die bei uns eine genaue Bedeutung haben.</b> Die Engine und der Connector; die Features, die sagen, was man damit tun kann; und die Begriffe, die es dazu braucht – Datensatz, Gast, Zusammenführung, Match-Review –, jeder eine eigene Seite, auf die eine andere verweisen kann."><b>What we ship, and the words we mean exactly.</b> The engine and the connector, the features that say what someone can do with them, and the concepts they need — source record, guest, merge, match review — each a page another can point at.</p>
+        <p data-de="<b>Wie gearbeitet wird.</b> Jeder Prozess, Phase für Phase; die Sitze, die jeden Schritt verantworten, ausführen und freigeben; und welche davon ein Agent besetzt."><b>How the work is done.</b> Each process phase by phase, the seats that own, run and approve each step, and which of them an agent holds.</p>
+        <p data-de="<b>Wo das Modell veröffentlicht ist.</b> Der MCP-Server, sein Eintrag in der MCP Registry und der Chat, jeweils aus einem gepinnten Commit gebaut."><b>Where the model is published.</b> The MCP server, its registry listing and the chat, each built from a pinned commit.</p>
       </div>
     </section>
-
     <section>
-      <h2 data-de="Wer das betreibt">Who runs this</h2>
-      <div class="rules">
-        <p data-de="GuestGraph wird von <a href='https://blust.ch/model/?stage=expanded'>Robert Blust</a> entwickelt und betrieben. Dahinter steht keine Firma, sondern eine Person, die öffentlich arbeitet. Die Engine steht unter Apache 2.0 – für alle, die nachlesen wollen, was sie tatsächlich tut.">GuestGraph is built and run by <a href="https://blust.ch/model/?stage=expanded">Robert Blust</a>. It is not a company: one person, working in the open, with the engine under Apache 2.0 for anyone who wants to read what it actually does.</p>
-        <p data-de="Ein Impressum gibt es noch nicht, und das ist Absicht, kein Versäumnis: Hier lässt sich nichts kaufen, also gibt es kein Geschäft, zu dem eines gehören würde. Sobald der gehostete Dienst startet, kommt es – mit Name, Adresse und Kontakt – auf eine eigene Seite, denn ein Impressum ist keine Datenschutzerklärung. Am selben Tag verschwindet auf der Abrechnungsseite der Hinweis, dass der Dienst noch nicht offen ist.">There is no imprint yet, and that is deliberate rather than an omission: nothing here can be bought, so there is no transaction for one to belong to. When the hosted service opens it arrives — name, address and contact — on a page of its own, because an imprint is not a privacy note. The same day, the billing page stops saying it is not open.</p>
-      </div>
+      <h2 data-de="Die Datei hinter dem Diagramm">The file behind the figure</h2>
+      <p class="lede" data-de="Das Diagramm wird aus einer einzigen Datei auf dieser Website gezeichnet, aus <a href='../model.json'>model.json</a>, und jeder darf sie abrufen. Sie listet die Entitäten und die Kanten dazwischen und enthält den Commit und das Repository, die unten genannt sind, auch dann, wenn kein JavaScript läuft.">The figure is drawn from one file on this site, <a href="../model.json">model.json</a>, and anyone may fetch it. It lists the entities and the edges between them, and it carries the commit and the repository named below even when no JavaScript runs.</p>
     </section>
+    <p class="derived"><span data-de="Erzeugt aus">Generated from</span> <a id="srclink" data-src="model" href="https://github.com/guestgraph/mental-model/tree/HEAD/model">guestgraph/mental-model</a>@<span id="srccommit">HEAD</span></p>
   </div>
 </main>
 
@@ -273,7 +311,8 @@
     <span><a class="credit" href="https://blust.ch/"><span class="rbmark"><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="plate" x=".75" y=".75" width="30.5" height="30.5" rx="7"/><text class="rb" x="16" y="22.5" text-anchor="middle" font-family="Plex Mono, ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17" font-weight="600">rb</text></svg></span><b>Robert <em>Blust</em></b></a></span>
     <span><a href="https://github.com/guestgraph">GitHub</a></span>
     <span><a href="https://github.com/guestgraph/engine/blob/HEAD/LICENSE" data-de="Lizenz">License</a></span>
-    <span><a href="./" aria-current="page" data-de="Datenschutz">Privacy</a></span>
+    <span><a href="../privacy/" data-de="Datenschutz">Privacy</a></span>
+    <span><a href="../model.json">model.json</a></span>
   </footer>
 </div>
 
@@ -330,10 +369,10 @@
   i18n.forEach(function(el){ el.setAttribute("data-en", el.innerHTML); });
 
   var UI = {
-    de:{ title:"Datenschutz – GuestGraph",
-         desc:"Diese Website setzt keine Cookies, betreibt keine Webanalyse und stellt keine Anfragen an Dritte. Wie der gehostete GuestGraph mit Gastdaten umgehen wird – aufgeschrieben, bevor es welche gibt." },
-    en:{ title:"Privacy — GuestGraph",
-         desc:"This site sets no cookies, runs no analytics and makes no third-party requests. How the hosted GuestGraph will treat guest data, written down before there is any." }
+    de:{ title:"Modell – GuestGraph",
+         desc:"GuestGraph, in CompanyGraph beschrieben und als der Graph gezeichnet, den die Dateien dieser Beschreibung bilden: Vision, Werte, Produkte, Begriffe und die Art, wie gearbeitet wird." },
+    en:{ title:"Model — GuestGraph",
+         desc:"GuestGraph described in CompanyGraph and drawn as the graph its files form: vision, values, products, concepts and the way the work is done." }
   };
 
   function applyLang(){
@@ -370,7 +409,14 @@
   document.getElementById("len").addEventListener("click", function(){ if (lang !== "en") toggle(); });
   document.getElementById("thLight").addEventListener("click", function(){ setTheme("light"); });
   document.getElementById("thDark").addEventListener("click", function(){ setTheme("dark"); });
-  document.addEventListener("keydown", function(e){ if(e.key === "l" || e.key === "L") toggle(); });
+  // L switches the language, but never while the visitor is typing: a letter typed into a field
+  // is text, and the language changes only when the visitor asks for it.
+  document.addEventListener("keydown", function(e){
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    var t = e.target;
+    if (t && t.closest && t.closest("input, textarea, select, [contenteditable=''], [contenteditable='true']")) return;
+    if (e.key === "l" || e.key === "L") toggle();
+  });
 
   applyTheme();
 
@@ -380,5 +426,9 @@
 })();
 </script>
 <script src="../page.js" defer></script>
+
+<script src="../d3.v7.min.js"></script>
+<script src="../card.js"></script>
+<script src="../stage.js"></script>
 </body>
 </html>
