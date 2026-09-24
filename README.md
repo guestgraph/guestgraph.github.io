@@ -104,4 +104,4 @@ The same page says how guest data will be handled once the hosted service exists
 
 ## License
 
-[CC BY 4.0](LICENSE) for everything written here: the pages, the talk and its narration, the share cards, and the scripts that build and check them. Use it, quote it, build on it; credit it. The faces under `fonts/` are not written here and keep their own license: they come from `@robertblust/design`, whose NOTICE names each one. The license grants no right to a name or a mark: GuestGraph and its mark stay the project's.
+[CC BY 4.0](LICENSE) for everything written here: the pages, the talk and its narration, the share cards, and the scripts that build and check them. Use it, quote it, build on it; credit it. The faces under `fonts/` are not written here and keep their own license, in a text beside each: they come from `@robertblust/design`, whose NOTICE names each one. The license grants no right to a name or a mark: GuestGraph and its mark stay the project's.
