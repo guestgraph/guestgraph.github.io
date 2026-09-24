@@ -1,5 +1,5 @@
 {
-  "commit": "1ed82ea08fa97c493e9e2d5b62444e18230d880c",
+  "commit": "e80418e8a4dc993ee154cb1f4ffd7b0ca31a6732",
   "root": "GuestGraph",
   "rootId": "identity",
   "types": [
@@ -4191,6 +4191,32 @@
       "path": "model/surfaces/chat-guestgraph-io-chat.md"
     },
     {
+      "id": "surfaces/guestgraph-io-website",
+      "type": "surface",
+      "name": "guestgraph.io website",
+      "tagline": "The project's own site, in English and Swiss Standard German, where a hotel, an integrator, a search engine or an agent meets the guest identity graph and the project that builds it, with the pages drawn from our model rebuilt from a pinned commit of it.",
+      "fields": {
+        "source": "Local",
+        "production": "built",
+        "built-by": "https://github.com/guestgraph/guestgraph.github.io",
+        "url": "https://guestgraph.io"
+      },
+      "sections": [
+        {
+          "heading": "What it shows",
+          "text": "- **Landing** — the problem in one line, five strangers and one guest, with the way into the introduction talk and the code.\n- **Team** — each process's phases as a board of the roles that own, execute, support and approve each, and the profiles that hold those roles, drawn from `model.json`.\n- **Principles** — the vision and the values, drawn from `model.json`.\n- **Surfaces** — every surface the model records, with how each is made and what makes it, and nothing kept beside the model, drawn from `model.json`.\n- **API** — the engine's and the connector's operations, generated from their OpenAPI documents at the commits the site pins.\n- **Model** — this model, drawn as a graph from `model.json`, with each entity's card.\n- **Talks** — the introduction talk, narrated in both languages with a PDF, and the questions it ends on.\n- **Billing** — the one meter the hosted service would bill on, what is free and stays so, and the ways to charge that were refused and why.\n- **Privacy** — what leaves a visitor's browser and what stays in it, listed in full, and how the hosted service will treat guest data.\n- **Problems** — what each refusal type a GuestGraph service answers means, and what to do about it.\n- **model.json** — this model parsed at the commit the site pins, published as a dataset.\n- **Structured data** — the organization, the website and the dataset each page describes to a crawler.",
+          "tables": []
+        },
+        {
+          "heading": "Constraints",
+          "text": "- The site collects nothing: no page sets a cookie, no page loads an analytics script, and nothing counts a visit.\n- Every page drawn from the model names the repository and the commit it was parsed from, on the page.\n- A page drawn from the model is rebuilt from `model.json`, and the build fails when that file is not what the pinned commit parses to.\n- Both languages carry the same claims: a page's German is a translation of its reviewed English, never a second text.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/surfaces/guestgraph-io-website.md"
+    },
+    {
       "id": "surfaces/mcp-guestgraph-io-mcp-server",
       "type": "surface",
       "name": "mcp.guestgraph.io MCP server",
@@ -6089,6 +6115,12 @@
     },
     {
       "from": "surfaces/chat-guestgraph-io-chat",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "surfaces/guestgraph-io-website",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
