@@ -3,6 +3,7 @@
 import { chromium } from "playwright";
 import { DESIGN_CHECKS, SYSTEM_FACES } from "@robertblust/design/verify/design";
 import { STAGE_CHECKS } from "@robertblust/design/verify/stage";
+import { MODEL_PAGE_CHECKS } from "@robertblust/design/verify/model-pages";
 import { pageChecks } from "@robertblust/design/verify/pages";
 import { runSuite } from "@robertblust/design/verify/suite";
 
@@ -49,6 +50,17 @@ const PAGES = [
     // tokenVersion reads tokens.css's own opening comment instead of a page marker.
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: [],
     card: true, cardBase: SITE, internalLinks: true },
+
+  // The team page. Its boards and note are rendered from model.json by build/pages.mjs, and
+  // `board` holds each board to the phases, seats and marks the model declares. A seat's card
+  // opens from the model on this page, and its links go to /model/.
+  { path: "/team/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /Team/, lang: "en", sourceLang: "en",
+    contains: ["An agent does the work,", "every", "gate", "How to read it", "Generated from"],
+    translates: { lang: "de", shows: ["Wie man es liest", "DAS TEAM", "Ein Sitz ist eine Rolle"], hides: ["How to read it", "THE TEAM", "A seat is a role"] },
+    links: ["https://github.com/guestgraph"],
+    sameOrigin: true,
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: ["stage contract"], fits: true,
+    card: true, cardBase: SITE, internalLinks: true, board: true },
 
   // The principles page. Its region is rendered from model.json by build/pages.mjs; the model's
   // words stay English, which the region's note says, so `translates` names the note and the one
@@ -180,6 +192,7 @@ const PAGES = [
 const CHECKS = {
   ...DESIGN_CHECKS,
   ...STAGE_CHECKS,
+  ...MODEL_PAGE_CHECKS,
   ...pageChecks({ SITE, BASE }),
   // A refusal's type URI ends in a fragment, and a fragment that lands on nothing is a
   // reader left at the top of the page: every id the spec names must be an element's id.

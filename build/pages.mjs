@@ -11,6 +11,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { writePrinciples } from "@robertblust/design/render/principles";
+import { writeTeam } from "@robertblust/design/render/team";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const { repo, commit } = JSON.parse(fs.readFileSync(path.join(ROOT, "source.json"), "utf8"));
@@ -27,7 +28,13 @@ if (data.commit !== commit) {
 }
 
 const check = process.argv.includes("--check");
-const RENDERERS = [writePrinciples];
+// The order the boards argue in: the work first, then how an outsider joins it, then how a
+// visitor is answered. Core gives a process no rank, so the site names the order, and the
+// renderer refuses the build if a name leaves the model.
+const RENDERERS = [
+  writePrinciples,
+  (d, o) => writeTeam(d, { ...o, order: ["Delivery", "Contribution", "Feature request", "Answering"] }),
+];
 
 const stale = RENDERERS.flatMap((write) => write(data, { check, root: ROOT }));
 
