@@ -73,6 +73,16 @@ const PAGES = [
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: [],
     card: true, cardBase: SITE, internalLinks: true },
 
+  // The surfaces page. Its lineage and note are rendered from model.json by build/pages.mjs, and
+  // `lineage` holds the drawing to the surfaces and makers the model declares.
+  { path: "/surfaces/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /Surfaces/, lang: "en", sourceLang: "en",
+    contains: ["Nothing kept beside", "model", "How to read it", "Generated from"],
+    translates: { lang: "de", shows: ["Wie man es liest", "Eine Surface ist eine Seite"], hides: ["How to read it", "A surface is a page"] },
+    links: ["https://github.com/guestgraph"],
+    sameOrigin: true,
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: ["stage contract"], fits: true,
+    card: true, cardBase: SITE, internalLinks: true, lineage: true },
+
   // The model page. The stage draws model.json, which build/model.mjs writes from the commit
   // source.json pins, and `graph` holds the drawing to that file. The source link is not listed
   // in `links`: the stage rewrites its href from the file's own commit, so `graph` asserts it.

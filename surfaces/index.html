@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Model — GuestGraph</title>
-<meta id="metadesc" name="description" content="GuestGraph described in CompanyGraph and drawn as the graph its files form: vision, values, products, concepts and the way the work is done.">
+<title>Surfaces — GuestGraph</title>
+<meta id="metadesc" name="description" content="Every place GuestGraph publishes its model, and how each is made from it: by hand, or by a repository's build from a pinned commit.">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<link rel="canonical" href="https://guestgraph.io/model/">
+<link rel="canonical" href="https://guestgraph.io/surfaces/">
 
-<meta property="og:title" content="Model — GuestGraph">
-<meta property="og:description" content="GuestGraph described in CompanyGraph and drawn as the graph its files form: vision, values, products, concepts and the way the work is done.">
+<meta property="og:title" content="Surfaces — GuestGraph">
+<meta property="og:description" content="Every place GuestGraph publishes its model, and how each is made from it: by hand, or by a repository's build from a pinned commit.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="GuestGraph">
-<meta property="og:url" content="https://guestgraph.io/model/">
-<meta property="og:image" content="https://guestgraph.io/model/og.png">
+<meta property="og:url" content="https://guestgraph.io/surfaces/">
+<meta property="og:image" content="https://guestgraph.io/surfaces/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="GuestGraph, described.">
+<meta property="og:image:alt" content="From GuestGraph's model to each surface">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="de_CH">
 <meta name="twitter:card" content="summary_large_image">
@@ -50,9 +50,9 @@
     },
     {
       "@type": "WebPage",
-      "@id": "https://guestgraph.io/model/#webpage",
-      "name": "Model",
-      "url": "https://guestgraph.io/model/",
+      "@id": "https://guestgraph.io/surfaces/#webpage",
+      "name": "Surfaces",
+      "url": "https://guestgraph.io/surfaces/",
       "inLanguage": "en",
       "isPartOf": {
         "@id": "https://guestgraph.io/#website"
@@ -61,12 +61,12 @@
         "@id": "https://guestgraph.io/#organization"
       },
       "breadcrumb": {
-        "@id": "https://guestgraph.io/model/#breadcrumb"
+        "@id": "https://guestgraph.io/surfaces/#breadcrumb"
       }
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://guestgraph.io/model/#breadcrumb",
+      "@id": "https://guestgraph.io/surfaces/#breadcrumb",
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -77,27 +77,8 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Model",
-          "item": "https://guestgraph.io/model/"
-        }
-      ]
-    },
-    {
-      "@type": "Dataset",
-      "@id": "https://guestgraph.io/model/#dataset",
-      "name": "GuestGraph — mental model",
-      "description": "GuestGraph described in CompanyGraph: its vision, values, objectives and strategies, the products it ships and the concepts they use, how its work is done, and where the model is published.",
-      "url": "https://guestgraph.io/model/",
-      "license": "https://creativecommons.org/licenses/by/4.0/",
-      "isBasedOn": "https://github.com/guestgraph/mental-model",
-      "creator": {
-        "@id": "https://guestgraph.io/#organization"
-      },
-      "distribution": [
-        {
-          "@type": "DataDownload",
-          "encodingFormat": "application/json",
-          "contentUrl": "https://guestgraph.io/model.json"
+          "name": "Surfaces",
+          "item": "https://guestgraph.io/surfaces/"
         }
       ]
     }
@@ -159,7 +140,7 @@
 
   main{flex:1; display:flex; align-items:center; padding:2vh 0 6vh}
 
-  /* The page's one marked sentence: what the figure is drawn from, and what it does not hold. */
+  /* The note the renderer writes under the tagline: the model's words are its own. */
   .note{margin-top:2rem; max-width:54ch; padding-left:1rem;
         border-left:2px solid var(--c-flag); color:var(--ink); font-size:1rem}
 
@@ -180,6 +161,24 @@
 
   :focus-visible{outline:2px solid var(--c-mid); outline-offset:3px; border-radius:3px}
 
+  .lbl{font-family:"Plex Mono", ui-monospace, Menlo, monospace; font-size:.66rem;
+       letter-spacing:.14em; text-transform:uppercase; color:var(--dim)}
+  .legend{display:flex; gap:.6rem 1.5rem; flex-wrap:wrap; margin-top:1.4rem; color:var(--dim); font-size:.76rem}
+  .legend > span{display:flex; align-items:center; gap:.5rem}
+  /* page.css's own `.legend span{display:flex; gap:.45rem}` is a descendant selector, not a
+     direct-child one, so it also reaches the label span nested inside this page's own
+     `.legend > span` — a collision the family-wide file did not have to consider when this
+     rule was its own page-scoped fence. Undone here, on the one span it should never touch:
+     a label holding text alone gains nothing from becoming a flex container and had none of
+     this before. */
+  .legend > span > span{display:inline; gap:normal; align-items:normal}
+  .legend svg.ln{width:28px; height:6px; flex:none}
+  .legend svg.ln path{stroke:var(--dim); stroke-width:1.5}
+  .ln-hint{margin-top:1.6rem; font-size:.82rem; color:var(--dim)}
+  /* Full width, like a seat's card on /team/: a References table needs the width. */
+  .ln-panel{margin-top:1.6rem}
+  .ln-panel .card{width:100%}
+  .cbody p, .cbody ul.prose{max-width:72ch}
   /* ─── stage contract · v2 · shared ───────────────────────────────────
      `stage.css` styles the drawing, the card and the dialog, and says in its own header that
      the page keeps `.figure-section`, `.figcap` and its prose. This is that remainder: the few
@@ -213,12 +212,25 @@
 
 </style>
 <link rel="stylesheet" href="../stage.css">
-<!-- The model this page draws. The stage finds it by the data-stage attribute and fetches the
-     href, so the page names its data once. crossorigin is not decoration: without it the
-     browser will not use the preload for the fetch and asks for the file twice. -->
+<!-- The model this page's cards read. card.js finds it by the data-stage attribute and fetches
+     the href; crossorigin lets the fetch use the preload rather than ask for the file twice. -->
 <link rel="preload" as="fetch" href="../model.json" data-stage data-images="../images/" crossorigin>
 </head>
 <body>
+
+<!-- The two ways a surface is made, as form rather than as colour, the way /team/ tells a human
+     from an agent: a filled pen for the hand, an outlined build for the machine. tokens.css
+     allows one hue at four brightnesses and refuses a second in writing. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="m-hand" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M8 .8l5.4 6.3-2.9 8.1H5.5L2.6 7.1zM8 7.2a1.35 1.35 0 1 0 0 2.7 1.35 1.35 0 0 0 0-2.7z"/>
+  </symbol>
+  <symbol id="m-build" viewBox="0 0 16 16">
+    <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="1.8" y="1.8" width="12.4" height="12.4" rx="2.8"/><path d="M6.4 5.6L4.2 8l2.2 2.4M9.6 5.6L11.8 8 9.6 10.4"/>
+    </g>
+  </symbol>
+</defs></svg>
 
 <div class="shell">
   <header>
@@ -239,9 +251,9 @@
         <div class="navlinks" id="navlinks">
           <a href="../team/">Team</a>
           <a href="../principles/" data-de="Prinzipien">Principles</a>
-          <a href="../surfaces/">Surfaces</a>
+          <a href="./" aria-current="page">Surfaces</a>
           <a href="../api/">API</a>
-          <a href="./" aria-current="page" data-de="Modell">Model</a>
+          <a href="../model/" data-de="Modell">Model</a>
           <a href="../talks/" data-de="Vorträge">Talks</a>
           <a href="../billing/" data-de="Abrechnung">Billing</a>
         </div>
@@ -258,54 +270,56 @@
 
 <main>
   <div class="shell">
-    <div class="title">
-      <h1 data-de="<span class='r70'>GuestGraph,</span><span class='rcl'><em>beschrieben</em>.</span>"><span class="r70">GuestGraph,</span><span class="rcl"><em>described</em>.</span></h1>
-      <p class="tagline" data-de="Was wir sind, wohin wir wollen und wie wir arbeiten – im Vokabular von CompanyGraph geschrieben und als der Graph gezeichnet, den unsere Dateien bilden.">What we are, where we are going and how we work, written in CompanyGraph's vocabulary and drawn as the graph its files form.</p>
-      <p class="note" data-de="Nichts hier wurde für diese Seite geschrieben: Alles wird aus unserem Modell erzeugt, auf dem Stand des Commits, der neben dem Diagramm steht. Das Modell beschreibt das Projekt und enthält keine Gastdaten.">Nothing here was written for this page: it is generated from our model, at the commit named beside the figure. The model describes the project and holds no guest's data.</p>
-    </div>
-    <section class="figure-section">
-      <div class="stagehead" id="stagehead">
-        <p class="path mono" id="path"></p>
-        <button type="button" class="expand" id="expand" data-de="Vergrössern">Expand</button>
-      </div>
-      <div class="stage" id="stage">
-        <div class="canvas">
-          <svg id="fig" role="group" aria-labelledby="figcap"></svg>
-          <button class="recenter" id="recenter" type="button" data-de="Neu zentrieren">recenter</button>
-        </div>
-        <button class="gutter" id="gutter" type="button"
-                aria-label="Resize the details panel" data-de-aria="Detailbereich verkleinern oder vergrössern"></button>
-        <aside class="card" id="card" aria-live="polite">
-          <div class="cbody" id="cbody"></div>
-          <div class="cfoot" id="cfoot">
-            <span id="cfootlink"></span>
-          </div>
-        </aside>
-      </div>
-      <p class="stagehint" data-de="Ziehen bewegt das Diagramm · ⌘- oder Ctrl-Scrollen zoomt">Drag to move · ⌘- or Ctrl-scroll to zoom</p>
-      <p class="figcap" id="figcap" data-de="Eine durchgezogene Linie bedeutet <b>besitzt</b>. Eine gestrichelte bedeutet <b>verweist per Namen auf</b>. Ein umrandeter Kasten ist ein Ordner, ein gefülltes Quadrat eine Seite. Ein Klick auf einen Kasten oder ein Quadrat rückt es in die Mitte.">A solid line means <b>owns</b>. A dashed line means <b>refers to by name</b>. An outlined box is a folder, a filled square is a page. Click to bring it to the center.</p>
 
-      <!-- The stage, expanded. Not a copy: Expand moves .stagehead and .stage in here — the
-           same #path, #fig and #card — and moves them back on close. The URL does not
-           change when it opens. -->
-      <dialog id="stagemodal" class="modal" aria-label="The model, expanded" data-de-aria="Das Modell, vergrössert">
-        <button type="button" class="close" id="modalclose" aria-label="Close" data-de-aria="Schliessen">×</button>
-      </dialog>
+    <div class="title">
+      <h1 data-de="<span class='r70'>Nichts wird neben</span><span class='rcl'>dem <em>Modell</em> gepflegt.</span>"><span class="r70">Nothing kept beside</span><span class="rcl">the <em>model</em>.</span></h1>
+      <p class="tagline" data-de="Jeder Ort, an dem GuestGraph sein Modell veröffentlicht, ist aus einem gepinnten Commit dieses Modells abgeleitet, und nichts wird daneben gepflegt. Diese Seite zeichnet jeden Ort und das, was ihn erzeugt.">Every place GuestGraph publishes its model is derived from it at a pinned commit, and nothing is maintained beside it. This page draws each place and what makes it.</p>
+      <!-- surfaces-note:start -->
+      <p class="note" data-de="Aus dem Modell erzeugt: Die Worte unten sind seine eigenen – und in der einen Sprache, in der es geschrieben ist. Der Rest dieser Website ist zweisprachig; eine übersetzte Kopie wäre eine zweite Fassung, die ebenfalls stimmen müsste – und genau dagegen argumentiert diese Seite.">Generated from the model, so the words below are its own — and in the one language it is written in. The rest of this site is bilingual; a translated copy would be a second thing to keep true, which is what this page argues against.</p>
+    <!-- surfaces-note:end -->
+    </div>
+
+    <section class="figure-section">
+      <div class="lbl" data-de="Herkunft der Surfaces">Surface lineage</div>
+      <!-- surfaces:start -->
+      <div class="lineage" id="lineage">
+        <svg class="wires" id="wires" aria-hidden="true"></svg>
+        <div class="ln-model" id="lnmodel"><div class="lbl" data-de="Das Modell">The model</div><div class="nm">mental-model</div><div class="at mono">@e80418e</div></div>
+        <ul class="ln-groups">
+          <li class="ln-group">
+            <div class="ln-maker" data-maker="https://github.com/guestgraph/guestgraph.github.io"><svg class="mk build" aria-hidden="true"><use href="#m-build"/></svg><span class="who">guestgraph.github.io<span class="how" data-de="Build">build</span></span></div>
+            <ul class="ln-surfaces">
+              <li><button class="ln-s" type="button" id="guestgraph-io-website" data-id="surfaces/guestgraph-io-website" data-maker="https://github.com/guestgraph/guestgraph.github.io" aria-pressed="false" aria-controls="lnpanel"><span class="nm">guestgraph.io website</span><span class="host">guestgraph.io</span></button></li>
+            </ul>
+          </li>
+          <li class="ln-group">
+            <div class="ln-maker" data-maker="https://github.com/guestgraph/mcp-guestgraph-io"><svg class="mk build" aria-hidden="true"><use href="#m-build"/></svg><span class="who">mcp-guestgraph-io<span class="how" data-de="Build">build</span></span></div>
+            <ul class="ln-surfaces">
+              <li><button class="ln-s" type="button" id="chat-guestgraph-io-chat" data-id="surfaces/chat-guestgraph-io-chat" data-maker="https://github.com/guestgraph/mcp-guestgraph-io" aria-pressed="false" aria-controls="lnpanel"><span class="nm">chat.guestgraph.io chat</span><span class="host">chat.guestgraph.io</span></button></li>
+              <li><button class="ln-s" type="button" id="mcp-registry-listing" data-id="surfaces/mcp-registry-listing" data-maker="https://github.com/guestgraph/mcp-guestgraph-io" aria-pressed="false" aria-controls="lnpanel"><span class="nm">MCP Registry listing</span><span class="host">registry.modelcontextprotocol.io/v0/servers</span></button></li>
+              <li><button class="ln-s" type="button" id="mcp-guestgraph-io-mcp-server" data-id="surfaces/mcp-guestgraph-io-mcp-server" data-maker="https://github.com/guestgraph/mcp-guestgraph-io" aria-pressed="false" aria-controls="lnpanel"><span class="nm">mcp.guestgraph.io MCP server</span><span class="host">mcp.guestgraph.io</span></button></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- surfaces:end -->
+      <div class="legend"><span><svg class="ln" aria-hidden="true"><path d="M0 3H28"/></svg> <span data-de="ein Build, der beim nächsten Pin erneut läuft">a build, which runs again on the next pin</span></span><span><svg class="ln" aria-hidden="true"><path d="M0 3H28" stroke-dasharray="5 5"/></svg> <span data-de="ein Mensch, der die Regeln liest">a person, who reads the rules</span></span></div>
+      <div class="ln-panel" id="lnpanel" aria-live="polite" hidden><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+      <p class="ln-hint" id="lnhint" data-de="Wählen Sie eine Surface, um ihrer Linie zu folgen und ihre Karte zu lesen.">Choose a surface to follow its line and read its card.</p>
+      <p class="figcap" data-de="Links der Commit des Modells, in der Mitte jeder Erzeuger und rechts jede Surface unter ihrem Erzeuger. Eine durchgezogene Linie ist ein Build; eine gestrichelte Linie ist ein Mensch.">The model's commit on the left, each maker in the middle, and each surface under its maker on the right. A solid line is a build; a dashed line is a person.</p>
     </section>
+
     <section>
-      <h2 data-de="Was hier steht">What is in it</h2>
+      <h2 data-de="Wie man es liest">How to read it</h2>
       <div class="rules">
-        <p data-de="<b>Eine Vision, Werte und die Ziele und Strategien, die ihnen untergeordnet sind.</b> Jede Seite nennt ihre Quelle, und diese Quelle ist das eigene Repository des Modells: Eine Tatsache wird dort korrigiert und sonst nirgends."><b>A vision, values and the objectives and strategies under them.</b> Every page names its source, and that source is the model's own repository: a fact is corrected there and nowhere else.</p>
-        <p data-de="<b>Was wir ausliefern, und die Begriffe, die bei uns eine genaue Bedeutung haben.</b> Die Engine und der Connector; die Features, die sagen, was man damit tun kann; und die Begriffe, die es dazu braucht – Datensatz, Gast, Zusammenführung, Match-Review –, jeder eine eigene Seite, auf die eine andere verweisen kann."><b>What we ship, and the words we mean exactly.</b> The engine and the connector, the features that say what someone can do with them, and the concepts they need — source record, guest, merge, match review — each a page another can point at.</p>
-        <p data-de="<b>Wie gearbeitet wird.</b> Jeder Prozess, Phase für Phase; die Sitze, die jeden Schritt verantworten, ausführen und freigeben; und welche davon ein Agent besetzt."><b>How the work is done.</b> Each process phase by phase, the seats that own, run and approve each step, and which of them an agent holds.</p>
-        <p data-de="<b>Wo das Modell veröffentlicht ist.</b> Der MCP-Server, sein Eintrag in der MCP Registry und der Chat, jeweils aus einem gepinnten Commit gebaut."><b>Where the model is published.</b> The MCP server, its registry listing and the chat, each built from a pinned commit.</p>
+        <p data-de="<b>Eine Surface ist eine Seite, kein Ort.</b> Das Modell enthält den MCP-Server und den Chat, nicht den Host, der sie bereitstellt, und nicht die Domain, unter der sie erreichbar sind. Was es beschreibt, ist das, was ein Besucher oder ein Agent liest."><b>A surface is a page, not a place.</b> The model holds the MCP server and the chat, not the host that serves them or the domain they answer on. What it describes is what a visitor or an agent reads.</p>
+        <p data-de="<b>Geschrieben oder gebaut: Das sagt, wo die Regeln stehen.</b> Bei einer geschriebenen Surface stehen die Projektionsregeln im Modell, denn ein Mensch lässt sich nicht erneut ausführen. Eine gebaute Surface nennt das Repository, dessen Build sie schreibt, und die Regeln sind dieser Build."><b>Written or built says where the rules are kept.</b> A written surface keeps its projection rules in the model, because nothing re-runs a person. A built surface names the repository whose build writes it, and the rules are that build.</p>
+        <p data-de="<b>Keine Linie ist von Hand gesetzt.</b> Jede Surface steht unter dem Erzeuger, den ihre eigene Datei nennt, daher kann das Diagramm dem Modell nicht widersprechen."><b>No line is typed.</b> Each surface sits under the maker its own file names, so the drawing cannot disagree with the model.</p>
       </div>
     </section>
-    <section>
-      <h2 data-de="Die Datei hinter dem Diagramm">The file behind the figure</h2>
-      <p class="lede" data-de="Das Diagramm wird aus einer einzigen Datei auf dieser Website gezeichnet, aus <a href='../model.json'>model.json</a>, und jeder darf sie abrufen. Sie listet die Entitäten und die Kanten dazwischen und enthält den Commit und das Repository, die unten genannt sind, auch dann, wenn kein JavaScript läuft.">The figure is drawn from one file on this site, <a href="../model.json">model.json</a>, and anyone may fetch it. It lists the entities and the edges between them, and it carries the commit and the repository named below even when no JavaScript runs.</p>
-    </section>
+
     <p class="derived"><span data-de="Erzeugt aus">Generated from</span> <a id="srclink" data-src="model" href="https://github.com/guestgraph/mental-model/tree/HEAD/model">guestgraph/mental-model</a>@<span id="srccommit">HEAD</span></p>
+
   </div>
 </main>
 
@@ -315,7 +329,6 @@
     <span><a href="https://github.com/guestgraph">GitHub</a></span>
     <span><a href="https://github.com/guestgraph/engine/blob/HEAD/LICENSE" data-de="Lizenz">License</a></span>
     <span><a href="../privacy/" data-de="Datenschutz">Privacy</a></span>
-    <span><a href="../model.json">model.json</a></span>
   </footer>
 </div>
 
@@ -372,10 +385,10 @@
   i18n.forEach(function(el){ el.setAttribute("data-en", el.innerHTML); });
 
   var UI = {
-    de:{ title:"Modell – GuestGraph",
-         desc:"GuestGraph, in CompanyGraph beschrieben und als der Graph gezeichnet, den die Dateien dieser Beschreibung bilden: Vision, Werte, Produkte, Begriffe und die Art, wie gearbeitet wird." },
-    en:{ title:"Model — GuestGraph",
-         desc:"GuestGraph described in CompanyGraph and drawn as the graph its files form: vision, values, products, concepts and the way the work is done." }
+    de:{ title:"Surfaces – GuestGraph",
+         desc:"Jeder Ort, an dem GuestGraph sein Modell veröffentlicht, und wie er aus ihm entsteht: von Hand oder durch den Build eines Repositorys aus einem gepinnten Commit." },
+    en:{ title:"Surfaces — GuestGraph",
+         desc:"Every place GuestGraph publishes its model, and how each is made from it: by hand, or by a repository's build from a pinned commit." }
   };
 
   function applyLang(){
@@ -430,8 +443,117 @@
 </script>
 <script src="../page.js" defer></script>
 
-<script src="../d3.v7.min.js"></script>
 <script src="../card.js"></script>
-<script src="../stage.js"></script>
+<script>
+  var STAGE_PAGE = "../model/";   // the page that draws this model on the stage
+  /* ─── surfaces lineage · v1 · shared ───────────────────────────────
+     Generated from @robertblust/design — edit it there and run `npm run design`.
+
+     The lineage's behavior on /surfaces/: the wires drawn from where the nodes landed, a
+     surface chosen by click or by address, and its card in the panel under the drawing. It
+     holds the page's card glue as well as its drawing, rather than leaving that to the
+     `model card` block, because the two share state: the card shown is the surface chosen,
+     and choosing one redraws the wires and fills the panel in one step. It moved here from
+     /surfaces/ with one thing generalized and nothing else: where a card's links go.
+
+     This block has a contract with the page around it that `design:check` cannot see, because
+     the check only compares bytes between the markers. The page must load card.js before it
+     and declare, above this fence in the same script:
+
+       var STAGE_PAGE = "../model/";   // the page that draws this model on the stage
+
+     and carry what lib/render/surfaces.mjs writes, the panel (`#lnpanel`, holding a card with
+     `.cbody` and `.cfoot span`), the hint (`#lnhint`), and the provenance line (`#srclink`
+     with its `data-src`, and `#srccommit`).
+  */
+  // The nodes are in the markup; the lines and the cards are not. A line is drawn from where two
+  // nodes landed, which only the browser knows, and says nothing the nesting of the lists does not.
+  // A card is rendered when its surface is chosen and again when the language changes, as a seat's
+  // card is on /team/.
+  (function(){
+    var box = document.getElementById("lineage"), svg = document.getElementById("wires"),
+        model = document.getElementById("lnmodel"), panel = document.getElementById("lnpanel"),
+        hint = document.getElementById("lnhint"),
+        btns = [].slice.call(document.querySelectorAll(".ln-s")), current = null, card = null;
+
+    function at(el){
+      var a = el.getBoundingClientRect(), b = box.getBoundingClientRect();
+      return { l: a.left - b.left, r: a.right - b.left, y: a.top - b.top + a.height / 2 };
+    }
+    function curve(x1, y1, x2, y2){
+      var m = (x1 + x2) / 2;
+      return "M" + x1 + " " + y1 + "C" + m + " " + y1 + " " + m + " " + y2 + " " + x2 + " " + y2;
+    }
+    // Model to each maker, maker to each of its surfaces. The chosen surface's two segments take
+    // --c-path, which is what that token names: the way back to the root.
+    function draw(){
+      if (getComputedStyle(svg).display === "none") return;
+      var on = current && current.getAttribute("data-maker"), out = [], m = at(model);
+      [].forEach.call(document.querySelectorAll(".ln-maker"), function(mk){
+        var key = mk.getAttribute("data-maker"), a = at(mk), cls = key === "hand" ? "hand" : "";
+        out.push('<path class="' + cls + (on === key ? " on" : "") + '" d="' + curve(m.r, m.y, a.l - 8, a.y) + '"/>');
+        var right = at(mk.querySelector(".who")).r + 10;
+        btns.forEach(function(b){
+          if (b.getAttribute("data-maker") !== key) return;
+          var s = at(b);
+          out.push('<path class="' + cls + (b === current ? " on" : "") + '" d="' + curve(right, a.y, s.l, s.y) + '"/>');
+        });
+      });
+      svg.innerHTML = out.join("");
+    }
+    function lang(){ return document.documentElement.lang === "de" ? "de" : "en"; }
+    function show(){
+      if (!current || !card) return;
+      card(current.getAttribute("data-id"));
+    }
+    function select(b, address){
+      current = b;
+      btns.forEach(function(x){ x.setAttribute("aria-pressed", String(x === b)); });
+      panel.hidden = !b; hint.hidden = !!b;
+      show();
+      if (address) history.replaceState(null, "", b ? "#" + b.id : location.pathname + location.search);
+      draw();
+    }
+    btns.forEach(function(b){
+      b.addEventListener("click", function(){ select(current === b ? null : b, true); });
+    });
+    // A link must land: arriving on /surfaces/#linkedin-profile chooses that surface.
+    function fromHash(){
+      var b = document.getElementById(location.hash.slice(1));
+      if (b && b.classList.contains("ln-s")) select(b, false);
+    }
+    window.addEventListener("hashchange", fromHash);
+    window.addEventListener("resize", draw);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+    new MutationObserver(function(){ show(); draw(); })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+    fromHash();
+    draw();
+
+    rbCard.data("surfaces", function (data) {
+      // The provenance line names the commit this was read from, as the timeline's does; the
+      // markup carries HEAD only until the data arrives.
+      var src = document.getElementById("srclink");
+      src.href = "https://github.com/" + data.repo + "/tree/" + data.commit + "/" + src.getAttribute("data-src");
+      document.getElementById("srccommit").textContent = data.commit.slice(0, 7);
+      var byId = {};
+      data.entities.forEach(function (e) { byId[e.id] = e; });
+      function goLink(id){
+        var a = document.createElement("a");
+        a.className = "go"; a.textContent = byId[id].name;
+        // Where a card links: the page that draws this model on the stage, which a site declares
+        // for the reason the `model card` block gives.
+        a.href = STAGE_PAGE + "?stage=expanded#" + id;
+        return a;
+      }
+      card = function (id) {
+        rbCard.render(byId[id], panel.querySelector(".cbody"), panel.querySelector(".cfoot span"),
+          { data: data, lang: lang(), link: goLink });
+      };
+      show();
+    });
+  })();
+  /* ─── end surfaces lineage ────────────────────────────────────────────── */
+</script>
 </body>
 </html>
