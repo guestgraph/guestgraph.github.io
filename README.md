@@ -18,6 +18,7 @@ A repository named `talks` in this organization would claim `guestgraph.io/talks
 | `/billing/` | How the hosted service will bill. One meter, and it is arrivals. |
 | `/privacy/` | What this site collects, which is nothing. |
 | `/problems/` | What each refusal type a GuestGraph service answers means, and what to do about it. |
+| `/team/` | A board per process of the seats that own, run and approve each phase, and which of them an agent holds, rendered from `model.json`. |
 | `/principles/` | GuestGraph's vision and values, rendered from `model.json` by `build/pages.mjs`. |
 | `/api/` | The two APIs, generated from the services' OpenAPI documents at pinned commits. |
 | `/model/` | GuestGraph's own model, drawn on the stage from `model.json`, which is built from a pinned commit of `guestgraph/mental-model`. |

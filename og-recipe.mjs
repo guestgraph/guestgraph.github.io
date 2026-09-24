@@ -62,6 +62,7 @@ export const cards = [
   { dir: "privacy", ...FRAME, clipY: CLIP_Y, hide: HOME_HIDE, titleSlide: false, settle: "wait:900" },
   { dir: "problems", ...FRAME, clipY: CLIP_Y, hide: HOME_HIDE, titleSlide: false, settle: "wait:900" },
   { dir: "api", ...FRAME, clipY: CLIP_Y, hide: HOME_HIDE, titleSlide: false, settle: "wait:900" },
+  { dir: "team", ...FRAME, clipY: CLIP_Y, hide: HOME_HIDE, titleSlide: false, settle: "wait:900" },
   { dir: "principles", ...FRAME, clipY: CLIP_Y, hide: HOME_HIDE, titleSlide: false, settle: "wait:900" },
   { dir: "model", ...FRAME, clipY: CLIP_Y, hide: MODEL_HIDE, titleSlide: false, settle: "wait:900" },
 ];

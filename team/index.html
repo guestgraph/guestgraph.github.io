@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Team — GuestGraph</title>
+<meta id="metadesc" name="description" content="Who does the work at GuestGraph: an AI agent holds most of the seats, and every gate is approved by a seat a person holds.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://guestgraph.io/team/">
+
+<meta property="og:title" content="Team — GuestGraph">
+<meta property="og:description" content="Who does the work at GuestGraph: an AI agent holds most of the seats, and every gate is approved by a seat a person holds.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GuestGraph">
+<meta property="og:url" content="https://guestgraph.io/team/">
+<meta property="og:image" content="https://guestgraph.io/team/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GuestGraph's team boards: seats by phase">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="de_CH">
+<meta name="twitter:card" content="summary_large_image">
+<!-- The publisher, the site and this page — nothing about what the software does or when
+     it does it, which is the same rule the prose follows. Each page carries the whole graph
+     it references: Google resolves @graph within one document, so a bare { "@id": ... }
+     naming a node defined on another page resolved to nothing, which is what this replaced. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://guestgraph.io/#organization",
+      "name": "GuestGraph",
+      "url": "https://guestgraph.io/",
+      "logo": "https://guestgraph.io/logo.svg",
+      "sameAs": [
+        "https://github.com/guestgraph"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://guestgraph.io/#website",
+      "name": "GuestGraph",
+      "url": "https://guestgraph.io/",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://guestgraph.io/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://guestgraph.io/team/#webpage",
+      "name": "Team",
+      "url": "https://guestgraph.io/team/",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://guestgraph.io/#website"
+      },
+      "publisher": {
+        "@id": "https://guestgraph.io/#organization"
+      },
+      "breadcrumb": {
+        "@id": "https://guestgraph.io/team/#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://guestgraph.io/team/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://guestgraph.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Team",
+          "item": "https://guestgraph.io/team/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+  /* ─── theme boot · v3 · page ────────────────────────────────────
+     Set the theme before anything paints. Generated from @robertblust/design —
+     editing it here does nothing, because the next `npm run design` overwrites it.
+
+     This is the only script on these pages that runs in <head>, and it has to: every other
+     script sits at the end of the body, which is after first paint. Language arriving late
+     costs a flash of English; a palette arriving late repaints the whole page in the wrong
+     one, on every navigation.
+
+     It duplicates the storage key and the URL pattern that `theme` also carries. That is
+     deliberate — nothing is in scope up here, and the block must stand alone. Both blocks are
+     generated from the same package, so the duplicate cannot drift.
+
+     Dark is the default and `prefers-color-scheme` is never read: dark is the design, and
+     light is something a visitor asks for. A visitor whose system is set to light still
+     arrives on dark until they say otherwise.
+  */
+  (function(){
+    try {
+      var m = /[?&]theme=(light|dark)(&|$)/.exec(location.search);
+      var t = m ? m[1] : localStorage.getItem("theme");
+      if (t === "light") document.documentElement.setAttribute("data-theme", "light");
+    } catch (e) {}
+  })();
+  /* ─── end theme boot ─────────────────────────────────────────────────── */
+
+</script>
+<link rel="stylesheet" href="../tokens.css">
+<link rel="stylesheet" href="../page.css">
+<style>
+/* Self-hosted, same origin — which is the subject of this page as well as a rule of it.
+   Relative, because a root-absolute path breaks under file://. */
+@font-face{font-family:"Instrument Sans";src:url(../fonts/InstrumentSans-var.woff2) format("woff2-variations"),url(../fonts/InstrumentSans-var.woff2) format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"Plex Mono";src:url(../fonts/PlexMono-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Plex Mono";src:url(../fonts/PlexMono-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Bricolage Grotesque";src:url(../fonts/Bricolage-var.woff2) format("woff2-variations"),url(../fonts/Bricolage-var.woff2) format("woff2");font-weight:200 800;font-display:swap}
+
+  header{padding:2rem 0}
+  /* three nav items plus the language control no longer fit beside the lockup on a
+     phone: let the row wrap rather than clip the control off the right edge. */
+  .bar{display:flex; align-items:center; justify-content:space-between; gap:1rem 2rem; flex-wrap:wrap}
+  /* The wordmark is one thing and never breaks: two pages had no wrap on the bar,
+     and it squeezed the mark and the name onto separate lines at phone widths. */
+  .brand{white-space:nowrap; flex:0 0 auto; display:flex; align-items:center; gap:.7rem; text-decoration:none}
+  .brand svg{width:28px; height:28px; color:var(--c-mid); flex:0 0 auto}
+  .brand b{font-weight:600; font-size:1.06rem; letter-spacing:-.01em}
+  .brand b span{color:var(--c-mid)}
+  .switchers{display:flex; align-items:center; gap:.6rem}
+  /* The hover underline hangs below the text, so the box is taller under the text than over
+     it. Mirror the space above, and the box is symmetric about its own text. */
+
+  main{flex:1; display:flex; align-items:center; padding:2vh 0 6vh}
+
+  /* The note the renderer writes under the tagline: the model's words are its own. */
+  .note{margin-top:2rem; max-width:54ch; padding-left:1rem;
+        border-left:2px solid var(--c-flag); color:var(--ink); font-size:1rem}
+
+  section{margin-top:clamp(3rem,8vh,5.5rem)}
+  h2{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+     font-weight:700; letter-spacing:-.025em; line-height:1.06;
+     font-size:clamp(1.6rem,3vw,2.3rem)}
+  h2 em{font-style:normal; color:var(--c-mid)}
+  .lede{margin-top:1.2rem; font-size:clamp(1rem,1.3vw,1.1rem); color:var(--dim); max-width:64ch}
+  .lede a{color:var(--c-mid)}
+
+
+
+  .rules{margin-top:2rem; display:grid; gap:1.6rem; max-width:68ch}
+  .rules p{color:var(--dim); font-size:1rem}
+  .rules p b{font-weight:600; color:var(--ink)}
+  .rules p a{color:var(--c-mid)}
+
+  :focus-visible{outline:2px solid var(--c-mid); outline-offset:3px; border-radius:3px}
+
+  .lbl{font-family:"Plex Mono", ui-monospace, Menlo, monospace; font-size:.66rem;
+       letter-spacing:.14em; text-transform:uppercase; color:var(--dim)}
+  /* The card's own prose keeps a measure inside the full-width drawer. card.js draws it, so
+     the team rules leave it to the page. */
+  .cbody p, .cbody ul.prose{max-width:72ch}
+
+  /* ─── stage contract · v2 · shared ───────────────────────────────────
+     `stage.css` styles the drawing, the card and the dialog, and says in its own header that
+     the page keeps `.figure-section`, `.figcap` and its prose. This is that remainder: the few
+     rules a page must bring for a stage to sit on it properly. They are generated from
+     @robertblust/design, like the tokens and the header above them. Editing them here has no
+     effect — the next `npm run design` overwrites them. Change them in the package.
+
+     What the contract says:
+       · the figure     gets its own air above it, and its caption sits clear of the canvas
+                        rather than hard against it, at a measure prose can be read at.
+       · the hint       how to move the drawing is not a sentence about the drawing, so it is
+                        its own line above the caption rather than a clause inside it. Small
+                        and dim: subordinate to the caption, and read first only by someone
+                        looking for a control. Not mono — mono means data here, and an
+                        instruction is prose. `monoScope` would not catch it either way: it
+                        inspects a fixed list of selectors and this class is not on one.
+       · the provenance mono end to end. It is the one line on the page that is entirely
+                        record — a repository, a commit, the folder the block was read from —
+                        and setting only the link and the commit in mono left the sentence
+                        around them looking like prose that happened to contain data.
+
+     The drawing's own behavior is in `stage.js` and `stage.css`, which are byte-identical
+     copies too. A page that carries a stage carries all of it. */
+  .figure-section{margin-top:clamp(2rem,5vh,3.5rem)}
+  .figcap{margin-top:1.1rem; color:var(--dim); font-size:clamp(1rem,1.3vw,1.14rem); line-height:1.5; max-width:68ch}
+  .figcap b{color:var(--ink); font-weight:600}
+  .stagehint{margin-top:.7rem; font-size:.82rem; color:var(--dim)}
+  .derived{margin-top:2.6rem; font-family:"Plex Mono",monospace; font-size:.78rem;
+           letter-spacing:.06em; color:var(--dim)}
+  /* ─── end stage contract ────────────────────────────────────────────────── */
+
+</style>
+<link rel="stylesheet" href="../stage.css">
+<!-- The model this page's cards read. card.js finds it by the data-stage attribute and fetches
+     the href; crossorigin lets the fetch use the preload rather than ask for the file twice. -->
+<link rel="preload" as="fetch" href="../model.json" data-stage data-images="../images/" crossorigin>
+</head>
+<body>
+
+<div class="shell">
+  <header>
+    <div class="bar">
+      <a class="brand" href="../">
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/>
+            <circle cx="6" cy="7.2" r="2.6" fill="var(--ground)"/>
+            <circle cx="6" cy="16" r="2.6" fill="var(--ground)"/>
+            <circle cx="6" cy="24.8" r="2.6" fill="var(--ground)"/>
+          </g>
+          <circle cx="24" cy="16" r="5.4" fill="currentColor"/>
+        </svg>
+        <b>Guest<span>Graph</span></b>
+      </a>
+      <nav>
+        <div class="navlinks" id="navlinks">
+          <a href="./" aria-current="page">Team</a>
+          <a href="../principles/" data-de="Prinzipien">Principles</a>
+          <a href="../api/">API</a>
+          <a href="../model/" data-de="Modell">Model</a>
+          <a href="../talks/" data-de="Vorträge">Talks</a>
+          <a href="../billing/" data-de="Abrechnung">Billing</a>
+        </div>
+        <button class="burger" id="burger" type="button" aria-expanded="false"
+                aria-controls="navlinks" aria-label="menu" data-de-aria="Menü">
+          <svg class="ibars" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="ix" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <div class="switchers" id="langind"><div class="seg" role="group" aria-label="switch language" data-de-aria="Sprache wechseln"><button type="button" id="lde" aria-pressed="false">DE</button><button type="button" id="len" aria-pressed="true">EN</button></div><div class="seg theme" id="thmind" role="group" aria-label="switch appearance" data-de-aria="Erscheinungsbild wechseln"><button type="button" id="thLight" aria-pressed="false" aria-label="Light" data-de-aria="Hell"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button><button type="button" id="thDark" aria-pressed="true" aria-label="Dark" data-de-aria="Dunkel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button></div></div>
+      </nav>
+    </div>
+  </header>
+</div>
+
+<main>
+  <div class="shell">
+
+    <div class="title">
+      <h1 data-de="<span class='r70'>Ein Agent macht die Arbeit,</span><span class='rcl'>ein Mensch wacht über jedes <em>Gate</em>.</span>"><span class="r70">An agent does the work,</span><span class="rcl">a person holds every <em>gate</em>.</span></h1>
+      <p class="tagline" data-de="Ein KI-Agent besetzt die Sitze, die spezifizieren, planen, umsetzen, prüfen und antworten. Jedes Gate wird von einem Sitz freigegeben, den ein Mensch besetzt.">An AI agent holds the seats that specify, plan, implement, review and answer. Every gate is approved by a seat a person holds.</p>
+      <!-- team-note:start -->
+      <p class="note" data-de="Aus dem Modell erzeugt: Die Worte unten sind seine eigenen – und in der einen Sprache, in der es geschrieben ist. Der Rest dieser Website ist zweisprachig; eine übersetzte Kopie wäre eine zweite Fassung, die ebenfalls stimmen müsste – und genau dagegen argumentiert diese Seite.">Generated from the model, so the words below are its own — and in the one language it is written in. The rest of this site is bilingual; a translated copy would be a second thing to keep true, which is what this page argues against.</p>
+    <!-- team-note:end -->
+    </div>
+
+    <section class="figure-section">
+      <div class="lbl" data-de="Das Team">The team</div>
+      <!-- team:start -->
+      <section class="proc" id="delivery">
+        <h3 class="procname">Delivery</h3>
+        <p class="proctag">How a slice of GuestGraph goes from the notes the roadmap keeps to merged, tested code: specified, planned, broken into tasks and implemented, each step approved before the next begins.</p>
+      <div class="hdrail"><div class="whos">
+        <div class="hw"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><div><div class="lbl">human · holds 1 of 5</div></div></div>
+        <div class="hw"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><div><div class="nm">AI Agent</div><div class="lbl">agent · holds 4 of 5</div></div></div>
+      </div><button class="openall" id="delivery-openall" type="button" data-de="Alle öffnen">Open all</button></div>
+      <div class="grid" id="delivery-board">
+        <div class="ghead"><span class="lbl">Seat</span><span><span class="phnum">01</span><span class="phname">Specify</span></span><span><span class="phnum">02</span><span class="phname">Plan</span></span><span><span class="phnum">03</span><span class="phname">Tasks</span></span><span><span class="phnum">04</span><span class="phname">Implement</span></span></div>
+        <details class="human" id="delivery-owner" data-role="roles/owner">
+          <summary aria-label="Owner, human. approves the gate of Specify, Plan, Tasks, Implement."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Owner</span></span><span><i class="g ga"></i></span><span><i class="g ga"></i></span><span><i class="g ga"></i></span><span><i class="g ga"></i></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+        <details id="delivery-specifier" data-role="roles/specifier">
+          <summary aria-label="Specifier, agent. executes Specify. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Specifier</span></span><span><i class="g ex"></i></span><span></span><span></span><span></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+        <details id="delivery-planner" data-role="roles/planner">
+          <summary aria-label="Planner, agent. executes Plan, Tasks. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Planner</span></span><span></span><span><i class="g ex"></i></span><span><i class="g ex"></i></span><span></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+        <details id="delivery-implementer" data-role="roles/implementer">
+          <summary aria-label="Implementer, agent. executes Implement. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Implementer</span></span><span></span><span></span><span></span><span><i class="g ex"></i></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+        <details id="delivery-reviewer" data-role="roles/reviewer">
+          <summary aria-label="Reviewer, agent. executes Tasks, Implement. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Reviewer</span></span><span></span><span></span><span><i class="g ex"></i></span><span><i class="g ex"></i></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+      </div>
+      <div class="legend"><span><i class="g ex"></i> <span data-de="führt die Phase aus">executes the phase</span></span><span><i class="g su"></i> <span data-de="unterstützt sie">supports it</span></span><span><i class="g ga"></i> <span data-de="gibt ihr Gate frei">approves its gate</span></span><span><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg> <span data-de="Mensch">human</span></span><span><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg> <span data-de="Agent">agent</span></span></div>
+      <dl class="phases">
+        <dt><span class="phnum">01</span><span class="phname">Specify</span></dt>
+        <dd>Write what the slice must do and why, completely enough that the plan does not have to guess.</dd>
+        <dt><span class="phnum">02</span><span class="phname">Plan</span></dt>
+        <dd>Decide how the slice will be built, and hold that design to the constitution before and after it is made.</dd>
+        <dt><span class="phnum">03</span><span class="phname">Tasks</span></dt>
+        <dd>Break the plan into ordered tasks an implementer can take one at a time, and check that specification, plan and tasks agree.</dd>
+        <dt><span class="phnum">04</span><span class="phname">Implement</span></dt>
+        <dd>Build the tasks test first, review the result against the constitution, and merge it once every check is green.</dd>
+      </dl>
+      </section>
+      <section class="proc" id="contribution">
+        <h3 class="procname">Contribution</h3>
+        <p class="proctag">How a change offered from outside as a pull request to one of our repositories is reviewed and taken, under the same rules a change from inside is held to.</p>
+      <div class="hdrail"><div class="whos">
+        <div class="hw"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><div><div class="lbl">human · holds 2 of 3</div></div></div>
+        <div class="hw"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><div><div class="nm">AI Agent</div><div class="lbl">agent · holds 1 of 3</div></div></div>
+      </div><button class="openall" id="contribution-openall" type="button" data-de="Alle öffnen">Open all</button></div>
+      <div class="grid" id="contribution-board">
+        <div class="ghead"><span class="lbl">Seat</span><span><span class="phnum">01</span><span class="phname">Propose</span></span><span><span class="phnum">02</span><span class="phname">Consider</span></span><span><span class="phnum">03</span><span class="phname">Review</span></span><span><span class="phnum">04</span><span class="phname">Integrate</span></span></div>
+        <details class="human" id="contribution-owner" data-role="roles/owner">
+          <summary aria-label="Owner, human. executes Consider, Integrate. supports Review. approves the gate of Consider, Review, Integrate."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Owner</span></span><span></span><span><i class="g ex"></i><i class="g ga"></i></span><span><i class="g su"></i><i class="g ga"></i></span><span><i class="g ex"></i><i class="g ga"></i></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+        <details class="human" id="contribution-contributor" data-role="roles/contributor">
+          <summary aria-label="Contributor, human. executes Propose. supports Consider, Review. approves the gate of Propose."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Contributor</span></span><span><i class="g ex"></i><i class="g ga"></i></span><span><i class="g su"></i></span><span><i class="g su"></i></span><span></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+        <details id="contribution-reviewer" data-role="roles/reviewer">
+          <summary aria-label="Reviewer, agent. executes Review. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Reviewer</span></span><span></span><span></span><span><i class="g ex"></i></span><span></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+      </div>
+      <div class="legend"><span><i class="g ex"></i> <span data-de="führt die Phase aus">executes the phase</span></span><span><i class="g su"></i> <span data-de="unterstützt sie">supports it</span></span><span><i class="g ga"></i> <span data-de="gibt ihr Gate frei">approves its gate</span></span><span><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg> <span data-de="Mensch">human</span></span><span><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg> <span data-de="Agent">agent</span></span></div>
+      <dl class="phases">
+        <dt><span class="phnum">01</span><span class="phname">Propose</span></dt>
+        <dd>Offer the change, under the address the Contributor means to be known by.</dd>
+        <dt><span class="phnum">02</span><span class="phname">Consider</span></dt>
+        <dd>Establish what the change is for, before anyone spends time on how it is written.</dd>
+        <dt><span class="phnum">03</span><span class="phname">Review</span></dt>
+        <dd>Find what is wrong with the change, and hand it to whoever merges as findings rather than as a verdict.</dd>
+        <dt><span class="phnum">04</span><span class="phname">Integrate</span></dt>
+        <dd>Take the change into the default branch, and carry it to whoever vendors or pins what it touched.</dd>
+      </dl>
+      </section>
+      <section class="proc" id="feature-request">
+        <h3 class="procname">Feature request</h3>
+        <p class="proctag">How somebody outside asks for something GuestGraph does not do, a capability of the engine or a system it cannot yet reach, as a GitHub issue, and gets an answer they can act on.</p>
+      <div class="hdrail"><div class="whos">
+        <div class="hw"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><div><div class="lbl">human · holds 2 of 2</div></div></div>
+      </div><button class="openall" id="feature-request-openall" type="button" data-de="Alle öffnen">Open all</button></div>
+      <div class="grid" id="feature-request-board">
+        <div class="ghead"><span class="lbl">Seat</span><span><span class="phnum">01</span><span class="phname">Raise</span></span><span><span class="phnum">02</span><span class="phname">Understand</span></span><span><span class="phnum">03</span><span class="phname">Triage</span></span><span><span class="phnum">04</span><span class="phname">Answer</span></span></div>
+        <details class="human" id="feature-request-owner" data-role="roles/owner">
+          <summary aria-label="Owner, human. executes Understand, Triage, Answer. approves the gate of Understand, Triage, Answer."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Owner</span></span><span></span><span><i class="g ex"></i><i class="g ga"></i></span><span><i class="g ex"></i><i class="g ga"></i></span><span><i class="g ex"></i><i class="g ga"></i></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+        <details class="human" id="feature-request-requestor" data-role="roles/requestor">
+          <summary aria-label="Requestor, human. executes Raise. supports Understand, Answer. approves the gate of Raise."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Requestor</span></span><span><i class="g ex"></i><i class="g ga"></i></span><span><i class="g su"></i></span><span></span><span><i class="g su"></i></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+      </div>
+      <div class="legend"><span><i class="g ex"></i> <span data-de="führt die Phase aus">executes the phase</span></span><span><i class="g su"></i> <span data-de="unterstützt sie">supports it</span></span><span><i class="g ga"></i> <span data-de="gibt ihr Gate frei">approves its gate</span></span><span><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg> <span data-de="Mensch">human</span></span><span><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg> <span data-de="Agent">agent</span></span></div>
+      <dl class="phases">
+        <dt><span class="phnum">01</span><span class="phname">Raise</span></dt>
+        <dd>Say where it can be answered that GuestGraph would not do something the asker needed.</dd>
+        <dt><span class="phnum">02</span><span class="phname">Understand</span></dt>
+        <dd>Turn what somebody asked for into the thing they could not do.</dd>
+        <dt><span class="phnum">03</span><span class="phname">Triage</span></dt>
+        <dd>Decide what kind of thing the gap is, and whether it is ours to fill.</dd>
+        <dt><span class="phnum">04</span><span class="phname">Answer</span></dt>
+        <dd>Give the asker something they can act on, whether or not anything will be built.</dd>
+      </dl>
+      </section>
+      <section class="proc" id="answering">
+        <h3 class="procname">Answering</h3>
+        <p class="proctag">How a visitor's question about GuestGraph is answered from this model, by an agent, with nothing added and nobody reading the answer before it goes out.</p>
+      <div class="hdrail"><div class="whos">
+        <div class="hw"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><div><div class="lbl">human · holds 2 of 3</div></div></div>
+        <div class="hw"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><div><div class="nm">AI Agent</div><div class="lbl">agent · holds 1 of 3</div></div></div>
+      </div><button class="openall" id="answering-openall" type="button" data-de="Alle öffnen">Open all</button></div>
+      <div class="grid" id="answering-board">
+        <div class="ghead"><span class="lbl">Seat</span><span><span class="phnum">01</span><span class="phname">Answer</span></span></div>
+        <details class="human" id="answering-owner" data-role="roles/owner">
+          <summary aria-label="Owner, human. approves the gate of Answer."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Owner</span></span><span><i class="g ga"></i></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+        <details class="human" id="answering-visitor" data-role="roles/visitor">
+          <summary aria-label="Visitor, human. supports Answer. approves no gate."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Visitor</span></span><span><i class="g su"></i></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+        <details id="answering-answerer" data-role="roles/answerer">
+          <summary aria-label="Answerer, agent. executes Answer. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Answerer</span></span><span><i class="g ex"></i></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+      </div>
+      <div class="legend"><span><i class="g ex"></i> <span data-de="führt die Phase aus">executes the phase</span></span><span><i class="g su"></i> <span data-de="unterstützt sie">supports it</span></span><span><i class="g ga"></i> <span data-de="gibt ihr Gate frei">approves its gate</span></span><span><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg> <span data-de="Mensch">human</span></span><span><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg> <span data-de="Agent">agent</span></span></div>
+      <dl class="phases">
+        <dt><span class="phnum">01</span><span class="phname">Answer</span></dt>
+        <dd>Give the visitor what the model says, in their words, and not a claim more.</dd>
+      </dl>
+      </section>
+      <!-- team:end -->
+      <p class="figcap" data-de="Jeder Prozess hat seine eigene Übersicht: die Lieferung, Etappe für Etappe; Beiträge, die als Pull-Requests vorgeschlagen werden; Feature-Requests, die als GitHub-Issues eröffnet werden; und das Beantworten von Fragen, bei dem der Chat einem Besucher antwortet. Eine Zeile zeigt, was ein Sitz über die ganze Arbeit hinweg tut, eine Spalte, wer an einer Phase beteiligt ist. Worauf es ankommt, zeigen die Gate-Zeichen: Jedes Gate wird von einem Sitz freigegeben, den ein Mensch besetzt, und keine Agentenzeile trägt eines. Ein Name neben einem Sitz ist das Profil, das ihn besetzt; einen Sitz ohne Namen besetzt ein Mensch, den das Modell nicht nennt. Ein Klick auf einen Sitz öffnet seine Karte auf der Modell-Seite.">Each process draws its own board: delivery, slice by slice; contributions, proposed as pull requests; feature requests, raised as GitHub issues; and answering, where the chat replies to a visitor. Read a row for what a seat does across the work, and a column for who touches a phase. The gate marks are the argument: every gate is approved by a seat a person holds, and no agent row carries one. A name beside a seat is the profile that holds it; a seat with no name is held by a person the model does not name. A seat opens onto its card on the model page.</p>
+    </section>
+
+    <section>
+      <h2 data-de="Wie man es liest">How to read it</h2>
+      <div class="rules">
+        <p data-de="<b>Ein Sitz ist eine Rolle, kein Mensch.</b> Ein Profil besetzt einige Sitze, und sein Name steht daneben. Einen Sitz ohne Namen besetzt ein Mensch; so viel sagt das Modell, nicht aber, wer."><b>A seat is a role, not a person.</b> A profile holds some seats, and its name stands beside them. A seat with no name is held by a person; the model says that much and not who.</p>
+        <p data-de="<b>Ein Gate ist das, ohne das eine Phase nicht abgeschlossen werden kann.</b> Die meisten gibt der Owner frei. Der Requestor gibt die erste Phase eines Feature-Requests frei, der Contributor die erste Phase eines Beitrags."><b>A gate is what a phase cannot be left without.</b> The Owner approves most of them. The Requestor approves the first phase of a feature request, and the Contributor the first phase of a contribution.</p>
+        <p data-de="<b>Kein Zeichen ist von Hand gesetzt.</b> Jede Zelle wird aus der eigenen Datei der Phase gelesen, darum kann die Übersicht dem Prozess, den sie zeichnet, nicht widersprechen."><b>No mark is typed.</b> Every cell is read off the phase's own file, so the board cannot disagree with the process it draws.</p>
+      </div>
+    </section>
+
+    <p class="derived"><span data-de="Erzeugt aus">Generated from</span> <a id="srclink" data-src="model" href="https://github.com/guestgraph/mental-model/tree/HEAD/model">guestgraph/mental-model</a>@<span id="srccommit">HEAD</span></p>
+
+  </div>
+</main>
+
+<div class="shell">
+  <footer>
+    <span><a class="credit" href="https://blust.ch/"><span class="rbmark"><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="plate" x=".75" y=".75" width="30.5" height="30.5" rx="7"/><text class="rb" x="16" y="22.5" text-anchor="middle" font-family="Plex Mono, ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17" font-weight="600">rb</text></svg></span><b>Robert <em>Blust</em></b></a></span>
+    <span><a href="https://github.com/guestgraph">GitHub</a></span>
+    <span><a href="https://github.com/guestgraph/engine/blob/HEAD/LICENSE" data-de="Lizenz">License</a></span>
+    <span><a href="../privacy/" data-de="Datenschutz">Privacy</a></span>
+  </footer>
+</div>
+
+<script>
+// page.js reads and writes lang/theme for its own purposes (link decoration, nav-fit,
+// aria-i18n) in its own scope, which this page's script cannot see. This page still needs
+// to compute its own initial lang and theme, from the same URL param and storage key, to
+// hand to page.js through window.rbPage and to drive its own controls — so the read/write
+// pair for each key is kept here too, exactly as page.js keeps its own.
+(function(){
+  var LANG_KEY = "lang";
+  function langStored(){ try { return localStorage.getItem(LANG_KEY); } catch (e) { return null; } }
+  function langRemember(v){ try { localStorage.setItem(LANG_KEY, v); } catch (e) {} }
+  function langFromUrl(){
+    var m = /[?&]lang=(de|en)(&|$)/.exec(location.search);
+    if (!m) return null;
+    try {
+      var q = location.search.replace(/([?&])lang=(de|en)(&|$)/, "$1").replace(/[?&]$/, "");
+      history.replaceState(null, "", location.pathname + q + location.hash);
+    } catch (e) {}
+    return m[1];
+  }
+  var THEME_KEY = "theme";
+  function themeStored(){ try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; } }
+  function themeRemember(v){ try { localStorage.setItem(THEME_KEY, v); } catch (e) {} }
+  function themeFromUrl(){
+    var m = /[?&]theme=(light|dark)(&|$)/.exec(location.search);
+    if (!m) return null;
+    try {
+      var q = location.search.replace(/([?&])theme=(light|dark)(&|$)/, "$1").replace(/[?&]$/, "");
+      history.replaceState(null, "", location.pathname + q + location.hash);
+    } catch (e) {}
+    return m[1];
+  }
+
+  var urlLang = langFromUrl();
+  if (urlLang) langRemember(urlLang);
+  var lang = urlLang || (langStored() === "de" ? "de" : "en");
+
+  var urlTheme = themeFromUrl();
+  if (urlTheme) themeRemember(urlTheme);
+  var theme = urlTheme || (themeStored() === "light" ? "light" : "dark");
+
+  function applyTheme(){
+    if (theme === "light") document.documentElement.setAttribute("data-theme", "light");
+    else document.documentElement.removeAttribute("data-theme");
+    var l = document.getElementById("thLight"), d = document.getElementById("thDark");
+    if (l) l.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
+    if (d) d.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+  }
+  function setTheme(v){ theme = v; themeRemember(v); applyTheme(); }
+
+  var i18n = Array.prototype.slice.call(document.querySelectorAll("[data-de]"));
+  i18n.forEach(function(el){ el.setAttribute("data-en", el.innerHTML); });
+
+  var UI = {
+    de:{ title:"Team – GuestGraph",
+         desc:"Wer bei GuestGraph die Arbeit macht: Ein KI-Agent besetzt die meisten Sitze, und jedes Gate wird von einem Sitz freigegeben, den ein Mensch besetzt." },
+    en:{ title:"Model — GuestGraph",
+         desc:"Who does the work at GuestGraph: an AI agent holds most of the seats, and every gate is approved by a seat a person holds." }
+  };
+
+  function applyLang(){
+    i18n.forEach(function(el){ el.innerHTML = el.getAttribute("data-" + lang); });
+    document.title = UI[lang].title;
+    document.getElementById("metadesc").setAttribute("content", UI[lang].desc);
+    document.getElementById("lde").setAttribute("aria-pressed", String(lang === "de"));
+    document.getElementById("len").setAttribute("aria-pressed", String(lang === "en"));
+    document.documentElement.lang = lang;
+  }
+  function toggle(){ lang = (lang === "de") ? "en" : "de"; langRemember(lang); applyLang(); }
+
+
+  var burger = document.getElementById("burger"),
+      navlinks = document.getElementById("navlinks"),
+      navbar = document.querySelector("nav");
+  function setMenu(open){
+    burger.setAttribute("aria-expanded", String(open));
+    navlinks.setAttribute("data-open", String(open));
+  }
+  burger.addEventListener("click", function(){
+    setMenu(burger.getAttribute("aria-expanded") !== "true");
+  });
+  // A tap anywhere else closes it, as does Escape and following a link. The button's own
+  // click is inside nav, so it toggles rather than being closed out from under itself.
+  document.addEventListener("click", function(e){ if (!navbar.contains(e.target)) setMenu(false); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape") setMenu(false); });
+  navlinks.addEventListener("click", function(e){ if (e.target.closest("a")) setMenu(false); });
+  // Turning the phone can take the row back over the breakpoint, where the panel's own
+  // styles no longer apply; leaving it flagged open would strand aria-expanded as true.
+  window.addEventListener("resize", function(){ if (window.innerWidth > 640) setMenu(false); });
+
+  document.getElementById("lde").addEventListener("click", function(){ if (lang !== "de") toggle(); });
+  document.getElementById("len").addEventListener("click", function(){ if (lang !== "en") toggle(); });
+  document.getElementById("thLight").addEventListener("click", function(){ setTheme("light"); });
+  document.getElementById("thDark").addEventListener("click", function(){ setTheme("dark"); });
+  // L switches the language, but never while the visitor is typing: a letter typed into a field
+  // is text, and the language changes only when the visitor asks for it.
+  document.addEventListener("keydown", function(e){
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    var t = e.target;
+    if (t && t.closest && t.closest("input, textarea, select, [contenteditable=''], [contenteditable='true']")) return;
+    if (e.key === "l" || e.key === "L") toggle();
+  });
+
+  applyTheme();
+
+  // page.js makes the initial applyLang() call itself, reading lang and applyLang off this
+  // object — set here, inside this closure, because that is the only place both are in scope.
+  window.rbPage = { lang: lang, applyLang: applyLang };
+})();
+</script>
+<script src="../page.js" defer></script>
+
+<script src="../card.js"></script>
+<script>
+  var STAGE_PAGE = "../model/";   // the page that draws this model on the stage
+  var MODEL_CARD = "team";        // the name card.js reports a failed read under
+  /* ─── model card · v2 · shared ─────────────────────────────────────
+     Generated from @robertblust/design — edit it there and run `npm run design`.
+
+     The card glue for a board of seats: a seat's card is rendered by card.js the first time
+     its row opens, again when the language has changed since, and on arrival at a seat's
+     address. It moved here from /team/ with four things generalized and nothing else: where a
+     card's links go, the rows it wires (every board's, not one board's), the Open-all button
+     (one per board), and the name it gives card.js.
+
+     This block has a contract with the page around it that `design:check` cannot see, because
+     the check only compares bytes between the markers. The page must load card.js before it
+     and declare, above this fence in the same script:
+
+       var STAGE_PAGE = "../model/";   // the page that draws this model on the stage
+       var MODEL_CARD = "team";        // the name card.js reports a failed read under
+
+     and carry what lib/render/team.mjs writes, plus the provenance line
+     (`#srclink` with its `data-src`, and `#srccommit`) that every model page has.
+  */
+  // The seats are in the markup; the cards are not. A card per seat at rest would be a copy of
+  // the model's own words for every seat, in a page whose site already serves the model as a
+  // file, and a page check that reads the body at rest would read them all. So a card is rendered
+  // the first time its row opens, and again when the language has changed since — the way the
+  // timeline renders an experience and the stage renders a card on focus.
+  (function(){
+    function lang(){ return document.documentElement.lang === "de" ? "de" : "en"; }
+    rbCard.data(MODEL_CARD, function (data) {
+      // The provenance line names the commit this was read from, as the timeline's does; the
+      // markup carries HEAD only until the data arrives.
+      var src = document.getElementById("srclink");
+      src.href = "https://github.com/" + data.repo + "/tree/" + data.commit + "/" + src.getAttribute("data-src");
+      document.getElementById("srccommit").textContent = data.commit.slice(0, 7);
+      var byId = {};
+      data.entities.forEach(function (e) { byId[e.id] = e; });
+      // The href the timeline already builds: a visitor who clicked a skill wants to read it with
+      // its references around it, and the stage's dialog is where one node is read.
+      function goLink(id){
+        var a = document.createElement("a");
+        a.className = "go"; a.textContent = byId[id].name;
+        // Where a seat links: the page that draws this model on the stage. A site declares it,
+        // because on one site that is /model/ and on another the landing page, and a shared file
+        // carrying either would send the other site's visitors to the wrong page.
+        a.href = STAGE_PAGE + "?stage=expanded#" + id;
+        return a;
+      }
+      // Rendered once per row, not per seat: a seat on two boards is two rows, and each row's
+      // card is its own element, so remembering the seat left the second row's card empty.
+      var seen = {};
+      function ensure(d){
+        var id = d.getAttribute("data-role"), L = lang();
+        if (seen[d.id] === L) return;
+        rbCard.render(byId[id], d.querySelector(".cbody"), d.querySelector(".cfoot span"),
+          { data: data, lang: L, link: goLink });
+        seen[d.id] = L;
+      }
+      // Every board's rows. One process draws one board and a model with several draws one per
+      // process, each a .grid; a card opens the same way on any of them.
+      var rows = [].slice.call(document.querySelectorAll(".grid details"));
+      rows.forEach(function (d) {
+        d.addEventListener("toggle", function(){ if (d.open) ensure(d); });
+      });
+      // A link must land: arriving on /team/#reviewer opens that seat rather than scrolling to a
+      // shut row whose name is all the visitor sees.
+      function fromHash(){
+        var id = location.hash.slice(1); if (!id) return;
+        var d = document.getElementById(id);
+        if (d && d.tagName === "DETAILS") { d.open = true; ensure(d); }
+      }
+      window.addEventListener("hashchange", fromHash);
+      fromHash();
+      // Re-render what is open when the language changes, and leave what is shut alone: a shut
+      // row renders on its next open, in whatever language is current then.
+      new MutationObserver(function(){
+        rows.forEach(function (d) { if (d.open) ensure(d); });
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+
+      function label(shut){
+        return shut ? (lang() === "de" ? "Alle schliessen" : "Close all")
+                    : (lang() === "de" ? "Alle öffnen" : "Open all");
+      }
+      // One Open-all per board, and it opens its own board only. The renderer writes each board's
+      // head rail immediately before its grid, so the rail's next sibling is the board it heads.
+      [].slice.call(document.querySelectorAll(".openall")).forEach(function (all) {
+        var board = all.closest(".hdrail").nextElementSibling;
+        var mine = [].slice.call(board.querySelectorAll("details"));
+        all.addEventListener("click", function(){
+          var shut = mine.some(function (d) { return !d.open; });
+          mine.forEach(function (d) { d.open = shut; if (shut) ensure(d); });
+          all.textContent = label(shut);
+          all.setAttribute("data-de", shut ? "Alle schliessen" : "Alle öffnen");
+        });
+      });
+    });
+  })();
+  /* ─── end model card ──────────────────────────────────────────────────── */
+</script>
+</body>
+</html>
