@@ -107,9 +107,7 @@ const PAGES = [
     // The German PDF is reached by data-de-href, which `sameTab` cannot see: it reads the href as
     // delivered, and the swap happens only after a click. `dlHref` reads the first such link.
     translates: { lang: "de", shows: ["Vorträge über", "Vortrag ansehen", "PDF herunterladen"], hides: ["Watch the talk", "Download PDF"],
-                  dlHref: { de: "intro/guestgraph-de.pdf", en: "intro/guestgraph-en.pdf" },
-                  title: "GuestGraph – Vorträge über Gastidentität in der Hotellerie",
-                  desc: "Vorträge über GuestGraph, den Open-Source-Identitätsgraphen für Gäste in der Hotellerie – auf Deutsch und Englisch." },
+                  dlHref: { de: "intro/guestgraph-de.pdf", en: "intro/guestgraph-en.pdf" } },
     contains: ["GuestGraph", "guest identity"],
     // the nav no longer carries a Code item — the footer's org link is the way to the
     // source from here, one click further out than it used to be
