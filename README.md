@@ -61,6 +61,7 @@ A repository named `talks` in this organization would claim `guestgraph.io/talks
   that mask. Upload the **PNG** — GitHub does not accept SVG for avatars, and there is no API
   for it (Organization → Settings → Profile → Upload new picture).
 - `CNAME` — the custom domain
+- `LICENSE` — CC BY 4.0, see License below
 
 ## The mark
 
@@ -100,3 +101,7 @@ It carries no prices and no bands. The model is the durable half; the numbers ar
 [`/privacy/`](https://guestgraph.io/privacy/) says what this site collects, which is nothing: no cookies, no analytics, no third-party requests, no forms, fonts served from this origin. The only thing stored is the language choice, in the visitor's own browser. `verify` records every request the page makes and fails on any that leaves this origin, because that claim is the kind that can quietly stop being true.
 
 The same page says how guest data will be handled once the hosted service exists — hotel as controller, GuestGraph as processor, revDSG and GDPR, a cloud not yet chosen and named there before the first record is processed. There is no imprint yet, and the page says why: nothing here can be bought. It arrives the day the billing page stops saying the service is not open — on a page of its own, because an imprint is not a privacy note.
+
+## License
+
+[CC BY 4.0](LICENSE) for everything written here: the pages, the talk and its narration, the share cards, and the scripts that build and check them. Use it, quote it, build on it; credit it. The faces under `fonts/` are not written here and keep their own license: they come from `@robertblust/design`, whose NOTICE names each one. The license grants no right to a name or a mark: GuestGraph and its mark stay the project's.
