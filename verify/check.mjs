@@ -50,6 +50,17 @@ const PAGES = [
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: [],
     card: true, cardBase: SITE, internalLinks: true },
 
+  // The principles page. Its region is rendered from model.json by build/pages.mjs; the model's
+  // words stay English, which the region's note says, so `translates` names the note and the one
+  // heading the region translates, never a principle.
+  { path: "/principles/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /Principles/, lang: "en", sourceLang: "en",
+    translates: { lang: "de", shows: ["Aus dem Modell erzeugt", "Werte"], hides: ["Generated from the model, so"] },
+    contains: ["One guest,", "not five", "Values", "Generated from"],
+    links: ["https://github.com/guestgraph/mental-model"],
+    sameOrigin: true,
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: [],
+    card: true, cardBase: SITE, internalLinks: true },
+
   // The model page. The stage draws model.json, which build/model.mjs writes from the commit
   // source.json pins, and `graph` holds the drawing to that file. The source link is not listed
   // in `links`: the stage rewrites its href from the file's own commit, so `graph` asserts it.

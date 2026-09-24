@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Privacy — GuestGraph</title>
-<meta id="metadesc" name="description" content="This site sets no cookies, runs no analytics and makes no third-party requests. How the hosted GuestGraph will treat guest data, written down before there is any.">
+<title>Principles — GuestGraph</title>
+<meta id="metadesc" name="description" content="The vision and values GuestGraph, the open-source guest identity graph, holds itself to — read from its own model, not written for this page.">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<link rel="canonical" href="https://guestgraph.io/privacy/">
+<link rel="canonical" href="https://guestgraph.io/principles/">
 
-<meta property="og:title" content="Privacy — GuestGraph">
-<meta property="og:description" content="This site sets no cookies, runs no analytics and makes no third-party requests.">
+<meta property="og:title" content="Principles — GuestGraph">
+<meta property="og:description" content="The vision and values GuestGraph, the open-source guest identity graph, holds itself to — read from its own model, not written for this page.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="GuestGraph">
-<meta property="og:url" content="https://guestgraph.io/privacy/">
-<meta property="og:image" content="https://guestgraph.io/privacy/og.png">
+<meta property="og:url" content="https://guestgraph.io/principles/">
+<meta property="og:image" content="https://guestgraph.io/principles/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="This site collects nothing.">
+<meta property="og:image:alt" content="Principles read from its own model.">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="de_CH">
 <meta name="twitter:card" content="summary_large_image">
@@ -50,9 +50,9 @@
     },
     {
       "@type": "WebPage",
-      "@id": "https://guestgraph.io/privacy/#webpage",
-      "name": "Privacy",
-      "url": "https://guestgraph.io/privacy/",
+      "@id": "https://guestgraph.io/principles/#webpage",
+      "name": "Principles",
+      "url": "https://guestgraph.io/principles/",
       "inLanguage": "en",
       "isPartOf": {
         "@id": "https://guestgraph.io/#website"
@@ -61,12 +61,12 @@
         "@id": "https://guestgraph.io/#organization"
       },
       "breadcrumb": {
-        "@id": "https://guestgraph.io/privacy/#breadcrumb"
+        "@id": "https://guestgraph.io/principles/#breadcrumb"
       }
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://guestgraph.io/privacy/#breadcrumb",
+      "@id": "https://guestgraph.io/principles/#breadcrumb",
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -77,8 +77,8 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Privacy",
-          "item": "https://guestgraph.io/privacy/"
+          "name": "Principles",
+          "item": "https://guestgraph.io/principles/"
         }
       ]
     }
@@ -140,10 +140,6 @@
 
   main{flex:1; display:flex; align-items:center; padding:2vh 0 6vh}
 
-  /* The page's one reversal, and the only honest place for it: the headline says nothing
-     leaves, and one thing does — the request itself, to whoever serves the file. */
-  .note{margin-top:2rem; max-width:54ch; padding-left:1rem;
-        border-left:2px solid var(--c-flag); color:var(--ink); font-size:1rem}
 
   section{margin-top:clamp(3rem,8vh,5.5rem)}
   h2{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
@@ -153,33 +149,17 @@
   .lede{margin-top:1.2rem; font-size:clamp(1rem,1.3vw,1.1rem); color:var(--dim); max-width:64ch}
   .lede a{color:var(--c-mid)}
 
-  /* the billable-unit box from the billing page, doing the same job: one datum, stated
-     once, in the face this system reserves for data */
-  .unit{margin-top:1.8rem; display:inline-block; padding:1rem 1.35rem; border-radius:10px;
-        background:var(--raise); border:1.5px solid var(--c-firm);
-        font-size:clamp(.95rem,1.6vw,1.2rem); color:var(--ink); letter-spacing:.02em}
 
-  .cols{margin-top:2rem; display:grid; gap:1.1rem; align-items:start;
-        grid-template-columns:repeat(auto-fit, minmax(280px, 1fr))}
-  .card{background:var(--raise); border:1.5px solid var(--rule); border-radius:12px;
-        padding:1.5rem 1.6rem}
-  .card h3{font-size:.76rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
-           color:var(--dim)}
-  .card ul{margin-top:1.1rem; list-style:none; display:grid; gap:.95rem}
-  .card li{font-size:.98rem; line-height:1.45}
-  .card li b{font-weight:600}
-  .card li i{font-style:normal; display:block; color:var(--dim); font-size:.88rem; margin-top:.2rem}
-  .card li i .mono{font-size:.95em; color:var(--ink)}
-  /* five short items across a full-width card read as a list, not a column of stubs */
-  .wide ul{grid-template-columns:repeat(auto-fit, minmax(255px, 1fr)); gap:1.3rem 1.8rem}
-  /* the .never card (declined options): terms use plain --ink like any other card, no separate treatment needed */
 
-  .rules{margin-top:2rem; display:grid; gap:1.6rem; max-width:68ch}
-  .rules p{color:var(--dim); font-size:1rem}
-  .rules p b{font-weight:600; color:var(--ink)}
-  .rules p a{color:var(--c-mid)}
 
   :focus-visible{outline:2px solid var(--c-mid); outline-offset:3px; border-radius:3px}
+
+  /* The line naming the repository and commit the region was read from: a record, so mono end
+     to end, as on /model/. The region's own classes are page.css's. */
+  .note{margin-top:2rem; max-width:54ch; padding-left:1rem;
+        border-left:2px solid var(--c-flag); color:var(--ink); font-size:1rem}
+  .derived{margin-top:2.6rem; font-family:"Plex Mono",monospace; font-size:.78rem;
+           letter-spacing:.06em; color:var(--dim)}
 
 </style>
 </head>
@@ -202,7 +182,7 @@
       </a>
       <nav>
         <div class="navlinks" id="navlinks">
-          <a href="../principles/" data-de="Prinzipien">Principles</a>
+          <a href="./" aria-current="page" data-de="Prinzipien">Principles</a>
           <a href="../api/">API</a>
           <a href="../model/" data-de="Modell">Model</a>
           <a href="../talks/" data-de="Vorträge">Talks</a>
@@ -221,51 +201,67 @@
 
 <main>
   <div class="shell">
+    <!-- principles:start -->
     <div class="title">
-      <h1 data-de="<span class='r70'>Diese Website sammelt</span><span class='rcl'><em>nichts</em>.</span>"><span class="r70">This site collects</span><span class="rcl"><em>nothing</em>.</span></h1>
-      <p class="tagline" data-de="Keine Cookies, keine Webanalyse, keine Anfragen an Dritte. Die Liste dessen, was Ihren Browser verlässt, ist kurz genug, um sie hier abzudrucken.">No cookies, no analytics, no third-party requests. The list of what leaves your browser is short enough to print here.</p>
-      <p class="note" data-de="Eine Ausnahme, und es steht uns nicht zu, sie zu entfernen: GitHub liefert diese Seiten aus und sieht dabei – wie jeder Hoster – die Anfrage, mit der sie abgerufen werden.">One exception, and it is not ours to remove: GitHub serves these pages and, like any host, sees the request that fetches them.</p>
+      <h1><span class="r70">One guest,</span><span class="rcl">not five <em>strangers</em></span></h1>
+      <p class="tagline">We are working toward hotels that know a returning guest as one person, whichever of their systems the guest passed through, from a profile they can ask why it believes what it does, and correct when it is wrong.</p>
+      <p class="note" data-de="Aus dem Modell erzeugt: Die Worte unten sind seine eigenen – und in der einen Sprache, in der es geschrieben ist. Der Rest dieser Website ist zweisprachig; eine übersetzte Kopie wäre eine zweite Fassung, die ebenfalls stimmen müsste – und genau dagegen argumentiert diese Seite.">Generated from the model, so the words below are its own — and in the one language it is written in. The rest of this site is bilingual; a translated copy would be a second thing to keep true, which is what this page argues against.</p>
     </div>
 
     <section>
-      <h2 data-de="Was diese Website tut">What this site does</h2>
-      <p class="lede" data-de="Alles, was diese Seite braucht, kommt von guestgraph.io – auch die Schriften. Nichts wird anderswo geholt, also erfährt kein Dritter, dass Sie hier waren.">Everything this page needs comes from guestgraph.io, fonts included. Nothing is fetched from anywhere else, so no third party learns that you were here.</p>
-      <!-- no data-de: this is the value itself, and it says the same thing in either language.
-           Both cases are shown because pinning one would be wrong the moment you switch. -->
-      <p class="unit mono"><b>localStorage</b><br>lang = "de" | "en"<br>theme = "light" | "dark"<br>stage-card, stage-card-modal = a width in pixels</p>
-      <p class="lede" data-de="Das ist alles, was gespeichert wird: Ihre Sprachwahl, zwei Buchstaben, und Ihre Darstellungswahl, ein Wort, damit die nächste Seite sie kennt, sowie die Breite, die Sie für den Detailbereich auf der Modell-Seite eingestellt haben. Diese Breite wird erst gespeichert, wenn Sie den Trenner verschoben haben, einmal für die Seite und einmal für die vergrösserte Ansicht. Nichts davon erreicht einen Server oder identifiziert jemanden.">That is everything that gets stored: your choice of language, two letters, your choice of appearance, one word, so the next page knows them, and how wide you set the details panel on the model page, stored only once you have moved its divider, once for the page and once for the expanded view. None of it reaches a server or identifies anybody.</p>
-      <div class="cols">
-        <div class="card never wide">
-          <h3 data-de="Gar nicht erst verwendet">Not used at all</h3>
-          <ul>
-            <li><b data-de="Cookies">Cookies</b><i data-de="Keine, gleich welcher Art. Es gibt kein Banner, weil es nichts gibt, dem Sie zustimmen müssten.">None, of any kind. There is no banner because there is nothing to consent to.</i></li>
-            <li><b data-de="Webanalyse">Analytics</b><i data-de="Nichts zählt Ihre Besuche, und niemandem wird mitgeteilt, dass Sie hier waren.">Nothing counts you, and nobody is told that you were here.</i></li>
-            <li><b data-de="Anfragen an Dritte">Third-party requests</b><i data-de="Schriften, Bilder und Stylesheets kommen alle von dieser Domain. Kein CDN sieht Ihre Adresse.">Fonts, images and styles all come from this origin. No CDN sees your address.</i></li>
-            <li><b data-de="Formulare und Konten">Forms and accounts</b><i data-de="Nichts auszufüllen, keine Anmeldung, nichts zu speichern.">Nothing to fill in, nothing to sign up for, nothing to store.</i></li>
-            <li><b data-de="Fingerprinting">Fingerprinting</b><i data-de="Es wird nicht versucht, Sie über Besuche hinweg wiederzuerkennen. Die gespeicherte Sprach- und Darstellungswahl ist kein Erkennungsmerkmal.">No attempt is made to recognize you across visits. The language and theme keys are not identifiers.</i></li>
-          </ul>
-        </div>
-      </div>
+      <h2>What it means</h2>
+      <p class="lede">It holds when the person at the desk, and an agent acting on guest data, are looking at the same guest the booking engine, the PMS, the restaurant and the wifi each saw separately, and when either of them can ask why two records are one person and get the whole chain of decisions back. It holds only while a wrong merge is rarer than a missed one, because a wrong merge shows one guest another's stays and invoices, and that is a data protection incident rather than a flaw.</p>
+      <p class="lede">It does not ask a hotel to replace the systems it runs or to clean their data first: the records stay as each system sent them, and the profile is derived from them. It is also not a marketing profile built by guessing. A match nobody can justify is left unmade and handed to a person, and a hotel that ends up with fewer merged guests and none of them wrong is closer to it than one with more.</p>
     </section>
 
     <section>
-      <h2 data-de="Gastdaten, sobald es welche gibt">Guest data, when there is any</h2>
-      <p class="lede" data-de="Der gehostete Dienst läuft noch nicht, also liegen dort keine Gastdaten. So werden sie behandelt, sobald es sie gibt – jetzt aufgeschrieben, weil ein Hotel diese Frage vor der nach dem Preis stellt.">The hosted service is not running yet, so there is no guest data in it. This is how it will be handled when there is — written down now, because a hotel asks this before it asks the price.</p>
-      <div class="rules">
-        <p data-de="<b>Das Hotel ist Verantwortlicher, GuestGraph ist Auftragsbearbeiter (DSGVO: Auftragsverarbeiter).</b> Sie entscheiden, was erhoben wird und wofür. Bearbeitet werden die Daten auf Ihre Weisung, für Ihre Zwecke und für nichts sonst."><b>The hotel is the controller; GuestGraph is the processor.</b> You decide what is collected and why. It is processed on your instruction, for your purposes and for nothing else.</p>
-        <p data-de="<b>Ein Auftragsbearbeitungsvertrag (DSGVO: Auftragsverarbeitungsvertrag), auf Anfrage.</b> Das revidierte Schweizer DSG und die DSGVO gelten beide – Schweizer Hotels und deutsche oder österreichische sind hier derselbe Markt. Mit dem Angemessenheitsbeschluss für die Schweiz ist die Datenübermittlung zwischen der Schweiz und der EU weniger hinderlich, als oft angenommen wird."><b>A data-processing agreement, on request.</b> The revised Swiss DSG and the GDPR both apply — Swiss hotels and German or Austrian ones are one market here. Switzerland's adequacy decision makes data moving between the two less of an obstacle than it is often assumed to be.</p>
-        <p data-de="<b>Die Cloud ist noch nicht gewählt.</b> Kein Anbieter, keine Region, keine Gastdaten – weil nichts läuft. Worauf die Wahl fällt, wird auf dieser Seite genannt, bevor der erste Datensatz bearbeitet wird, nicht danach."><b>The cloud is not chosen yet.</b> No provider, no region, no guest data — because nothing is running. Whichever it turns out to be will be named on this page before the first record is processed, not after.</p>
-        <p data-de="<b>Wer GuestGraph selbst betreibt, den betrifft nichts davon.</b> Apache 2.0, Ihre Infrastruktur, Ihre Daten: Nichts verlässt das Haus, und es gibt niemanden, mit dem ein Vertrag zu schliessen wäre."><b>Self-host and none of this applies.</b> Apache 2.0, your infrastructure, your data: nothing leaves the building, and there is nobody to sign an agreement with.</p>
-      </div>
+      <h2 data-de="Werte">Values</h2>
+      <article class="value">
+        <h3>A match is not trusted until it is justified</h3>
+        <p class="tagline">Finding a match is the easy part; knowing when not to trust one is the work, and a match that cannot justify itself is escalated rather than made.</p>
+        <p>Each layer of matching decides only what it is entitled to and hands the rest upward: a shared strong identifier merges outright, a probabilistic score merges only above a threshold the tenant chose, and everything else queues for a person, whose decision sticks. Automatic probabilistic merging ships switched off, so out of the box a score suggests and a person decides, and lowering the threshold is an explicit, reversible act of trust. An agent gets no exemption a score would not get: it passes through the same thresholds, the same review queue and the same undo.</p>
+        <p>We never switch on a merge that no person asked to trust.</p>
+      </article>
+      <article class="value">
+        <h3>Every merge can be explained and undone</h3>
+        <p class="tagline">Whichever layer decided that two records are one person, the decision can be asked why and can be taken back, and the taking back holds.</p>
+        <p>Every merge records what it joined, the matcher that decided it, how confident it was, on what evidence, when and whether the system, a person or a named agent made it, and asking why two records are one guest returns that whole chain. An unmerge splits them again and writes a do-not-merge rule, so new evidence cannot quietly put them back together. This was built before any uncertain decision was possible, because a probabilistic merge is only safe to allow once it can be explained and reversed.</p>
+        <p>We never ship a way of merging guests whose decisions cannot be read back and undone.</p>
+      </article>
+      <article class="value">
+        <h3>Everything the engine does is on its API</h3>
+        <p class="tagline">Every capability of the engine is reachable through its versioned REST API, and every refusal carries a type a program can act on and a person can look up.</p>
+        <p>Registering a source system, submitting a record, reading a guest, asking why, undoing a merge, deciding a review and setting the matching thresholds are all operations of the API, and a connector reaches the engine through that API like any other client. Every refusal is a problem detail whose type leads to a page saying what it means and what to do next. The hosted service will run this same engine, so the API is the product's contract from the first day.</p>
+        <p>We never build an engine capability that can only be reached through a job, an internal call or the database.</p>
+      </article>
+      <article class="value">
+        <h3>Never drop what can be parsed</h3>
+        <p class="tagline">Data loss is the cardinal sin: a record that can be read at all is kept, however wrong it looks.</p>
+        <p>Hospitality systems are dirty by nature, so a malformed record that can still be parsed is stored and flagged for review rather than rejected, and only a request that cannot be parsed at all is refused, with a problem detail saying exactly what was wrong. A connector keeps a delivery it could not fetch or submit, with its reason and its next attempt, and retries it rather than dropping it. A flagged record can be repaired and resolved again; a discarded one is a guest interaction lost for good.</p>
+        <p>We never discard a parseable record because it does not look the way we expected.</p>
+      </article>
+      <article class="value">
+        <h3>Store what happened, derive who it was</h3>
+        <p class="tagline">A source record is kept exactly as its system sent it, and a guest is a conclusion drawn from those records rather than a row anyone edits.</p>
+        <p>A record enters as it arrived, its raw payload beside the fields extracted from it, and application code never changes or deletes it; a correction arrives as a new record. The golden profile is computed from the records by survivorship rules and can be recomputed at any time, which is what makes an explanation, an undo and a replay of resolution possible at all. Lawful erasure under data protection law is the one exception, and it is named as one.</p>
+        <p>We never overwrite a source record to fix what a guest's profile says.</p>
+      </article>
+      <article class="value">
+        <h3>Tenants never meet</h3>
+        <p class="tagline">One instance serves many brands, properties or customers, and nothing in one tenant is readable from another, from the first line of code on.</p>
+        <p>Every stored row, query, uniqueness rule, lock and API operation carries its tenant, and resolution, lookup and merging happen within one tenant only. An id that belongs to another tenant is answered exactly as one that never existed, so a refusal cannot say whether an id is in use elsewhere, and the core has no administrative path that reads across tenants. Tenancy was there on the first day because it is cheap then and brutal to retrofit, and a leak between tenants in an identity graph is a privacy incident.</p>
+        <p>We never add a path, for an operator or for ourselves, that reads one tenant's guests from another's.</p>
+      </article>
+      <article class="value">
+        <h3>The core stays open</h3>
+        <p class="tagline">The engine, the graph, the API and the connectors are Apache 2.0 and stay that way, because a hotel has to be able to check how an identity graph decided before it can trust one.</p>
+        <p>Anyone can run the core themselves and read exactly how it decided to merge two of their guests. What is planned as commercial, managed hosting, a console and MCP access for agents, goes on top of the core and never inside it: the core does not depend on commercial code, and self-hosting stays free. A black box that merges guests is not something we would deploy ourselves, so it is not something we ask a hotel to.</p>
+        <p>We never hold back or degrade a capability of the core to sell the hosted service.</p>
+      </article>
     </section>
 
-    <section>
-      <h2 data-de="Wer das betreibt">Who runs this</h2>
-      <div class="rules">
-        <p data-de="GuestGraph wird von <a href='https://blust.ch/model/?stage=expanded'>Robert Blust</a> entwickelt und betrieben. Dahinter steht keine Firma, sondern eine Person, die öffentlich arbeitet. Die Engine steht unter Apache 2.0 – für alle, die nachlesen wollen, was sie tatsächlich tut.">GuestGraph is built and run by <a href="https://blust.ch/model/?stage=expanded">Robert Blust</a>. It is not a company: one person, working in the open, with the engine under Apache 2.0 for anyone who wants to read what it actually does.</p>
-        <p data-de="Ein Impressum gibt es noch nicht, und das ist Absicht, kein Versäumnis: Hier lässt sich nichts kaufen, also gibt es kein Geschäft, zu dem eines gehören würde. Sobald der gehostete Dienst startet, kommt es – mit Name, Adresse und Kontakt – auf eine eigene Seite, denn ein Impressum ist keine Datenschutzerklärung. Am selben Tag verschwindet auf der Abrechnungsseite der Hinweis, dass der Dienst noch nicht offen ist.">There is no imprint yet, and that is deliberate rather than an omission: nothing here can be bought, so there is no transaction for one to belong to. When the hosted service opens it arrives — name, address and contact — on a page of its own, because an imprint is not a privacy note. The same day, the billing page stops saying it is not open.</p>
-      </div>
-    </section>
+    <p class="derived" data-de="Erzeugt aus <a href='https://github.com/guestgraph/mental-model'>guestgraph/mental-model</a>@49662a2 – <code class='mono'>model/vision.md</code> und <code class='mono'>model/values/</code>. Dieses Repository ist eine Instanz von <a href='https://companygraph.io/'>CompanyGraph</a>, einem Meta-Modell, das ein Unternehmen als Graph aus Markdown beschreibt.">Generated from <a href="https://github.com/guestgraph/mental-model">guestgraph/mental-model</a>@49662a2 — <code class="mono">model/vision.md</code> and <code class="mono">model/values/</code>. That repository is an instance of <a href="https://companygraph.io/">CompanyGraph</a>, a meta-model for describing a company as a graph of Markdown.</p>
+    <!-- principles:end -->
   </div>
 </main>
 
@@ -274,7 +270,7 @@
     <span><a class="credit" href="https://blust.ch/"><span class="rbmark"><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="plate" x=".75" y=".75" width="30.5" height="30.5" rx="7"/><text class="rb" x="16" y="22.5" text-anchor="middle" font-family="Plex Mono, ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17" font-weight="600">rb</text></svg></span><b>Robert <em>Blust</em></b></a></span>
     <span><a href="https://github.com/guestgraph">GitHub</a></span>
     <span><a href="https://github.com/guestgraph/engine/blob/HEAD/LICENSE" data-de="Lizenz">License</a></span>
-    <span><a href="./" aria-current="page" data-de="Datenschutz">Privacy</a></span>
+    <span><a href="../privacy/" data-de="Datenschutz">Privacy</a></span>
   </footer>
 </div>
 
@@ -331,10 +327,10 @@
   i18n.forEach(function(el){ el.setAttribute("data-en", el.innerHTML); });
 
   var UI = {
-    de:{ title:"Datenschutz – GuestGraph",
-         desc:"Diese Website setzt keine Cookies, betreibt keine Webanalyse und stellt keine Anfragen an Dritte. Wie der gehostete GuestGraph mit Gastdaten umgehen wird – aufgeschrieben, bevor es welche gibt." },
-    en:{ title:"Privacy — GuestGraph",
-         desc:"This site sets no cookies, runs no analytics and makes no third-party requests. How the hosted GuestGraph will treat guest data, written down before there is any." }
+    de:{ title:"Prinzipien – GuestGraph",
+         desc:"Die Vision und die Werte, an die sich GuestGraph, der Open-Source-Identitätsgraph für Gäste, selbst hält – gelesen aus seinem eigenen Modell, nicht für diese Seite geschrieben." },
+    en:{ title:"Principles — GuestGraph",
+         desc:"The vision and values GuestGraph, the open-source guest identity graph, holds itself to — read from its own model, not written for this page." }
   };
 
   function applyLang(){
@@ -371,7 +367,14 @@
   document.getElementById("len").addEventListener("click", function(){ if (lang !== "en") toggle(); });
   document.getElementById("thLight").addEventListener("click", function(){ setTheme("light"); });
   document.getElementById("thDark").addEventListener("click", function(){ setTheme("dark"); });
-  document.addEventListener("keydown", function(e){ if(e.key === "l" || e.key === "L") toggle(); });
+  // L switches the language, but never while the visitor is typing: a letter typed into a field
+  // is text, and the language changes only when the visitor asks for it.
+  document.addEventListener("keydown", function(e){
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    var t = e.target;
+    if (t && t.closest && t.closest("input, textarea, select, [contenteditable=''], [contenteditable='true']")) return;
+    if (e.key === "l" || e.key === "L") toggle();
+  });
 
   applyTheme();
 

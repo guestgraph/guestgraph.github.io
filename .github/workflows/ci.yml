@@ -76,6 +76,10 @@ jobs:
         run: npm run model:check
         env:
           GITHUB_TOKEN: ${{ github.token }}
+      # Every region this site derives from the model, held against model.json. After npm ci
+      # because the renderers come from @robertblust/design; it reaches no network.
+      - name: The derived regions still match the model
+        run: npm run pages:check
       - name: The API page says what the pinned documents say
         run: npm run api:check
       # The other half, and deliberately not a failure: api:check proves the page is what the
