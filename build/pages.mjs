@@ -13,6 +13,7 @@ import { fileURLToPath } from "node:url";
 import { writePrinciples } from "@robertblust/design/render/principles";
 import { writeTeam } from "@robertblust/design/render/team";
 import { writeSurfaces } from "@robertblust/design/render/surfaces";
+import { writeJsonLd } from "./jsonld.mjs";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const { repo, commit } = JSON.parse(fs.readFileSync(path.join(ROOT, "source.json"), "utf8"));
@@ -36,6 +37,7 @@ const RENDERERS = [
   writePrinciples,
   (d, o) => writeTeam(d, { ...o, order: ["Delivery", "Contribution", "Feature request", "Answering", "Narrating"] }),
   writeSurfaces,
+  writeJsonLd,
 ];
 
 const stale = RENDERERS.flatMap((write) => write(data, { check, root: ROOT }));

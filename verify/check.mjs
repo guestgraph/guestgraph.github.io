@@ -18,7 +18,7 @@ const SITE = "https://guestgraph.io";
 // What every prose footer reads, left to right. The check compares this to the rendered DOM,
 // so it is the one place that decides the order — and the German labels never appear here
 // because the suite loads each page in its source language.
-const FOOTER = ["Robert Blust", "GitHub", "License", "Privacy"];
+const FOOTER = ["Robert Blust", "GitHub", "License", "Privacy", "model.json"];
 
 const PAGES = [
   { path: "/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
@@ -86,7 +86,7 @@ const PAGES = [
   // The model page. The stage draws model.json, which build/model.mjs writes from the commit
   // source.json pins, and `graph` holds the drawing to that file. The source link is not listed
   // in `links`: the stage rewrites its href from the file's own commit, so `graph` asserts it.
-  { path: "/model/", typography: true, footer: [...FOOTER, "model.json"], storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /Model/, lang: "en", sourceLang: "en",
+  { path: "/model/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /Model/, lang: "en", sourceLang: "en",
     translates: { lang: "de", shows: ["Was hier steht", "Die Datei hinter dem Diagramm"], hides: ["What is in it", "The file behind the figure"] },
     contains: ["GuestGraph,", "described", "What is in it", "Generated from"],
     sameOrigin: true,

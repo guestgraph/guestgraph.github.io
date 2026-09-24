@@ -54,6 +54,9 @@ A repository named `talks` in this organization would claim `guestgraph.io/talks
 - `build/pages.mjs` — every region derived from `model.json`, written by the design package's
   renderers: `npm run pages` rewrites them, `npm run pages:check` fails when one has drifted, and
   CI runs the check. It refuses a `model.json` whose commit is not the pin.
+- `build/jsonld.mjs` — the model's Dataset node, written by `build/pages.mjs` into every page's
+  JSON-LD graph from one definition, after the nodes the page writes by hand; a page with a graph
+  missing from its list stops the build.
 - `build-api.mjs` and `api-sources.json` — the API page's operation rows, written from the
   engine's and the connector's own OpenAPI documents at the commits the pins name. `npm run api`
   rewrites the rows, `npm run api:check` fails when the page has drifted from the pins, and CI
