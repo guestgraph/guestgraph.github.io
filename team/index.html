@@ -422,6 +422,30 @@
         <dd>Give the visitor what the model says, in their words, and not a claim more.</dd>
       </dl>
       </section>
+      <section class="proc" id="narrating">
+        <h3 class="procname">Narrating</h3>
+        <p class="proctag">How a talk's reviewed speaker notes become the clips a visitor hears, in English and in German, with every clip heard by the Owner before it ships.</p>
+      <div class="hdrail"><div class="whos">
+        <div class="hw"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><div><div class="lbl">human · holds 1 of 2</div></div></div>
+        <div class="hw"><span class="stack"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg></span><div><div class="nm">English Voice, German Voice</div><div class="lbl">agents · share 1 of 2</div></div></div>
+      </div><button class="openall" id="narrating-openall" type="button" data-de="Alle öffnen">Open all</button></div>
+      <div class="grid" id="narrating-board">
+        <div class="ghead"><span class="lbl">Seat</span><span><span class="phnum">01</span><span class="phname">Narrate</span></span></div>
+        <details class="human" id="narrating-owner" data-role="roles/owner">
+          <summary aria-label="Owner, human. approves the gate of Narrate."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Owner</span></span><span><i class="g ga"></i></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+        <details id="narrating-narrator" data-role="roles/narrator">
+          <summary aria-label="Narrator, agent, held by English Voice and German Voice. executes Narrate. approves no gate."><span class="sname"><span class="stack"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg></span><span class="tw">Narrator</span></span><span><i class="g ex"></i></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+      </div>
+      <div class="legend"><span><i class="g ex"></i> <span data-de="führt die Phase aus">executes the phase</span></span><span><i class="g su"></i> <span data-de="unterstützt sie">supports it</span></span><span><i class="g ga"></i> <span data-de="gibt ihr Gate frei">approves its gate</span></span><span><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg> <span data-de="Mensch">human</span></span><span><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg> <span data-de="Agent">agent</span></span></div>
+      <dl class="phases">
+        <dt><span class="phnum">01</span><span class="phname">Narrate</span></dt>
+        <dd>Turn each changed note into a clip in its language, and let none of them out unheard.</dd>
+      </dl>
+      </section>
       <!-- team:end -->
       <p class="figcap" data-de="Jeder Prozess hat seine eigene Übersicht: die Lieferung, Etappe für Etappe; Beiträge, die als Pull-Requests vorgeschlagen werden; Feature-Requests, die als GitHub-Issues eröffnet werden; und das Beantworten von Fragen, bei dem der Chat einem Besucher antwortet. Eine Zeile zeigt, was ein Sitz über die ganze Arbeit hinweg tut, eine Spalte, wer an einer Phase beteiligt ist. Worauf es ankommt, zeigen die Gate-Zeichen: Jedes Gate wird von einem Sitz freigegeben, den ein Mensch besetzt, und keine Agentenzeile trägt eines. Ein Name neben einem Sitz ist das Profil, das ihn besetzt; einen Sitz ohne Namen besetzt ein Mensch, den das Modell nicht nennt. Ein Klick auf einen Sitz öffnet seine Karte auf der Modell-Seite.">Each process draws its own board: delivery, slice by slice; contributions, proposed as pull requests; feature requests, raised as GitHub issues; and answering, where the chat replies to a visitor. Read a row for what a seat does across the work, and a column for who touches a phase. The gate marks are the argument: every gate is approved by a seat a person holds, and no agent row carries one. A name beside a seat is the profile that holds it; a seat with no name is held by a person the model does not name. A seat opens onto its card on the model page.</p>
     </section>

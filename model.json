@@ -1,5 +1,5 @@
 {
-  "commit": "d1384d77a0838b9c1a372db3c1f6f5e727a8f96d",
+  "commit": "ae180650846dd0f86019d5ddfdd120d0a3a58345",
   "root": "GuestGraph",
   "rootId": "identity",
   "types": [
@@ -3123,6 +3123,206 @@
       "path": "model/processes/feature-request/tracks/decision.md"
     },
     {
+      "id": "processes/narrating",
+      "type": "process",
+      "name": "Narrating",
+      "tagline": "How a talk's reviewed speaker notes become the clips a visitor hears, in English and in German, with every clip heard by the Owner before it ships.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "Tracks",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Track"
+              ],
+              "rows": [
+                [
+                  "Clip"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Track"
+            ],
+            "rows": [
+              [
+                "Clip"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Phases",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Phase"
+              ],
+              "rows": [
+                [
+                  "Narrate"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Phase"
+            ],
+            "rows": [
+              [
+                "Narrate"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never speaks a note that has not been reviewed in its language.\n- Never speaks a clip again whose text, voice, model and settings are unchanged.\n- Never ships a clip the Owner has not listened to.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Rulebook",
+                  "https://github.com/guestgraph/guestgraph.github.io/blob/main/talks/intro/tts/generate.py"
+                ],
+                [
+                  "Working rules for the talks",
+                  "https://github.com/guestgraph/guestgraph.github.io/blob/main/AGENTS.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Rulebook",
+                "https://github.com/guestgraph/guestgraph.github.io/blob/main/talks/intro/tts/generate.py"
+              ],
+              [
+                "Working rules for the talks",
+                "https://github.com/guestgraph/guestgraph.github.io/blob/main/AGENTS.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/processes/narrating/narrating.md"
+    },
+    {
+      "id": "processes/narrating/phases/narrate",
+      "type": "phase",
+      "name": "Narrate",
+      "tagline": "Turn each changed note into a clip in its language, and let none of them out unheard.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "executed-by": [
+          "Narrator"
+        ],
+        "gate-approvers": [
+          "Owner"
+        ],
+        "escalation-authority": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A deck whose English notes are reviewed and whose German notes were made from them and reviewed, both on a branch. The cues in a note are the author's directions for where to pause.",
+          "tables": []
+        },
+        {
+          "heading": "Activities",
+          "text": "1. The Narrator reads each slide's note from the deck, in each language; a cue becomes a paragraph break or a direction to the voice.\n2. The Narrator skips a slide whose stamp still matches its note, voice, model and settings, so an edited note costs one clip and not a deck.\n3. The Narrator speaks each remaining note in its language's voice and treats a click at the end of a clip.\n4. The Owner listens to every new clip in the deck, in both languages.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Deliverable",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "Clip",
+                  "One per changed slide and language, beside the deck, with the stamp that says what it was spoken from; finished when the Owner has heard it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Deliverable",
+              "Description"
+            ],
+            "rows": [
+              [
+                "Clip",
+                "One per changed slide and language, beside the deck, with the stamp that says what it was spoken from; finished when the Owner has heard it"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never lets one clip that fails stop the rest of the deck.\n- Never regenerates a whole deck to change one clip.",
+          "tables": []
+        },
+        {
+          "heading": "Gate",
+          "text": "- The Owner has listened to every new clip.\n- Every clip's stamp matches the note on its slide.\n\nWhere a clip cannot be made to sound right, the Owner decides whether the note changes, back through Delivery, or the voice does.",
+          "tables": []
+        }
+      ],
+      "owner": "processes/narrating",
+      "path": "model/processes/narrating/phases/narrate.md"
+    },
+    {
+      "id": "processes/narrating/tracks/clip",
+      "type": "track",
+      "name": "Clip",
+      "tagline": "One slide's note, spoken in one language, beside the deck it belongs to and stamped with what it was spoken from.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [],
+      "owner": "processes/narrating",
+      "path": "model/processes/narrating/tracks/clip.md"
+    },
+    {
       "id": "products/apaleo-connector",
       "type": "product",
       "name": "Apaleo Connector",
@@ -3176,6 +3376,178 @@
       ],
       "owner": null,
       "path": "model/profiles/ai-agent/ai-agent.md"
+    },
+    {
+      "id": "profiles/english-voice",
+      "type": "profile",
+      "name": "English Voice",
+      "tagline": "Speaks the English of every talk, from the reviewed notes, under the rulebook, and decides nothing.",
+      "fields": {
+        "source": "Local",
+        "nature": "agent",
+        "roles": [
+          "Narrator"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Summary",
+          "text": "Its one seat, one language: each slide's English note becomes a clip beside the deck. The voice is chosen for how it carries English and apart from the other language's, and whichever voice the rulebook names, the seat and its rules stay the same. The voice below is the one the rulebook names; choosing another changes both.",
+          "tables": []
+        },
+        {
+          "heading": "Voice",
+          "text": "ElevenLabs lists it for informative and educational speech. How it delivers — stability, similarity, style — is set in the rulebook and not repeated here.",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "Value"
+              ],
+              "rows": [
+                [
+                  "Provider",
+                  "ElevenLabs"
+                ],
+                [
+                  "Voice",
+                  "Matilda — Knowledgable, Professional"
+                ],
+                [
+                  "Voice ID",
+                  "`XrExE9yKIg1WjnnlVkGX`"
+                ],
+                [
+                  "Kind",
+                  "Premade, from the ElevenLabs voice library"
+                ],
+                [
+                  "Model",
+                  "`eleven_v3`"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "Value"
+            ],
+            "rows": [
+              [
+                "Provider",
+                "ElevenLabs"
+              ],
+              [
+                "Voice",
+                "Matilda — Knowledgable, Professional"
+              ],
+              [
+                "Voice ID",
+                "`XrExE9yKIg1WjnnlVkGX`"
+              ],
+              [
+                "Kind",
+                "Premade, from the ElevenLabs voice library"
+              ],
+              [
+                "Model",
+                "`eleven_v3`"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/profiles/english-voice/english-voice.md"
+    },
+    {
+      "id": "profiles/german-voice",
+      "type": "profile",
+      "name": "German Voice",
+      "tagline": "Speaks the German of every talk, from the reviewed notes, under the rulebook, and decides nothing.",
+      "fields": {
+        "source": "Local",
+        "nature": "agent",
+        "roles": [
+          "Narrator"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Summary",
+          "text": "Its one seat, one language: each slide's German note becomes a clip beside the deck. The voice is chosen for how it carries German and apart from the other language's, and whichever voice the rulebook names, the seat and its rules stay the same. The voice below is the one the rulebook names; choosing another changes both.",
+          "tables": []
+        },
+        {
+          "heading": "Voice",
+          "text": "Chosen for how it carries German. How it delivers — stability, similarity, style — is set in the rulebook and not repeated here.",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "Value"
+              ],
+              "rows": [
+                [
+                  "Provider",
+                  "ElevenLabs"
+                ],
+                [
+                  "Voice",
+                  "Jessica — Playful, Bright, Warm"
+                ],
+                [
+                  "Voice ID",
+                  "`cgSgspJ2msm6clMCkdW9`"
+                ],
+                [
+                  "Kind",
+                  "Premade, from the ElevenLabs voice library"
+                ],
+                [
+                  "Model",
+                  "`eleven_v3`"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "Value"
+            ],
+            "rows": [
+              [
+                "Provider",
+                "ElevenLabs"
+              ],
+              [
+                "Voice",
+                "Jessica — Playful, Bright, Warm"
+              ],
+              [
+                "Voice ID",
+                "`cgSgspJ2msm6clMCkdW9`"
+              ],
+              [
+                "Kind",
+                "Premade, from the ElevenLabs voice library"
+              ],
+              [
+                "Model",
+                "`eleven_v3`"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/profiles/german-voice/german-voice.md"
     },
     {
       "id": "roles/answerer",
@@ -3424,6 +3796,74 @@
       ],
       "owner": null,
       "path": "model/roles/implementer.md"
+    },
+    {
+      "id": "roles/narrator",
+      "type": "role",
+      "name": "Narrator",
+      "tagline": "The seat that speaks a talk's reviewed speaker notes, one clip per slide in each language, so the talk can be heard without its presenter.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A deck whose speaker notes are reviewed in the language the clip is in, the cues the author wrote into them, and the voice and settings the rulebook names for that language. Where a note is not reviewed, the seat speaks nothing for that slide.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "One audio clip per slide and language, beside the deck it belongs to, stamped with what it was spoken from: the voice, the model, the settings and the text. A clip whose stamp still matches is left as it is.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never changes a word of the note it speaks, and never speaks text that is not on the slide.\n- Never chooses its own voice, model or settings; the rulebook names them per language.\n- Never speaks one language's note in the other language's voice.\n- Never publishes a clip; the Owner listens to it first.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Rulebook, with the ElevenLabs voices and settings",
+                  "https://github.com/guestgraph/guestgraph.github.io/blob/main/talks/intro/tts/generate.py"
+                ],
+                [
+                  "Working rules for the talks",
+                  "https://github.com/guestgraph/guestgraph.github.io/blob/main/AGENTS.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Rulebook, with the ElevenLabs voices and settings",
+                "https://github.com/guestgraph/guestgraph.github.io/blob/main/talks/intro/tts/generate.py"
+              ],
+              [
+                "Working rules for the talks",
+                "https://github.com/guestgraph/guestgraph.github.io/blob/main/AGENTS.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/roles/narrator.md"
     },
     {
       "id": "roles/owner",
@@ -5862,6 +6302,66 @@
       "attrs": {}
     },
     {
+      "from": "processes/narrating/phases/narrate",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/narrating/phases/narrate",
+      "to": "roles/narrator",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/narrating/phases/narrate",
+      "to": "roles/owner",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/narrating/phases/narrate",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/narrating/phases/narrate",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/narrating/tracks/clip",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/narrating",
+      "to": "processes/narrating/phases/narrate",
+      "via": "Phases.Phase",
+      "attrs": {}
+    },
+    {
+      "from": "processes/narrating",
+      "to": "processes/narrating/tracks/clip",
+      "via": "Tracks.Track",
+      "attrs": {}
+    },
+    {
+      "from": "processes/narrating",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/narrating",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
       "from": "products/apaleo-connector",
       "to": "domains/integration",
       "via": "domain",
@@ -5940,6 +6440,30 @@
       "attrs": {}
     },
     {
+      "from": "profiles/english-voice",
+      "to": "roles/narrator",
+      "via": "roles",
+      "attrs": {}
+    },
+    {
+      "from": "profiles/english-voice",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "profiles/german-voice",
+      "to": "roles/narrator",
+      "via": "roles",
+      "attrs": {}
+    },
+    {
+      "from": "profiles/german-voice",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
       "from": "roles/answerer",
       "to": "sources/local",
       "via": "source",
@@ -5959,6 +6483,12 @@
     },
     {
       "from": "roles/implementer",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "roles/narrator",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
