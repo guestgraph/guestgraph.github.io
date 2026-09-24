@@ -257,44 +257,58 @@
       <!-- team:start -->
       <section class="proc" id="delivery">
         <h3 class="procname">Delivery</h3>
-        <p class="proctag">How a slice of GuestGraph goes from the notes the roadmap keeps to merged, tested code: specified, planned, broken into tasks and implemented, each step approved before the next begins.</p>
+        <p class="proctag">How anything we publish is shaped, specified, planned, made and merged, in code and in prose.</p>
       <div class="hdrail"><div class="whos">
-        <div class="hw"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><div><div class="lbl">human · holds 1 of 5</div></div></div>
-        <div class="hw"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><div><div class="nm">AI Agent</div><div class="lbl">agent · holds 4 of 5</div></div></div>
+        <div class="hw"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><div><div class="lbl">human · holds 1 of 8</div></div></div>
+        <div class="hw"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><div><div class="nm">AI Agent</div><div class="lbl">agent · holds 7 of 8</div></div></div>
       </div><button class="openall" id="delivery-openall" type="button" data-de="Alle öffnen">Open all</button></div>
       <div class="grid" id="delivery-board">
-        <div class="ghead"><span class="lbl">Seat</span><span><span class="phnum">01</span><span class="phname">Specify</span></span><span><span class="phnum">02</span><span class="phname">Plan</span></span><span><span class="phnum">03</span><span class="phname">Tasks</span></span><span><span class="phnum">04</span><span class="phname">Implement</span></span></div>
+        <div class="ghead"><span class="lbl">Seat</span><span><span class="phnum">01</span><span class="phname">Shape</span></span><span><span class="phnum">02</span><span class="phname">Spec</span></span><span><span class="phnum">03</span><span class="phname">Plan</span></span><span><span class="phnum">04</span><span class="phname">Implement</span></span><span><span class="phnum">05</span><span class="phname">Integrate</span></span></div>
         <details class="human" id="delivery-owner" data-role="roles/owner">
-          <summary aria-label="Owner, human. approves the gate of Specify, Plan, Tasks, Implement."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Owner</span></span><span><i class="g ga"></i></span><span><i class="g ga"></i></span><span><i class="g ga"></i></span><span><i class="g ga"></i></span></summary>
+          <summary aria-label="Owner, human. executes Shape, Implement, Integrate. approves the gate of Shape, Spec, Plan, Implement, Integrate."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Owner</span></span><span><i class="g ex"></i><i class="g ga"></i></span><span><i class="g ga"></i></span><span><i class="g ga"></i></span><span><i class="g ex"></i><i class="g ga"></i></span><span><i class="g ex"></i><i class="g ga"></i></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
         <details id="delivery-specifier" data-role="roles/specifier">
-          <summary aria-label="Specifier, agent. executes Specify. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Specifier</span></span><span><i class="g ex"></i></span><span></span><span></span><span></span></summary>
+          <summary aria-label="Specifier, agent. executes Spec. supports Plan. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Specifier</span></span><span></span><span><i class="g ex"></i></span><span><i class="g su"></i></span><span></span><span></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
         <details id="delivery-planner" data-role="roles/planner">
-          <summary aria-label="Planner, agent. executes Plan, Tasks. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Planner</span></span><span></span><span><i class="g ex"></i></span><span><i class="g ex"></i></span><span></span></summary>
+          <summary aria-label="Planner, agent. executes Plan. supports Implement. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Planner</span></span><span></span><span></span><span><i class="g ex"></i></span><span><i class="g su"></i></span><span></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+        <details id="delivery-controller" data-role="roles/controller">
+          <summary aria-label="Controller, agent. executes Implement, Integrate. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Controller</span></span><span></span><span></span><span></span><span><i class="g ex"></i></span><span><i class="g ex"></i></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
         <details id="delivery-implementer" data-role="roles/implementer">
-          <summary aria-label="Implementer, agent. executes Implement. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Implementer</span></span><span></span><span></span><span></span><span><i class="g ex"></i></span></summary>
+          <summary aria-label="Implementer, agent. executes Implement. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Implementer</span></span><span></span><span></span><span></span><span><i class="g ex"></i></span><span></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
         <details id="delivery-reviewer" data-role="roles/reviewer">
-          <summary aria-label="Reviewer, agent. executes Tasks, Implement. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Reviewer</span></span><span></span><span></span><span><i class="g ex"></i></span><span><i class="g ex"></i></span></summary>
+          <summary aria-label="Reviewer, agent. executes Implement, Integrate. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Reviewer</span></span><span></span><span></span><span></span><span><i class="g ex"></i></span><span><i class="g ex"></i></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+        <details id="delivery-writer" data-role="roles/writer">
+          <summary aria-label="Writer, agent. executes Implement. supports Spec. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Writer</span></span><span></span><span><i class="g su"></i></span><span></span><span><i class="g ex"></i></span><span></span></summary>
+          <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+        </details>
+        <details id="delivery-translator" data-role="roles/translator">
+          <summary aria-label="Translator, agent. executes Implement. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Translator</span></span><span></span><span></span><span></span><span><i class="g ex"></i></span><span></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
       </div>
       <div class="legend"><span><i class="g ex"></i> <span data-de="führt die Phase aus">executes the phase</span></span><span><i class="g su"></i> <span data-de="unterstützt sie">supports it</span></span><span><i class="g ga"></i> <span data-de="gibt ihr Gate frei">approves its gate</span></span><span><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg> <span data-de="Mensch">human</span></span><span><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg> <span data-de="Agent">agent</span></span></div>
       <dl class="phases">
-        <dt><span class="phnum">01</span><span class="phname">Specify</span></dt>
-        <dd>Write what the slice must do and why, completely enough that the plan does not have to guess.</dd>
-        <dt><span class="phnum">02</span><span class="phname">Plan</span></dt>
-        <dd>Decide how the slice will be built, and hold that design to the constitution before and after it is made.</dd>
-        <dt><span class="phnum">03</span><span class="phname">Tasks</span></dt>
-        <dd>Break the plan into ordered tasks an implementer can take one at a time, and check that specification, plan and tasks agree.</dd>
+        <dt><span class="phnum">01</span><span class="phname">Shape</span></dt>
+        <dd>Decide what kind of change this is, how far it reaches, and how much of it gets written down.</dd>
+        <dt><span class="phnum">02</span><span class="phname">Spec</span></dt>
+        <dd>Write what the change must do, completely enough that nobody downstream has to guess.</dd>
+        <dt><span class="phnum">03</span><span class="phname">Plan</span></dt>
+        <dd>Cut the approved specification into pieces that can be worked one at a time.</dd>
         <dt><span class="phnum">04</span><span class="phname">Implement</span></dt>
-        <dd>Build the tasks test first, review the result against the constitution, and merge it once every check is green.</dd>
+        <dd>Make the thing, and let nothing go forward unread.</dd>
+        <dt><span class="phnum">05</span><span class="phname">Integrate</span></dt>
+        <dd>Put the change where it binds, release what other repositories take from it, and move everything that names it.</dd>
       </dl>
       </section>
       <section class="proc" id="contribution">

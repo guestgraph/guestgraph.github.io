@@ -1,5 +1,5 @@
 {
-  "commit": "49662a2a94c2643ea4f4f15633253bdebd4483ce",
+  "commit": "1ed82ea08fa97c493e9e2d5b62444e18230d880c",
   "root": "GuestGraph",
   "rootId": "identity",
   "types": [
@@ -2027,7 +2027,7 @@
       "id": "processes/delivery",
       "type": "process",
       "name": "Delivery",
-      "tagline": "How a slice of GuestGraph goes from the notes the roadmap keeps to merged, tested code: specified, planned, broken into tasks and implemented, each step approved before the next begins.",
+      "tagline": "How anything we publish is shaped, specified, planned, made and merged, in code and in prose.",
       "fields": {
         "source": "Local",
         "owner": "Owner"
@@ -2045,6 +2045,9 @@
               "rows": [
                 [
                   "Code"
+                ],
+                [
+                  "Prose"
                 ]
               ]
             }
@@ -2057,6 +2060,9 @@
             "rows": [
               [
                 "Code"
+              ],
+              [
+                "Prose"
               ]
             ]
           }
@@ -2072,16 +2078,19 @@
               ],
               "rows": [
                 [
-                  "Specify"
+                  "Shape"
+                ],
+                [
+                  "Spec"
                 ],
                 [
                   "Plan"
                 ],
                 [
-                  "Tasks"
+                  "Implement"
                 ],
                 [
-                  "Implement"
+                  "Integrate"
                 ]
               ]
             }
@@ -2093,23 +2102,26 @@
             ],
             "rows": [
               [
-                "Specify"
+                "Shape"
+              ],
+              [
+                "Spec"
               ],
               [
                 "Plan"
               ],
               [
-                "Tasks"
+                "Implement"
               ],
               [
-                "Implement"
+                "Integrate"
               ]
             ]
           }
         },
         {
           "heading": "What it never does",
-          "text": "- Never begins a phase whose predecessor's gate the Owner has not approved.\n- Never lets an agent merge, tag or release anything.\n- Never merges a change to the resolution engine without the scenario tests that were written for it first.\n- Never edits a merged specification; a correction goes forward into the roadmap notes or the document that owns the subject.\n- Never amends a principle the constitution marks non-negotiable, or the fixed stack or license, without the Owner's explicit approval.\n- Never restates in one repository a fact another repository owns; it links instead.",
+          "text": "- Never begins a phase whose predecessor's gate the Owner has not approved.\n- Never lets an agent merge, tag or release anything.\n- Never merges a change to the resolution engine without the scenario tests that were written for it first.\n- Never changes what another repository vendors without a release whose notes say what it asks of a consumer.\n- Never makes the German from English the Owner has not reviewed.\n- Never counts a check nobody ran as a check that passed.\n- Never lets a published page outlive a disagreement with the model; the model is corrected first and the page rebuilt from it.",
           "tables": []
         },
         {
@@ -2124,16 +2136,20 @@
               ],
               "rows": [
                 [
-                  "Constitution",
-                  "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
-                ],
-                [
                   "Working rules",
                   "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
                 ],
                 [
-                  "Roadmap notes",
-                  "https://github.com/guestgraph/engine/blob/main/docs/roadmap-notes.md"
+                  "Writing rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+                ],
+                [
+                  "Modeling rules",
+                  "https://github.com/companygraph/meta-model/blob/main/core/CONVENTIONS.md"
+                ],
+                [
+                  "Constitution",
+                  "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
                 ]
               ]
             }
@@ -2146,16 +2162,20 @@
             ],
             "rows": [
               [
-                "Constitution",
-                "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
-              ],
-              [
                 "Working rules",
                 "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
               ],
               [
-                "Roadmap notes",
-                "https://github.com/guestgraph/engine/blob/main/docs/roadmap-notes.md"
+                "Writing rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+              ],
+              [
+                "Modeling rules",
+                "https://github.com/companygraph/meta-model/blob/main/core/CONVENTIONS.md"
+              ],
+              [
+                "Constitution",
+                "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
               ]
             ]
           }
@@ -2168,13 +2188,112 @@
       "id": "processes/delivery/phases/implement",
       "type": "phase",
       "name": "Implement",
-      "tagline": "Build the tasks test first, review the result against the constitution, and merge it once every check is green.",
+      "tagline": "Make the thing, and let nothing go forward unread.",
       "fields": {
         "source": "Local",
-        "owner": "Implementer",
+        "owner": "Controller",
         "executed-by": [
+          "Controller",
           "Implementer",
-          "Reviewer"
+          "Reviewer",
+          "Writer",
+          "Translator",
+          "Owner"
+        ],
+        "supported-by": [
+          "Planner"
+        ],
+        "gate-approvers": [
+          "Owner"
+        ],
+        "escalation-authority": "Owner",
+        "gate-to": "Integrate"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "An approved plan, a branch in a worktree of its own, and for each task the brief that is the whole of its requirements.",
+          "tables": []
+        },
+        {
+          "heading": "Activities",
+          "text": "### Code\n\n1. The Controller dispatches one brief.\n2. The Implementer works it, test first where the brief says so, and reports what was built, what was run and what it doubts.\n3. The Reviewer reads the diff against the brief and returns findings, each with a file, a line and a severity, strengths named first.\n4. Where the task touched a model, the Reviewer also reads every entity it touched against its schema's writing rules, which the mechanical checks do not reach.\n5. The Controller decides: fix, accept or park for the Owner.\n6. The task is committed before the next one is dispatched.\n7. A finding against a task already committed comes back as its own brief; the commit stands and the fix is a new one.\n\n### Prose\n\n1. The Writer drafts the English from the brief, on the branch, and reports which claims it could not trace to the brief or to prose we have already published.\n2. An entry of the model goes to the Owner on its own: what it says, the case against it, a proposal, and the Owner decides.\n3. The Owner reviews on the branch, in the diff and, where a surface carries the text, on the rendered page.\n4. The Translator makes the Swiss Standard German from the reviewed English only, one element at a time, with the glossary open, and hands back a back-translation beside each element.\n5. An English edit re-runs the Translator on that element alone.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Deliverable",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "Reviewed commits",
+                  "One per task, on the branch, with every finding resolved or parked"
+                ],
+                [
+                  "Reviewed English",
+                  "The draft the Owner has read on the branch and, where a surface carries it, on the page"
+                ],
+                [
+                  "Swiss Standard German",
+                  "For a surface that carries it: made from the reviewed English, with its back-translation"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Deliverable",
+              "Description"
+            ],
+            "rows": [
+              [
+                "Reviewed commits",
+                "One per task, on the branch, with every finding resolved or parked"
+              ],
+              [
+                "Reviewed English",
+                "The draft the Owner has read on the branch and, where a surface carries it, on the page"
+              ],
+              [
+                "Swiss Standard German",
+                "For a surface that carries it: made from the reviewed English, with its back-translation"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never changes a test's expectation to make it pass.\n- Never makes the German from English the Owner has not reviewed.\n- Never dispatches the next task while the last one's findings are open.\n- Never commits a change to a model that no validation pass has read.\n- Never claims a check that was not run.\n- Never merges.",
+          "tables": []
+        },
+        {
+          "heading": "Gate",
+          "text": "To leave Implement, all of these hold:\n\n- Every task's findings are resolved, or parked for the Owner and named in the pull request.\n- The repository's checks pass on the branch.\n- Where a model changed, both halves of the validation pass have run over it: the mechanical checks, and an agent reading each entity against its schema's writing rules.\n- The branch does what the specification said, and nothing else.\n\nWhere they cannot be met, the Owner decides whether the branch is reworked or abandoned.",
+          "tables": []
+        }
+      ],
+      "owner": "processes/delivery",
+      "path": "model/processes/delivery/phases/implement.md"
+    },
+    {
+      "id": "processes/delivery/phases/integrate",
+      "type": "phase",
+      "name": "Integrate",
+      "tagline": "Put the change where it binds, release what other repositories take from it, and move everything that names it.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "executed-by": [
+          "Controller",
+          "Reviewer",
+          "Owner"
         ],
         "gate-approvers": [
           "Owner"
@@ -2184,12 +2303,12 @@
       "sections": [
         {
           "heading": "What it takes",
-          "text": "The repository's own agent file, the approved tasks and the plan and contracts behind them.",
+          "text": "A branch that left Implement with its checks green, and the specification it was made from.",
           "tables": []
         },
         {
           "heading": "Activities",
-          "text": "1. The Implementer takes the tasks in order, and for the resolution engine writes the scenario tests first and sees them fail before writing the code.\n2. The Implementer runs the full build with its tests, its architecture rules and its format check, and regenerates what the build holds against a fresh generation.\n3. The Implementer opens the pull request and reports what was built and what was run.\n4. The Reviewer reviews the pull request against the constitution's core principles, and any change touching merge, unmerge, survivorship or ingest against the three that keep the data safe.",
+          "text": "1. The Reviewer reviews the whole branch against the specification, not task by task.\n2. The Controller opens the pull request and stops.\n3. The Owner reads the diff and, where a surface carries the change, the rendered page, and merges it with a merge commit.\n4. Where the change touches what another repository vendors or builds from, the Owner tags a release and writes its notes: a minor where a consumer re-syncs or re-pins, a major where it is asked to do more than either, and the notes say which.\n5. The Owner moves every pin that names the release, each in a commit that says why, and every surface built from one of them is rebuilt at the commit it now names.\n6. The Owner deletes the branch and its worktree, as their own step.",
           "tables": []
         },
         {
@@ -2204,8 +2323,16 @@
               ],
               "rows": [
                 [
-                  "Merged slice",
-                  "The implemented tasks on the default branch, with their tests and every required check green"
+                  "Merged change",
+                  "On the default branch, with its checks green"
+                ],
+                [
+                  "Release",
+                  "Where one is due: the tag, notes saying whether a consumer re-syncs, re-pins or does more, and every pin that names it moved"
+                ],
+                [
+                  "Rebuilt surface",
+                  "Where a surface is built from what changed: rebuilt at the commit it names, so the page and the model agree"
                 ]
               ]
             }
@@ -2218,52 +2345,63 @@
             ],
             "rows": [
               [
-                "Merged slice",
-                "The implemented tasks on the default branch, with their tests and every required check green"
+                "Merged change",
+                "On the default branch, with its checks green"
+              ],
+              [
+                "Release",
+                "Where one is due: the tag, notes saying whether a consumer re-syncs, re-pins or does more, and every pin that names it moved"
+              ],
+              [
+                "Rebuilt surface",
+                "Where a surface is built from what changed: rebuilt at the commit it names, so the page and the model agree"
               ]
             ]
           }
         },
         {
           "heading": "What it never does",
-          "text": "- Never changes a test's expectation to make it pass.\n- Never merges, tags or releases; the Owner does.\n- Never mutates a source record, drops parseable data or merges guests without recording the decision in full.",
+          "text": "- Never merges without the Owner; an agent opens and reports.\n- Never squashes a merge, because a squash re-authors the commit to whoever pressed the button and a wrong identity would land looking correct.\n- Never chains a branch delete after a merge, because a failed merge would still run the delete and close the pull request.\n- Never changes what another repository vendors without a release, because the change has made every copy of it stale.\n- Never leaves a consumer pinned to a release that no longer exists.\n- Never releases a change the model disagrees with.",
           "tables": []
         },
         {
           "heading": "Gate",
-          "text": "To leave Implement, all of these hold:\n\n- Every required check is green on the pull request.\n- Resolution-engine changes have their scenario tests, and they pass.\n- A change touching merge, unmerge, survivorship or ingest has had its data-safety review.\n- The Owner has merged the pull request.\n\nWhere they cannot be met, the Owner decides whether the slice is fixed on the branch or taken back to Tasks.",
+          "text": "Integrate is the last phase. The work is done when all of these hold:\n\n- The checks pass on the pull request.\n- The Owner has merged it.\n- Where a release was due it is tagged, and its notes say whether a consumer re-syncs, re-pins or does more.\n- Every pin that names the release has moved with it, and every surface built from one of them has been rebuilt.\n\nWhere they cannot be met, the Owner decides whether the change is reverted or the release held.",
           "tables": []
         }
       ],
       "owner": "processes/delivery",
-      "path": "model/processes/delivery/phases/implement.md"
+      "path": "model/processes/delivery/phases/integrate.md"
     },
     {
       "id": "processes/delivery/phases/plan",
       "type": "phase",
       "name": "Plan",
-      "tagline": "Decide how the slice will be built, and hold that design to the constitution before and after it is made.",
+      "tagline": "Cut the approved specification into pieces that can be worked one at a time.",
       "fields": {
         "source": "Local",
         "owner": "Planner",
         "executed-by": [
           "Planner"
         ],
+        "supported-by": [
+          "Specifier"
+        ],
         "gate-approvers": [
           "Owner"
         ],
         "escalation-authority": "Owner",
-        "gate-to": "Tasks"
+        "gate-to": "Implement"
       },
       "sections": [
         {
           "heading": "What it takes",
-          "text": "An approved specification, the constitution and the code the slice lands in.",
+          "text": "A specification or brief the Owner has approved, and the repository the work lands in with the rules that bind it.",
           "tables": []
         },
         {
           "heading": "Activities",
-          "text": "1. The Planner runs the Constitution Check against the specification before any research.\n2. The Planner writes the research, the data model and the API contracts the slice needs, each decision with the alternatives it rejected.\n3. The Planner runs the Constitution Check again against the design.\n4. Where the design needs more than the constitution's fixed shape, the Planner writes the excess into the plan's complexity tracking with the simpler alternative it rejected.",
+          "text": "### Code\n\n1. The Planner maps the files the change creates and modifies, and what each is responsible for.\n2. The Planner cuts the work into task briefs, each the whole of its own requirements.\n3. The Planner names the interfaces each brief produces and consumes, so no brief depends on a conversation its holder did not have.\n4. The Planner orders them so each can be worked, tested and committed on its own.\n5. Where the change reaches another repository, the pin that moves is a brief of its own, because it lands in a repository of its own and after the release.\n\n### Prose\n\n1. The Planner names the entries that change, and in what order.\n2. The Planner cuts them one to a brief, because an entry is put to the Owner on its own.\n3. The Planner names which of them a surface carries in German, and so which the Translator is run on.",
           "tables": []
         },
         {
@@ -2278,8 +2416,8 @@
               ],
               "rows": [
                 [
-                  "Plan",
-                  "The implementation plan, with the research, the data model and the contracts beside it, passing the Constitution Check twice"
+                  "Task briefs",
+                  "An ordered set, each whole on its own, each with a way to tell it is done"
                 ]
               ]
             }
@@ -2292,20 +2430,20 @@
             ],
             "rows": [
               [
-                "Plan",
-                "The implementation plan, with the research, the data model and the contracts beside it, passing the Constitution Check twice"
+                "Task briefs",
+                "An ordered set, each whole on its own, each with a way to tell it is done"
               ]
             ]
           }
         },
         {
           "heading": "What it never does",
-          "text": "- Never plans a module, a service or a datastore beyond the fixed shape without saying in complexity tracking why the simpler option was rejected.\n- Never plans a capability that is reachable other than through the API.\n- Never changes the specification it plans; a gap goes back to the Owner.",
+          "text": "- Never re-opens a decision the specification took.\n- Never writes a brief whose holder would have to guess at an interface.\n- Never writes the change.\n- Never plans a task whose completion cannot be checked.\n- Never puts two entries of the model in one brief.",
           "tables": []
         },
         {
           "heading": "Gate",
-          "text": "To leave Plan, all of these hold:\n\n- The Constitution Check passes, before research and after design.\n- Every exception to the fixed shape is in complexity tracking with its rejected alternative.\n- The Owner has approved the plan.\n\nWhere they cannot be met, the Owner decides whether the design changes or the constitution is amended first.",
+          "text": "To leave Plan, all of these hold:\n\n- The Owner has read the plan and approved it.\n- Every brief states how its holder can tell the task is done.\n- The order is one the briefs can actually be worked in.\n\nWhere they cannot be met, the Owner decides whether the plan is recut or the specification reopened.",
           "tables": []
         }
       ],
@@ -2313,15 +2451,116 @@
       "path": "model/processes/delivery/phases/plan.md"
     },
     {
-      "id": "processes/delivery/phases/specify",
+      "id": "processes/delivery/phases/shape",
       "type": "phase",
-      "name": "Specify",
-      "tagline": "Write what the slice must do and why, completely enough that the plan does not have to guess.",
+      "name": "Shape",
+      "tagline": "Decide what kind of change this is, how far it reaches, and how much of it gets written down.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "executed-by": [
+          "Owner"
+        ],
+        "gate-approvers": [
+          "Owner"
+        ],
+        "escalation-authority": "Owner",
+        "gate-to": "Spec"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A request in whatever words it arrived in, and the part of the model, the constitution or the repository it will have to agree with, read rather than remembered.",
+          "tables": []
+        },
+        {
+          "heading": "Activities",
+          "text": "1. The Owner states the request as one sentence.\n2. The Owner classifies it: a question whose output is an answer, a bounded change to something already here to read or a change to how things fit together.\n3. The Owner names the track it runs on.\n4. The Owner names how far it reaches: what another repository vendors or builds from, and what surface is rebuilt from a commit of it.\n5. The Owner says which phases write a document and which are satisfied in conversation.\n6. The Owner names what is explicitly not being changed.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Deliverable",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "Classification",
+                  "Which of the three kinds of change this is, and why"
+                ],
+                [
+                  "Track",
+                  "Which track the work runs on, named as the process spells it"
+                ],
+                [
+                  "Reach",
+                  "What the change makes stale: what vendors it, what builds from it, and what is rebuilt when it lands"
+                ],
+                [
+                  "Document plan",
+                  "Which phases produce a file and which are answered in conversation"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Deliverable",
+              "Description"
+            ],
+            "rows": [
+              [
+                "Classification",
+                "Which of the three kinds of change this is, and why"
+              ],
+              [
+                "Track",
+                "Which track the work runs on, named as the process spells it"
+              ],
+              [
+                "Reach",
+                "What the change makes stale: what vendors it, what builds from it, and what is rebuilt when it lands"
+              ],
+              [
+                "Document plan",
+                "Which phases produce a file and which are answered in conversation"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never classifies by how familiar the work feels rather than by what exists to read.\n- Never lets a classification skip a gate; only the document scales, never the approval.\n- Never begins the work it is classifying.",
+          "tables": []
+        },
+        {
+          "heading": "Gate",
+          "text": "To leave Shape, all of these hold:\n\n- The request is stated as one sentence.\n- The track is named.\n- What the change makes stale is named, or named as nothing.\n- The classification is stated, and the phases that will write a document are named.\n\nWhere they cannot be met, the Owner decides whether the request is reshaped or dropped.",
+          "tables": []
+        }
+      ],
+      "owner": "processes/delivery",
+      "path": "model/processes/delivery/phases/shape.md"
+    },
+    {
+      "id": "processes/delivery/phases/spec",
+      "type": "phase",
+      "name": "Spec",
+      "tagline": "Write what the change must do, completely enough that nobody downstream has to guess.",
       "fields": {
         "source": "Local",
         "owner": "Specifier",
         "executed-by": [
           "Specifier"
+        ],
+        "supported-by": [
+          "Writer"
         ],
         "gate-approvers": [
           "Owner"
@@ -2332,12 +2571,12 @@
       "sections": [
         {
           "heading": "What it takes",
-          "text": "The requirements the roadmap notes have captured for this slice, the constitution the slice must not contradict, and the specifications and reference documents already merged, read rather than remembered.",
+          "text": "A classified request, the model and the constitution the change must not contradict, and whatever it will touch, read rather than remembered.",
           "tables": []
         },
         {
           "heading": "Activities",
-          "text": "1. The Specifier opens the slice's numbered branch and reads the roadmap notes and the documents the slice touches.\n2. The Specifier writes the specification: the user stories, the functional requirements and what is explicitly not in the slice.\n3. The Specifier puts every open question to the Owner and records the answers in the specification rather than assuming one.",
+          "text": "### Code\n\n1. The Specifier reads the model, the constitution and the code the change lands in, before proposing anything.\n2. The Specifier names the approaches worth considering, with their trade-offs, and recommends one.\n3. The Specifier writes the specification: the gap, the decisions and their reasons, what was rejected and why, and what is explicitly not being done.\n4. Where the change touches merge, unmerge, survivorship or ingest, the specification says how it keeps the constitution's principles that keep the data safe.\n5. Where the change reaches what another repository vendors or builds from, the specification says what the release will ask of a consumer: a re-sync, a re-pin or more than either.\n6. The Specifier parks every question that is the Owner's, rather than answering it conveniently.\n\n### Prose\n\n1. The Specifier names the audience, the one point, the facts the text may claim and where each is shown.\n2. For an entry of the model, each fact is traced to prose we have already published, because nothing here is invented.\n3. The Specifier names the file and the place it lands, and the register the place calls for.\n4. The Specifier names the claims it may not make.",
           "tables": []
         },
         {
@@ -2353,7 +2592,11 @@
               "rows": [
                 [
                   "Specification",
-                  "The slice's requirements under the engine's specs, with its open questions answered and what is not in the slice named"
+                  "The whole of the requirements for a change to code, with what is not being done named"
+                ],
+                [
+                  "Brief",
+                  "For prose: the audience, the one point, the facts it may claim and where each is shown"
                 ]
               ]
             }
@@ -2367,111 +2610,52 @@
             "rows": [
               [
                 "Specification",
-                "The slice's requirements under the engine's specs, with its open questions answered and what is not in the slice named"
-              ]
-            ]
-          }
-        },
-        {
-          "heading": "What it never does",
-          "text": "- Never writes the plan or the code it specifies.\n- Never decides a question that is the Owner's; it asks and records the answer.\n- Never edits a specification an earlier slice merged.",
-          "tables": []
-        },
-        {
-          "heading": "Gate",
-          "text": "To leave Specify, all of these hold:\n\n- The Owner has read the specification and approved it.\n- No question in it is left open.\n\nWhere they cannot be met, the Owner decides whether the slice is narrowed, split or deferred to the roadmap notes.",
-          "tables": []
-        }
-      ],
-      "owner": "processes/delivery",
-      "path": "model/processes/delivery/phases/specify.md"
-    },
-    {
-      "id": "processes/delivery/phases/tasks",
-      "type": "phase",
-      "name": "Tasks",
-      "tagline": "Break the plan into ordered tasks an implementer can take one at a time, and check that specification, plan and tasks agree.",
-      "fields": {
-        "source": "Local",
-        "owner": "Planner",
-        "executed-by": [
-          "Planner",
-          "Reviewer"
-        ],
-        "gate-approvers": [
-          "Owner"
-        ],
-        "escalation-authority": "Owner",
-        "gate-to": "Implement"
-      },
-      "sections": [
-        {
-          "heading": "What it takes",
-          "text": "An approved plan and the specification it serves.",
-          "tables": []
-        },
-        {
-          "heading": "Activities",
-          "text": "1. The Planner writes the tasks in the order they are to be done, with the test tasks ahead of the code they test wherever the resolution engine is touched.\n2. The Reviewer reads the specification, the plan and the tasks against each other and reports every requirement no task covers and every task no requirement asks for.\n3. The Planner corrects the tasks where the report found a gap.",
-          "tables": []
-        },
-        {
-          "heading": "What it produces",
-          "text": "",
-          "tables": [
-            {
-              "caption": null,
-              "columns": [
-                "Deliverable",
-                "Description"
+                "The whole of the requirements for a change to code, with what is not being done named"
               ],
-              "rows": [
-                [
-                  "Tasks",
-                  "The ordered task list, covering every requirement of the specification and nothing beyond it"
-                ]
-              ]
-            }
-          ],
-          "table": {
-            "caption": null,
-            "columns": [
-              "Deliverable",
-              "Description"
-            ],
-            "rows": [
               [
-                "Tasks",
-                "The ordered task list, covering every requirement of the specification and nothing beyond it"
+                "Brief",
+                "For prose: the audience, the one point, the facts it may claim and where each is shown"
               ]
             ]
           }
         },
         {
           "heading": "What it never does",
-          "text": "- Never leaves a change to the resolution engine without a test task written before it.\n- Never adds a task the specification does not ask for.",
+          "text": "- Never writes the change it specifies.\n- Never decides a question that is the Owner's; it names the options and parks it.\n- Never specifies a capability of the engine that is reachable other than through its API.\n- Never states a fact the model does not hold, or one no published page shows.\n- Never leaves a question unasked because an assumption would be convenient.",
           "tables": []
         },
         {
           "heading": "Gate",
-          "text": "To leave Tasks, all of these hold:\n\n- Every functional requirement has a task, and every task a requirement.\n- Resolution-engine work has its scenario tests as tasks ahead of its code.\n- The Owner has approved the tasks.\n\nWhere they cannot be met, the Owner decides whether the plan or the specification goes back a phase.",
+          "text": "To leave Spec, all of these hold:\n\n- The Owner has read the specification or the brief and approved it.\n- What is explicitly not being done is written down.\n- Where the change reaches another repository, what its release asks of a consumer is written down.\n- Every parked question has the Owner's word on it.\n\nWhere they cannot be met, the Owner decides whether the change is reshaped, narrowed or dropped.",
           "tables": []
         }
       ],
       "owner": "processes/delivery",
-      "path": "model/processes/delivery/phases/tasks.md"
+      "path": "model/processes/delivery/phases/spec.md"
     },
     {
       "id": "processes/delivery/tracks/code",
       "type": "track",
       "name": "Code",
-      "tagline": "A merged slice of a GuestGraph service: its specification, plan and tasks under the engine's specs, and the code and tests that implement them, with every required check green.",
+      "tagline": "A merged change to one of the repositories we publish, with its checks green, and where it changes what another repository vendors, the release that carries it.",
       "fields": {
         "source": "Local"
       },
       "sections": [],
       "owner": "processes/delivery",
       "path": "model/processes/delivery/tracks/code.md"
+    },
+    {
+      "id": "processes/delivery/tracks/prose",
+      "type": "track",
+      "name": "Prose",
+      "tagline": "An entry of the model, a schema, a README or a page of a site, in English the Owner has reviewed, and in Swiss Standard German where the surface carries it.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [],
+      "owner": "processes/delivery",
+      "path": "model/processes/delivery/tracks/prose.md"
     },
     {
       "id": "processes/feature-request",
@@ -2968,22 +3152,25 @@
       "id": "profiles/ai-agent",
       "type": "profile",
       "name": "AI Agent",
-      "tagline": "Specifies, plans, implements and reviews each slice of GuestGraph, and answers whoever asks about it, under a rulebook for each, and decides nothing.",
+      "tagline": "Specifies, plans, runs, implements, reviews, drafts and translates what this company publishes, answers whoever asks about it, under a rulebook for each, and decides nothing.",
       "fields": {
         "source": "Local",
         "nature": "agent",
         "roles": [
           "Specifier",
           "Planner",
+          "Controller",
           "Implementer",
           "Reviewer",
+          "Writer",
+          "Translator",
           "Answerer"
         ]
       },
       "sections": [
         {
           "heading": "Summary",
-          "text": "It holds every seat in Delivery but the Owner's, the Reviewer's seat in Contribution and the Answerer's in Answering, and none of the seats work is brought from: a request is raised by a person, a change offered by one and a question asked by one. Whichever model runs it, the rulebooks are the same, every question it raises ends with the Owner's answer, and nothing it produces reaches the default branch without the Owner merging it.\n\nThis profile is here so the model can say what holds a seat. A seat no profile names is held by a person, and which person is a fact this repository does not carry.",
+          "text": "It holds every seat in Delivery but the Owner's, the Reviewer's seat in Contribution and the Answerer's in Answering, and none of the seats work is brought from: a request is raised by a person, a change offered by one and a question asked by one. Whichever model runs it, the rulebooks are the same, every question it parks ends with the Owner's word, and nothing it produces reaches the default branch without the Owner merging it.\n\nThis profile is here so the model can say what holds a seat. A seat no profile names is held by a person, and which person is a fact this repository does not carry.",
           "tables": []
         }
       ],
@@ -3119,27 +3306,27 @@
       "path": "model/roles/contributor.md"
     },
     {
-      "id": "roles/implementer",
+      "id": "roles/controller",
       "type": "role",
-      "name": "Implementer",
-      "tagline": "The seat that turns approved tasks into tested code on a branch and a pull request, and nothing beyond the tasks.",
+      "name": "Controller",
+      "tagline": "The seat that runs a plan one brief at a time, reads every report as a claim, and writes nothing itself.",
       "fields": {
         "source": "Local"
       },
       "sections": [
         {
           "heading": "What it takes",
-          "text": "The repository's own agent file, the approved tasks and the plan and contracts behind them. Where a task is unclear the seat asks before starting.",
+          "text": "An approved plan, the repository's own agent file, and a place to keep each task's brief, report and findings.",
           "tables": []
         },
         {
           "heading": "What it produces",
-          "text": "The change the tasks specify, tests first on the resolution engine, the full build green and a pull request reporting what was built and what was run.",
+          "text": "One dispatched brief at a time; a decision after each report — fix, accept or park for the Owner; review ordered on the diff rather than on the report; and a branch whose tasks are done in the plan's order, each committed as it lands. The pull request at the end, opened and reported and no further.",
           "tables": []
         },
         {
           "heading": "What it never does",
-          "text": "- Never changes a test's expectation to make it pass.\n- Never merges, tags or edits the pull request's approval.\n- Never claims a check it did not run.",
+          "text": "- Never writes the change or the test itself.\n- Never rewrites what a commit contains; a finding against a committed task is a new brief.\n- Never dispatches the next task while the last one's findings are open.\n- Never accepts a claim that a check passed without the check's output.\n- Never commits a change to a model before the validation pass has read it.\n- Never merges, tags or edits a pull request.",
           "tables": []
         },
         {
@@ -3153,78 +3340,6 @@
                 "URL"
               ],
               "rows": [
-                [
-                  "Rulebook, spec-kit, the implementation",
-                  "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-implement/SKILL.md"
-                ],
-                [
-                  "Agent file",
-                  "https://github.com/guestgraph/engine/blob/main/AGENTS.md"
-                ]
-              ]
-            }
-          ],
-          "table": {
-            "caption": null,
-            "columns": [
-              "What",
-              "URL"
-            ],
-            "rows": [
-              [
-                "Rulebook, spec-kit, the implementation",
-                "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-implement/SKILL.md"
-              ],
-              [
-                "Agent file",
-                "https://github.com/guestgraph/engine/blob/main/AGENTS.md"
-              ]
-            ]
-          }
-        }
-      ],
-      "owner": null,
-      "path": "model/roles/implementer.md"
-    },
-    {
-      "id": "roles/owner",
-      "type": "role",
-      "name": "Owner",
-      "tagline": "The seat that decides what GuestGraph builds next, approves every gate, and is the only one that merges, tags and releases.",
-      "fields": {
-        "source": "Local"
-      },
-      "sections": [
-        {
-          "heading": "What it takes",
-          "text": "A specification, plan, task list or pull request to approve, on the branch, whether it came from inside or from a contributor; a request raised from outside; the constitution and the roadmap notes a decision is weighed against; every question another seat has put to it.",
-          "tables": []
-        },
-        {
-          "heading": "What it produces",
-          "text": "Decisions recorded where they bind: an approved gate, an answer and its reason on a request, an answered question in a specification, a merge, a tag, a release and an amendment to the constitution with its rationale.",
-          "tables": []
-        },
-        {
-          "heading": "What it never does",
-          "text": "- Never delegates a merge, a tag or a release.\n- Never approves a gate whose criteria are not met.\n- Never lets a non-negotiable principle be amended in passing inside a slice.",
-          "tables": []
-        },
-        {
-          "heading": "References",
-          "text": "",
-          "tables": [
-            {
-              "caption": null,
-              "columns": [
-                "What",
-                "URL"
-              ],
-              "rows": [
-                [
-                  "Constitution",
-                  "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
-                ],
                 [
                   "Working rules",
                   "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
@@ -3240,10 +3355,6 @@
             ],
             "rows": [
               [
-                "Constitution",
-                "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
-              ],
-              [
                 "Working rules",
                 "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
               ]
@@ -3252,30 +3363,30 @@
         }
       ],
       "owner": null,
-      "path": "model/roles/owner.md"
+      "path": "model/roles/controller.md"
     },
     {
-      "id": "roles/planner",
+      "id": "roles/implementer",
       "type": "role",
-      "name": "Planner",
-      "tagline": "The seat that turns an approved specification into a design and an ordered task list that the constitution allows.",
+      "name": "Implementer",
+      "tagline": "The seat that turns one task brief into a tested commit and a report, and nothing beyond the brief.",
       "fields": {
         "source": "Local"
       },
       "sections": [
         {
           "heading": "What it takes",
-          "text": "An approved specification, the constitution and the code the slice lands in.",
+          "text": "A task brief that is the whole of its requirements, the interfaces earlier tasks produced, the repository's own agent file and a path for the report. Where the brief is unclear the seat asks before starting.",
           "tables": []
         },
         {
           "heading": "What it produces",
-          "text": "The plan with its research, data model and contracts, having passed the Constitution Check twice with every exception to the fixed shape justified. Then the tasks, in the order they are to be done.",
+          "text": "The change the brief specifies, test first where the brief says so; the commit in the git register; a report naming what was built, what was run and what it doubts; and a short status the Controller acts on.",
           "tables": []
         },
         {
           "heading": "What it never does",
-          "text": "- Never plans past the constitution's fixed shape without writing down the simpler alternative it rejected.\n- Never changes the specification it plans.\n- Never orders the code for the resolution engine ahead of the tests that hold it.",
+          "text": "- Never spawns a subagent or a reviewer; review comes from the Controller after the report.\n- Never changes a test's expectation to make it pass.\n- Never merges, tags or edits a pull request.\n- Never claims a check it did not run.",
           "tables": []
         },
         {
@@ -3290,12 +3401,8 @@
               ],
               "rows": [
                 [
-                  "Rulebook, spec-kit, the plan",
-                  "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-plan/SKILL.md"
-                ],
-                [
-                  "Rulebook, spec-kit, the tasks",
-                  "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-tasks/SKILL.md"
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
                 ]
               ]
             }
@@ -3308,12 +3415,136 @@
             ],
             "rows": [
               [
-                "Rulebook, spec-kit, the plan",
-                "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-plan/SKILL.md"
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/roles/implementer.md"
+    },
+    {
+      "id": "roles/owner",
+      "type": "role",
+      "name": "Owner",
+      "tagline": "The seat that decides what the project is for, says the last word on every page, and is the only one that merges, tags and releases.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "The model, read before deciding: the vision, the objectives and the strategies under them, and the values a decision is weighed against. A draft or a pull request to review, on the branch and on the rendered page. The signals a strategy names as showing whether it is working.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "Decisions, recorded where they bind: a merge, a tag, a release and its notes, a pin moved in a commit that says why, a corrected model. The reviewed English every translation is made from. The word that ends a question an agent has parked, and the word that closes a question the model has left open.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never delegates a merge, a tag or a release; an agent opens the pull request and reports, the Owner merges.\n- Never approves an amendment to a principle the constitution marks non-negotiable in passing inside a change.\n- Never releases a change to what another repository vendors without notes saying what it asks of a consumer.\n- Never lets a published page outlive a disagreement with the model; the model is corrected and the page rebuilt from it.\n- Never states a number that was not counted or a claim the model does not hold.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ],
+                [
+                  "Writing rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
               ],
               [
-                "Rulebook, spec-kit, the tasks",
-                "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-tasks/SKILL.md"
+                "Writing rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/roles/owner.md"
+    },
+    {
+      "id": "roles/planner",
+      "type": "role",
+      "name": "Planner",
+      "tagline": "The seat that cuts an approved specification into task briefs, each whole on its own, and writes none of them.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A specification the Owner has approved, and the repository the work lands in, including the rules that bind it.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "An ordered set of task briefs. Each is the whole of its own requirements, names the interfaces the briefs around it produce and consume, and states how its holder can tell it is done. An entry of a model gets a brief of its own, because the Owner decides one entry at a time. The order is the order they can be worked in, not the order they were thought of.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never re-opens a decision the specification took.\n- Never writes a brief that depends on a conversation its holder did not have.\n- Never writes the change.\n- Never plans a task whose completion cannot be checked.\n- Never puts two entries of a model in one brief.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
               ]
             ]
           }
@@ -3386,24 +3617,24 @@
       "id": "roles/reviewer",
       "type": "role",
       "name": "Reviewer",
-      "tagline": "The seat that reads a slice's artifacts or one diff against what they were meant to do and against the constitution, returns findings with a severity and changes nothing.",
+      "tagline": "The seat that reads one diff against its brief, returns findings with a severity and changes nothing.",
       "fields": {
         "source": "Local"
       },
       "sections": [
         {
           "heading": "What it takes",
-          "text": "For a slice, its specification, plan and tasks. For a pull request, the brief or the description the change was made from, the author's report read as unverified claims, the diff with its commits and context, and the constitution it is held to.",
+          "text": "The brief the work was done from, the implementer's report read as unverified claims, the diff as one file with its commits and context, and the constraints that bind the task.",
           "tables": []
         },
         {
           "heading": "What it produces",
-          "text": "For a slice, every requirement no task covers and every task no requirement asks for. For a pull request, findings each with a file and a line, what is wrong, why it matters and how to fix it, ranked by severity, with the data-safety principles read on any change to merge, unmerge, survivorship or ingest. Where the diff touched a model, every entity it touched read against its schema's writing rules, which no mechanical check reaches. A finding is an input to whoever merges and never a verdict.",
+          "text": "Two verdicts, spec compliance and quality, and findings each with a file and a line, what is wrong, why it matters and how to fix it, ranked by severity, with the strengths named first. Where the diff touched a model, a third verdict: every entity it touched read against its schema's writing rules, which no mechanical check reaches. A finding is an input to whoever merges and never a verdict: it does not decide, and it is not passed on a person.",
           "tables": []
         },
         {
           "heading": "What it never does",
-          "text": "- Never mutates the working tree, the index, a branch or the pull request.\n- Never approves a gate.\n- Never reports a change as clean that alters a source record or drops parseable data.\n- Never reads a schema's writing rules as satisfied because the mechanical checks are green.\n- Never marks polish as critical.",
+          "text": "- Never mutates the working tree, the index, a branch or the pull request.\n- Never re-runs a suite to confirm a report; it runs one focused test on a doubt the report does not answer.\n- Never reads a schema's writing rules as satisfied because the mechanical checks are green.\n- Never spawns another reviewer.\n- Never marks polish as critical.",
           "tables": []
         },
         {
@@ -3418,16 +3649,12 @@
               ],
               "rows": [
                 [
-                  "Rulebook, spec-kit, the artifacts",
-                  "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-analyze/SKILL.md"
-                ],
-                [
-                  "Constitution",
-                  "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
-                ],
-                [
                   "Working rules",
                   "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ],
+                [
+                  "Modeling rules",
+                  "https://github.com/companygraph/meta-model/blob/main/core/CONVENTIONS.md"
                 ]
               ]
             }
@@ -3440,16 +3667,12 @@
             ],
             "rows": [
               [
-                "Rulebook, spec-kit, the artifacts",
-                "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-analyze/SKILL.md"
-              ],
-              [
-                "Constitution",
-                "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
-              ],
-              [
                 "Working rules",
                 "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ],
+              [
+                "Modeling rules",
+                "https://github.com/companygraph/meta-model/blob/main/core/CONVENTIONS.md"
               ]
             ]
           }
@@ -3462,24 +3685,24 @@
       "id": "roles/specifier",
       "type": "role",
       "name": "Specifier",
-      "tagline": "The seat that turns the roadmap notes for a slice into a specification with no open question in it, and builds nothing.",
+      "tagline": "The seat that turns a shaped request into a specification nobody has to guess at, and builds nothing.",
       "fields": {
         "source": "Local"
       },
       "sections": [
         {
           "heading": "What it takes",
-          "text": "The specifications and reference documents already merged, the roadmap notes for the slice and the constitution. Where the notes are ambiguous the seat asks before writing.",
+          "text": "A request already classified, the model and the constitution it must not contradict, and the code or the pages it will touch, read rather than remembered. Where the request is ambiguous the seat asks before writing.",
           "tables": []
         },
         {
           "heading": "What it produces",
-          "text": "A specification of what the slice must do and why, its user stories and requirements, what is not in it and the Owner's answer to every question it raised.",
+          "text": "A specification that is the whole of the requirements: the gap it closes, the approaches considered with the one chosen and why, the decisions taken, and what is explicitly not being done. Where it reaches another repository, what its release will ask of a consumer. Where a decision is the Owner's, the seat names the options and parks the question.",
           "tables": []
         },
         {
           "heading": "What it never does",
-          "text": "- Never writes the plan or the code.\n- Never answers a question that is the Owner's.\n- Never edits a merged specification.",
+          "text": "- Never writes the change it specifies.\n- Never decides scope; it names the options and the Owner chooses.\n- Never specifies a capability of the engine that is reachable other than through its API.\n- Never leaves a question unasked because an assumption would be convenient.\n- Never states a fact the model does not hold.",
           "tables": []
         },
         {
@@ -3494,12 +3717,16 @@
               ],
               "rows": [
                 [
-                  "Rulebook, spec-kit, the specification",
-                  "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-specify/SKILL.md"
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
                 ],
                 [
-                  "Rulebook, spec-kit, the open questions",
-                  "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-clarify/SKILL.md"
+                  "Modeling rules",
+                  "https://github.com/companygraph/meta-model/blob/main/core/CONVENTIONS.md"
+                ],
+                [
+                  "Constitution",
+                  "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
                 ]
               ]
             }
@@ -3512,12 +3739,16 @@
             ],
             "rows": [
               [
-                "Rulebook, spec-kit, the specification",
-                "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-specify/SKILL.md"
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
               ],
               [
-                "Rulebook, spec-kit, the open questions",
-                "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-clarify/SKILL.md"
+                "Modeling rules",
+                "https://github.com/companygraph/meta-model/blob/main/core/CONVENTIONS.md"
+              ],
+              [
+                "Constitution",
+                "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
               ]
             ]
           }
@@ -3525,6 +3756,90 @@
       ],
       "owner": null,
       "path": "model/roles/specifier.md"
+    },
+    {
+      "id": "roles/translator",
+      "type": "role",
+      "name": "Translator",
+      "tagline": "The seat that makes the Swiss Standard German of an element whose English the Owner has reviewed, and hands back a back-translation beside it.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "The reviewed English of the elements the task names, and the glossary. Reviewed means the Owner has said the English is done; a draft is not reviewed, and the seat says so. Where the task names no elements, the seat names the gap and writes nothing.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "The German in the element's own place, de-CH in the forms Switzerland uses, and beside each element a back-translation in English, so a reviewer with a minute can read what the German says.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never translates a draft.\n- Never edits the English.\n- Never writes German into a model; a model is English, and the German a surface carries lives in the surface's own attributes.\n- Never writes a family term in any form but the glossary's.\n- Never commits.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ],
+                [
+                  "Writing rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+                ],
+                [
+                  "Glossary",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/GLOSSARY.md"
+                ],
+                [
+                  "Rulebook",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/TRANSLATOR.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ],
+              [
+                "Writing rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+              ],
+              [
+                "Glossary",
+                "https://github.com/robertblust/conventions/blob/main/conventions/GLOSSARY.md"
+              ],
+              [
+                "Rulebook",
+                "https://github.com/robertblust/conventions/blob/main/conventions/TRANSLATOR.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/roles/translator.md"
     },
     {
       "id": "roles/visitor",
@@ -3553,6 +3868,90 @@
       ],
       "owner": null,
       "path": "model/roles/visitor.md"
+    },
+    {
+      "id": "roles/writer",
+      "type": "role",
+      "name": "Writer",
+      "tagline": "The seat that drafts English in the family voice from a brief, so the Owner reviews a draft instead of writing one.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A brief naming the audience, the one point, the facts the text may claim and where each is shown, and the file and the place the text lands. The rulebook and the glossary. Where the brief lacks the audience, the point or a fact's source, the seat names the gap and writes nothing.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "The text in its file on the current branch, in the register the place calls for, and a reply naming what was written, what changed and which claims could not be traced to the brief or to prose we have already published.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never writes a fact the brief, the repository or a page we have published does not show.\n- Never writes a count or a version of something that is still changing; it says where the number is read instead.\n- Never writes German; the translation is the Translator's, made after the English is reviewed.\n- Never commits and never runs the build.\n- Never uses an adjective that sells.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ],
+                [
+                  "Writing rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+                ],
+                [
+                  "Glossary",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/GLOSSARY.md"
+                ],
+                [
+                  "Rulebook",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WRITER.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ],
+              [
+                "Writing rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+              ],
+              [
+                "Glossary",
+                "https://github.com/robertblust/conventions/blob/main/conventions/GLOSSARY.md"
+              ],
+              [
+                "Rulebook",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WRITER.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/roles/writer.md"
     },
     {
       "id": "sources/local",
@@ -4898,13 +5297,37 @@
     },
     {
       "from": "processes/delivery/phases/implement",
+      "to": "processes/delivery/tracks/code",
+      "via": "Activities.Track",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/implement",
+      "to": "processes/delivery/tracks/prose",
+      "via": "Activities.Track",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/implement",
       "to": "roles/owner",
       "via": "escalation-authority",
       "attrs": {}
     },
     {
       "from": "processes/delivery/phases/implement",
+      "to": "roles/controller",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/implement",
       "to": "roles/implementer",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/implement",
+      "to": "roles/owner",
       "via": "executed-by",
       "attrs": {}
     },
@@ -4916,13 +5339,31 @@
     },
     {
       "from": "processes/delivery/phases/implement",
+      "to": "roles/translator",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/implement",
+      "to": "roles/writer",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/implement",
       "to": "roles/owner",
       "via": "gate-approvers",
       "attrs": {}
     },
     {
       "from": "processes/delivery/phases/implement",
-      "to": "roles/implementer",
+      "to": "processes/delivery/phases/integrate",
+      "via": "gate-to",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/implement",
+      "to": "roles/controller",
       "via": "owner",
       "attrs": {}
     },
@@ -4933,117 +5374,195 @@
       "attrs": {}
     },
     {
-      "from": "processes/delivery/phases/plan",
+      "from": "processes/delivery/phases/implement",
+      "to": "roles/planner",
+      "via": "supported-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/integrate",
       "to": "roles/owner",
       "via": "escalation-authority",
       "attrs": {}
     },
     {
-      "from": "processes/delivery/phases/plan",
-      "to": "roles/planner",
+      "from": "processes/delivery/phases/integrate",
+      "to": "roles/controller",
       "via": "executed-by",
       "attrs": {}
     },
     {
-      "from": "processes/delivery/phases/plan",
+      "from": "processes/delivery/phases/integrate",
       "to": "roles/owner",
-      "via": "gate-approvers",
-      "attrs": {}
-    },
-    {
-      "from": "processes/delivery/phases/plan",
-      "to": "processes/delivery/phases/tasks",
-      "via": "gate-to",
-      "attrs": {}
-    },
-    {
-      "from": "processes/delivery/phases/plan",
-      "to": "roles/planner",
-      "via": "owner",
-      "attrs": {}
-    },
-    {
-      "from": "processes/delivery/phases/plan",
-      "to": "sources/local",
-      "via": "source",
-      "attrs": {}
-    },
-    {
-      "from": "processes/delivery/phases/specify",
-      "to": "roles/owner",
-      "via": "escalation-authority",
-      "attrs": {}
-    },
-    {
-      "from": "processes/delivery/phases/specify",
-      "to": "roles/specifier",
       "via": "executed-by",
       "attrs": {}
     },
     {
-      "from": "processes/delivery/phases/specify",
-      "to": "roles/owner",
-      "via": "gate-approvers",
-      "attrs": {}
-    },
-    {
-      "from": "processes/delivery/phases/specify",
-      "to": "processes/delivery/phases/plan",
-      "via": "gate-to",
-      "attrs": {}
-    },
-    {
-      "from": "processes/delivery/phases/specify",
-      "to": "roles/specifier",
-      "via": "owner",
-      "attrs": {}
-    },
-    {
-      "from": "processes/delivery/phases/specify",
-      "to": "sources/local",
-      "via": "source",
-      "attrs": {}
-    },
-    {
-      "from": "processes/delivery/phases/tasks",
-      "to": "roles/owner",
-      "via": "escalation-authority",
-      "attrs": {}
-    },
-    {
-      "from": "processes/delivery/phases/tasks",
-      "to": "roles/planner",
-      "via": "executed-by",
-      "attrs": {}
-    },
-    {
-      "from": "processes/delivery/phases/tasks",
+      "from": "processes/delivery/phases/integrate",
       "to": "roles/reviewer",
       "via": "executed-by",
       "attrs": {}
     },
     {
-      "from": "processes/delivery/phases/tasks",
+      "from": "processes/delivery/phases/integrate",
       "to": "roles/owner",
       "via": "gate-approvers",
       "attrs": {}
     },
     {
-      "from": "processes/delivery/phases/tasks",
+      "from": "processes/delivery/phases/integrate",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/integrate",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/plan",
+      "to": "processes/delivery/tracks/code",
+      "via": "Activities.Track",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/plan",
+      "to": "processes/delivery/tracks/prose",
+      "via": "Activities.Track",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/plan",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/plan",
+      "to": "roles/planner",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/plan",
+      "to": "roles/owner",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/plan",
       "to": "processes/delivery/phases/implement",
       "via": "gate-to",
       "attrs": {}
     },
     {
-      "from": "processes/delivery/phases/tasks",
+      "from": "processes/delivery/phases/plan",
       "to": "roles/planner",
       "via": "owner",
       "attrs": {}
     },
     {
-      "from": "processes/delivery/phases/tasks",
+      "from": "processes/delivery/phases/plan",
       "to": "sources/local",
       "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/plan",
+      "to": "roles/specifier",
+      "via": "supported-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/shape",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/shape",
+      "to": "roles/owner",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/shape",
+      "to": "roles/owner",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/shape",
+      "to": "processes/delivery/phases/spec",
+      "via": "gate-to",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/shape",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/shape",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/spec",
+      "to": "processes/delivery/tracks/code",
+      "via": "Activities.Track",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/spec",
+      "to": "processes/delivery/tracks/prose",
+      "via": "Activities.Track",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/spec",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/spec",
+      "to": "roles/specifier",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/spec",
+      "to": "roles/owner",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/spec",
+      "to": "processes/delivery/phases/plan",
+      "via": "gate-to",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/spec",
+      "to": "roles/specifier",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/spec",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/spec",
+      "to": "roles/writer",
+      "via": "supported-by",
       "attrs": {}
     },
     {
@@ -5053,8 +5572,20 @@
       "attrs": {}
     },
     {
+      "from": "processes/delivery/tracks/prose",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
       "from": "processes/delivery",
       "to": "processes/delivery/phases/implement",
+      "via": "Phases.Phase",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery",
+      "to": "processes/delivery/phases/integrate",
       "via": "Phases.Phase",
       "attrs": {}
     },
@@ -5066,19 +5597,25 @@
     },
     {
       "from": "processes/delivery",
-      "to": "processes/delivery/phases/specify",
+      "to": "processes/delivery/phases/shape",
       "via": "Phases.Phase",
       "attrs": {}
     },
     {
       "from": "processes/delivery",
-      "to": "processes/delivery/phases/tasks",
+      "to": "processes/delivery/phases/spec",
       "via": "Phases.Phase",
       "attrs": {}
     },
     {
       "from": "processes/delivery",
       "to": "processes/delivery/tracks/code",
+      "via": "Tracks.Track",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery",
+      "to": "processes/delivery/tracks/prose",
       "via": "Tracks.Track",
       "attrs": {}
     },
@@ -5330,6 +5867,12 @@
     },
     {
       "from": "profiles/ai-agent",
+      "to": "roles/controller",
+      "via": "roles",
+      "attrs": {}
+    },
+    {
+      "from": "profiles/ai-agent",
       "to": "roles/implementer",
       "via": "roles",
       "attrs": {}
@@ -5354,6 +5897,18 @@
     },
     {
       "from": "profiles/ai-agent",
+      "to": "roles/translator",
+      "via": "roles",
+      "attrs": {}
+    },
+    {
+      "from": "profiles/ai-agent",
+      "to": "roles/writer",
+      "via": "roles",
+      "attrs": {}
+    },
+    {
+      "from": "profiles/ai-agent",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
@@ -5366,6 +5921,12 @@
     },
     {
       "from": "roles/contributor",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "roles/controller",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
@@ -5407,7 +5968,19 @@
       "attrs": {}
     },
     {
+      "from": "roles/translator",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
       "from": "roles/visitor",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "roles/writer",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
