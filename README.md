@@ -19,6 +19,7 @@ A repository named `talks` in this organization would claim `guestgraph.io/talks
 | `/privacy/` | What this site collects, which is nothing. |
 | `/problems/` | What each refusal type a GuestGraph service answers means, and what to do about it. |
 | `/api/` | The two APIs, generated from the services' OpenAPI documents at pinned commits. |
+| `/model/` | GuestGraph's own model, drawn on the stage from `model.json`, which is built from a pinned commit of `guestgraph/mental-model`. |
 
 ## Contents
 
@@ -35,8 +36,14 @@ A repository named `talks` in this organization would claim `guestgraph.io/talks
   still resolve under `file://` too, even though a deck is no longer required to open that way.
 - `sitemap.xml` — one flat list of every URL on the domain. It was an index pointing at a
   second sitemap while the talks lived elsewhere; there is one list now.
-- `verify/check.mjs` — the suite, covering all seven pages in one run, and
+- `verify/check.mjs` — the suite, covering every page in one run, and
   `verify/og-recipe.test.mjs`, the share-card check's own tests.
+- `build/model.mjs`, `build/read.mjs` and `source.json` — `model.json`, written from the commit of
+  `guestgraph/mental-model` that `source.json` pins, with the parser `companygraph-meta-model`
+  ships. `npm run model` rewrites it, `npm run model:check` fails when it is not what the pin
+  parses to, and CI runs the check. The pin is editorial, and `npm run pin:check` reports how far
+  it has fallen behind, beside the API pins. `stage.js`, `stage.css`, `card.js` and the vendored
+  d3 are the design package's `stage` group, which draws it.
 - `build-api.mjs` and `api-sources.json` — the API page's operation rows, written from the
   engine's and the connector's own OpenAPI documents at the commits the pins name. `npm run api`
   rewrites the rows, `npm run api:check` fails when the page has drifted from the pins, and CI
@@ -47,10 +54,10 @@ A repository named `talks` in this organization would claim `guestgraph.io/talks
   older API on purpose, or an owner who has not looked lately, and only a person tells those
   apart. It prints a notice CI renders on the pull request, which is how a new operation stops
   being something the page has never heard of.
-- `og.png`, `talks/og.png`, `talks/intro/og.png` — 1200×630 share cards, each rendered from the
-  page it belongs to, and an `og.sha` beside each one: a hash of everything that went into the
+- `og.png` at the root and beside every page's `index.html` — 1200×630 share cards, each rendered
+  from the page it belongs to, and an `og.sha` beside each one: a hash of everything that went into the
   card, so `npm run og:check` can say whether it still shows its page. `og-recipe.mjs` defines
-  what that is, `export-og.mjs` renders all three and writes the stamps, `og-check.mjs` reports
+  what that is, `export-og.mjs` renders every one and writes the stamps, `og-check.mjs` reports
   them. `export-pdf.mjs`, alongside it at the root, renders the deck's two PDFs into
   `talks/intro/`.
 - `logo.svg` — the mark: three open records resolving into one solid profile. Uses
@@ -75,9 +82,9 @@ No build step. Open `index.html`, or serve it:
 npm install                        # once, for Playwright
 npm run serve                      # → http://localhost:8000
 npm run verify                     # renders every page and asserts the DOM
-npm run og:check                   # do the seven share cards still show their pages?
+npm run og:check                   # do the share cards still show their pages?
 npm run test:og                    # the card check's own tests (node --test)
-npm run og                         # re-renders all seven cards after a visual change
+npm run og                         # re-renders every card after a visual change
 npm run sitemap                    # date each sitemap URL from its page's last commit — run before committing a page
 npm run sitemap:check              # are those dates still what git says?
 ```

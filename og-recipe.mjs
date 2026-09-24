@@ -38,6 +38,9 @@ const DECK_HIDE = `.chrome,.bar,.notes,.langind,.hint{display:none!important}
 // reader takes in before deciding to care. The figure is the five-record argument that leads
 // there, and an argument does not survive being glanced at in a feed.
 const HOME_HIDE = `.figure{display:none!important}`;
+// The model page's stage is a drawing to explore, not a picture: cut at the card's edge it reads
+// as a broken figure, so the card is the title block alone, as on every other page here.
+const MODEL_HIDE = `.figure-section{display:none!important}`;
 
 // Rendered at 16:9 and the middle band taken: these pages size themselves against the
 // viewport's shorter side, so squeezed straight into 1.9:1 they shrink and leave the frame
@@ -59,6 +62,7 @@ export const cards = [
   { dir: "privacy", ...FRAME, clipY: CLIP_Y, hide: HOME_HIDE, titleSlide: false, settle: "wait:900" },
   { dir: "problems", ...FRAME, clipY: CLIP_Y, hide: HOME_HIDE, titleSlide: false, settle: "wait:900" },
   { dir: "api", ...FRAME, clipY: CLIP_Y, hide: HOME_HIDE, titleSlide: false, settle: "wait:900" },
+  { dir: "model", ...FRAME, clipY: CLIP_Y, hide: MODEL_HIDE, titleSlide: false, settle: "wait:900" },
 ];
 
 // Bound to this repository's root so the site's own callers can say `state(card)`. The package

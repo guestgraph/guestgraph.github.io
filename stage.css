@@ -1,0 +1,514 @@
+/* The stage: the figure, the card and the expand dialog, shared by every page that draws a
+   data block (spec §4). Loaded relatively — `<link rel="stylesheet" href="../stage.css">` —
+   after the page's own inline <style>, so the page's tokens are defined before these rules
+   use them and a page rule and a stage rule of equal weight still resolve the way they did
+   when both lived in the one block. The page keeps `.figure-section`, `.figcap` and its
+   prose; everything below belongs to the stage and is edited in this one place.
+
+   The design tokens (--ground, --raise, --rule, --ink, --dim, --c-*) and the `.mono` face
+   come from the page: this file names them, it does not define them. */
+  /* The path line and Expand share a row: the control belongs beside the thing it acts on,
+     not tucked in the card's footer — Expand opens the whole stage, not just the card. */
+  /* Three columns: the path, the history, Expand. The middle one is the transport the
+     script builds, and it sits over the seam between canvas and card; in the dialog Expand
+     is turned into nothing and the right column stays, so the control does not move.
+     Each names its own column rather than trusting the order it was written in. Auto
+     placement fills the tracks from the items present, so the moment one of the three is
+     not there — the path is not, below 860px — the other two slide left and the transport
+     stops sitting over the seam. A column named is a column kept. */
+  .stagehead{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:1rem}
+  .stagehead .path{grid-column:1}
+  .stagehead .history{grid-column:2}
+  .stagehead .expand{grid-column:3; justify-self:end}
+  .path{min-height:1.4em; font-size:.8rem; letter-spacing:.06em; color:var(--dim)}
+  .path b{color:var(--c-firm); font-weight:600}
+  /* Three columns: canvas, the handle between them, details. The details width is a custom
+     property so one line of script can move it and every layout that reads it follows —
+     including the dialog, which is the same .stage element moved, not a second one. */
+  /* Half and half to begin with. The chrome between the panes is the handle plus the grid's
+     two gaps — 10 + 8 + 8 — so half of what is left is 50% minus 13px, and the script computes
+     the same number when it takes over. Declaring it here rather than only in the script means
+     the first paint is already even, instead of 360px for a frame and then a jump. */
+  .stage{--card-w:calc(50% - 13px); margin-top:.8rem; height:clamp(520px,62vh,720px); display:grid;
+         grid-template-columns:minmax(0,1fr) 10px var(--card-w); gap:.5rem}
+  .canvas{position:relative; overflow:hidden; border:1.5px solid var(--rule); border-radius:12px; background:var(--raise)}
+  /* No cursor at rest. The primary act on this canvas is clicking a node, not dragging the
+     space between them, and a permanent grab hand advertises the wrong one — every canvas a
+     visitor already knows (Figma, Miro, tldraw, a map) shows an arrow until a pan actually
+     begins, and reserves the hand for the moment the thing is moving.
+     `.panning` is set by the stage on the first pointer move that pans, and cleared on
+     release, so the closed hand is feedback rather than an invitation. */
+  .canvas svg{display:block; width:100%; height:100%}
+  .canvas svg.panning{cursor:grabbing}
+  .recenter{position:absolute; right:.8rem; bottom:.8rem; font:inherit; font-size:.72rem; letter-spacing:.08em;
+            background:var(--raise); color:var(--c-mid); border:1px solid var(--rule); border-radius:6px;
+            padding:.35rem .6rem; cursor:pointer}
+  .recenter:hover, .recenter:focus-visible{border-color:var(--c-mid)}
+  /* A drag handle wide enough to hit — 10px — with a 1px rule drawn down its middle, which
+     is the shape every resizable pane a visitor already knows has: an editor's sidebar, a
+     devtools split, a Finder column. It is a real separator to the accessibility tree and it
+     takes the keyboard, because a control that can only be dragged cannot be reached at all
+     by someone who does not drag. */
+  .gutter{align-self:stretch; position:relative; cursor:col-resize; border:0; padding:0;
+          background:none; touch-action:none}
+  .gutter::before{content:""; position:absolute; inset:0 4px; background:var(--rule);
+                  border-radius:1px; transition:background-color .15s ease}
+  .gutter:hover::before, .gutter:focus-visible::before, .gutter.dragging::before{background:var(--c-mid)}
+  .gutter:focus{outline:none}
+  .card{display:flex; flex-direction:column; min-height:0; border:1.5px solid var(--c-mid); border-radius:12px; background:var(--raise)}
+  .cbody{flex:1; min-height:0; overflow:auto; padding:1.3rem 1.4rem}
+  .cfoot{border-top:1px solid var(--rule); padding:.8rem 1.4rem; min-height:2.6rem;
+         display:flex; align-items:center; justify-content:space-between; gap:1rem}
+  .cfoot a{font-family:"Plex Mono",monospace; font-size:.78rem; letter-spacing:.06em; color:var(--c-mid); text-decoration:none}
+  /* A control, never mono — .expand sits at the end of the path line, styled like .recenter
+     because both are things you can do to the stage, not things it reports. It is visible at
+     every focus: the whole stage — path, canvas and card — is always worth expanding, unlike
+     the card alone, which had nothing to show for the root or a folder. */
+  .expand{font:inherit; font-size:.72rem; letter-spacing:.08em; line-height:1.5; background:var(--raise);
+          color:var(--c-mid); border:1px solid var(--rule); border-radius:6px;
+          padding:.35rem .6rem; cursor:pointer; white-space:nowrap}
+  .expand:hover, .expand:focus-visible{border-color:var(--c-mid)}
+  /* The history: the deck footer's transport, cut to the head row — its slab, its LCD and
+     its buttons, in the tokens the deck chrome already puts on every page. The readout is
+     where the visitor is in this visit's trail, the way the deck's is the slide it is on.
+     The buttons are the deck's glyphs at the row's size; a side with nowhere to go fades the
+     way the deck's does, and stays focusable for the reason stage.js gives. */
+  .history{display:inline-flex; align-items:center; gap:.7rem}
+  .history .slab{display:inline-flex; align-items:center; gap:.3rem; background:var(--slab); border:1px solid var(--rule);
+                 border-radius:10px; padding:.25rem .35rem; box-shadow:inset 0 1px 0 var(--deck-lift), 0 8px 22px var(--deck-drop)}
+  /* The names beside the slab: where Back goes on the left, where Next goes on the right,
+     in the page's dim text with a fixed slot each, so the instrument between them stays put
+     whatever the names measure. Empty when a side has nowhere to go; the slot stays. */
+  .history .step{width:11rem; display:flex; flex-direction:column; gap:.1rem; line-height:1.2; overflow:hidden}
+  .history .step .k, .history .step b{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .history .step .k{font-style:normal; font-family:"Plex Mono",monospace; font-size:.66rem; letter-spacing:.08em; color:var(--dim); min-height:.8em}
+  .history .step b{font-size:.8rem; font-weight:500; color:var(--ink)}
+  .history .was{text-align:right}
+  @media (max-width:900px){ .history .step{display:none} }
+  .history button{display:grid; place-items:center; width:28px; height:28px; padding:0; border:0; border-radius:7px;
+                  background:none; color:var(--dim); cursor:pointer}
+  .history button svg{width:15px; height:15px; display:block; fill:currentColor}
+  .history button:hover{color:var(--ink); background:var(--deck-hover)}
+  .history button:focus-visible{outline:2px solid var(--c-mid); outline-offset:2px; color:var(--ink)}
+  .history button[aria-disabled="true"]{opacity:.35; cursor:default}
+  .history button[aria-disabled="true"]:hover{color:var(--dim); background:none}
+  .history .lcd{display:flex; align-items:center; margin:0 .15rem; padding:.3rem .5rem; border-radius:6px; background:var(--lcd);
+                box-shadow:inset 0 1px 3px var(--lcd-inset), inset 0 0 0 1px var(--lcd-glow);
+                font-family:"Plex Mono",monospace; font-size:.7rem; font-weight:600; letter-spacing:.09em; line-height:1;
+                color:var(--lcd-ink); white-space:nowrap}
+  .history .lcd .sep, .history .lcd .tot{color:var(--lcd-faint)}
+  .cbody .eyebrow{font-family:"Plex Mono",monospace; font-size:.72rem; letter-spacing:.08em; color:var(--dim); word-break:break-all}
+  .cbody h3{margin-top:.35rem; font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; font-weight:700; letter-spacing:-.02em; font-size:1.45rem; line-height:1.1}
+  .cbody .chead{margin-top:.35rem; display:flex; align-items:center; gap:.85rem}
+  .cbody .chead h3{margin-top:0; min-width:0; overflow-wrap:anywhere}
+  .cbody .avatar{flex:none; width:64px; height:64px; border-radius:50%; object-fit:cover; box-shadow:0 0 0 1px var(--rule)}
+  .cbody .tag{margin-top:.55rem; color:var(--dim); line-height:1.4}
+  .cbody dl{margin-top:1.1rem; display:grid; grid-template-columns:max-content 1fr; gap:.3rem .9rem; font-size:.9rem}
+  .cbody dt{font-family:"Plex Mono",monospace; font-size:.78rem; color:var(--dim); padding-top:.15rem}
+  /* A section heading is a heading, not a label. The pages set one in Bricolage, sentence
+     case, ink — `.value h3` on the model page is the nearest — and keep mono uppercase for
+     what names a kind of thing: the nav, the byline, the eyebrow above the title. A heading
+     dressed as the eyebrow reads as one more label and, with the prose under it dim, sits at
+     the prose's own stop. So: the title's face at a size between the prose and the title, and
+     a hairline above it, the rule the model page draws over each value at the card's weight,
+     so a long card scans by section. More air above than below, so the heading belongs to
+     what follows it. */
+  .cbody h4{margin-top:1.4rem; padding-top:1.1rem; border-top:1px solid var(--rule);
+            font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+            font-size:1.02rem; font-weight:700; letter-spacing:-.015em; line-height:1.2}
+  .cbody h4 + p, .cbody h4 + ul.prose, .cbody h4 + ol.prose{margin-top:.45rem}
+  /* A subheading inside a section, which the file writes as "###": a phase's Activities is Code
+     and then Prose. It belongs to the section above it, so it carries no rule; it is ink in the
+     prose's face at the prose's size and weight 600, which is all a reader needs to see the
+     section turn, and it keeps the h4's order of air, more above than below. */
+  .cbody h5.sub{margin-top:.9rem; font-size:.93rem; font-weight:600; line-height:1.3; color:var(--ink)}
+  .cbody h5.sub + p, .cbody h5.sub + ul.prose, .cbody h5.sub + ol.prose{margin-top:.3rem}
+  /* Running text is prose, and prose on every page is dim: ink is for a title, a value and a
+     control. A paragraph and a list share the rule, because an experience card is mostly a
+     list. Inline code stays ink — it is quoted from the file, data rather than prose, and the
+     mono face already says so. */
+  .cbody p{margin-top:.4rem; font-size:.93rem; line-height:1.5; color:var(--dim)}
+  /* A list the file wrote as a list. The marker is the quiet blue the canvas uses for a line
+     that is present but not the point, and the text hangs off it, so a wrapped item lines up
+     with the item above rather than with the marker. */
+  /* Every property here is declared, none left to the default: the pages that host the stage
+     have their own `.card ul` — a `list-style:none` grid — and a rule that named only margin
+     and padding inherited that, so the list drew no bullets and took the page's row gap. A
+     shared block cannot assume the page around it has no opinion about `ul`.
+     `display:block` and not a flex or grid column for the same reason the page's rule was a
+     problem: an element that is not laid out as a list item draws no marker. Rows are spaced
+     by a margin between items. */
+  /* A numbered list is the same list with its numbers: the file numbered it because the items
+     are a sequence, and the numbers say that. The padding is wider than the disc's so a
+     two-digit number still hangs outside the text. */
+  .cbody ul.prose{display:block; list-style:disc; margin:.4rem 0 0; padding-left:1.05rem;
+                  font-size:.93rem; line-height:1.5; color:var(--dim)}
+  .cbody ol.prose{display:block; list-style:decimal; margin:.4rem 0 0; padding-left:1.45rem;
+                  font-size:.93rem; line-height:1.5; color:var(--dim)}
+  .cbody ul.prose li + li, .cbody ol.prose li + li{margin-top:.4rem}
+  .cbody ul.prose li::marker, .cbody ol.prose li::marker{color:var(--c-weak)}
+  .cbody ol.prose li::marker{font-variant-numeric:tabular-nums}
+  .cbody p code, .cbody ul.prose code, .cbody ol.prose code{color:var(--ink)}
+  .cbody table{margin-top:.5rem; border-collapse:collapse; width:100%; font-size:.88rem}
+  .cbody th{text-align:left; font-family:"Plex Mono",monospace; font-weight:600; font-size:.72rem; letter-spacing:.06em; color:var(--dim); padding:.3rem .6rem .3rem 0; border-bottom:1px solid var(--rule)}
+  /* A cell is one of four things, and the renderer has already decided which: a reference is
+     a link in the interactive blue, a URL an external link, a quoted token code in ink, and
+     what remains is text from the file, a sentence or a one-word classifier. The sentence is
+     prose and reads in dim like every paragraph; the classifier does the job the field label
+     does in the list above, which is dim already. So a row reads link, link, dim sentence,
+     and no rule has to know which column it is in. */
+  .cbody td{padding:.35rem .6rem .35rem 0; vertical-align:top; border-bottom:1px solid var(--rule); color:var(--dim)}
+  .cbody td code{color:var(--ink)}
+  /* A caption addresses the table under it and is quoted out of the file it came from —
+     mono, because it is data, not this page's prose. Carries .mono for the face, which
+     the page defines, and this rule for the size and the space above its table. */
+  .cbody .caption{margin-top:1.1rem; font-size:.78rem; color:var(--dim); line-height:1.45}
+  .cbody .caption + table{margin-top:.35rem}
+  /* Inline code is a string quoted out of a file, so it takes the data face the page defines
+     as .mono. Sized in em against whatever it sits in — a browser's default monospace is a
+     size smaller than the prose around it — and allowed to break, because a path is one long
+     unbreakable word and the card is one column wide on a phone. break-word only breaks at a
+     boundary the browser would already choose for prose, so a short word like "Evidence"
+     stays whole; a table cell that is one long unbreakable token still wraps because there is
+     nowhere else to put it. */
+  .cbody code{font-size:.92em; overflow-wrap:break-word}
+  /* Prose, not a table cell, is where a path or URL actually runs long enough to need the
+     anywhere break — back to that here. */
+  .cbody p code{overflow-wrap:anywhere}
+  .cbody a.go{color:var(--c-mid); text-decoration:none; border-bottom:1px solid var(--c-weak); cursor:pointer}
+  /* A link that leaves the model, in the same treatment as one that walks it — a reader should
+     not have to learn two link styles in one card. It breaks anywhere, because a URL is one
+     long unbreakable word and this column is narrow. */
+  .cbody a.ext{color:var(--c-mid); text-decoration:none; border-bottom:1px solid var(--c-weak);
+               overflow-wrap:anywhere}
+  .cbody a.go:hover, .cbody a.ext:hover,
+  .cbody a.go:focus-visible, .cbody a.ext:focus-visible{border-bottom-color:var(--c-mid)}
+  /* A list field's entries, one per line. No marker: the `dt` beside them already says what
+     they are, and a bullet column would indent them out of line with every other value in the
+     grid. The rhythm is the row gap of the `dl` it sits in, so a list of one looks like the
+     scalar it sits beside. */
+  .cbody dd ul.items{list-style:none; margin:0; padding:0; display:flex;
+                     flex-direction:column; gap:.28rem}
+  .cbody .empty{color:var(--dim); line-height:1.5}
+  /* The skills section: one closed group per category, the category's name and its count on
+     the line, its skills as chips when opened. A chip is one bordered token per reference,
+     wrapping, each with an edge a pointer can find; the border is the rule and the text the
+     interactive stop. Used for a set of references and for nothing else, or the card grows a
+     second card style. The triangle is the disclosure's own mark, drawn in the candidate
+     blue and turned when open. */
+  .cbody .grps{margin-top:.5rem; display:flex; flex-direction:column; gap:.2rem}
+  .cbody .grp > summary{cursor:pointer; list-style:none; display:flex; align-items:baseline; gap:.5rem; padding:.1rem 0; font-size:.93rem}
+  .cbody .grp > summary::-webkit-details-marker{display:none}
+  .cbody .grp > summary::before{content:""; width:0; height:0; border-style:solid; border-width:4px 0 4px 6px;
+                                border-color:transparent transparent transparent var(--c-weak); flex:0 0 auto; transition:transform .15s ease}
+  .cbody .grp[open] > summary::before{transform:rotate(90deg); border-left-color:var(--c-mid)}
+  .cbody .grp > summary:hover{color:var(--c-mid)}
+  .cbody .grp > summary:focus-visible{outline:2px solid var(--c-mid); outline-offset:2px; border-radius:3px}
+  .cbody .grp > summary .n{font-family:"Plex Mono",monospace; font-size:.74rem; color:var(--dim); letter-spacing:.06em}
+  .cbody .grp > .chips{display:flex; flex-wrap:wrap; gap:.4rem .45rem; padding:.3rem 0 .55rem 1.1rem}
+  .cbody .chips a{display:inline-flex; align-items:center; gap:.45rem;
+                  font-size:.86rem; line-height:1.25; padding:.26rem .6rem; border-radius:6px; border:1px solid var(--rule);
+                  color:var(--c-mid); text-decoration:none}
+  .cbody .chips a:hover, .cbody .chips a:focus-visible{border-color:var(--c-mid)}
+  /* The level's marks on a chip: one square per level the model defines, filled to the one
+     claimed. The square is the figure's mark for a page — outlined in the candidate blue
+     when empty, filled in the resolved one when reached — so the scale reads as the model's. */
+  .cbody .chips .lv{display:inline-flex; gap:2px; flex:0 0 auto}
+  .cbody .chips .lv i{width:6px; height:6px; border:1.5px solid var(--c-weak); display:block}
+  .cbody .chips .lv i.on{background:var(--c-firm); border-color:var(--c-firm)}
+  /* The tooltip card.js moves to whatever is hovered or focused: a note, on the family's
+     control surface — the raised ground, the hairline rule and the small radius Expand and
+     recenter wear — with the name in ink and the one line in dim after it, one line where it
+     fits and two where it does not. It says what a browser title said, in the page's own
+     voice, and it is the same box on a chip, on a reference and on the transport. The type
+     card.js also hands over is not shown: the name is what the note is about. Fixed, above
+     the target, and never past the viewport's edge; the script does the placing, this only
+     dresses it. */
+  .tip{position:fixed; z-index:20; left:0; top:0; pointer-events:none; opacity:0; transform:translateY(2px);
+       transition:opacity .12s ease, transform .12s ease; max-width:min(22rem, calc(100vw - 2rem));
+       background:var(--raise); border:1px solid var(--rule); border-radius:6px; padding:.42rem .62rem;
+       box-shadow:0 6px 18px var(--deck-drop); font-size:.8rem; line-height:1.35; color:var(--dim)}
+  .tip.show{opacity:1; transform:none}
+  .tip .k{display:none}
+  .tip .n{color:var(--ink); font-weight:600}
+  .tip .n:not(:empty) + .d:not(:empty)::before{content:" "}
+  @media (prefers-reduced-motion: reduce){ .tip{transition:none} }
+  @media (prefers-reduced-motion: reduce){
+    .cbody .grp > summary::before{transition:none}
+  }
+  @media (max-width: 860px){
+    /* minmax(0,1fr), never a bare 1fr: a grid track sized `auto` at its floor takes the
+       widest min-content of the items in it, and the card's is a table of quoted field
+       names. On a phone that pushed the one column past the shell and scrolled the whole
+       document sideways. The card scrolls inside itself instead — .cbody already does. */
+    /* One column below this width, so there is nothing to divide and no handle to show.
+       With the handle gone the split is no longer the visitor's to move, so it is the one
+       the stage opens with above this width — half and half — turned on its side. Both
+       panes read the one number: --pane is what the visible screen has left once the head
+       row, the stage's own top margin and the gap between the panes are out of it, halved —
+       4rem covers those three, the head row being the transport's own height now that the
+       path below it is gone —
+       so the card's last pixel lands at the fold and the drawing and what it says about the
+       node are on screen at once, which is the pair's whole point. svh, not vh: on a phone
+       vh measures the screen with the browser's own bar scrolled away, so a pane sized in it
+       is taller than what the visitor can see, and the pair the arithmetic just fitted
+       spills anyway. The floor is the smallest canvas a graph is still worth drawing on;
+       under roughly a 600px screen the pair runs past the fold rather than shrink below it,
+       because two panes too small to read are worse than one scroll. */
+    .stage{--pane:max(240px, calc((100svh - 4rem) / 2));
+           height:auto; grid-template-columns:minmax(0,1fr)}
+    .gutter{display:none}
+    /* The path line goes. It is one long unbreakable id in a column a phone gives about
+       twenty characters, so it wrapped to three lines and made the head row taller than
+       the transport standing in it — a breadcrumb costing the drawing under it more height
+       than the breadcrumb is worth. What it said is not lost: the card under the canvas
+       carries the same node's type and name, and the drawing rings the node it is on. The
+       element stays in the document for the script to write into, so nothing downstream
+       has to know it is not shown. */
+    .path{display:none}
+    .canvas{height:var(--pane)}
+    .card{height:var(--pane)}
+  }
+
+  /* The stage, expanded. Not a copy: Expand moves the same .stagehead and .stage elements
+     into this dialog, so the same #fig, #card and their handlers keep working, and moves
+     them back on close. A dialog in the browser's own top layer needs no z-index and closes
+     on Escape for free. */
+  /* max-width/max-height override the UA stylesheet's own dialog:modal clamp — Chromium's is
+     tighter than the 96vw/92vh this page asks for, and without this the dialog quietly
+     renders smaller than its own width/height rule says, defeating the point of Expand on a
+     narrow viewport, where every pixel back is a pixel the graph needed. */
+  dialog.modal{width:min(1500px,96vw); height:min(92vh,1000px);
+               max-width:96vw; max-height:92vh; padding:1rem 1.2rem 1.2rem;
+               margin:auto; border:1.5px solid var(--c-mid); border-radius:12px;
+               background:var(--raise); color:var(--ink); flex-direction:column}
+  dialog.modal[open]{display:flex}
+  /* The dialog holds focus itself when a link opened it, so that no control is lit before
+     the visitor has touched anything; it is a container, and a container draws no ring. */
+  dialog.modal:focus, dialog.modal:focus-visible{outline:none}
+  dialog.modal::backdrop{background:rgba(0,0,0,.6)}
+  @keyframes modalIn{ from{opacity:0} to{opacity:1} }
+  dialog.modal[open]{animation:modalIn .15s ease-out}
+  @media (prefers-reduced-motion: reduce){
+    dialog.modal[open]{animation:none}
+  }
+  .modal .close{position:absolute; top:.6rem; right:.6rem; width:2.2rem; height:2.2rem;
+                display:flex; align-items:center; justify-content:center;
+                font:inherit; font-size:1.3rem; line-height:1; background:none; border:0;
+                border-radius:6px; color:var(--dim); cursor:pointer}
+  .modal .close:hover, .modal .close:focus-visible{color:var(--c-mid)}
+  /* Flex column so .stage takes whatever height .stagehead leaves — no hardcoded header
+     height to keep in step with the row's actual size. padding-right clears the × sitting in
+     the same corner, now that Expand (below) is the row's only other content. */
+  .modal .stagehead{flex:0 0 auto; padding-right:2.4rem}
+  /* Expand travels into the dialog with the rest of .stagehead, but there is nothing left
+     for it to do there — the × is the way out — and it would sit under the close button.
+     Turned into nothing rather than removed, so the same element still exists to move back. */
+  .modal .expand{display:none}
+  .modal .stage{flex:1 1 auto; min-height:0; height:auto; margin-top:.8rem;
+                grid-template-columns:minmax(0,1fr) 10px var(--card-w)}
+  @media (max-width: 860px){
+    /* Half and half here too, for the reason the page halves: with the handle gone the
+       split is nobody's to move, so it is the one the stage opens with. The page sizes its
+       panes against the screen because the page can scroll; the dialog cannot, so its two
+       take equal shares of the box's own remaining height — `flex:1 1 0`, a basis of zero
+       on both, which is what makes the shares equal rather than proportional to what is
+       inside them. The card gave up a fixed 230px for this, and it was fixed on the
+       argument that a percentage split shrank the dialog's canvas below its on-page size.
+       That argument is spent: the on-page canvas is half a screen now, so the dialog's was
+       already the smaller of the two, and a stage that changes its proportions when it is
+       expanded is a second layout to learn. What Expand gains on a phone is the whole
+       screen, below.
+       The canvas keeps a floor for the reason `--pane` has one; the card yields first,
+       because the drawing is what Expand is opened for. */
+    .modal .stage{display:flex; flex-direction:column; height:auto}
+    .modal .gutter{display:none}
+    .modal .canvas{height:auto; flex:1 1 0; min-height:200px}
+    .modal .card{height:auto; flex:1 1 0; min-height:0}
+    /* A sheet, not a card. On a desktop a dialog inset from its backdrop reads as a thing
+       laid over the page, which is what it is; on a phone every dialog a visitor already
+       knows — a share sheet, a photo, a map opened from a message — takes the whole screen,
+       and a card floating a few pixels in reads as neither one nor the other. So the border,
+       the radius and the margin go, the backdrop stops showing at all, and the sheet is the
+       screen. It is also what makes Expand worth opening here: at 98vw by 92vh its canvas
+       was both shorter and narrower than the page's own, so the control gave back less
+       than it took. At the full screen the height is the page's — 285 against 288 on an
+       iPhone 13, the head row and the gutter accounting for the three — and the width is
+       374 against 335. Wider, not taller, is what a phone has to give.
+       dvh and not svh: the page behind a modal cannot scroll, so the browser's own bar is
+       frozen wherever it stood when the sheet opened, and the dynamic unit is simply the
+       screen as it is at that moment. A gutter stays — the path line, the transport and the
+       × are text and controls, and text against the glass is a different mistake from a
+       card floating off it. */
+    dialog.modal{width:100vw; max-width:100vw; height:100dvh; max-height:100dvh;
+                 margin:0; border:0; border-radius:0; padding:.5rem}
+  }
+  /* The ledger: the timeline page's figure, every experience as a row on one vertical rule,
+     each opening into the card above. It is here rather than on that page because the card
+     it opens is this file's .card, and a row and its card have to agree on one stylesheet.
+     The column widths are the page's own gutter and mark; --lvl on a row is its indent, one
+     level when the entry began while a role ran, and the gutter stays flush because a
+     ledger keeps its date column. */
+  .ledger{--when:6.6rem; list-style:none; position:relative; margin-top:1rem; max-width:80ch}
+  .ledger::before{content:""; position:absolute; top:.6rem; bottom:.6rem; left:calc(var(--when) + .6rem); width:2px; background:var(--rule)}
+  .ledger li{position:relative}
+  .ledger summary{list-style:none; cursor:pointer; display:grid; grid-template-columns:var(--when) 1.25rem minmax(0,1fr);
+                  align-items:baseline; gap:0 .8rem; padding:.55rem 0}
+  .ledger summary::-webkit-details-marker{display:none}
+  .ledger summary:focus-visible{outline:2px solid var(--c-mid); outline-offset:3px; border-radius:3px}
+  .ledger .when{font-family:"Plex Mono",monospace; font-size:.78rem; letter-spacing:.06em; color:var(--dim); font-variant-numeric:tabular-nums; white-space:nowrap}
+  /* The mark is the kind, drawn the way the model page's drawing gives every type a shape,
+     so a reader tells a talk from a project before reading the line under the name. Two
+     kinds are the track: a role is a filled square in --c-firm and an independent period a
+     hollow one of the same size, the same track with no employer on it. The rest are one
+     size down in --c-mid: a project a hollow diamond, community work a circle, education a
+     triangle. A kind the stylesheet does not know keeps the plain square. While the row is
+     open the mark wears the ring the focused node wears, on the box and not the shape, so
+     the ring is one ring whatever the shape inside it.
+
+     A caption that names the shapes in words parts from them the first time a shape changes,
+     so `.glyph` puts the mark itself in the sentence: the same box turned inline, wearing the
+     kind's class directly, and every shape rule below names it beside the ledger's own. There
+     is one triangle in this file and both places draw it. A glyph has no text, so the page
+     labels each one with the shape's name; the ledger's mark is aria-hidden instead, because
+     the line under the name already says the kind. */
+  .ledger .mark, .glyph{position:relative; width:1.25rem; height:1rem}
+  .ledger .mark{align-self:center}
+  .glyph{display:inline-block; vertical-align:middle}
+  .ledger .mark::after, .glyph::after{content:""; position:absolute; left:calc(50% - 5px); top:calc(50% - 5px); width:10px; height:10px; background:var(--c-mid)}
+  .ledger .k-role .mark::after, .ledger .k-independent .mark::after, .glyph.k-role::after, .glyph.k-independent::after{width:14px; height:14px; left:calc(50% - 7px); top:calc(50% - 7px); background:var(--c-firm); border-radius:2px}
+  .ledger .k-independent .mark::after, .glyph.k-independent::after{background:var(--ground); border:2.5px solid var(--c-firm); box-sizing:border-box}
+  .ledger .k-project .mark::after, .glyph.k-project::after{width:9px; height:9px; left:calc(50% - 4.5px); top:calc(50% - 4.5px); background:var(--ground); border:2px solid var(--c-mid); box-sizing:border-box; transform:rotate(45deg)}
+  .ledger .k-community .mark::after, .glyph.k-community::after{border-radius:50%}
+  .ledger .k-education .mark::after, .glyph.k-education::after{width:11px; height:10px; left:calc(50% - 5.5px); top:calc(50% - 5px); clip-path:polygon(50% 0, 100% 100%, 0 100%)}
+  .ledger details[open] > summary .mark::before{content:""; position:absolute; left:calc(50% - 10px); top:calc(50% - 10px); width:20px; height:20px; box-sizing:border-box; border:2px solid var(--ink); border-radius:3px}
+  /* The track leads: a role or an independent period reads a size up in the title face with
+     air above it, everything that began inside one reads a size down at a lighter weight,
+     further in, and bundles on a dotted stem. The stem is drawn on a row the page marks
+     `under`, because the page is what knows that a row began while a track ran; a page that
+     sets --lvl and no class gets the indent and no stem. */
+  .ledger .what{padding-left:calc(var(--lvl, 0) * 2.2rem); min-width:0}
+  .ledger .name{font-weight:500; color:var(--ink); font-size:.95rem}
+  .ledger .k-role .name, .ledger .k-independent .name{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; font-weight:700; letter-spacing:-.02em; font-size:1.3rem}
+  .ledger .k-role summary, .ledger .k-independent summary{padding-top:.9rem}
+  .ledger li.under::before{content:""; position:absolute; left:calc(var(--when) + 2.95rem); top:0; bottom:0; border-left:1px dotted var(--c-weak)}
+  .ledger .meta{display:block; color:var(--dim); font-size:.8rem; margin-top:.1rem}
+  .ledger .k-role .meta, .ledger .k-independent .meta{font-size:.88rem}
+  .ledger summary:hover .name{color:var(--c-mid)}
+  .ledger details[open] > summary .name{color:var(--c-firm)}
+  /* The card opens under its row and takes the row's indent; the rule runs on past it. The
+     card is positioned because the dotted `under` line is the row's own positioned
+     pseudo-element and would otherwise paint over the row's in-flow card: below 640px the
+     card takes the whole width and lies under that line. Positioned, the card paints after
+     the line in tree order and covers it, as it already covers the ledger's rule. */
+  .ledger .body{padding:.3rem 0 1.3rem calc(var(--when) + 1.25rem + 1.6rem + var(--lvl,0) * 2.2rem); max-width:calc(72ch + 12rem)}
+  .ledger .body .card{height:auto; position:relative}
+  .ledger .body .cbody{overflow:visible}
+  /* The row leads the card: inside a ledger the card's title steps down to the row's scale,
+     the way the dialog sets the card's width. The card stays the same card. */
+  .ledger .cbody h3{font-size:1.2rem}
+  .ledger .cbody h4{font-size:1rem}
+  .ledger .now{margin-top:.6rem; padding-left:calc(var(--when) + 1.25rem + 1.6rem); font-family:"Plex Mono",monospace; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--dim)}
+  /* The gutter carries both years and the start year alone, and the width decides which
+     shows: the range above 640px, where both languages fit with room, the start year below
+     it, where an open end spelled out in either language overran the column. The start year
+     is what places a row on the axis; the full period is on the line under the name. */
+  .ledger .when .start{display:none}
+  @media (max-width:640px){
+    .ledger{--when:4.2rem}
+    .ledger .body{padding-left:0}
+    .ledger .when .range{display:none}
+    .ledger .when .start{display:inline}
+  }
+  /* Open all is an .expand that stays pressed: the same control the stage puts beside its
+     path line, with a state, because it reads Close all once every row is open. */
+  .expand[aria-pressed="true"]{color:var(--c-firm); border-color:var(--c-mid); background:var(--press)}
+  /* The head row's right-hand group: a page with more than one thing to do to its figure
+     puts them side by side here, stretched to one height, the way the timeline puts its
+     kind filter beside Open all. A page with one control needs no group. The group names
+     its column: the head row has three, path, transport and control, and a page with no
+     transport would otherwise fill the middle one with the group and leave the right
+     edge empty. */
+  .stagehead .right{grid-column:3; justify-self:end; display:inline-flex; align-items:stretch; gap:.5rem}
+  /* The kind filter: one control in Open all's exact dress that names what the ledger
+     shows, opening a list with a box per kind under its right edge. A kind off takes its
+     rows out; the rule runs on. The page builds the list from its block and describes each
+     kind with the note card.js moves to it, so a hover says what a kind is. */
+  .kinds{position:relative}
+  .kinds > summary{list-style:none; height:100%; box-sizing:border-box; font-size:.72rem; letter-spacing:.08em; line-height:1.5;
+                   background:var(--raise); color:var(--c-mid); border:1px solid var(--rule); border-radius:6px;
+                   padding:.35rem .6rem; cursor:pointer; white-space:nowrap; display:inline-flex; align-items:center; gap:.5rem}
+  .kinds > summary::-webkit-details-marker{display:none}
+  .kinds > summary::after{content:""; width:0; height:0; border-style:solid; border-width:5px 4px 0 4px;
+                          border-color:var(--c-weak) transparent transparent transparent}
+  .kinds[open] > summary, .kinds > summary:hover{border-color:var(--c-mid)}
+  .kinds[open] > summary{color:var(--c-firm); background:var(--press)}
+  .kinds > summary:focus-visible{outline:2px solid var(--c-mid); outline-offset:2px}
+  .kinds .menu{position:absolute; top:calc(100% + .4rem); right:0; z-index:5; min-width:15rem;
+               background:var(--raise); border:1px solid var(--rule); border-radius:8px; padding:.4rem; box-shadow:0 8px 24px var(--deck-drop)}
+  .kinds .menu label{display:flex; align-items:center; gap:.6rem; padding:.35rem .5rem; border-radius:5px; font-size:.86rem; cursor:pointer}
+  .kinds .menu label:hover{background:var(--press)}
+  .kinds .menu input{appearance:none; width:12px; height:12px; margin:0; border:2px solid var(--c-weak); background:none; flex:0 0 auto; border-radius:0}
+  .kinds .menu input:checked{background:var(--c-firm); border-color:var(--c-firm)}
+  .kinds .menu input:focus-visible{outline:2px solid var(--c-mid); outline-offset:2px}
+  .kinds .menu .n{margin-left:auto; font-family:"Plex Mono",monospace; font-size:.68rem; letter-spacing:.06em; color:var(--dim)}
+  .kinds .menu .all{margin:.3rem .5rem .1rem; padding-top:.45rem; border-top:1px solid var(--rule); font-size:.76rem}
+  .kinds .menu .all button{font:inherit; background:none; border:0; padding:0; color:var(--c-mid); cursor:pointer}
+  .kinds .menu .all button:focus-visible{outline:2px solid var(--c-mid); outline-offset:2px; border-radius:3px}
+  /* The one line the ledger shows when every kind is off, with the way back. */
+  .ledger .none{padding:1.2rem 0 1.2rem calc(var(--when) + 1.25rem + 1.6rem); color:var(--dim); font-size:.93rem}
+  .ledger .none a{color:var(--c-mid)}
+  /* figure tokens. No @media (prefers-reduced-motion) block here on purpose: every node is
+     placed by its own transform attribute, and a blanket `transform:none !important` would
+     not cancel a displacement, it would replace the attribute-derived position and collapse
+     the figure onto (0,0). Reduced motion is a transition duration of 0 ms in the script,
+     which lands on exactly the same drawing. */
+  #fig .own{fill:none; stroke:var(--c-weak); stroke-width:2; stroke-linecap:square}
+  #fig .ref{fill:none; stroke:var(--c-mid); stroke-width:1.6; stroke-dasharray:5 5}
+  #fig .box{fill:none; stroke:var(--c-weak); stroke-width:2}
+  #fig .sq{fill:var(--c-firm)}
+  #fig .n{cursor:pointer}
+
+  /* Where you are, and how you got here. The breadcrumb prints the path and marks its last
+     segment; the drawing said neither, because `spine` never reached the DOM and the focused
+     node wore hover's own color. Three tiers now, and the path is the thing that carries
+     them: the spine from the root to the focus, the ancestors it passes through, and the
+     focus at the end of it.
+
+     Hover keeps --c-mid and adds width, so it is still felt on a node that already carries a
+     color — an ancestor. That is what makes the tiers survive a pointer moving over them. */
+  #fig .own.spine{stroke:var(--c-path); stroke-width:2.5}
+  #fig .n.ancestor .box{stroke:var(--c-path); stroke-width:2.5}
+  #fig .n.ancestor .sq{fill:var(--c-path)}
+  /* The focus is ringed, not recoloured. Every page square is already --c-firm, so filling
+     the focused one with the same color made it one more square among fifty-eight; a ring in
+     the page's strongest ink is the one mark nothing else on the canvas wears. The folder
+     outline can just brighten, because no other box is --c-firm. */
+  #fig .n.focus .box{stroke:var(--c-firm); stroke-width:2.5}
+  #fig .n.focus .sq{fill:var(--c-firm); stroke:var(--ink); stroke-width:2}
+  #fig .n:hover .box, #fig .n:focus-visible .box{stroke:var(--c-mid); stroke-width:3}
+  #fig .n:hover .sq, #fig .n:focus-visible .sq{fill:var(--c-mid)}
+
+  /* Everything off the path steps back rather than the path stepping forward. On a focus with
+     fifty-eight references the band is the loudest thing on the canvas and the structure is
+     the quietest, which is backwards: the band is what you came to read, but the path is what
+     tells you where you are while you read it. Dimming is reversible by hovering, so nothing
+     is hidden — it is ordered. */
+  #fig .own:not(.spine), #fig .ref{opacity:.45}
+  /* The lines step back, and nothing else does. Two things were tried first and both cost
+     more than they bought: dimming whole nodes put an attribute that is already --dim under
+     the contrast floor this site holds itself to, and dimming the marks alone turned the
+     squares gray, which reads as a third kind of node rather than a quieter one. The
+     dashes were the noise all along — fifty-eight of them against one path. */
+  #fig .n:focus:not(:focus-visible){outline:none}
+  #fig text{fill:var(--ink); font-family:"Instrument Sans", ui-sans-serif, system-ui, sans-serif; font-size:13px; dominant-baseline:middle}
+  #fig text.folder, #fig text.attr, #fig text.eyebrow{font-family:"Plex Mono",monospace; font-size:11.5px}
+  #fig text.eyebrow{fill:var(--dim); letter-spacing:.08em}
+  #fig text.typelab{font-family:"Plex Mono",monospace; font-size:11.5px; fill:var(--dim);
+                    letter-spacing:.08em}
+  #fig text.attr{fill:var(--dim)}
+  /* The line under a name: an experience's kind and the period it ran. Mono because it is
+     record values — a date and a category read out of the model, not this page's prose — and
+     dim because the name is what the eye is looking for. */
+  #fig text.stamp{font-family:"Plex Mono",monospace; font-size:11.5px; fill:var(--dim)}
+  #fig text.root{font-family:"Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif; font-weight:700; font-size:15px}

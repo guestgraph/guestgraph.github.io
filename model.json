@@ -1,0 +1,5585 @@
+{
+  "commit": "49662a2a94c2643ea4f4f15633253bdebd4483ce",
+  "root": "GuestGraph",
+  "rootId": "identity",
+  "types": [
+    {
+      "type": "concept",
+      "folder": "concepts",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "domain",
+      "folder": "domains",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "feature",
+      "folder": "features",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "identity",
+      "folder": null,
+      "owner": null,
+      "singular": true
+    },
+    {
+      "type": "phase",
+      "folder": "phases",
+      "owner": "process",
+      "singular": false
+    },
+    {
+      "type": "process",
+      "folder": "processes",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "product",
+      "folder": "products",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "profile",
+      "folder": "profiles",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "role",
+      "folder": "roles",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "source",
+      "folder": "sources",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "strategic-objective",
+      "folder": "strategic-objectives",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "strategy",
+      "folder": "strategies",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "surface",
+      "folder": "surfaces",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "track",
+      "folder": "tracks",
+      "owner": "process",
+      "singular": false
+    },
+    {
+      "type": "value",
+      "folder": "values",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "vision",
+      "folder": null,
+      "owner": null,
+      "singular": true
+    }
+  ],
+  "entities": [
+    {
+      "id": "concepts/connection",
+      "type": "concept",
+      "name": "Connection",
+      "tagline": "One pairing a connector serves, an engine tenant with its key and an account in the source system with its credentials and properties, whose state nothing under another connection can see.",
+      "fields": {
+        "source": "Local",
+        "domain": "Integration"
+      },
+      "sections": [
+        {
+          "heading": "Relations",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Concept",
+                "Cardinality",
+                "As"
+              ],
+              "rows": [
+                [
+                  "Tenant",
+                  "one",
+                  ""
+                ],
+                [
+                  "Source system",
+                  "one",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Concept",
+              "Cardinality",
+              "As"
+            ],
+            "rows": [
+              [
+                "Tenant",
+                "one",
+                ""
+              ],
+              [
+                "Source system",
+                "one",
+                ""
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/concepts/connection.md"
+    },
+    {
+      "id": "concepts/do-not-merge-rule",
+      "type": "concept",
+      "name": "Do-not-merge rule",
+      "tagline": "A standing instruction, written when a merge is undone or a candidate rejected, that the records it keeps apart are not to be joined again by new evidence.",
+      "fields": {
+        "source": "Local",
+        "domain": "Guest identity"
+      },
+      "sections": [
+        {
+          "heading": "Also known as",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Term",
+                "Kind"
+              ],
+              "rows": [
+                [
+                  "Negative rule",
+                  "synonym"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Term",
+              "Kind"
+            ],
+            "rows": [
+              [
+                "Negative rule",
+                "synonym"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Relations",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Concept",
+                "Cardinality",
+                "As"
+              ],
+              "rows": [
+                [
+                  "Source record",
+                  "one to many",
+                  "kept apart"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Concept",
+              "Cardinality",
+              "As"
+            ],
+            "rows": [
+              [
+                "Source record",
+                "one to many",
+                "kept apart"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/concepts/do-not-merge-rule.md"
+    },
+    {
+      "id": "concepts/golden-profile",
+      "type": "concept",
+      "name": "Golden profile",
+      "tagline": "What a guest's records say about them, field by field, computed from those records and never authored, so it can match no single record and can always be computed again.",
+      "fields": {
+        "source": "Local",
+        "domain": "Guest identity"
+      },
+      "sections": [
+        {
+          "heading": "Also known as",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Term",
+                "Kind"
+              ],
+              "rows": [
+                [
+                  "Profile",
+                  "synonym"
+                ],
+                [
+                  "goldenes Profil",
+                  "translation"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Term",
+              "Kind"
+            ],
+            "rows": [
+              [
+                "Profile",
+                "synonym"
+              ],
+              [
+                "goldenes Profil",
+                "translation"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/concepts/golden-profile.md"
+    },
+    {
+      "id": "concepts/guest",
+      "type": "concept",
+      "name": "Guest",
+      "tagline": "One person as the graph has resolved them within one tenant: the set of source records concluded to be that person, under an id other systems can keep.",
+      "fields": {
+        "source": "Local",
+        "domain": "Guest identity"
+      },
+      "sections": [
+        {
+          "heading": "Also known as",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Term",
+                "Kind"
+              ],
+              "rows": [
+                [
+                  "Gast",
+                  "translation"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Term",
+              "Kind"
+            ],
+            "rows": [
+              [
+                "Gast",
+                "translation"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Relations",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Concept",
+                "Cardinality",
+                "As"
+              ],
+              "rows": [
+                [
+                  "Tenant",
+                  "one",
+                  ""
+                ],
+                [
+                  "Source record",
+                  "one to many",
+                  ""
+                ],
+                [
+                  "Golden profile",
+                  "one",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Concept",
+              "Cardinality",
+              "As"
+            ],
+            "rows": [
+              [
+                "Tenant",
+                "one",
+                ""
+              ],
+              [
+                "Source record",
+                "one to many",
+                ""
+              ],
+              [
+                "Golden profile",
+                "one",
+                ""
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/concepts/guest.md"
+    },
+    {
+      "id": "concepts/identifier",
+      "type": "concept",
+      "name": "Identifier",
+      "tagline": "A value on a record strong enough to merge two records on once normalized, an email, a phone, a loyalty id, an ID document or an external key, and only where a trust rule does not say the shared value proves nothing.",
+      "fields": {
+        "source": "Local",
+        "domain": "Guest identity"
+      },
+      "sections": [
+        {
+          "heading": "Also known as",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Term",
+                "Kind"
+              ],
+              "rows": [
+                [
+                  "Strong identifier",
+                  "synonym"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Term",
+              "Kind"
+            ],
+            "rows": [
+              [
+                "Strong identifier",
+                "synonym"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/concepts/identifier.md"
+    },
+    {
+      "id": "concepts/match-review",
+      "type": "concept",
+      "name": "Match review",
+      "tagline": "A candidate match held back from merging because it was not certain enough or looked suspicious, waiting for a person to confirm or reject it once.",
+      "fields": {
+        "source": "Local",
+        "domain": "Guest identity"
+      },
+      "sections": [
+        {
+          "heading": "Relations",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Concept",
+                "Cardinality",
+                "As"
+              ],
+              "rows": [
+                [
+                  "Matcher",
+                  "one",
+                  "suggesting matcher"
+                ],
+                [
+                  "Guest",
+                  "one",
+                  "candidate guest"
+                ],
+                [
+                  "Source record",
+                  "one",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Concept",
+              "Cardinality",
+              "As"
+            ],
+            "rows": [
+              [
+                "Matcher",
+                "one",
+                "suggesting matcher"
+              ],
+              [
+                "Guest",
+                "one",
+                "candidate guest"
+              ],
+              [
+                "Source record",
+                "one",
+                ""
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/concepts/match-review.md"
+    },
+    {
+      "id": "concepts/matcher",
+      "type": "concept",
+      "name": "Matcher",
+      "tagline": "The rule that decides whether records are one person and how sure it is, named on every decision it makes: a match on strong identifiers or a probabilistic score. Who acted on a decision, the system, a person or an agent, is recorded beside it and is not the matcher.",
+      "fields": {
+        "source": "Local",
+        "domain": "Guest identity"
+      },
+      "sections": [
+        {
+          "heading": "Also known as",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Term",
+                "Kind"
+              ],
+              "rows": [
+                [
+                  "Resolution strategy",
+                  "synonym"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Term",
+              "Kind"
+            ],
+            "rows": [
+              [
+                "Resolution strategy",
+                "synonym"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/concepts/matcher.md"
+    },
+    {
+      "id": "concepts/merge",
+      "type": "concept",
+      "name": "Merge",
+      "tagline": "The decision that records, or two guests, are one person, recorded permanently with its matcher, its confidence, its evidence, its time and who made it.",
+      "fields": {
+        "source": "Local",
+        "domain": "Guest identity"
+      },
+      "sections": [
+        {
+          "heading": "Also known as",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Term",
+                "Kind"
+              ],
+              "rows": [
+                [
+                  "Merge event",
+                  "synonym"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Term",
+              "Kind"
+            ],
+            "rows": [
+              [
+                "Merge event",
+                "synonym"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Relations",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Concept",
+                "Cardinality",
+                "As"
+              ],
+              "rows": [
+                [
+                  "Matcher",
+                  "one",
+                  "deciding matcher"
+                ],
+                [
+                  "Guest",
+                  "one",
+                  "survivor"
+                ],
+                [
+                  "Source record",
+                  "one to many",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Concept",
+              "Cardinality",
+              "As"
+            ],
+            "rows": [
+              [
+                "Matcher",
+                "one",
+                "deciding matcher"
+              ],
+              [
+                "Guest",
+                "one",
+                "survivor"
+              ],
+              [
+                "Source record",
+                "one to many",
+                ""
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/concepts/merge.md"
+    },
+    {
+      "id": "concepts/retired-guest-id",
+      "type": "concept",
+      "name": "Retired guest id",
+      "tagline": "A guest id no guest carries any more because a merge absorbed it or a split emptied it, which still answers with how it was retired and where the person is now.",
+      "fields": {
+        "source": "Local",
+        "domain": "Guest identity"
+      },
+      "sections": [
+        {
+          "heading": "Relations",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Concept",
+                "Cardinality",
+                "As"
+              ],
+              "rows": [
+                [
+                  "Guest",
+                  "one to many",
+                  "current guest"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Concept",
+              "Cardinality",
+              "As"
+            ],
+            "rows": [
+              [
+                "Guest",
+                "one to many",
+                "current guest"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/concepts/retired-guest-id.md"
+    },
+    {
+      "id": "concepts/source-object",
+      "type": "concept",
+      "name": "Source object",
+      "tagline": "A thing in a source system that people are on, a reservation or a booking, which changes over time and whose every version names in full who is on it and in which role.",
+      "fields": {
+        "source": "Local",
+        "domain": "Integration"
+      },
+      "sections": [
+        {
+          "heading": "Relations",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Concept",
+                "Cardinality",
+                "As"
+              ],
+              "rows": [
+                [
+                  "Source system",
+                  "one",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Concept",
+              "Cardinality",
+              "As"
+            ],
+            "rows": [
+              [
+                "Source system",
+                "one",
+                ""
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/concepts/source-object.md"
+    },
+    {
+      "id": "concepts/source-record",
+      "type": "concept",
+      "name": "Source record",
+      "tagline": "One person, as one source system saw them, on one version of the source object they came from where they came from one, kept exactly as it arrived beside what the engine extracted from it; only its review flag ever changes afterward.",
+      "fields": {
+        "source": "Local",
+        "domain": "Guest identity"
+      },
+      "sections": [
+        {
+          "heading": "Also known as",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Term",
+                "Kind"
+              ],
+              "rows": [
+                [
+                  "Record",
+                  "synonym"
+                ],
+                [
+                  "Observation",
+                  "synonym"
+                ],
+                [
+                  "Datensatz",
+                  "translation"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Term",
+              "Kind"
+            ],
+            "rows": [
+              [
+                "Record",
+                "synonym"
+              ],
+              [
+                "Observation",
+                "synonym"
+              ],
+              [
+                "Datensatz",
+                "translation"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Relations",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Concept",
+                "Cardinality",
+                "As"
+              ],
+              "rows": [
+                [
+                  "Source system",
+                  "one",
+                  ""
+                ],
+                [
+                  "Source object",
+                  "maybe one",
+                  ""
+                ],
+                [
+                  "Identifier",
+                  "many",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Concept",
+              "Cardinality",
+              "As"
+            ],
+            "rows": [
+              [
+                "Source system",
+                "one",
+                ""
+              ],
+              [
+                "Source object",
+                "maybe one",
+                ""
+              ],
+              [
+                "Identifier",
+                "many",
+                ""
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/concepts/source-record.md"
+    },
+    {
+      "id": "concepts/source-system",
+      "type": "concept",
+      "name": "Source system",
+      "tagline": "A system a hotel runs that keeps its own record of guests, a PMS, a point of sale, a booking engine, a wifi portal or a review platform, registered once with the engine under a code of its own.",
+      "fields": {
+        "source": "Local",
+        "domain": "Integration"
+      },
+      "sections": [
+        {
+          "heading": "Relations",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Concept",
+                "Cardinality",
+                "As"
+              ],
+              "rows": [
+                [
+                  "Tenant",
+                  "one",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Concept",
+              "Cardinality",
+              "As"
+            ],
+            "rows": [
+              [
+                "Tenant",
+                "one",
+                ""
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/concepts/source-system.md"
+    },
+    {
+      "id": "concepts/tenant",
+      "type": "concept",
+      "name": "Tenant",
+      "tagline": "One brand, property or group an engine serves, whose records, guests and decisions are kept wholly apart from every other tenant's in the same instance.",
+      "fields": {
+        "source": "Local",
+        "domain": "Guest identity"
+      },
+      "sections": [
+        {
+          "heading": "Also known as",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Term",
+                "Kind"
+              ],
+              "rows": [
+                [
+                  "Mandant",
+                  "translation"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Term",
+              "Kind"
+            ],
+            "rows": [
+              [
+                "Mandant",
+                "translation"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/concepts/tenant.md"
+    },
+    {
+      "id": "concepts/timeline",
+      "type": "concept",
+      "name": "Timeline",
+      "tagline": "The source objects a guest is on and in which role, as the newest version of each object decides, current associations by default and ended ones when asked.",
+      "fields": {
+        "source": "Local",
+        "domain": "Guest identity"
+      },
+      "sections": [
+        {
+          "heading": "Relations",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Concept",
+                "Cardinality",
+                "As"
+              ],
+              "rows": [
+                [
+                  "Guest",
+                  "one",
+                  ""
+                ],
+                [
+                  "Source object",
+                  "many",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Concept",
+              "Cardinality",
+              "As"
+            ],
+            "rows": [
+              [
+                "Guest",
+                "one",
+                ""
+              ],
+              [
+                "Source object",
+                "many",
+                ""
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/concepts/timeline.md"
+    },
+    {
+      "id": "domains/guest-identity",
+      "type": "domain",
+      "name": "Guest identity",
+      "tagline": "The words we mean something exact by when we say who a guest is, and every decision that joined or split one. How a record gets out of a hotel's system and into the graph is left to integration.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [],
+      "owner": null,
+      "path": "model/domains/guest-identity.md"
+    },
+    {
+      "id": "domains/integration",
+      "type": "domain",
+      "name": "Integration",
+      "tagline": "The words we mean something exact by when a hotel's systems reach the graph and a connector carries what they hold. Which guest a record belongs to once it has arrived is left to guest identity.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [],
+      "owner": null,
+      "path": "model/domains/integration.md"
+    },
+    {
+      "id": "features/ask-why-records-are-one-guest",
+      "type": "feature",
+      "name": "Ask why records are one guest",
+      "tagline": "Anyone reading a guest can find out why the graph believes these records are one person, and who or what decided it.",
+      "fields": {
+        "source": "Local",
+        "products": [
+          "GuestGraph Engine"
+        ],
+        "concepts": [
+          "Merge",
+          "Guest"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Description",
+          "text": "Asking a guest to explain itself returns the chain of decisions behind it: each merge with the matcher that made it, its confidence, the evidence it saw, when it was made and whether the system, a person or a named agent made it. It explains decisions and nothing else: which field of the profile came from which record is the profile's reference, not this answer.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/features/ask-why-records-are-one-guest.md"
+    },
+    {
+      "id": "features/bring-reservations-and-bookings-into-the-graph",
+      "type": "feature",
+      "name": "Bring reservations and bookings into the graph",
+      "tagline": "The guests on a hotel's reservations and the bookers on its bookings reach the graph as their PMS changes, without anyone exporting anything.",
+      "fields": {
+        "source": "Local",
+        "products": [
+          "Apaleo Connector"
+        ],
+        "concepts": [
+          "Source object",
+          "Connection",
+          "Source system"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Description",
+          "text": "For each connection the connector subscribes to the PMS's events, fetches the reservation or booking an event names and submits one observation per person on that version, and only when a person on it changed. A periodic reconciliation and a full sync when needed cover what the events miss, and a delivery that fails is kept and retried rather than dropped. It holds the guest id each person resolved to and re-reads those ids when merges retire them. It writes nothing back into the PMS, and it never chooses among several current guests.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/features/bring-reservations-and-bookings-into-the-graph.md"
+    },
+    {
+      "id": "features/keep-a-guest-id-you-stored",
+      "type": "feature",
+      "name": "Keep a guest id you stored",
+      "tagline": "A guest id kept in another system goes on answering after the guest is merged or split, so other systems can store it as their reference.",
+      "fields": {
+        "source": "Local",
+        "products": [
+          "GuestGraph Engine"
+        ],
+        "concepts": [
+          "Retired guest id",
+          "Guest"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Description",
+          "text": "Reading an id that a merge absorbed or an unmerge emptied answers with how it was retired and the guest or guests that hold the person now, never a bare not found. When the person is now on one guest, a caller replaces the stored id with it. It stops where the graph cannot know: when a split leaves several current guests, it names them all, and which one was meant is for a person to decide.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/features/keep-a-guest-id-you-stored.md"
+    },
+    {
+      "id": "features/read-a-guest-s-golden-profile",
+      "type": "feature",
+      "name": "Read a guest's golden profile",
+      "tagline": "One profile per guest, with the source records behind it, found by guest id or by any identifier the guest carries.",
+      "fields": {
+        "source": "Local",
+        "products": [
+          "GuestGraph Engine"
+        ],
+        "concepts": [
+          "Golden profile",
+          "Guest",
+          "Source record"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Description",
+          "text": "A guest is read as one golden profile, computed from its records field by field, together with the records themselves. A caller holding only an email or a phone can find the guest by it. It is read only: a profile is never edited, and a correction enters as a record.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/features/read-a-guest-s-golden-profile.md"
+    },
+    {
+      "id": "features/resolve-records-into-one-guest",
+      "type": "feature",
+      "name": "Resolve records into one guest",
+      "tagline": "Records of the same person from different systems end up on one guest, without anyone having to match them by hand.",
+      "fields": {
+        "source": "Local",
+        "products": [
+          "GuestGraph Engine"
+        ],
+        "concepts": [
+          "Guest",
+          "Identifier",
+          "Merge",
+          "Matcher"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Description",
+          "text": "A record that shares a normalized strong identifier with a guest, an email, a phone, a loyalty id, an ID document or an external key, joins that guest at full confidence, and merges carry transitively. Records sharing no identifier are found by name phonetics and scored on a weighted set of signals, and a score merges only above the threshold the tenant chose; below it, the candidate goes to review. It stops short of guessing: a record nobody could justify joining opens a guest of its own, and automatic probabilistic merging is off until a tenant turns it on.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/features/resolve-records-into-one-guest.md"
+    },
+    {
+      "id": "features/review-an-uncertain-match",
+      "type": "feature",
+      "name": "Review an uncertain match",
+      "tagline": "A match the rules were not sure of waits for a person, with the reasons laid out signal by signal, and the person's answer stands.",
+      "fields": {
+        "source": "Local",
+        "products": [
+          "GuestGraph Engine"
+        ],
+        "concepts": [
+          "Match review",
+          "Matcher",
+          "Tenant"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Description",
+          "text": "A probabilistic candidate below the tenant's threshold, or a strong identifier shared by suspiciously many records, goes into the review queue instead of merging. A steward reads each review with the reasons it was held back, confirms or rejects it once, and the first decision stands. Each tenant sets its own thresholds and identifier rules. It stops at the decision: nothing is merged from the queue without one, and a decided review cannot be decided again.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/features/review-an-uncertain-match.md"
+    },
+    {
+      "id": "features/see-what-a-guest-currently-has",
+      "type": "feature",
+      "name": "See what a guest currently has",
+      "tagline": "A guest's reservations and other source objects are listed as the guest holds them now, and a caller can look up who is on a given object.",
+      "fields": {
+        "source": "Local",
+        "products": [
+          "GuestGraph Engine"
+        ],
+        "concepts": [
+          "Timeline",
+          "Source object",
+          "Guest"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Description",
+          "text": "The timeline lists each source object a guest is on, in which role, decided by the newest version of that object alone, and past associations only when asked for. A source object can be read the other way round, to see which guests it resolves to. It lists what a guest has, not every record of it, so a timeline is shorter than the records behind it; it does not follow one person from one version of an object to the next.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/features/see-what-a-guest-currently-has.md"
+    },
+    {
+      "id": "features/submit-a-record-from-any-system",
+      "type": "feature",
+      "name": "Submit a record from any system",
+      "tagline": "Whatever a hotel's system knows about a person can be handed to the graph as it is, and nothing it said is lost or changed.",
+      "fields": {
+        "source": "Local",
+        "products": [
+          "GuestGraph Engine"
+        ],
+        "concepts": [
+          "Source record",
+          "Source system",
+          "Tenant"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Description",
+          "text": "A caller registers a source system once and then submits records through the API, each keyed by the system and a key the caller chose, so a second submission of the same key is recognized rather than stored twice. The record is kept exactly as sent beside what the engine extracted from it, and a record the engine could only partly understand is stored and flagged for review rather than refused. It stops at storing and resolving: it does not fetch anything from the system, which is a connector's work, and it never edits a record once stored.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/features/submit-a-record-from-any-system.md"
+    },
+    {
+      "id": "features/undo-a-merge",
+      "type": "feature",
+      "name": "Undo a merge",
+      "tagline": "When the graph put two people together, a person can split them again, and the split holds against whatever arrives later.",
+      "fields": {
+        "source": "Local",
+        "products": [
+          "GuestGraph Engine"
+        ],
+        "concepts": [
+          "Merge",
+          "Do-not-merge rule",
+          "Guest"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Description",
+          "text": "An unmerge detaches the named records from a guest and resolves them again, and it writes a do-not-merge rule so that new evidence cannot silently put them back together. The rules can be listed and lifted through the API when a split was itself a mistake, and lifting one is recorded with who did it. It does not repair a record: the records are unchanged, and only which guest they belong to moves.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/features/undo-a-merge.md"
+    },
+    {
+      "id": "identity",
+      "type": "identity",
+      "name": "GuestGraph",
+      "tagline": "The open-source guest identity graph for hospitality: one explainable, reversible guest profile, derived from the records every system in a hotel keeps of the same person.",
+      "fields": {
+        "source": "Local",
+        "url": "https://guestgraph.io"
+      },
+      "sections": [
+        {
+          "heading": "What it is",
+          "text": "The same person books, checks in, eats, joins the wifi and leaves a review, and every system in the hotel stores someone different, with its own keys and its own version of the truth. We resolve those records into one profile per guest, and every merge behind it can say why it was made and can be undone. It is built for the hotels, groups and brands whose guests are scattered that way, and for whoever integrates their systems.\n\nThe engine that does it is open source under Apache 2.0 and stays that way, and each source system is brought into it by a connector of its own. Managed hosting, a console and MCP access for agents are planned as the commercial half, and the core never depends on them.",
+          "tables": []
+        },
+        {
+          "heading": "Also at",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Where",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "GitHub",
+                  "https://github.com/guestgraph"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Where",
+              "URL"
+            ],
+            "rows": [
+              [
+                "GitHub",
+                "https://github.com/guestgraph"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/identity.md"
+    },
+    {
+      "id": "processes/answering",
+      "type": "process",
+      "name": "Answering",
+      "tagline": "How a visitor's question about GuestGraph is answered from this model, by an agent, with nothing added and nobody reading the answer before it goes out.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "Tracks",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Track"
+              ],
+              "rows": [
+                [
+                  "Reply"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Track"
+            ],
+            "rows": [
+              [
+                "Reply"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Phases",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Phase"
+              ],
+              "rows": [
+                [
+                  "Answer"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Phase"
+            ],
+            "rows": [
+              [
+                "Answer"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never lets a claim stand that no tool returned in that conversation.\n- Never keeps a conversation, a question or an answer; the tab holds it and the meter counts only what was spent.\n- Never spends past the ceiling the deployment wrote down, and refuses before asking the model.\n- Never answers from a model commit other than the one the host pins.\n- Never answers about a hotel's guests; the model describes GuestGraph, and no guest's data is in it.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Design",
+                  "https://github.com/companygraph/chat-server/blob/main/docs/superpowers/specs/2026-09-22-chat-server-design.md"
+                ],
+                [
+                  "Interface",
+                  "https://github.com/companygraph/chat-server/blob/main/docs/INTERFACE.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Design",
+                "https://github.com/companygraph/chat-server/blob/main/docs/superpowers/specs/2026-09-22-chat-server-design.md"
+              ],
+              [
+                "Interface",
+                "https://github.com/companygraph/chat-server/blob/main/docs/INTERFACE.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/processes/answering/answering.md"
+    },
+    {
+      "id": "processes/answering/phases/answer",
+      "type": "phase",
+      "name": "Answer",
+      "tagline": "Give the visitor what the model says, in their words, and not a claim more.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "executed-by": [
+          "Answerer"
+        ],
+        "supported-by": [
+          "Visitor"
+        ],
+        "gate-approvers": [
+          "Owner"
+        ],
+        "escalation-authority": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A message the fence has let through: under the length it allows, from a page the deployment names, inside the hour's, the day's and the month's share. The host's tools, at its pinned commit.",
+          "tables": []
+        },
+        {
+          "heading": "Activities",
+          "text": "1. The Visitor asks, in their own words and language.\n2. The Answerer asks the host's tools: a kind of thing by its type, a named thing by search and then the entity itself.\n3. The Answerer writes the answer from what the tools said, naming the entity each claim rests on, and where they said nothing, that the model does not say.\n4. The page links each entity the answer was read from, to the model page and to the file at the commit.\n5. Nobody reads the answer before the Visitor does. The Owner's gate was passed once, before any question: the rules the seat runs under, the commit the host pins, the fence, and the switch that stops the chat without a deploy.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Deliverable",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "Answer",
+                  "In the visitor's tab, in their language, every claim traceable to a tool's answer in that conversation; gone when the tab closes"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Deliverable",
+              "Description"
+            ],
+            "rows": [
+              [
+                "Answer",
+                "In the visitor's tab, in their language, every claim traceable to a tool's answer in that conversation; gone when the tab closes"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never sends a message before the visitor presses send, and never reads one they did not.\n- Never answers a question that is not about the model with more than a sentence saying what the chat is for.\n- Never continues past the ceiling: a spent share is a refusal, made before the model is asked.",
+          "tables": []
+        },
+        {
+          "heading": "Gate",
+          "text": "Answer is the only phase. An answer has left it when:\n\n- Every claim in it names the entity a tool returned it from.\n- Where the tools did not say, it says the model does not say.\n- It was written inside the fence: the rounds, the output length and the share.\n\nWhere they cannot be met, the Owner closes the chat at its switch, corrects the rules or the model, and opens it again; no answer is corrected after the fact, because none is kept.",
+          "tables": []
+        }
+      ],
+      "owner": "processes/answering",
+      "path": "model/processes/answering/phases/answer.md"
+    },
+    {
+      "id": "processes/answering/tracks/reply",
+      "type": "track",
+      "name": "Reply",
+      "tagline": "One answer in a visitor's tab, in their language, read from the model at the host's commit and kept nowhere.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [],
+      "owner": "processes/answering",
+      "path": "model/processes/answering/tracks/reply.md"
+    },
+    {
+      "id": "processes/contribution",
+      "type": "process",
+      "name": "Contribution",
+      "tagline": "How a change offered from outside as a pull request to one of our repositories is reviewed and taken, under the same rules a change from inside is held to.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "supported-by": [
+          "Reviewer",
+          "Contributor"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Tracks",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Track"
+              ],
+              "rows": [
+                [
+                  "Change"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Track"
+            ],
+            "rows": [
+              [
+                "Change"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Phases",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Phase"
+              ],
+              "rows": [
+                [
+                  "Propose"
+                ],
+                [
+                  "Consider"
+                ],
+                [
+                  "Review"
+                ],
+                [
+                  "Integrate"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Phase"
+            ],
+            "rows": [
+              [
+                "Propose"
+              ],
+              [
+                "Consider"
+              ],
+              [
+                "Review"
+              ],
+              [
+                "Integrate"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never merges anything with a red check or no check.\n- Never squashes a pull request; a merge commit keeps the author it was given.\n- Never lets an agent merge, tag or release.\n- Never re-authors a contributor's commit, or asks a contributor to be anyone but themselves.\n- Never takes a change to the resolution engine without the scenario tests that hold it.\n- Never treats a review finding as a verdict; it is an input to whoever merges, and silence is a valid answer to one.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Rulebook, GitHub pull requests",
+                  "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests"
+                ],
+                [
+                  "Constitution",
+                  "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
+                ],
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ],
+                [
+                  "Writing rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Rulebook, GitHub pull requests",
+                "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests"
+              ],
+              [
+                "Constitution",
+                "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
+              ],
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ],
+              [
+                "Writing rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/processes/contribution/contribution.md"
+    },
+    {
+      "id": "processes/contribution/phases/consider",
+      "type": "phase",
+      "name": "Consider",
+      "tagline": "Establish what the change is for, before anyone spends time on how it is written.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "executed-by": [
+          "Owner"
+        ],
+        "supported-by": [
+          "Contributor"
+        ],
+        "gate-approvers": [
+          "Owner"
+        ],
+        "escalation-authority": "Owner",
+        "gate-to": "Review"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A pull request against the default branch, from anyone, with a description saying what is now true that was not before.",
+          "tables": []
+        },
+        {
+          "heading": "Activities",
+          "text": "1. The Owner reads the description before the diff, because a change whose purpose is unclear cannot be reviewed for whether it achieves it.\n2. The Owner establishes whether the change is wanted at all, and says so early; a review of something that will not be taken spends a contributor's evening for nothing.\n3. The Owner names which rules it will be held to, where the contributor may not know them: the constitution's principles, the service conventions, the register a text is written in and the form the Markdown takes.\n4. The Owner checks that the status checks report, and that it is the contributor's own commit under their own address.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Deliverable",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "Accepted purpose",
+                  "A statement that the change is wanted, or that it is not and why, written in the pull request"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Deliverable",
+              "Description"
+            ],
+            "rows": [
+              [
+                "Accepted purpose",
+                "A statement that the change is wanted, or that it is not and why, written in the pull request"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never reviews the writing of a change it has not decided is wanted.\n- Never asks a contributor to commit under an address that is not theirs.\n- Never leaves a contributor to discover a rule from a failing check that could have been named.",
+          "tables": []
+        },
+        {
+          "heading": "Gate",
+          "text": "To leave Consider, all of these hold:\n\n- The pull request says what is now true that was not before.\n- The Owner has said the change is wanted.\n- The status checks have reported.\n\nWhere they cannot be met, the Owner says which of them failed and closes the pull request, with what would make a later one succeed.",
+          "tables": []
+        }
+      ],
+      "owner": "processes/contribution",
+      "path": "model/processes/contribution/phases/consider.md"
+    },
+    {
+      "id": "processes/contribution/phases/integrate",
+      "type": "phase",
+      "name": "Integrate",
+      "tagline": "Take the change into the default branch, and carry it to whoever vendors or pins what it touched.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "executed-by": [
+          "Owner"
+        ],
+        "gate-approvers": [
+          "Owner"
+        ],
+        "escalation-authority": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A change whose findings the Owner has ruled on, with every required check green.",
+          "tables": []
+        },
+        {
+          "heading": "Activities",
+          "text": "1. The Owner merges with a merge commit, never a squash, so the address the contributor committed under reaches the default branch unchanged.\n2. Where the change touches what another repository vendors, the Owner tags a release and writes its notes, saying what a consumer must do.\n3. The Owner moves every pin that names what moved, each in a commit that says why, or records it as deliberately behind.\n4. The Owner deletes the branch, as their own step.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Deliverable",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "Merge commit",
+                  "The change on the default branch, carrying the author it was given"
+                ],
+                [
+                  "Release",
+                  "Where something vendored moved: a tag and notes saying what a consumer must do"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Deliverable",
+              "Description"
+            ],
+            "rows": [
+              [
+                "Merge commit",
+                "The change on the default branch, carrying the author it was given"
+              ],
+              [
+                "Release",
+                "Where something vendored moved: a tag and notes saying what a consumer must do"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never squashes, because a squash re-authors the commit to whoever pressed the button and a wrong identity would land looking correct.\n- Never merges on a contributor's say-so that a check passed.\n- Never chains deleting the branch to the merge, because a failed merge would still delete it.",
+          "tables": []
+        },
+        {
+          "heading": "Gate",
+          "text": "To leave Integrate, all of these hold:\n\n- The default branch carries the change under the address its author committed with.\n- Where something vendored moved, a release exists and its notes say what a consumer must do.\n- Every pin that names it has moved, or is recorded as deliberately behind.\n\nWhere they cannot be met, the Owner reverts rather than leaving the default branch in a state nobody chose.",
+          "tables": []
+        }
+      ],
+      "owner": "processes/contribution",
+      "path": "model/processes/contribution/phases/integrate.md"
+    },
+    {
+      "id": "processes/contribution/phases/propose",
+      "type": "phase",
+      "name": "Propose",
+      "tagline": "Offer the change, under the address the Contributor means to be known by.",
+      "fields": {
+        "source": "Local",
+        "owner": "Contributor",
+        "executed-by": [
+          "Contributor"
+        ],
+        "gate-approvers": [
+          "Contributor"
+        ],
+        "escalation-authority": "Owner",
+        "gate-to": "Consider"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "The repository, its conventions, its constitution and its specifications, all of which are published and need nobody's permission to read.",
+          "tables": []
+        },
+        {
+          "heading": "Activities",
+          "text": "1. The Contributor branches from the default branch and makes the change there.\n2. The Contributor writes what is now true that was not before, as the pull request's description.\n3. The Contributor commits under their own address, which is theirs to choose and nobody else's to set.\n4. The Contributor opens the pull request and lets the checks run.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Deliverable",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "Pull request",
+                  "A change against the default branch, saying what is now true that was not, under its author's own address"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Deliverable",
+              "Description"
+            ],
+            "rows": [
+              [
+                "Pull request",
+                "A change against the default branch, saying what is now true that was not, under its author's own address"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never commits under an address that is not the Contributor's own.\n- Never merges, tags or releases; that is the Owner's and is not delegated.\n- Never has to have read every convention first; where one was missed, naming it is our work.",
+          "tables": []
+        },
+        {
+          "heading": "Gate",
+          "text": "To leave Propose, all of these hold:\n\n- A pull request exists against the default branch.\n- It says what is now true that was not before.\n- Its commits carry the address their author means to be known by.\n\nWhere they cannot be met, the Contributor decides whether to carry on or to stop; nothing here obliges anyone to finish what they started.",
+          "tables": []
+        }
+      ],
+      "owner": "processes/contribution",
+      "path": "model/processes/contribution/phases/propose.md"
+    },
+    {
+      "id": "processes/contribution/phases/review",
+      "type": "phase",
+      "name": "Review",
+      "tagline": "Find what is wrong with the change, and hand it to whoever merges as findings rather than as a verdict.",
+      "fields": {
+        "source": "Local",
+        "owner": "Reviewer",
+        "executed-by": [
+          "Reviewer"
+        ],
+        "supported-by": [
+          "Contributor",
+          "Owner"
+        ],
+        "gate-approvers": [
+          "Owner"
+        ],
+        "escalation-authority": "Owner",
+        "gate-to": "Integrate"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A change the Owner has said is wanted, with its checks reporting.",
+          "tables": []
+        },
+        {
+          "heading": "Activities",
+          "text": "1. The Reviewer reads the change against what the pull request says it does, and reports where the two disagree.\n2. The Reviewer reads any change touching merge, unmerge, survivorship or ingest against the constitution's principles that keep the data safe: no source record altered, no parseable data dropped and every merge decision recorded in full.\n3. The Reviewer writes one finding per comment, each with a severity and the line it sits on.\n4. The Reviewer judges what no check reads: whether an entity answers its schema's writing rules, and whether a text is in the register its place calls for.\n5. The Reviewer says what it could not verify, rather than leaving a reader to assume it was checked.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Deliverable",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "Findings",
+                  "One per comment, each with a severity and the line it sits on, addressed to whoever merges"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Deliverable",
+              "Description"
+            ],
+            "rows": [
+              [
+                "Findings",
+                "One per comment, each with a severity and the line it sits on, addressed to whoever merges"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never merges, and never approves in a way that reads as merging.\n- Never states a finding as a decision the contributor must take.\n- Never counts a check nobody ran as a check that passed.\n- Never asks for a change of taste as though it were a rule.",
+          "tables": []
+        },
+        {
+          "heading": "Gate",
+          "text": "To leave Review, all of these hold:\n\n- Every finding carries a severity and the line it sits on.\n- The Owner has read the findings and said which are to be acted on.\n- What the review could not verify is written down.\n\nWhere they cannot be met, the Owner decides whether the change is narrowed, carried on by someone else, or declined.",
+          "tables": []
+        }
+      ],
+      "owner": "processes/contribution",
+      "path": "model/processes/contribution/phases/review.md"
+    },
+    {
+      "id": "processes/contribution/tracks/change",
+      "type": "track",
+      "name": "Change",
+      "tagline": "A change to one of our repositories, offered from outside as a pull request, in code or in prose.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [],
+      "owner": "processes/contribution",
+      "path": "model/processes/contribution/tracks/change.md"
+    },
+    {
+      "id": "processes/delivery",
+      "type": "process",
+      "name": "Delivery",
+      "tagline": "How a slice of GuestGraph goes from the notes the roadmap keeps to merged, tested code: specified, planned, broken into tasks and implemented, each step approved before the next begins.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "Tracks",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Track"
+              ],
+              "rows": [
+                [
+                  "Code"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Track"
+            ],
+            "rows": [
+              [
+                "Code"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Phases",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Phase"
+              ],
+              "rows": [
+                [
+                  "Specify"
+                ],
+                [
+                  "Plan"
+                ],
+                [
+                  "Tasks"
+                ],
+                [
+                  "Implement"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Phase"
+            ],
+            "rows": [
+              [
+                "Specify"
+              ],
+              [
+                "Plan"
+              ],
+              [
+                "Tasks"
+              ],
+              [
+                "Implement"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never begins a phase whose predecessor's gate the Owner has not approved.\n- Never lets an agent merge, tag or release anything.\n- Never merges a change to the resolution engine without the scenario tests that were written for it first.\n- Never edits a merged specification; a correction goes forward into the roadmap notes or the document that owns the subject.\n- Never amends a principle the constitution marks non-negotiable, or the fixed stack or license, without the Owner's explicit approval.\n- Never restates in one repository a fact another repository owns; it links instead.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Constitution",
+                  "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
+                ],
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ],
+                [
+                  "Roadmap notes",
+                  "https://github.com/guestgraph/engine/blob/main/docs/roadmap-notes.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Constitution",
+                "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
+              ],
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ],
+              [
+                "Roadmap notes",
+                "https://github.com/guestgraph/engine/blob/main/docs/roadmap-notes.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/processes/delivery/delivery.md"
+    },
+    {
+      "id": "processes/delivery/phases/implement",
+      "type": "phase",
+      "name": "Implement",
+      "tagline": "Build the tasks test first, review the result against the constitution, and merge it once every check is green.",
+      "fields": {
+        "source": "Local",
+        "owner": "Implementer",
+        "executed-by": [
+          "Implementer",
+          "Reviewer"
+        ],
+        "gate-approvers": [
+          "Owner"
+        ],
+        "escalation-authority": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "The repository's own agent file, the approved tasks and the plan and contracts behind them.",
+          "tables": []
+        },
+        {
+          "heading": "Activities",
+          "text": "1. The Implementer takes the tasks in order, and for the resolution engine writes the scenario tests first and sees them fail before writing the code.\n2. The Implementer runs the full build with its tests, its architecture rules and its format check, and regenerates what the build holds against a fresh generation.\n3. The Implementer opens the pull request and reports what was built and what was run.\n4. The Reviewer reviews the pull request against the constitution's core principles, and any change touching merge, unmerge, survivorship or ingest against the three that keep the data safe.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Deliverable",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "Merged slice",
+                  "The implemented tasks on the default branch, with their tests and every required check green"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Deliverable",
+              "Description"
+            ],
+            "rows": [
+              [
+                "Merged slice",
+                "The implemented tasks on the default branch, with their tests and every required check green"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never changes a test's expectation to make it pass.\n- Never merges, tags or releases; the Owner does.\n- Never mutates a source record, drops parseable data or merges guests without recording the decision in full.",
+          "tables": []
+        },
+        {
+          "heading": "Gate",
+          "text": "To leave Implement, all of these hold:\n\n- Every required check is green on the pull request.\n- Resolution-engine changes have their scenario tests, and they pass.\n- A change touching merge, unmerge, survivorship or ingest has had its data-safety review.\n- The Owner has merged the pull request.\n\nWhere they cannot be met, the Owner decides whether the slice is fixed on the branch or taken back to Tasks.",
+          "tables": []
+        }
+      ],
+      "owner": "processes/delivery",
+      "path": "model/processes/delivery/phases/implement.md"
+    },
+    {
+      "id": "processes/delivery/phases/plan",
+      "type": "phase",
+      "name": "Plan",
+      "tagline": "Decide how the slice will be built, and hold that design to the constitution before and after it is made.",
+      "fields": {
+        "source": "Local",
+        "owner": "Planner",
+        "executed-by": [
+          "Planner"
+        ],
+        "gate-approvers": [
+          "Owner"
+        ],
+        "escalation-authority": "Owner",
+        "gate-to": "Tasks"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "An approved specification, the constitution and the code the slice lands in.",
+          "tables": []
+        },
+        {
+          "heading": "Activities",
+          "text": "1. The Planner runs the Constitution Check against the specification before any research.\n2. The Planner writes the research, the data model and the API contracts the slice needs, each decision with the alternatives it rejected.\n3. The Planner runs the Constitution Check again against the design.\n4. Where the design needs more than the constitution's fixed shape, the Planner writes the excess into the plan's complexity tracking with the simpler alternative it rejected.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Deliverable",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "Plan",
+                  "The implementation plan, with the research, the data model and the contracts beside it, passing the Constitution Check twice"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Deliverable",
+              "Description"
+            ],
+            "rows": [
+              [
+                "Plan",
+                "The implementation plan, with the research, the data model and the contracts beside it, passing the Constitution Check twice"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never plans a module, a service or a datastore beyond the fixed shape without saying in complexity tracking why the simpler option was rejected.\n- Never plans a capability that is reachable other than through the API.\n- Never changes the specification it plans; a gap goes back to the Owner.",
+          "tables": []
+        },
+        {
+          "heading": "Gate",
+          "text": "To leave Plan, all of these hold:\n\n- The Constitution Check passes, before research and after design.\n- Every exception to the fixed shape is in complexity tracking with its rejected alternative.\n- The Owner has approved the plan.\n\nWhere they cannot be met, the Owner decides whether the design changes or the constitution is amended first.",
+          "tables": []
+        }
+      ],
+      "owner": "processes/delivery",
+      "path": "model/processes/delivery/phases/plan.md"
+    },
+    {
+      "id": "processes/delivery/phases/specify",
+      "type": "phase",
+      "name": "Specify",
+      "tagline": "Write what the slice must do and why, completely enough that the plan does not have to guess.",
+      "fields": {
+        "source": "Local",
+        "owner": "Specifier",
+        "executed-by": [
+          "Specifier"
+        ],
+        "gate-approvers": [
+          "Owner"
+        ],
+        "escalation-authority": "Owner",
+        "gate-to": "Plan"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "The requirements the roadmap notes have captured for this slice, the constitution the slice must not contradict, and the specifications and reference documents already merged, read rather than remembered.",
+          "tables": []
+        },
+        {
+          "heading": "Activities",
+          "text": "1. The Specifier opens the slice's numbered branch and reads the roadmap notes and the documents the slice touches.\n2. The Specifier writes the specification: the user stories, the functional requirements and what is explicitly not in the slice.\n3. The Specifier puts every open question to the Owner and records the answers in the specification rather than assuming one.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Deliverable",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "Specification",
+                  "The slice's requirements under the engine's specs, with its open questions answered and what is not in the slice named"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Deliverable",
+              "Description"
+            ],
+            "rows": [
+              [
+                "Specification",
+                "The slice's requirements under the engine's specs, with its open questions answered and what is not in the slice named"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never writes the plan or the code it specifies.\n- Never decides a question that is the Owner's; it asks and records the answer.\n- Never edits a specification an earlier slice merged.",
+          "tables": []
+        },
+        {
+          "heading": "Gate",
+          "text": "To leave Specify, all of these hold:\n\n- The Owner has read the specification and approved it.\n- No question in it is left open.\n\nWhere they cannot be met, the Owner decides whether the slice is narrowed, split or deferred to the roadmap notes.",
+          "tables": []
+        }
+      ],
+      "owner": "processes/delivery",
+      "path": "model/processes/delivery/phases/specify.md"
+    },
+    {
+      "id": "processes/delivery/phases/tasks",
+      "type": "phase",
+      "name": "Tasks",
+      "tagline": "Break the plan into ordered tasks an implementer can take one at a time, and check that specification, plan and tasks agree.",
+      "fields": {
+        "source": "Local",
+        "owner": "Planner",
+        "executed-by": [
+          "Planner",
+          "Reviewer"
+        ],
+        "gate-approvers": [
+          "Owner"
+        ],
+        "escalation-authority": "Owner",
+        "gate-to": "Implement"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "An approved plan and the specification it serves.",
+          "tables": []
+        },
+        {
+          "heading": "Activities",
+          "text": "1. The Planner writes the tasks in the order they are to be done, with the test tasks ahead of the code they test wherever the resolution engine is touched.\n2. The Reviewer reads the specification, the plan and the tasks against each other and reports every requirement no task covers and every task no requirement asks for.\n3. The Planner corrects the tasks where the report found a gap.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Deliverable",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "Tasks",
+                  "The ordered task list, covering every requirement of the specification and nothing beyond it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Deliverable",
+              "Description"
+            ],
+            "rows": [
+              [
+                "Tasks",
+                "The ordered task list, covering every requirement of the specification and nothing beyond it"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never leaves a change to the resolution engine without a test task written before it.\n- Never adds a task the specification does not ask for.",
+          "tables": []
+        },
+        {
+          "heading": "Gate",
+          "text": "To leave Tasks, all of these hold:\n\n- Every functional requirement has a task, and every task a requirement.\n- Resolution-engine work has its scenario tests as tasks ahead of its code.\n- The Owner has approved the tasks.\n\nWhere they cannot be met, the Owner decides whether the plan or the specification goes back a phase.",
+          "tables": []
+        }
+      ],
+      "owner": "processes/delivery",
+      "path": "model/processes/delivery/phases/tasks.md"
+    },
+    {
+      "id": "processes/delivery/tracks/code",
+      "type": "track",
+      "name": "Code",
+      "tagline": "A merged slice of a GuestGraph service: its specification, plan and tasks under the engine's specs, and the code and tests that implement them, with every required check green.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [],
+      "owner": "processes/delivery",
+      "path": "model/processes/delivery/tracks/code.md"
+    },
+    {
+      "id": "processes/feature-request",
+      "type": "process",
+      "name": "Feature request",
+      "tagline": "How somebody outside asks for something GuestGraph does not do, a capability of the engine or a system it cannot yet reach, as a GitHub issue, and gets an answer they can act on.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "supported-by": [
+          "Requestor"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Tracks",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Track"
+              ],
+              "rows": [
+                [
+                  "Decision"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Track"
+            ],
+            "rows": [
+              [
+                "Decision"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Phases",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Phase"
+              ],
+              "rows": [
+                [
+                  "Raise"
+                ],
+                [
+                  "Understand"
+                ],
+                [
+                  "Triage"
+                ],
+                [
+                  "Answer"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Phase"
+            ],
+            "rows": [
+              [
+                "Raise"
+              ],
+              [
+                "Understand"
+              ],
+              [
+                "Triage"
+              ],
+              [
+                "Answer"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never answers a request before knowing what the asker was trying to do and could not.\n- Never promises a date, a release or a place on the roadmap.\n- Never closes a request without the reason written where it was asked.\n- Never builds something because it was asked for; a request is evidence for the roadmap notes and never the decision to build.\n- Never asks which hotel a request comes from, and never asks for a guest's data to illustrate one.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Rulebook, GitHub issues",
+                  "https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues"
+                ],
+                [
+                  "Roadmap notes",
+                  "https://github.com/guestgraph/engine/blob/main/docs/roadmap-notes.md"
+                ],
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Rulebook, GitHub issues",
+                "https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues"
+              ],
+              [
+                "Roadmap notes",
+                "https://github.com/guestgraph/engine/blob/main/docs/roadmap-notes.md"
+              ],
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/processes/feature-request/feature-request.md"
+    },
+    {
+      "id": "processes/feature-request/phases/answer",
+      "type": "phase",
+      "name": "Answer",
+      "tagline": "Give the asker something they can act on, whether or not anything will be built.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "executed-by": [
+          "Owner"
+        ],
+        "supported-by": [
+          "Requestor"
+        ],
+        "gate-approvers": [
+          "Owner"
+        ],
+        "escalation-authority": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A classified gap with its reason.",
+          "tables": []
+        },
+        {
+          "heading": "Activities",
+          "text": "1. The Owner writes the answer in the issue: what was decided, why, and what the asker can do now.\n2. Where the gap is real and will be filled, the Owner says which slice it is aimed at only if one has been chosen, and otherwise says that it has not been.\n3. Where the gap is real and will not be filled, the Owner says what would change that.\n4. Where there is no gap, the Owner names what already does it and where it is documented.\n5. The Owner closes the issue.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Deliverable",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "Answer",
+                  "The decision, its reason and what the asker can do now, written where the request was made"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Deliverable",
+              "Description"
+            ],
+            "rows": [
+              [
+                "Answer",
+                "The decision, its reason and what the asker can do now, written where the request was made"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never closes with a label and no sentence.\n- Never leaves the asker without something to do, even where the answer is no.\n- Never promises a date that has not been chosen.",
+          "tables": []
+        },
+        {
+          "heading": "Gate",
+          "text": "To leave Answer, all of these hold:\n\n- The answer says what was decided and why, in the issue.\n- The asker has something to do next, or is told plainly that there is nothing.\n- No date appears that has not actually been chosen.\n\nWhere they cannot be met, the issue stays open; an answer nobody can act on is not an answer and closing it does not make it one.",
+          "tables": []
+        }
+      ],
+      "owner": "processes/feature-request",
+      "path": "model/processes/feature-request/phases/answer.md"
+    },
+    {
+      "id": "processes/feature-request/phases/raise",
+      "type": "phase",
+      "name": "Raise",
+      "tagline": "Say where it can be answered that GuestGraph would not do something the asker needed.",
+      "fields": {
+        "source": "Local",
+        "owner": "Requestor",
+        "executed-by": [
+          "Requestor"
+        ],
+        "gate-approvers": [
+          "Requestor"
+        ],
+        "escalation-authority": "Owner",
+        "gate-to": "Understand"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "Whatever the Requestor was trying to do and could not, in whatever words they have for it.",
+          "tables": []
+        },
+        {
+          "heading": "Activities",
+          "text": "1. The Requestor opens an issue on the repository the request concerns.\n2. The Requestor says what they were trying to do and where they stopped, in their own words.\n3. The Requestor adds whatever makes that concrete, the system they wanted connected or the question the API could not answer, and nothing they were not asked for.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Deliverable",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "Request",
+                  "A GitHub issue on the repository it concerns, saying what could not be done"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Deliverable",
+              "Description"
+            ],
+            "rows": [
+              [
+                "Request",
+                "A GitHub issue on the repository it concerns, saying what could not be done"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never has to be written in our terms; putting it in them is our work.\n- Never has to name the hotel it asks for, or carry a guest's data.\n- Never waits for a template, a label or a form; there is none, by design.",
+          "tables": []
+        },
+        {
+          "heading": "Gate",
+          "text": "To leave Raise, all of these hold:\n\n- An issue exists, in the open, on the repository the request concerns.\n- It says what the Requestor was trying to do and could not.\n\nWhere they cannot be met, the Owner helps state it rather than closing it; a request nobody could phrase is still a finding.",
+          "tables": []
+        }
+      ],
+      "owner": "processes/feature-request",
+      "path": "model/processes/feature-request/phases/raise.md"
+    },
+    {
+      "id": "processes/feature-request/phases/triage",
+      "type": "phase",
+      "name": "Triage",
+      "tagline": "Decide what kind of thing the gap is, and whether it is ours to fill.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "executed-by": [
+          "Owner"
+        ],
+        "gate-approvers": [
+          "Owner"
+        ],
+        "escalation-authority": "Owner",
+        "gate-to": "Answer"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A restated request naming what could not be done.",
+          "tables": []
+        },
+        {
+          "heading": "Activities",
+          "text": "1. The Owner decides which of four the gap is: a capability of the engine, a connector for a system not yet reached, something of the planned commercial layer, or no gap at all.\n2. The Owner checks whether the engine already does it under another name, because a request for what exists is a finding about how it is documented.\n3. The Owner weighs it against the constitution and the strategies: a capability reachable only outside the API, or one that would merge on less than the layers allow, is refused whoever asks.\n4. Where the gap is real, the Owner writes it into the roadmap notes, where the next slice's specification will read it.\n5. The Owner writes the classification and its reason in the issue.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Deliverable",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "Classification",
+                  "Which of the four the gap is, with the reason, written in the issue"
+                ],
+                [
+                  "Roadmap note",
+                  "Where the gap is real: the requirement as the next slice's specification will read it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Deliverable",
+              "Description"
+            ],
+            "rows": [
+              [
+                "Classification",
+                "Which of the four the gap is, with the reason, written in the issue"
+              ],
+              [
+                "Roadmap note",
+                "Where the gap is real: the requirement as the next slice's specification will read it"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never leaves the reason out because the classification seems obvious.\n- Never admits a request that breaks a principle of the constitution because it was asked for.\n- Never opens a specification; what happens next is Delivery's, and it starts from the roadmap notes.",
+          "tables": []
+        },
+        {
+          "heading": "Gate",
+          "text": "To leave Triage, all of these hold:\n\n- The gap is classified as an engine capability, a connector, the commercial layer or no gap.\n- The reason is written where the request was made.\n- Where the gap is real, the roadmap notes carry it.\n\nWhere they cannot be met, the Owner leaves the request open and says what would settle it, rather than classifying it to be finished with it.",
+          "tables": []
+        }
+      ],
+      "owner": "processes/feature-request",
+      "path": "model/processes/feature-request/phases/triage.md"
+    },
+    {
+      "id": "processes/feature-request/phases/understand",
+      "type": "phase",
+      "name": "Understand",
+      "tagline": "Turn what somebody asked for into the thing they could not do.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "executed-by": [
+          "Owner"
+        ],
+        "supported-by": [
+          "Requestor"
+        ],
+        "gate-approvers": [
+          "Owner"
+        ],
+        "escalation-authority": "Owner",
+        "gate-to": "Triage"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A GitHub issue on the repository the request is about, from anyone, in whatever words they brought.",
+          "tables": []
+        },
+        {
+          "heading": "Activities",
+          "text": "1. The Owner reads the request as it was written, before restating it.\n2. The Owner establishes what the asker was trying to do and could not: the system that could not be connected, the operation the API lacked or the decision the engine could not explain.\n3. The Owner asks for that where it is absent, and asks for nothing else; a request is not a form to be completed.\n4. The Owner restates the request as the gap it is, in the issue, and lets the asker correct the restatement.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Deliverable",
+                "Description"
+              ],
+              "rows": [
+                [
+                  "Restated request",
+                  "The request written as the thing that could not be done, agreed with whoever raised it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Deliverable",
+              "Description"
+            ],
+            "rows": [
+              [
+                "Restated request",
+                "The request written as the thing that could not be done, agreed with whoever raised it"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never rewrites the asker's words as the record; the restatement sits beside them.\n- Never decides whether the gap is real.\n- Never asks which hotel the request comes from.",
+          "tables": []
+        },
+        {
+          "heading": "Gate",
+          "text": "To leave Understand, all of these hold:\n\n- The request names the system, the operation or the decision that was missing.\n- Whoever raised it has seen the restatement and not disputed it.\n\nWhere they cannot be met, the Owner says so in the issue and closes it as not understood, which is an answer and is not a refusal.",
+          "tables": []
+        }
+      ],
+      "owner": "processes/feature-request",
+      "path": "model/processes/feature-request/phases/understand.md"
+    },
+    {
+      "id": "processes/feature-request/tracks/decision",
+      "type": "track",
+      "name": "Decision",
+      "tagline": "An answer written where the request was made, in the words the request used, saying what was decided and why.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [],
+      "owner": "processes/feature-request",
+      "path": "model/processes/feature-request/tracks/decision.md"
+    },
+    {
+      "id": "products/apaleo-connector",
+      "type": "product",
+      "name": "Apaleo Connector",
+      "tagline": "The service that brings a hotel's reservations and bookings from Apaleo into the guest graph, run beside the engine by whoever operates it for a hotel that keeps its stays in Apaleo.",
+      "fields": {
+        "source": "Local",
+        "domain": "Integration"
+      },
+      "sections": [],
+      "owner": null,
+      "path": "model/products/apaleo-connector.md"
+    },
+    {
+      "id": "products/guestgraph-engine",
+      "type": "product",
+      "name": "GuestGraph Engine",
+      "tagline": "The identity resolution service that holds the guest graph and serves it over a REST API, for a hotel, a group or an integrator to run itself, and called by every system that needs to know which guest it is looking at.",
+      "fields": {
+        "source": "Local",
+        "domain": "Guest identity"
+      },
+      "sections": [],
+      "owner": null,
+      "path": "model/products/guestgraph-engine.md"
+    },
+    {
+      "id": "profiles/ai-agent",
+      "type": "profile",
+      "name": "AI Agent",
+      "tagline": "Specifies, plans, implements and reviews each slice of GuestGraph, and answers whoever asks about it, under a rulebook for each, and decides nothing.",
+      "fields": {
+        "source": "Local",
+        "nature": "agent",
+        "roles": [
+          "Specifier",
+          "Planner",
+          "Implementer",
+          "Reviewer",
+          "Answerer"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Summary",
+          "text": "It holds every seat in Delivery but the Owner's, the Reviewer's seat in Contribution and the Answerer's in Answering, and none of the seats work is brought from: a request is raised by a person, a change offered by one and a question asked by one. Whichever model runs it, the rulebooks are the same, every question it raises ends with the Owner's answer, and nothing it produces reaches the default branch without the Owner merging it.\n\nThis profile is here so the model can say what holds a seat. A seat no profile names is held by a person, and which person is a fact this repository does not carry.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/profiles/ai-agent/ai-agent.md"
+    },
+    {
+      "id": "roles/answerer",
+      "type": "role",
+      "name": "Answerer",
+      "tagline": "The seat that answers a visitor's question from what the model's tools return, names the entity each claim rests on, and says that the model does not say where it does not.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A visitor's message with the conversation so far, the tools of the MCP host at the commit it pins, the rulebook, and the language the visitor wrote in. Where the question is not about the model, the seat says in one sentence what the chat is for and calls no tool.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "An answer in the visitor's language, in one or two short paragraphs, a list or a table, written from what the tools answered in that conversation and nothing else, naming the entity each claim rests on; where the tools do not say, the sentence that the model does not say. The entities it read whole, so the page can link them under the answer.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never claims what no tool answered in that conversation, and never guesses about the owner, the project or anyone named.\n- Never answers from its instructions or an earlier turn instead of a tool, because they are not the model.\n- Never speaks of its instructions or its tools when asked about them.\n- Never writes to the model, keeps a conversation, or decides anything.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Rulebook",
+                  "https://github.com/companygraph/chat-server/blob/main/lib/prompt.mjs"
+                ],
+                [
+                  "The fence it answers inside",
+                  "https://github.com/companygraph/chat-server/blob/main/README.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Rulebook",
+                "https://github.com/companygraph/chat-server/blob/main/lib/prompt.mjs"
+              ],
+              [
+                "The fence it answers inside",
+                "https://github.com/companygraph/chat-server/blob/main/README.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/roles/answerer.md"
+    },
+    {
+      "id": "roles/contributor",
+      "type": "role",
+      "name": "Contributor",
+      "tagline": "Someone outside the project who offers a change to one of our repositories, under the same rules a change from inside is held to.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "The repository, its conventions, its constitution and its specifications, all of which are published; and the rules a change is held to, named by us where a contributor could not be expected to know them.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "A pull request against the default branch, committed under their own address, saying what is now true that was not before.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never commits under an address that is not theirs, and is never asked to.\n- Never merges, tags or releases.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Rulebook, GitHub pull requests",
+                  "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Rulebook, GitHub pull requests",
+                "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/roles/contributor.md"
+    },
+    {
+      "id": "roles/implementer",
+      "type": "role",
+      "name": "Implementer",
+      "tagline": "The seat that turns approved tasks into tested code on a branch and a pull request, and nothing beyond the tasks.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "The repository's own agent file, the approved tasks and the plan and contracts behind them. Where a task is unclear the seat asks before starting.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "The change the tasks specify, tests first on the resolution engine, the full build green and a pull request reporting what was built and what was run.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never changes a test's expectation to make it pass.\n- Never merges, tags or edits the pull request's approval.\n- Never claims a check it did not run.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Rulebook, spec-kit, the implementation",
+                  "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-implement/SKILL.md"
+                ],
+                [
+                  "Agent file",
+                  "https://github.com/guestgraph/engine/blob/main/AGENTS.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Rulebook, spec-kit, the implementation",
+                "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-implement/SKILL.md"
+              ],
+              [
+                "Agent file",
+                "https://github.com/guestgraph/engine/blob/main/AGENTS.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/roles/implementer.md"
+    },
+    {
+      "id": "roles/owner",
+      "type": "role",
+      "name": "Owner",
+      "tagline": "The seat that decides what GuestGraph builds next, approves every gate, and is the only one that merges, tags and releases.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A specification, plan, task list or pull request to approve, on the branch, whether it came from inside or from a contributor; a request raised from outside; the constitution and the roadmap notes a decision is weighed against; every question another seat has put to it.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "Decisions recorded where they bind: an approved gate, an answer and its reason on a request, an answered question in a specification, a merge, a tag, a release and an amendment to the constitution with its rationale.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never delegates a merge, a tag or a release.\n- Never approves a gate whose criteria are not met.\n- Never lets a non-negotiable principle be amended in passing inside a slice.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Constitution",
+                  "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
+                ],
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Constitution",
+                "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
+              ],
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/roles/owner.md"
+    },
+    {
+      "id": "roles/planner",
+      "type": "role",
+      "name": "Planner",
+      "tagline": "The seat that turns an approved specification into a design and an ordered task list that the constitution allows.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "An approved specification, the constitution and the code the slice lands in.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "The plan with its research, data model and contracts, having passed the Constitution Check twice with every exception to the fixed shape justified. Then the tasks, in the order they are to be done.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never plans past the constitution's fixed shape without writing down the simpler alternative it rejected.\n- Never changes the specification it plans.\n- Never orders the code for the resolution engine ahead of the tests that hold it.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Rulebook, spec-kit, the plan",
+                  "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-plan/SKILL.md"
+                ],
+                [
+                  "Rulebook, spec-kit, the tasks",
+                  "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-tasks/SKILL.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Rulebook, spec-kit, the plan",
+                "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-plan/SKILL.md"
+              ],
+              [
+                "Rulebook, spec-kit, the tasks",
+                "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-tasks/SKILL.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/roles/planner.md"
+    },
+    {
+      "id": "roles/requestor",
+      "type": "role",
+      "name": "Requestor",
+      "tagline": "Someone outside the project who needed GuestGraph to do something it does not, and says so where it can be answered.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "Whatever they were trying to do and could not: the system that could not be connected, the operation the API lacked, the decision the engine could not explain. Nothing else: the seat is filled by whoever turns up, and a request is not a form to be completed before it is heard.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "A GitHub issue on the repository the request concerns, in their own words, and a correction where we restate it wrongly.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never has to know our terms to be understood; restating the request in them is our work.\n- Never has to say which hotel it asks for, and is never asked.\n- Never puts a guest's data in a request.\n- Never decides whether the gap is filled.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Rulebook, GitHub issues",
+                  "https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Rulebook, GitHub issues",
+                "https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/roles/requestor.md"
+    },
+    {
+      "id": "roles/reviewer",
+      "type": "role",
+      "name": "Reviewer",
+      "tagline": "The seat that reads a slice's artifacts or one diff against what they were meant to do and against the constitution, returns findings with a severity and changes nothing.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "For a slice, its specification, plan and tasks. For a pull request, the brief or the description the change was made from, the author's report read as unverified claims, the diff with its commits and context, and the constitution it is held to.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "For a slice, every requirement no task covers and every task no requirement asks for. For a pull request, findings each with a file and a line, what is wrong, why it matters and how to fix it, ranked by severity, with the data-safety principles read on any change to merge, unmerge, survivorship or ingest. Where the diff touched a model, every entity it touched read against its schema's writing rules, which no mechanical check reaches. A finding is an input to whoever merges and never a verdict.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never mutates the working tree, the index, a branch or the pull request.\n- Never approves a gate.\n- Never reports a change as clean that alters a source record or drops parseable data.\n- Never reads a schema's writing rules as satisfied because the mechanical checks are green.\n- Never marks polish as critical.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Rulebook, spec-kit, the artifacts",
+                  "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-analyze/SKILL.md"
+                ],
+                [
+                  "Constitution",
+                  "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
+                ],
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Rulebook, spec-kit, the artifacts",
+                "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-analyze/SKILL.md"
+              ],
+              [
+                "Constitution",
+                "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
+              ],
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/roles/reviewer.md"
+    },
+    {
+      "id": "roles/specifier",
+      "type": "role",
+      "name": "Specifier",
+      "tagline": "The seat that turns the roadmap notes for a slice into a specification with no open question in it, and builds nothing.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "The specifications and reference documents already merged, the roadmap notes for the slice and the constitution. Where the notes are ambiguous the seat asks before writing.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "A specification of what the slice must do and why, its user stories and requirements, what is not in it and the Owner's answer to every question it raised.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never writes the plan or the code.\n- Never answers a question that is the Owner's.\n- Never edits a merged specification.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Rulebook, spec-kit, the specification",
+                  "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-specify/SKILL.md"
+                ],
+                [
+                  "Rulebook, spec-kit, the open questions",
+                  "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-clarify/SKILL.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Rulebook, spec-kit, the specification",
+                "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-specify/SKILL.md"
+              ],
+              [
+                "Rulebook, spec-kit, the open questions",
+                "https://github.com/guestgraph/engine/blob/main/.claude/skills/speckit-clarify/SKILL.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/roles/specifier.md"
+    },
+    {
+      "id": "roles/visitor",
+      "type": "role",
+      "name": "Visitor",
+      "tagline": "Someone who asks about GuestGraph in their own words, on its site or through an agent of their own, and is owed what the model says and nothing else.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A question, in whatever words and language they have. Nothing else: the seat is filled by whoever turns up, and nobody is asked who they are.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "A question, and where the answer sends them, a click on the entity it rests on: on the model page, or on the file at the commit it was read from.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never has to know the model's vocabulary to be answered; meeting their words is our work.\n- Never leaves anything behind: the conversation lives in their tab and ends with it.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/roles/visitor.md"
+    },
+    {
+      "id": "sources/local",
+      "type": "source",
+      "name": "Local",
+      "tagline": "Written and kept in this repository, which masters every page in the model. Nothing syncs it, and it issues no identifiers, so no page carries a `source-id`.",
+      "fields": {
+        "url": "https://github.com/guestgraph/mental-model"
+      },
+      "sections": [],
+      "owner": null,
+      "path": "model/sources/local.md"
+    },
+    {
+      "id": "strategic-objectives/an-agent-can-decide-a-merge-a-hotel-would-accept",
+      "type": "strategic-objective",
+      "name": "An agent can decide a merge a hotel would accept",
+      "tagline": "An agent acting as a steward decides the uncertain matches on a hotel's guests, with no exemption any other matcher would not get, and a hotel lets it.",
+      "fields": {
+        "source": "Local",
+        "adopted": "2026-07-10"
+      },
+      "sections": [
+        {
+          "heading": "What it makes true",
+          "text": "The audit trail already records whether the system, a person or a named agent made a decision, which makes the rule that an agent never lifts a person's split a single comparison, not yet enforced, and nothing acts as an agent steward yet. When this holds, an agent resolves what the rules could not and a person has not got to yet, every decision it makes is explained and reversible as any other is, and a hotel has said what it needed to see before it would let one decide.\n\nWhat falls outside it: a model trained on a hotel's reviews, which is a different matcher and not a steward. Also outside is any exemption for the agent: an agent deciding a merge the review queue would have stopped does not make this true, whatever it gets right.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/strategic-objectives/an-agent-can-decide-a-merge-a-hotel-would-accept.md"
+    },
+    {
+      "id": "strategic-objectives/every-system-a-guest-passes-through-feeds-the-graph",
+      "type": "strategic-objective",
+      "name": "Every system a guest passes through feeds the graph",
+      "tagline": "The graph sees a guest wherever the hotel does: the PMS, the point of sale, the booking engine, the wifi and the review platforms, not one of them.",
+      "fields": {
+        "source": "Local",
+        "adopted": "2026-09-10"
+      },
+      "sections": [
+        {
+          "heading": "What it makes true",
+          "text": "One PMS is connected today, Apaleo, bringing in reservations and bookings, and a PMS alone is not an estate: the booking engine, the point of sale, the wifi and the review platforms are where the other four strangers come from, and none of them reaches the graph yet. When this holds, each kind of system a hotel's guests pass through reaches the graph, so that the same person seen at booking, at the desk, at dinner and online resolves to one guest instead of only the stays they booked.\n\nWhat falls outside it: every vendor of every kind. Each kind of system reaching the graph is what it asks for, and a second PMS adds reach without making this truer. Also outside is anything that writes back into a hotel's systems.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/strategic-objectives/every-system-a-guest-passes-through-feeds-the-graph.md"
+    },
+    {
+      "id": "strategic-objectives/whether-a-hotel-would-pay-to-know-its-guests-is-answered",
+      "type": "strategic-objective",
+      "name": "Whether a hotel would pay to know its guests is answered",
+      "tagline": "Whether the scattered-guest problem is real enough in a hotel's operation that someone would pay to have it solved is settled, in either direction, by hotels rather than by us.",
+      "fields": {
+        "source": "Local",
+        "adopted": "2026-08-21"
+      },
+      "sections": [
+        {
+          "heading": "What it makes true",
+          "text": "Today the engine is built, one real system is connected, nothing runs in production and there are no customers; the billing page says what the hosted service would count and that there is nothing to buy yet. That is a foundation and an open question. When this holds, the question has been put to people who run hotels and answered by what they did: either a hotel paid for the hosted service, or it is written down that nobody would, and the pages stop implying the question is live. A no settles it as completely as a yes, and a no is worth more to us than a polite yes.\n\nWhat falls outside it: how many hotels, and at what price. One hotel paying answers the question; a larger one does not answer it better. Also outside is whether the open-source core is worth using, which a hotel running it for itself answers without paying anyone.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/strategic-objectives/whether-a-hotel-would-pay-to-know-its-guests-is-answered.md"
+    },
+    {
+      "id": "strategies/one-direction-connector-strategy",
+      "type": "strategy",
+      "name": "One-Direction Connector Strategy",
+      "tagline": "Each source system gets a connector of its own, a separate service that reads that system and submits what it finds through the engine's API, so the engine calls nothing outward and runs with any number of connectors or none.",
+      "fields": {
+        "source": "Local",
+        "adopted": "2026-09-10",
+        "serves": [
+          "Every system a guest passes through feeds the graph"
+        ],
+        "upholds": [
+          "Everything the engine does is on its API",
+          "Never drop what can be parsed"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "The approach",
+          "text": "A connector reaches one external system and is a client of the engine's REST API and nothing more: it submits one observation per person per version of a source object, keyed by the source's own clock so retries and full re-syncs are idempotent, and it holds the guest ids the engine answers. It owns a database schema of its own and connects as a role that sees nothing else, so whether it shares the engine's database is a deployment choice. The first connector is for a real PMS, Apaleo, because a PMS is what decides whether any of this is usable, and every rule a connector follows is decided in the engine's specification, with a change taken while building carried forward into the roadmap notes.",
+          "tables": []
+        },
+        {
+          "heading": "What it rules out",
+          "text": "No integration code inside the engine, and no engine call out to a hotel's systems. No connector reading the engine's tables, since its role cannot. And no connector that writes back into the system it reads.",
+          "tables": []
+        },
+        {
+          "heading": "What would show it is working",
+          "text": "A second connector, for a different kind of system, built against the same API without a change to the engine beyond what its specification asked for. A deployment running the engine alone, or several connectors against one engine, from the same builds. And the connector's status showing deliveries retried rather than lost when the engine or the source was down.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/strategies/one-direction-connector-strategy.md"
+    },
+    {
+      "id": "strategies/open-core-strategy",
+      "type": "strategy",
+      "name": "Open Core Strategy",
+      "tagline": "The engine, the graph, the API and the connectors are open source for anyone to run, and what could ever be paid for is running them: managed hosting, a console and MCP access for agents.",
+      "fields": {
+        "source": "Local",
+        "adopted": "2026-07-09",
+        "serves": [
+          "Whether a hotel would pay to know its guests is answered"
+        ],
+        "upholds": [
+          "The core stays open"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "The approach",
+          "text": "Everything that resolves a guest is in public repositories under Apache 2.0, built spec-first in the open, so a hotel or an integrator can read exactly how a merge was decided before trusting one, and can run it without us. The commercial layer is planned on top of the core and never inside it: the core does not depend on commercial code, authentication beyond per-tenant API keys belongs to that layer, and the hosted service will run the same engine anyone can run. The talks and the pages say plainly that there is no product for sale yet and ask where the idea is wrong.",
+          "tables": []
+        },
+        {
+          "heading": "What it rules out",
+          "text": "No proprietary edition of the engine and no capability held back to make the hosted service worth buying. No closed matching model whose decisions a hotel cannot inspect. And no license change on the core later, which is why the pages say it will remain open rather than only that it is open.",
+          "tables": []
+        },
+        {
+          "heading": "What would show it is working",
+          "text": "People outside the project reading the engine and arguing with how it decides, in issues, pull requests or replies to the talk, which says the openness is being used rather than merely offered. Integrators running the engine themselves against their own systems. And, later, a hotel choosing the hosted service over running the same code itself, which is the one signal that the commercial half has a reason to exist.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/strategies/open-core-strategy.md"
+    },
+    {
+      "id": "strategies/per-arrival-billing-strategy",
+      "type": "strategy",
+      "name": "Per-Arrival Billing Strategy",
+      "tagline": "The hosted service will count one thing, a reservation that checked in, because a resolved profile is worth something at the moment someone is standing at the desk, and everything that makes the graph better is free.",
+      "fields": {
+        "source": "Local",
+        "adopted": "2026-08-23",
+        "serves": [
+          "Whether a hotel would pay to know its guests is answered"
+        ],
+        "upholds": [
+          "The core stays open"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "The approach",
+          "text": "One meter: an arrival is one reservation that checked in, walk-ins included and cancellations and no-shows not, so a family of four is one arrival and four profiles, and a guest who returns next month is a new arrival. That number is already on a hotel's own occupancy report every morning, so every invoice can be checked against a system we do not own. Ingestion, the historical backfill, stored profiles, lookups and self-hosting cost nothing. The bill is an annual allowance paid in twelve equal installments, because hotels are seasonal; going over it never stops resolution; and a group pools one allowance across every property on one contract.",
+          "tables": []
+        },
+        {
+          "heading": "What it rules out",
+          "text": "Pricing per record ingested, which would put the largest invoice at the backfill before a single profile is resolved. Prepaid credit wallets, which leave a hotel wondering in August whether the balance holds. Pricing per connector, which would tax the fifth system, the one where identity resolution earns its keep. Charging for stored profiles, which would make a hotel delete records and the graph worse. And cutting resolution off at an allowance, which would fail a hotel in its high season.",
+          "tables": []
+        },
+        {
+          "heading": "What would show it is working",
+          "text": "A hotel reading the billing model and being able to say what its bill would be from its own occupancy report, without asking us. Nobody holding back a system or an archive from the graph because of what it would cost. And, once there is a hosted service, invoices that nobody disputes because they match a number the hotel already trusts.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/strategies/per-arrival-billing-strategy.md"
+    },
+    {
+      "id": "strategies/safety-first-strategy",
+      "type": "strategy",
+      "name": "Safety-First Strategy",
+      "tagline": "The machinery that makes a merge safe to allow, explanation, undo, the review queue and the confidence behind each decision, is built before anything uncertain is allowed to merge, and every new kind of matcher is admitted through it.",
+      "fields": {
+        "source": "Local",
+        "adopted": "2026-07-09",
+        "serves": [
+          "An agent can decide a merge a hotel would accept"
+        ],
+        "upholds": [
+          "Every merge can be explained and undone",
+          "A match is not trusted until it is justified"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "The approach",
+          "text": "Every merge is recorded with its matcher, its confidence and its evidence, can be asked why and undone, and a suspicious match queues for review under a threshold each tenant sets, and all of that existed while matching was still deterministic. A new matcher is a new implementation of the same contract, candidates in and scored decisions out, and the probabilistic one was admitted switched off, with a split holding against new evidence through a do-not-merge rule. An agent is treated as one more uncertain matcher behind that contract, and the audit trail records who decided before any agent decides anything. The resolution engine is written test first, with scenario tests for shared family addresses, transitive merges and an unmerge followed by new records.",
+          "tables": []
+        },
+        {
+          "heading": "What it rules out",
+          "text": "No matcher that merges before it can be explained and undone, however accurate it looks. No automatic probabilistic merging out of the box. No agent path around the review queue or the thresholds, and no special trust for a model because it is a model. And no retrofitting: a safeguard added after the decisions it guards have been made cannot reach the ones made before it.",
+          "tables": []
+        },
+        {
+          "heading": "What would show it is working",
+          "text": "A wrong merge found in testing or in use that was undone completely, with the split holding against the records that arrived after it. Review decisions accumulating with the feature vector each was scored on, which is the labeled data a later matcher would be trained on. And a hotel shown the explanation of a merge and able to tell, from that alone, whether it was right.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/strategies/safety-first-strategy.md"
+    },
+    {
+      "id": "surfaces/chat-guestgraph-io-chat",
+      "type": "surface",
+      "name": "chat.guestgraph.io chat",
+      "tagline": "The chat a visitor opens on guestgraph.io to ask about what we know, answered from what the mcp.guestgraph.io MCP server says at its pinned commit, and the page a person reaches at the same address.",
+      "fields": {
+        "source": "Local",
+        "production": "built",
+        "built-by": "https://github.com/guestgraph/mcp-guestgraph-io",
+        "url": "https://chat.guestgraph.io"
+      },
+      "sections": [
+        {
+          "heading": "What it shows",
+          "text": "- **Endpoint** — `/chat` on this address, which a page of guestgraph.io posts a visitor's conversation to and which answers it as a stream of events.\n- **Answer** — the text a language model writes from what the MCP server's tools returned for the visitor's question, in the language of the visitor's message, naming the entity each claim rests on.\n- **From the model** — a link to each entity a tool returned on its own, opening its file at the commit it was read from.\n- **Refusals** — the sentences a visitor reads instead of an answer when the day's or the month's share is spent, when one address has sent too many messages in an hour, when the host does not answer or when the chat is switched off.\n- **Page** — what a browser gets at the chat's own address: the host's name, the vision's and the identity's taglines, the paths and the events the endpoint answers, the fence that bounds what it spends, and the commit of the model it answers from.",
+          "tables": []
+        },
+        {
+          "heading": "Constraints",
+          "text": "- The chat answers about GuestGraph and never about a hotel's guests; no guest's data is in the model it reads.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/surfaces/chat-guestgraph-io-chat.md"
+    },
+    {
+      "id": "surfaces/mcp-guestgraph-io-mcp-server",
+      "type": "surface",
+      "name": "mcp.guestgraph.io MCP server",
+      "tagline": "The server an agent connects to for answers about what we know, and the page a person reaches at the same address, reading a pinned commit of our model and adding nothing to it.",
+      "fields": {
+        "source": "Local",
+        "production": "built",
+        "built-by": "https://github.com/guestgraph/mcp-guestgraph-io",
+        "url": "https://mcp.guestgraph.io"
+      },
+      "sections": [
+        {
+          "heading": "What it shows",
+          "text": "- **Endpoint** — `/mcp` on this address, the only path that speaks the protocol and the one a client is given. The registry listing's remote is this.\n- **Title** — the identity's name.\n- **Instructions** — the vision's tagline and the identity's tagline, then one sentence saying that every answer names the commit it was read from, and no commit of their own.\n- **Tools** — listing the types, describing a schema, what the types declare about each other and what they constrain, the rules the model is held to and the checks that hold it, listing and returning entities, finding evidence, searching and fetching, over every entity in the model.\n- **Page** — what a browser gets at the server's own address, for a reader who arrived at a protocol endpoint without a client: the identity's name, the vision's and the identity's taglines, the address to give a client, every tool with what it returns, and the commit the answers are read from.\n- **Structured data** — the organization and the endpoint that the page describes to a crawler, with the organization's addresses from the identity's `## Also at`.",
+          "tables": []
+        },
+        {
+          "heading": "Constraints",
+          "text": "- The server holds no guest's data: every answer is read from this model, which describes GuestGraph and no hotel's guests.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/surfaces/mcp-guestgraph-io-mcp-server.md"
+    },
+    {
+      "id": "surfaces/mcp-registry-listing",
+      "type": "surface",
+      "name": "MCP Registry listing",
+      "tagline": "The entry an agent client finds when it searches the public MCP Registry, pointing it at the MCP server.",
+      "fields": {
+        "source": "Local",
+        "production": "built",
+        "built-by": "https://github.com/guestgraph/mcp-guestgraph-io",
+        "url": "https://registry.modelcontextprotocol.io/v0/servers?search=io.guestgraph/mental-model"
+      },
+      "sections": [
+        {
+          "heading": "What it shows",
+          "text": "- **Title** — the identity's name.\n- **Description** — the identity's name and the vision's name, joined by a colon.\n- **Remote** — the MCP server's address.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/surfaces/mcp-registry-listing.md"
+    },
+    {
+      "id": "values/a-match-is-not-trusted-until-it-is-justified",
+      "type": "value",
+      "name": "A match is not trusted until it is justified",
+      "tagline": "Finding a match is the easy part; knowing when not to trust one is the work, and a match that cannot justify itself is escalated rather than made.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "In practice",
+          "text": "Each layer of matching decides only what it is entitled to and hands the rest upward: a shared strong identifier merges outright, a probabilistic score merges only above a threshold the tenant chose, and everything else queues for a person, whose decision sticks. Automatic probabilistic merging ships switched off, so out of the box a score suggests and a person decides, and lowering the threshold is an explicit, reversible act of trust. An agent gets no exemption a score would not get: it passes through the same thresholds, the same review queue and the same undo.\n\nWe never switch on a merge that no person asked to trust.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/values/a-match-is-not-trusted-until-it-is-justified.md"
+    },
+    {
+      "id": "values/every-merge-can-be-explained-and-undone",
+      "type": "value",
+      "name": "Every merge can be explained and undone",
+      "tagline": "Whichever layer decided that two records are one person, the decision can be asked why and can be taken back, and the taking back holds.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "In practice",
+          "text": "Every merge records what it joined, the matcher that decided it, how confident it was, on what evidence, when and whether the system, a person or a named agent made it, and asking why two records are one guest returns that whole chain. An unmerge splits them again and writes a do-not-merge rule, so new evidence cannot quietly put them back together. This was built before any uncertain decision was possible, because a probabilistic merge is only safe to allow once it can be explained and reversed.\n\nWe never ship a way of merging guests whose decisions cannot be read back and undone.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/values/every-merge-can-be-explained-and-undone.md"
+    },
+    {
+      "id": "values/everything-the-engine-does-is-on-its-api",
+      "type": "value",
+      "name": "Everything the engine does is on its API",
+      "tagline": "Every capability of the engine is reachable through its versioned REST API, and every refusal carries a type a program can act on and a person can look up.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "In practice",
+          "text": "Registering a source system, submitting a record, reading a guest, asking why, undoing a merge, deciding a review and setting the matching thresholds are all operations of the API, and a connector reaches the engine through that API like any other client. Every refusal is a problem detail whose type leads to a page saying what it means and what to do next. The hosted service will run this same engine, so the API is the product's contract from the first day.\n\nWe never build an engine capability that can only be reached through a job, an internal call or the database.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/values/everything-the-engine-does-is-on-its-api.md"
+    },
+    {
+      "id": "values/never-drop-what-can-be-parsed",
+      "type": "value",
+      "name": "Never drop what can be parsed",
+      "tagline": "Data loss is the cardinal sin: a record that can be read at all is kept, however wrong it looks.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "In practice",
+          "text": "Hospitality systems are dirty by nature, so a malformed record that can still be parsed is stored and flagged for review rather than rejected, and only a request that cannot be parsed at all is refused, with a problem detail saying exactly what was wrong. A connector keeps a delivery it could not fetch or submit, with its reason and its next attempt, and retries it rather than dropping it. A flagged record can be repaired and resolved again; a discarded one is a guest interaction lost for good.\n\nWe never discard a parseable record because it does not look the way we expected.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/values/never-drop-what-can-be-parsed.md"
+    },
+    {
+      "id": "values/store-what-happened-derive-who-it-was",
+      "type": "value",
+      "name": "Store what happened, derive who it was",
+      "tagline": "A source record is kept exactly as its system sent it, and a guest is a conclusion drawn from those records rather than a row anyone edits.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "In practice",
+          "text": "A record enters as it arrived, its raw payload beside the fields extracted from it, and application code never changes or deletes it; a correction arrives as a new record. The golden profile is computed from the records by survivorship rules and can be recomputed at any time, which is what makes an explanation, an undo and a replay of resolution possible at all. Lawful erasure under data protection law is the one exception, and it is named as one.\n\nWe never overwrite a source record to fix what a guest's profile says.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/values/store-what-happened-derive-who-it-was.md"
+    },
+    {
+      "id": "values/tenants-never-meet",
+      "type": "value",
+      "name": "Tenants never meet",
+      "tagline": "One instance serves many brands, properties or customers, and nothing in one tenant is readable from another, from the first line of code on.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "In practice",
+          "text": "Every stored row, query, uniqueness rule, lock and API operation carries its tenant, and resolution, lookup and merging happen within one tenant only. An id that belongs to another tenant is answered exactly as one that never existed, so a refusal cannot say whether an id is in use elsewhere, and the core has no administrative path that reads across tenants. Tenancy was there on the first day because it is cheap then and brutal to retrofit, and a leak between tenants in an identity graph is a privacy incident.\n\nWe never add a path, for an operator or for ourselves, that reads one tenant's guests from another's.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/values/tenants-never-meet.md"
+    },
+    {
+      "id": "values/the-core-stays-open",
+      "type": "value",
+      "name": "The core stays open",
+      "tagline": "The engine, the graph, the API and the connectors are Apache 2.0 and stay that way, because a hotel has to be able to check how an identity graph decided before it can trust one.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "In practice",
+          "text": "Anyone can run the core themselves and read exactly how it decided to merge two of their guests. What is planned as commercial, managed hosting, a console and MCP access for agents, goes on top of the core and never inside it: the core does not depend on commercial code, and self-hosting stays free. A black box that merges guests is not something we would deploy ourselves, so it is not something we ask a hotel to.\n\nWe never hold back or degrade a capability of the core to sell the hosted service.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/values/the-core-stays-open.md"
+    },
+    {
+      "id": "vision",
+      "type": "vision",
+      "name": "One guest, not five strangers",
+      "tagline": "We are working toward hotels that know a returning guest as one person, whichever of their systems the guest passed through, from a profile they can ask why it believes what it does, and correct when it is wrong.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "It holds when the person at the desk, and an agent acting on guest data, are looking at the same guest the booking engine, the PMS, the restaurant and the wifi each saw separately, and when either of them can ask why two records are one person and get the whole chain of decisions back. It holds only while a wrong merge is rarer than a missed one, because a wrong merge shows one guest another's stays and invoices, and that is a data protection incident rather than a flaw.\n\nIt does not ask a hotel to replace the systems it runs or to clean their data first: the records stay as each system sent them, and the profile is derived from them. It is also not a marketing profile built by guessing. A match nobody can justify is left unmade and handed to a person, and a hotel that ends up with fewer merged guests and none of them wrong is closer to it than one with more.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/vision.md"
+    }
+  ],
+  "edges": [
+    {
+      "from": "concepts/connection",
+      "to": "concepts/source-system",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one",
+        "As": ""
+      }
+    },
+    {
+      "from": "concepts/connection",
+      "to": "concepts/tenant",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one",
+        "As": ""
+      }
+    },
+    {
+      "from": "concepts/connection",
+      "to": "domains/integration",
+      "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/connection",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/do-not-merge-rule",
+      "to": "concepts/source-record",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one to many",
+        "As": "kept apart"
+      }
+    },
+    {
+      "from": "concepts/do-not-merge-rule",
+      "to": "domains/guest-identity",
+      "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/do-not-merge-rule",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/golden-profile",
+      "to": "domains/guest-identity",
+      "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/golden-profile",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/guest",
+      "to": "concepts/golden-profile",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one",
+        "As": ""
+      }
+    },
+    {
+      "from": "concepts/guest",
+      "to": "concepts/source-record",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one to many",
+        "As": ""
+      }
+    },
+    {
+      "from": "concepts/guest",
+      "to": "concepts/tenant",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one",
+        "As": ""
+      }
+    },
+    {
+      "from": "concepts/guest",
+      "to": "domains/guest-identity",
+      "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/guest",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/identifier",
+      "to": "domains/guest-identity",
+      "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/identifier",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/match-review",
+      "to": "concepts/guest",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one",
+        "As": "candidate guest"
+      }
+    },
+    {
+      "from": "concepts/match-review",
+      "to": "concepts/matcher",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one",
+        "As": "suggesting matcher"
+      }
+    },
+    {
+      "from": "concepts/match-review",
+      "to": "concepts/source-record",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one",
+        "As": ""
+      }
+    },
+    {
+      "from": "concepts/match-review",
+      "to": "domains/guest-identity",
+      "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/match-review",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/matcher",
+      "to": "domains/guest-identity",
+      "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/matcher",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/merge",
+      "to": "concepts/guest",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one",
+        "As": "survivor"
+      }
+    },
+    {
+      "from": "concepts/merge",
+      "to": "concepts/matcher",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one",
+        "As": "deciding matcher"
+      }
+    },
+    {
+      "from": "concepts/merge",
+      "to": "concepts/source-record",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one to many",
+        "As": ""
+      }
+    },
+    {
+      "from": "concepts/merge",
+      "to": "domains/guest-identity",
+      "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/merge",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/retired-guest-id",
+      "to": "concepts/guest",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one to many",
+        "As": "current guest"
+      }
+    },
+    {
+      "from": "concepts/retired-guest-id",
+      "to": "domains/guest-identity",
+      "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/retired-guest-id",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/source-object",
+      "to": "concepts/source-system",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one",
+        "As": ""
+      }
+    },
+    {
+      "from": "concepts/source-object",
+      "to": "domains/integration",
+      "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/source-object",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/source-record",
+      "to": "concepts/identifier",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "many",
+        "As": ""
+      }
+    },
+    {
+      "from": "concepts/source-record",
+      "to": "concepts/source-object",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "maybe one",
+        "As": ""
+      }
+    },
+    {
+      "from": "concepts/source-record",
+      "to": "concepts/source-system",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one",
+        "As": ""
+      }
+    },
+    {
+      "from": "concepts/source-record",
+      "to": "domains/guest-identity",
+      "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/source-record",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/source-system",
+      "to": "concepts/tenant",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one",
+        "As": ""
+      }
+    },
+    {
+      "from": "concepts/source-system",
+      "to": "domains/integration",
+      "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/source-system",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/tenant",
+      "to": "domains/guest-identity",
+      "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/tenant",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/timeline",
+      "to": "concepts/guest",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "one",
+        "As": ""
+      }
+    },
+    {
+      "from": "concepts/timeline",
+      "to": "concepts/source-object",
+      "via": "Relations.Concept",
+      "attrs": {
+        "Cardinality": "many",
+        "As": ""
+      }
+    },
+    {
+      "from": "concepts/timeline",
+      "to": "domains/guest-identity",
+      "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "concepts/timeline",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "domains/guest-identity",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "domains/integration",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "features/ask-why-records-are-one-guest",
+      "to": "concepts/guest",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/ask-why-records-are-one-guest",
+      "to": "concepts/merge",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/ask-why-records-are-one-guest",
+      "to": "products/guestgraph-engine",
+      "via": "products",
+      "attrs": {}
+    },
+    {
+      "from": "features/ask-why-records-are-one-guest",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "features/bring-reservations-and-bookings-into-the-graph",
+      "to": "concepts/connection",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/bring-reservations-and-bookings-into-the-graph",
+      "to": "concepts/source-object",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/bring-reservations-and-bookings-into-the-graph",
+      "to": "concepts/source-system",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/bring-reservations-and-bookings-into-the-graph",
+      "to": "products/apaleo-connector",
+      "via": "products",
+      "attrs": {}
+    },
+    {
+      "from": "features/bring-reservations-and-bookings-into-the-graph",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "features/keep-a-guest-id-you-stored",
+      "to": "concepts/guest",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/keep-a-guest-id-you-stored",
+      "to": "concepts/retired-guest-id",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/keep-a-guest-id-you-stored",
+      "to": "products/guestgraph-engine",
+      "via": "products",
+      "attrs": {}
+    },
+    {
+      "from": "features/keep-a-guest-id-you-stored",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "features/read-a-guest-s-golden-profile",
+      "to": "concepts/golden-profile",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/read-a-guest-s-golden-profile",
+      "to": "concepts/guest",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/read-a-guest-s-golden-profile",
+      "to": "concepts/source-record",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/read-a-guest-s-golden-profile",
+      "to": "products/guestgraph-engine",
+      "via": "products",
+      "attrs": {}
+    },
+    {
+      "from": "features/read-a-guest-s-golden-profile",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "features/resolve-records-into-one-guest",
+      "to": "concepts/guest",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/resolve-records-into-one-guest",
+      "to": "concepts/identifier",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/resolve-records-into-one-guest",
+      "to": "concepts/matcher",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/resolve-records-into-one-guest",
+      "to": "concepts/merge",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/resolve-records-into-one-guest",
+      "to": "products/guestgraph-engine",
+      "via": "products",
+      "attrs": {}
+    },
+    {
+      "from": "features/resolve-records-into-one-guest",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "features/review-an-uncertain-match",
+      "to": "concepts/match-review",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/review-an-uncertain-match",
+      "to": "concepts/matcher",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/review-an-uncertain-match",
+      "to": "concepts/tenant",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/review-an-uncertain-match",
+      "to": "products/guestgraph-engine",
+      "via": "products",
+      "attrs": {}
+    },
+    {
+      "from": "features/review-an-uncertain-match",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "features/see-what-a-guest-currently-has",
+      "to": "concepts/guest",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/see-what-a-guest-currently-has",
+      "to": "concepts/source-object",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/see-what-a-guest-currently-has",
+      "to": "concepts/timeline",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/see-what-a-guest-currently-has",
+      "to": "products/guestgraph-engine",
+      "via": "products",
+      "attrs": {}
+    },
+    {
+      "from": "features/see-what-a-guest-currently-has",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "features/submit-a-record-from-any-system",
+      "to": "concepts/source-record",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/submit-a-record-from-any-system",
+      "to": "concepts/source-system",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/submit-a-record-from-any-system",
+      "to": "concepts/tenant",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/submit-a-record-from-any-system",
+      "to": "products/guestgraph-engine",
+      "via": "products",
+      "attrs": {}
+    },
+    {
+      "from": "features/submit-a-record-from-any-system",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "features/undo-a-merge",
+      "to": "concepts/do-not-merge-rule",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/undo-a-merge",
+      "to": "concepts/guest",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/undo-a-merge",
+      "to": "concepts/merge",
+      "via": "concepts",
+      "attrs": {}
+    },
+    {
+      "from": "features/undo-a-merge",
+      "to": "products/guestgraph-engine",
+      "via": "products",
+      "attrs": {}
+    },
+    {
+      "from": "features/undo-a-merge",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "identity",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/answering/phases/answer",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/answering/phases/answer",
+      "to": "roles/answerer",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/answering/phases/answer",
+      "to": "roles/owner",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/answering/phases/answer",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/answering/phases/answer",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/answering/phases/answer",
+      "to": "roles/visitor",
+      "via": "supported-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/answering/tracks/reply",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/answering",
+      "to": "processes/answering/phases/answer",
+      "via": "Phases.Phase",
+      "attrs": {}
+    },
+    {
+      "from": "processes/answering",
+      "to": "processes/answering/tracks/reply",
+      "via": "Tracks.Track",
+      "attrs": {}
+    },
+    {
+      "from": "processes/answering",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/answering",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/consider",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/consider",
+      "to": "roles/owner",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/consider",
+      "to": "roles/owner",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/consider",
+      "to": "processes/contribution/phases/review",
+      "via": "gate-to",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/consider",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/consider",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/consider",
+      "to": "roles/contributor",
+      "via": "supported-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/integrate",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/integrate",
+      "to": "roles/owner",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/integrate",
+      "to": "roles/owner",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/integrate",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/integrate",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/propose",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/propose",
+      "to": "roles/contributor",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/propose",
+      "to": "roles/contributor",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/propose",
+      "to": "processes/contribution/phases/consider",
+      "via": "gate-to",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/propose",
+      "to": "roles/contributor",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/propose",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/review",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/review",
+      "to": "roles/reviewer",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/review",
+      "to": "roles/owner",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/review",
+      "to": "processes/contribution/phases/integrate",
+      "via": "gate-to",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/review",
+      "to": "roles/reviewer",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/review",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/review",
+      "to": "roles/contributor",
+      "via": "supported-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/review",
+      "to": "roles/owner",
+      "via": "supported-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution/tracks/change",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution",
+      "to": "processes/contribution/phases/consider",
+      "via": "Phases.Phase",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution",
+      "to": "processes/contribution/phases/integrate",
+      "via": "Phases.Phase",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution",
+      "to": "processes/contribution/phases/propose",
+      "via": "Phases.Phase",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution",
+      "to": "processes/contribution/phases/review",
+      "via": "Phases.Phase",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution",
+      "to": "processes/contribution/tracks/change",
+      "via": "Tracks.Track",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution",
+      "to": "roles/contributor",
+      "via": "supported-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/contribution",
+      "to": "roles/reviewer",
+      "via": "supported-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/implement",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/implement",
+      "to": "roles/implementer",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/implement",
+      "to": "roles/reviewer",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/implement",
+      "to": "roles/owner",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/implement",
+      "to": "roles/implementer",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/implement",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/plan",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/plan",
+      "to": "roles/planner",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/plan",
+      "to": "roles/owner",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/plan",
+      "to": "processes/delivery/phases/tasks",
+      "via": "gate-to",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/plan",
+      "to": "roles/planner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/plan",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/specify",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/specify",
+      "to": "roles/specifier",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/specify",
+      "to": "roles/owner",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/specify",
+      "to": "processes/delivery/phases/plan",
+      "via": "gate-to",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/specify",
+      "to": "roles/specifier",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/specify",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/tasks",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/tasks",
+      "to": "roles/planner",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/tasks",
+      "to": "roles/reviewer",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/tasks",
+      "to": "roles/owner",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/tasks",
+      "to": "processes/delivery/phases/implement",
+      "via": "gate-to",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/tasks",
+      "to": "roles/planner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/tasks",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery/tracks/code",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery",
+      "to": "processes/delivery/phases/implement",
+      "via": "Phases.Phase",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery",
+      "to": "processes/delivery/phases/plan",
+      "via": "Phases.Phase",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery",
+      "to": "processes/delivery/phases/specify",
+      "via": "Phases.Phase",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery",
+      "to": "processes/delivery/phases/tasks",
+      "via": "Phases.Phase",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery",
+      "to": "processes/delivery/tracks/code",
+      "via": "Tracks.Track",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/delivery",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/answer",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/answer",
+      "to": "roles/owner",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/answer",
+      "to": "roles/owner",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/answer",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/answer",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/answer",
+      "to": "roles/requestor",
+      "via": "supported-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/raise",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/raise",
+      "to": "roles/requestor",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/raise",
+      "to": "roles/requestor",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/raise",
+      "to": "processes/feature-request/phases/understand",
+      "via": "gate-to",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/raise",
+      "to": "roles/requestor",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/raise",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/triage",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/triage",
+      "to": "roles/owner",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/triage",
+      "to": "roles/owner",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/triage",
+      "to": "processes/feature-request/phases/answer",
+      "via": "gate-to",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/triage",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/triage",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/understand",
+      "to": "roles/owner",
+      "via": "escalation-authority",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/understand",
+      "to": "roles/owner",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/understand",
+      "to": "roles/owner",
+      "via": "gate-approvers",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/understand",
+      "to": "processes/feature-request/phases/triage",
+      "via": "gate-to",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/understand",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/understand",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/understand",
+      "to": "roles/requestor",
+      "via": "supported-by",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/tracks/decision",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request",
+      "to": "processes/feature-request/phases/answer",
+      "via": "Phases.Phase",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request",
+      "to": "processes/feature-request/phases/raise",
+      "via": "Phases.Phase",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request",
+      "to": "processes/feature-request/phases/triage",
+      "via": "Phases.Phase",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request",
+      "to": "processes/feature-request/phases/understand",
+      "via": "Phases.Phase",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request",
+      "to": "processes/feature-request/tracks/decision",
+      "via": "Tracks.Track",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "processes/feature-request",
+      "to": "roles/requestor",
+      "via": "supported-by",
+      "attrs": {}
+    },
+    {
+      "from": "products/apaleo-connector",
+      "to": "domains/integration",
+      "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "products/apaleo-connector",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "products/guestgraph-engine",
+      "to": "domains/guest-identity",
+      "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "products/guestgraph-engine",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "profiles/ai-agent",
+      "to": "roles/answerer",
+      "via": "roles",
+      "attrs": {}
+    },
+    {
+      "from": "profiles/ai-agent",
+      "to": "roles/implementer",
+      "via": "roles",
+      "attrs": {}
+    },
+    {
+      "from": "profiles/ai-agent",
+      "to": "roles/planner",
+      "via": "roles",
+      "attrs": {}
+    },
+    {
+      "from": "profiles/ai-agent",
+      "to": "roles/reviewer",
+      "via": "roles",
+      "attrs": {}
+    },
+    {
+      "from": "profiles/ai-agent",
+      "to": "roles/specifier",
+      "via": "roles",
+      "attrs": {}
+    },
+    {
+      "from": "profiles/ai-agent",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "roles/answerer",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "roles/contributor",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "roles/implementer",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "roles/owner",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "roles/planner",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "roles/requestor",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "roles/reviewer",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "roles/specifier",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "roles/visitor",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "strategic-objectives/an-agent-can-decide-a-merge-a-hotel-would-accept",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "strategic-objectives/every-system-a-guest-passes-through-feeds-the-graph",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "strategic-objectives/whether-a-hotel-would-pay-to-know-its-guests-is-answered",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "strategies/one-direction-connector-strategy",
+      "to": "strategic-objectives/every-system-a-guest-passes-through-feeds-the-graph",
+      "via": "serves",
+      "attrs": {}
+    },
+    {
+      "from": "strategies/one-direction-connector-strategy",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "strategies/one-direction-connector-strategy",
+      "to": "values/everything-the-engine-does-is-on-its-api",
+      "via": "upholds",
+      "attrs": {}
+    },
+    {
+      "from": "strategies/one-direction-connector-strategy",
+      "to": "values/never-drop-what-can-be-parsed",
+      "via": "upholds",
+      "attrs": {}
+    },
+    {
+      "from": "strategies/open-core-strategy",
+      "to": "strategic-objectives/whether-a-hotel-would-pay-to-know-its-guests-is-answered",
+      "via": "serves",
+      "attrs": {}
+    },
+    {
+      "from": "strategies/open-core-strategy",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "strategies/open-core-strategy",
+      "to": "values/the-core-stays-open",
+      "via": "upholds",
+      "attrs": {}
+    },
+    {
+      "from": "strategies/per-arrival-billing-strategy",
+      "to": "strategic-objectives/whether-a-hotel-would-pay-to-know-its-guests-is-answered",
+      "via": "serves",
+      "attrs": {}
+    },
+    {
+      "from": "strategies/per-arrival-billing-strategy",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "strategies/per-arrival-billing-strategy",
+      "to": "values/the-core-stays-open",
+      "via": "upholds",
+      "attrs": {}
+    },
+    {
+      "from": "strategies/safety-first-strategy",
+      "to": "strategic-objectives/an-agent-can-decide-a-merge-a-hotel-would-accept",
+      "via": "serves",
+      "attrs": {}
+    },
+    {
+      "from": "strategies/safety-first-strategy",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "strategies/safety-first-strategy",
+      "to": "values/a-match-is-not-trusted-until-it-is-justified",
+      "via": "upholds",
+      "attrs": {}
+    },
+    {
+      "from": "strategies/safety-first-strategy",
+      "to": "values/every-merge-can-be-explained-and-undone",
+      "via": "upholds",
+      "attrs": {}
+    },
+    {
+      "from": "surfaces/chat-guestgraph-io-chat",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "surfaces/mcp-guestgraph-io-mcp-server",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "surfaces/mcp-registry-listing",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "values/a-match-is-not-trusted-until-it-is-justified",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "values/every-merge-can-be-explained-and-undone",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "values/everything-the-engine-does-is-on-its-api",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "values/never-drop-what-can-be-parsed",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "values/store-what-happened-derive-who-it-was",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "values/tenants-never-meet",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "values/the-core-stays-open",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "vision",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    }
+  ],
+  "repo": "guestgraph/mental-model"
+}

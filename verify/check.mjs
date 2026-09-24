@@ -50,6 +50,16 @@ const PAGES = [
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: [],
     card: true, cardBase: SITE, internalLinks: true },
 
+  // The model page. The stage draws model.json, which build/model.mjs writes from the commit
+  // source.json pins, and `graph` holds the drawing to that file. The source link is not listed
+  // in `links`: the stage rewrites its href from the file's own commit, so `graph` asserts it.
+  { path: "/model/", typography: true, footer: [...FOOTER, "model.json"], storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /Model/, lang: "en", sourceLang: "en",
+    translates: { lang: "de", shows: ["Was hier steht", "Die Datei hinter dem Diagramm"], hides: ["What is in it", "The file behind the figure"] },
+    contains: ["GuestGraph,", "described", "What is in it", "Generated from"],
+    sameOrigin: true,
+    fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: ["stage contract"],
+    card: true, cardBase: SITE, internalLinks: true, graph: true, divider: true },
+
   // The privacy note. Its claims are checkable, so `verify` checks them rather than
   // trusting the prose: a page that says it makes no third-party request must make none,
   // and the suite's own `requestfailed`/`links` machinery cannot see that. If a font, an

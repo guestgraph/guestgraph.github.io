@@ -70,6 +70,12 @@ jobs:
       # Same reason, one repository further out: the API page is written from two services'
       # OpenAPI documents at the commits api-sources.json pins, so a page that has drifted
       # from them is a page that describes calls nobody can make.
+      # After npm ci: build/model.mjs imports the parser from companygraph-meta-model, which is
+      # not on disk until then. The token is only for the rate limit.
+      - name: The model still matches the pinned commit
+        run: npm run model:check
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - name: The API page says what the pinned documents say
         run: npm run api:check
       # The other half, and deliberately not a failure: api:check proves the page is what the
