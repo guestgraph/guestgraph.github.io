@@ -106,7 +106,7 @@ npm run sitemap:check              # are those dates still what git says?
 
 ## What it says, and what it deliberately does not
 
-One screen, one job: say what GuestGraph is and send the visitor to the talk or the code. The landing page carries the title, the hook, and two links — nothing else. Everything a visitor would ask next is answered in the [12-minute talk](https://guestgraph.io/talks/intro/), which is a better medium for it than a scrolling page of claims.
+One screen, one job: say what GuestGraph is and send the visitor to the talk or the code. The landing page carries the title, the hook, and two links — nothing else. Everything a visitor would ask next is answered in the [six-minute talk](https://guestgraph.io/talks/intro/), which is a better medium for it than a scrolling page of claims.
 
 That is also why it makes no claim about matching behavior, roadmap, or status. Those live where they are maintained — in the core repository and in [`docs/matching.md`](https://github.com/guestgraph/engine/blob/main/docs/matching.md) — so a change there cannot leave this page quietly wrong.
 
