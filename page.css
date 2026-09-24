@@ -1,6 +1,6 @@
-/* @robertblust/design v0.83.0 — page.css, assembled from the shared blocks
-   and copied into this site by `npm run design`. Editing it here does nothing: the
-   next `npm run design` overwrites it from the package. Change it there instead. */
+/* @robertblust/design — page.css, assembled from the shared blocks: reset v2 · header v14 ·
+   title v1 · footer v1 · principles v1 · team v1 · surfaces v1.
+   Editing this file in a site does nothing: the next npm run design overwrites it. */
 
 *{box-sizing:border-box; margin:0; padding:0}
 body{
