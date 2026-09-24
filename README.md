@@ -18,6 +18,7 @@ A repository named `talks` in this organization would claim `guestgraph.io/talks
 | `/billing/` | How the hosted service will bill. One meter, and it is arrivals. |
 | `/privacy/` | What this site collects, which is nothing. |
 | `/problems/` | What each refusal type a GuestGraph service answers means, and what to do about it. |
+| `/principles/` | GuestGraph's vision and values, rendered from `model.json` by `build/pages.mjs`. |
 | `/api/` | The two APIs, generated from the services' OpenAPI documents at pinned commits. |
 | `/model/` | GuestGraph's own model, drawn on the stage from `model.json`, which is built from a pinned commit of `guestgraph/mental-model`. |
 
@@ -44,6 +45,9 @@ A repository named `talks` in this organization would claim `guestgraph.io/talks
   parses to, and CI runs the check. The pin is editorial, and `npm run pin:check` reports how far
   it has fallen behind, beside the API pins. `stage.js`, `stage.css`, `card.js` and the vendored
   d3 are the design package's `stage` group, which draws it.
+- `build/pages.mjs` — every region derived from `model.json`, written by the design package's
+  renderers: `npm run pages` rewrites them, `npm run pages:check` fails when one has drifted, and
+  CI runs the check. It refuses a `model.json` whose commit is not the pin.
 - `build-api.mjs` and `api-sources.json` — the API page's operation rows, written from the
   engine's and the connector's own OpenAPI documents at the commits the pins name. `npm run api`
   rewrites the rows, `npm run api:check` fails when the page has drifted from the pins, and CI

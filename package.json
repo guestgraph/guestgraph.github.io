@@ -11,6 +11,8 @@
     "sitemap:check": "design sitemap --check",
     "model": "node build/model.mjs",
     "model:check": "node build/model.mjs --check",
+    "pages": "node build/pages.mjs",
+    "pages:check": "node build/pages.mjs --check",
     "verify": "node verify/check.mjs",
     "pdf": "node export-pdf.mjs",
     "og": "node export-og.mjs",
