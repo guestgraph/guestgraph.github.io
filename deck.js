@@ -1,6 +1,6 @@
-// @robertblust/design v0.83.0 — deck.js, assembled from the shared blocks
-// and copied into this site by `npm run design`. Editing it here does nothing: the
-// next `npm run design` overwrites it from the package. Change it there instead.
+// @robertblust/design — deck.js, assembled from the shared blocks: theme v5 · runtime v8 ·
+// fit v1.
+// Editing this file in a site does nothing: the next npm run design overwrites it.
 
 (function () {
 var THEME_KEY = "theme";

@@ -1,6 +1,5 @@
-/* @robertblust/design v0.83.0 — tokens.css, assembled from the shared blocks
-   and copied into this site by `npm run design`. Editing it here does nothing: the
-   next `npm run design` overwrites it from the package. Change it there instead. */
+/* @robertblust/design — tokens.css, assembled from the shared blocks: tokens v11.
+   Editing this file in a site does nothing: the next npm run design overwrites it. */
 
 /* The same eleven names, re-picked. The ramp's axis flips: on dark, brightness is
    confidence; on light, depth is — the candidate pales, the resolved thing deepens.

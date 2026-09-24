@@ -1,6 +1,5 @@
-/* @robertblust/design v0.83.0 — deck.css, assembled from the shared blocks
-   and copied into this site by `npm run design`. Editing it here does nothing: the
-   next `npm run design` overwrites it from the package. Change it there instead. */
+/* @robertblust/design — deck.css, assembled from the shared blocks: lockup v1 · transport v9.
+   Editing this file in a site does nothing: the next npm run design overwrites it. */
 
 .name{display:flex; align-items:center; gap:.5em}
 .name{grid-column:1; justify-self:start;

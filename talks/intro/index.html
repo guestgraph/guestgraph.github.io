@@ -412,21 +412,21 @@
   <section class="slide title-slide"
     data-say-title="no"
     data-time="0:00"
-    data-notes-de="<em class='cue'>Der Titel liegt an, während ich eröffne.</em> GuestGraph ist kein fertiges Produkt. Es ist eine Idee, und ich stelle sie hier zur Prüfung. <em class='cue'>Wichtig im Ton – kurze Pause davor:</em> Ich will Gegenwind, nicht Applaus."
+    data-notes-de="<em class='cue'>Die Titelfolie bleibt stehen, während ich beginne.</em> GuestGraph ist kein fertiges Produkt. Es ist eine Idee, und ich stelle sie hier zur Prüfung. <em class='cue'>Wichtig im Ton – kurze Pause davor:</em> Ich will Gegenwind, nicht Applaus."
     data-notes="<em class='cue'>The title stays up while I open.</em> GuestGraph is not a finished product. It is an idea, and I am putting it up for scrutiny. <em class='cue'>Important in tone — a short pause first:</em> I want pushback, not applause.">
     <div class="kicker mono" data-n="00" data-de="Eine Idee, zur Prüfung gestellt">An idea, put up for scrutiny</div>
     <div class="titlelock">
       <span class="titlemark"><svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8.6 7.2 L20.5 14.2"/><path d="M8.6 16 L19.4 16"/><path d="M8.6 24.8 L20.5 17.8"/><circle cx="6" cy="7.2" r="2.6" fill="var(--ground)"/><circle cx="6" cy="16" r="2.6" fill="var(--ground)"/><circle cx="6" cy="24.8" r="2.6" fill="var(--ground)"/></g><circle cx="24" cy="16" r="5.4" fill="currentColor"/></svg></span>
       <h1 data-de="Guest<em>Graph</em>.">Guest<em>Graph</em>.</h1>
     </div>
-    <p class="sub" data-de="Ein erklärbares Gastprofil – aus Daten, die über jedes System im Hotel verstreut liegen.">One explainable guest profile, from data scattered across every system in the hotel.</p>
-    <p class="byline" data-de="Robert Blust · <span>Software Engineer &amp; Architekt</span>">Robert Blust · <span>Software Engineer &amp; Architect</span></p>
+    <p class="sub" data-de="Ein erklärbares Gastprofil – aus Daten, die über alle Systeme des Hotels verstreut sind.">One explainable guest profile, from data scattered across every system in the hotel.</p>
+    <p class="byline" data-de="Robert Blust · <span>Software Engineer &amp; Architect</span>">Robert Blust · <span>Software Engineer &amp; Architect</span></p>
   </section>
 
   <!-- 01 · Das Problem -->
   <section class="slide"
     data-time="0:40"
-    data-notes-de="<em class='cue'>Konkret einsteigen, nicht abstrakt.</em> Erika bucht über Booking.com, checkt im PMS ein, isst im Restaurant, loggt sich ins WLAN ein, schreibt eine Bewertung. Fünf Systeme, fünf Datensätze, fünf verschiedene Schlüssel. <em class='cue'>Kurze Pause.</em> Das Hotel hat keinen einzigen Gast namens Erika – es hat fünf Fremde. Und niemand im Haus merkt es."
+    data-notes-de="<em class='cue'>Konkret einsteigen, nicht abstrakt.</em> Erika bucht über Booking.com, checkt im PMS ein, isst im Restaurant, loggt sich ins WLAN ein, schreibt eine Bewertung. Fünf Systeme, fünf Datensätze, fünf verschiedene Schlüssel. <em class='cue'>Kurze Pause.</em> Für das Hotel ist Erika nicht ein Gast – es sind fünf Fremde. Und niemand im Haus merkt es."
     data-notes="<em class='cue'>Start concrete, not abstract.</em> Erika books via Booking.com, checks in through the PMS, eats in the restaurant, logs into the wifi, writes a review. Five systems, five records, five different keys. <em class='cue'>Short pause.</em> The hotel does not have one guest called Erika — it has five strangers. And nobody in the building notices.">
     <div class="kicker mono" data-n="01" data-de="Das Problem">The problem</div>
     <h1 data-de="Ein Stammgast sieht aus wie <em>fünf Fremde</em>.">A returning guest looks like <em>five strangers</em>.</h1>
@@ -454,37 +454,37 @@
   <!-- 02 · Warum es nicht gelöst ist -->
   <section class="slide"
     data-time="1:40"
-    data-notes-de="<em class='cue'>Den naheliegenden Einwand selbst vorwegnehmen.</em> Die erste Antwort ist immer: dann gleicht doch über die E-Mail ab. Das funktioniert genau so lange, bis eine Familie sich eine Adresse teilt, bis Booking.com eine Relay-Adresse schickt, bis jemand die Adresse wechselt. <em class='cue'>Betonen:</em> Und wenn man falsch zusammenführt, ist das kein Schönheitsfehler – dann sieht ein Gast die Rechnungen und Aufenthalte eines anderen. Das ist ein Datenschutzvorfall. Deshalb trauen sich die meisten gar nicht erst."
+    data-notes-de="<em class='cue'>Den naheliegenden Einwand selbst vorwegnehmen.</em> Die erste Antwort ist immer: Dann gleicht man eben über die E-Mail-Adresse ab. Das funktioniert genau so lange, bis eine Familie sich eine Adresse teilt, bis Booking.com eine Relay-Adresse schickt, bis jemand den Anbieter wechselt. <em class='cue'>Betonen:</em> Und wenn man falsch zusammenführt, ist das kein Schönheitsfehler – dann sieht ein Gast die Rechnungen und Aufenthalte eines anderen. Das ist ein Datenschutzvorfall. Deshalb wagen es die meisten gar nicht erst."
     data-notes="<em class='cue'>Pre-empt the obvious objection myself.</em> The first answer is always: just match on email. That works exactly until a family shares an address, until Booking.com sends a relay address, until someone changes provider. <em class='cue'>Stress this:</em> And if you merge wrongly, that is not a cosmetic flaw — one guest sees another's invoices and stays. That is a data protection incident. Which is why most people do not dare try.">
     <div class="kicker mono" data-n="02" data-de="Warum es nicht gelöst ist">Why it is not solved</div>
-    <h1 data-de="Zusammenführen ist einfach. <em>Falsch</em> liegen ist teuer.">Matching is easy. Being <em>wrong</em> is expensive.</h1>
+    <h1 data-de="Treffer finden ist einfach. <em>Danebenliegen</em> ist teuer.">Matching is easy. Being <em>wrong</em> is expensive.</h1>
     <div class="thennow">
       <div class="col">
-        <h4 data-de="Die naheliegende Lösung">The naive fix</h4>
+        <h4 data-de="Die naive Lösung">The naive fix</h4>
         <p data-de="Über die E-Mail abgleichen.">Match on email.</p>
-        <p class="small" data-de="Scheitert an geteilten Familienadressen, an OTA-Relay-Adressen, und an jedem, der den Anbieter wechselt.">Breaks on shared family addresses, OTA relay addresses and anyone who changes provider.</p>
+        <p class="small" data-de="Scheitert an gemeinsam genutzten Familienadressen, an OTA-Relay-Adressen und an allen, die den Anbieter wechseln.">Breaks on shared family addresses, OTA relay addresses and anyone who changes provider.</p>
       </div>
       <div class="col now">
         <h4 data-de="Was es kostet">What it costs</h4>
         <p data-de="Ein Gast sieht die Aufenthalte und Rechnungen eines anderen.">One guest sees another's stays and invoices.</p>
-        <p class="small" data-de="Eine falsche Zusammenführung ist ein Datenschutzvorfall – kein Schönheitsfehler. Also versuchen es die meisten gar nicht.">A wrong merge is a data protection incident — not a cosmetic flaw. So most hotels never try.</p>
+        <p class="small" data-de="Eine falsche Zusammenführung ist ein Datenschutzvorfall – kein Schönheitsfehler. Deshalb versuchen es die meisten Hotels gar nicht erst.">A wrong merge is a data protection incident — not a cosmetic flaw. So most hotels never try.</p>
       </div>
     </div>
-    <p class="verdict" data-de="Das Schwierige ist nicht, Treffer zu finden. Sondern <em>zu wissen, wann man einem nicht traut</em>.">The hard part is not finding matches. It is <em>knowing when not to trust one</em>.</p>
+    <p class="verdict" data-de="Das Schwierige ist nicht, Treffer zu finden, sondern <em>zu wissen, wann man einem Treffer nicht trauen darf</em>.">The hard part is not finding matches. It is <em>knowing when not to trust one</em>.</p>
   </section>
 
   <!-- 03 · Die Idee -->
   <section class="slide"
     data-time="2:50"
-    data-notes-de="<em class='cue'>Die Kernidee, ruhig.</em> GuestGraph nimmt die Rohdaten aus allen Systemen, lässt sie unangetastet liegen, und leitet daraus ab, welche Datensätze zur selben Person gehören. <em class='cue'>Zwei Dinge betonen:</em> Erstens, das Original wird nie verändert – Korrekturen kommen als neuer Datensatz, nie als Überschreiben. Zweitens, das goldene Profil ist berechnet, nicht gespeichert: man kann es jederzeit neu herleiten. Das klingt nach einem Detail, ist aber die Grundlage für alles Weitere."
+    data-notes-de="<em class='cue'>Die Kernidee, ruhig.</em> GuestGraph nimmt die Rohdaten aus allen Systemen, lässt sie unangetastet und leitet daraus ab, welche Datensätze zur selben Person gehören. <em class='cue'>Zwei Dinge betonen:</em> Erstens: Das Original wird nie verändert. Korrekturen kommen als neuer Datensatz dazu, nie wird etwas überschrieben. Zweitens: Das goldene Profil wird berechnet, nicht gespeichert. Man kann es jederzeit neu herleiten. Das klingt nach einem Detail, ist aber die Grundlage für alles Weitere."
     data-notes="<em class='cue'>The core idea, calmly.</em> GuestGraph takes the raw records from every system, leaves them untouched and derives which of them belong to the same person. <em class='cue'>Stress two things:</em> First, the original is never altered — corrections arrive as a new record, never as an overwrite. Second, the golden profile is computed, not stored: it can be re-derived at any time. That sounds like a detail, but it is the foundation for everything that follows.">
     <div class="kicker mono" data-n="03" data-de="Die Idee">The idea</div>
     <h1 data-de="Speichern, was passiert ist. <em>Herleiten</em>, wer es war.">Store what happened. <em>Derive</em> who it was.</h1>
     <div class="split">
       <ul class="blist">
         <li><b data-de="Datensätze sind unveränderlich">Records are immutable</b><span data-de="Korrekturen kommen als neue Datensätze, nie als Änderung. Das Original ist immer das, was die Quelle wirklich geschickt hat.">Corrections arrive as new records, never as edits. The original is always what the source actually sent.</span></li>
-        <li><b data-de="Das Profil ist abgeleitet">The profile is derived</b><span data-de="Eine Berechnung über die Datensätze, keine Zeile, die jemand ändert. Jederzeit neu herleitbar.">A computation over the records, not a row someone edits. It can always be recomputed.</span></li>
-        <li><b data-de="Mandantengetrennt von Tag eins">Tenant-scoped from day one</b><span data-de="Eine Instanz für viele Marken oder Häuser, ohne Weg dazwischen.">One instance serves many brands or properties, with no path between them.</span></li>
+        <li><b data-de="Das Profil ist abgeleitet">The profile is derived</b><span data-de="Aus den Datensätzen berechnet, keine Zeile, die jemand bearbeitet. Es lässt sich jederzeit neu berechnen.">A computation over the records, not a row someone edits. It can always be recomputed.</span></li>
+        <li><b data-de="Von Anfang an mandantengetrennt">Tenant-scoped from day one</b><span data-de="Eine Instanz bedient viele Marken oder Häuser, und zwischen ihnen führt kein Weg.">One instance serves many brands or properties, with no path between them.</span></li>
       </ul>
       <div class="diagram">
         <svg viewBox="0 0 420 210" role="img" aria-label="Records resolve into one derived guest profile">
@@ -512,61 +512,61 @@
   <!-- 04 · Wie entschieden wird -->
   <section class="slide"
     data-time="4:10"
-    data-notes-de="<em class='cue' data-tag='[slowly]'>Das ist die wichtigste Folie – hier langsam werden.</em> Aus dieser Frage folgt der ganze Aufbau: Jede Schicht entscheidet nur das, wozu sie berechtigt ist, und gibt den Rest nach oben. Geteilte starke Merkmale – E-Mail, Telefon, Ausweis – führen sofort zusammen. Wahrscheinlichkeitsbasiertes Scoring führt nur zusammen, wenn der Betrieb die Schwelle selbst gesetzt hat. Alles andere landet bei einem Menschen. <em class='cue' data-tag='[deliberate]'>Der Satz, den ich hängen lassen will:</em> Ab Werk ist das automatische Zusammenführen ausgeschaltet."
-    data-notes="<em class='cue' data-tag='[slowly]'>This is the most important slide — slow down here.</em> Everything about the design follows from that question: each layer decides only what it is entitled to decide, and hands the rest upward. Shared strong identifiers — email, phone, ID document — merge outright. Probabilistic scoring merges only if the operator set the threshold themselves. Everything else goes to a human. <em class='cue' data-tag='[deliberate]'>The sentence I want to leave hanging:</em> Out of the box, automatic merging is switched off.">
+    data-notes-de="<em class='cue' data-tag='[slowly]'>Das ist die wichtigste Folie – hier langsamer sprechen.</em> Aus dieser Frage folgt der ganze Aufbau: Jede Schicht entscheidet nur das, wozu sie berechtigt ist, und gibt den Rest nach oben weiter. Ein gemeinsames starkes Merkmal – E-Mail, Telefon, Ausweis – genügt, um direkt zusammenzuführen. Ein Wahrscheinlichkeits-Score führt nur dann Datensätze zusammen, wenn der Betrieb die Schwelle selbst gesetzt hat. Alles andere geht an einen Menschen. <em class='cue' data-tag='[deliberate]'>Der Satz, der nachklingen soll:</em> Ab Werk ist das automatische Zusammenführen nach Wahrscheinlichkeit ausgeschaltet."
+    data-notes="<em class='cue' data-tag='[slowly]'>This is the most important slide — slow down here.</em> Everything about the design follows from that question: each layer decides only what it is entitled to decide, and hands the rest upward. Shared strong identifiers — email, phone, ID document — merge outright. Probabilistic scoring merges only if the operator set the threshold themselves. Everything else goes to a human. <em class='cue' data-tag='[deliberate]'>The sentence I want to leave hanging:</em> Out of the box, automatic probabilistic merging is switched off.">
     <div class="kicker mono" data-n="04" data-de="Wie entschieden wird">How it decides</div>
-    <h1 data-de="Nicht <em>«passt das?»</em> – sondern <em>«wie sicher sind wir?»</em>">Not <em>&#8220;is it a match?&#8221;</em> — but <em>&#8220;how sure are we?&#8221;</em></h1>
+    <h1 data-de="Nicht <em>«ist das ein Treffer?»</em> – sondern <em>«wie sicher sind wir?»</em>">Not <em>&#8220;is it a match?&#8221;</em> — but <em>&#8220;how sure are we?&#8221;</em></h1>
     <div class="layers">
       <div class="layer on">
         <span class="who">1 ·</span>
-        <span class="what"><b style="color:var(--ink)" data-de="Geteiltes starkes Merkmal">Shared strong identifier</b><br><span data-de="E-Mail, Telefon, Kundennummer, Ausweis → führt direkt zusammen.">Email, phone, loyalty id, ID document → merges outright.</span></span>
+        <span class="what"><b style="color:var(--ink)" data-de="Gemeinsames starkes Merkmal">Shared strong identifier</b><br><span data-de="E-Mail, Telefon, Mitgliedsnummer des Treueprogramms, Ausweis → führt direkt zusammen.">Email, phone, loyalty id, ID document → merges outright.</span></span>
       </div>
       <div class="layer on">
         <span class="who">2 ·</span>
-        <span class="what"><b style="color:var(--ink)" data-de="Wahrscheinlichkeits-Score">Probabilistic score</b><br><span data-de="Führt nur über einer Schwelle zusammen, die der Betrieb selbst gesetzt hat. Sonst: Warteschlange.">Merges only above a threshold the operator chose. Otherwise it queues.</span></span>
+        <span class="what"><b style="color:var(--ink)" data-de="Wahrscheinlichkeits-Score">Probabilistic score</b><br><span data-de="Führt nur über einer Schwelle zusammen, die der Betrieb selbst gesetzt hat. Sonst wartet der Fall in der Prüfwarteschlange.">Merges only above a threshold the operator chose. Otherwise it queues.</span></span>
       </div>
       <div class="layer human">
         <span class="who">3 ·</span>
-        <span class="what"><b style="color:var(--ink)" data-de="Ein Mensch entscheidet">A human decides</b><br><span data-de="Das letzte Wort – und die Entscheidung hält auch gegen neue Hinweise.">The final word — and their decision sticks against future evidence.</span></span>
+        <span class="what"><b style="color:var(--ink)" data-de="Ein Mensch entscheidet">A human decides</b><br><span data-de="Das letzte Wort – und dieser Entscheid bleibt, auch gegen spätere Hinweise.">The final word — and their decision sticks against future evidence.</span></span>
       </div>
     </div>
-    <p class="stamp" data-de="Ab Werk ist automatisches Zusammenführen <b>ausgeschaltet</b>. Es schlägt vor; ein Mensch entscheidet.">Out of the box, automatic probabilistic merging is <b>off</b>. It suggests; a human decides.</p>
+    <p class="stamp" data-de="Ab Werk ist das automatische Zusammenführen nach Wahrscheinlichkeit <b>ausgeschaltet</b>. Das System schlägt vor; ein Mensch entscheidet.">Out of the box, automatic probabilistic merging is <b>off</b>. It suggests; a human decides.</p>
   </section>
 
   <!-- 05 · Die zwei Garantien -->
   <section class="slide"
     data-time="5:40"
-    data-notes-de="<em class='cue'>Hier geht es um Vertrauen, nicht um Technik.</em> Zwei Eigenschaften gelten für jede Entscheidung, egal welche Schicht sie getroffen hat. Erstens: man kann fragen, warum zwei Datensätze eine Person sind, und bekommt die vollständige Kette – welcher Matcher, wie sicher, aufgrund welcher Hinweise, wann, und seit kurzem auch: wer. Zweitens: jede Zusammenführung lässt sich rückgängig machen, und diese Korrektur hält. <em class='cue'>Wichtig:</em> Das ist keine Zusatzfunktion. Das war zuerst da, bevor überhaupt eine unsichere Entscheidung möglich war."
+    data-notes-de="<em class='cue'>Hier geht es um Vertrauen, nicht um Technik.</em> Zwei Eigenschaften gelten für jeden Entscheid, egal welche Schicht ihn getroffen hat. Erstens: Man kann fragen, warum zwei Datensätze eine Person sind, und bekommt die vollständige Kette – welcher Matcher, wie sicher, aufgrund welcher Hinweise, wann, und seit Kurzem auch: wer. Zweitens: Jede Zusammenführung lässt sich rückgängig machen, und diese Korrektur bleibt bestehen. <em class='cue'>Wichtig:</em> Das ist keine Zusatzfunktion. Es war zuerst da, bevor überhaupt ein unsicherer Entscheid möglich war."
     data-notes="<em class='cue'>This is about trust, not technology.</em> Two properties hold for every decision, whichever layer made it. First: you can ask why two records are one person and get the full chain — which matcher, how confident, on what evidence, when, and recently also: who. Second: every merge can be undone, and that correction sticks. <em class='cue'>Important:</em> This is not an add-on. It came first, before any uncertain decision was possible at all.">
     <div class="kicker mono" data-n="05" data-de="Die zwei Garantien">The two guarantees</div>
-    <h1 data-de="Jede Entscheidung ist <em>erklärbar</em> und <em>umkehrbar</em>.">Every decision can be <em>explained</em> and <em>undone</em>.</h1>
+    <h1 data-de="Jeder Entscheid ist <em>erklärbar</em> und <em>umkehrbar</em>.">Every decision can be <em>explained</em> and <em>undone</em>.</h1>
     <div class="thennow">
       <div class="col now">
         <h4 data-de="Erklären">Explain</h4>
-        <p data-de="«Warum sind das ein Gast?»">&quot;Why are these one guest?&quot;</p>
+        <p data-de="«Warum ist das ein und derselbe Gast?»">&quot;Why are these one guest?&quot;</p>
         <p class="small" data-de="Die vollständige Kette: welcher Matcher, wie sicher, aufgrund welcher Hinweise, wann – und wer, wenn ein Mensch oder ein Agent entschieden hat.">The full chain: which matcher, how confident, on what evidence, when — and who, if a person or an agent decided it.</p>
       </div>
       <div class="col now">
         <h4 data-de="Umkehren">Undo</h4>
-        <p data-de="Wieder trennen – und es hält.">Split them again — and it holds.</p>
-        <p class="small" data-de="Eine Trennung schreibt eine dauerhafte Regel, damit neue Hinweise die beiden nicht stillschweigend wieder zusammenführen.">An undo writes a permanent do-not-merge rule, so new evidence cannot silently put them back together.</p>
+        <p data-de="Wieder trennen – und die Trennung bleibt.">Split them again — and it holds.</p>
+        <p class="small" data-de="Eine Trennung schreibt eine dauerhafte Regel «nicht zusammenführen», damit neue Hinweise die beiden nicht stillschweigend wieder vereinen können.">An undo writes a permanent do-not-merge rule, so new evidence cannot silently put them back together.</p>
       </div>
     </div>
-    <p class="verdict" data-de="Das gab es, <em>bevor</em> eine unsichere Entscheidung überhaupt möglich war. Diese Reihenfolge war der Punkt.">This shipped <em>before</em> any uncertain decision was possible. That order was the point.</p>
+    <p class="verdict" data-de="Das war ausgeliefert, <em>bevor</em> überhaupt ein unsicherer Entscheid möglich war. Auf diese Reihenfolge kam es an.">This shipped <em>before</em> any uncertain decision was possible. That order was the point.</p>
   </section>
 
   <!-- 06 · Wo KI hingehört -->
   <section class="slide"
     data-time="6:40"
-    data-notes-de="<em class='cue'>Hier kommt die Frage, die heute jeder stellt – und ich beantworte sie mit der Maschinerie, nicht mit dem Wort KI.</em> Ein Agent, der Gastdaten nutzt, muss zuerst wissen, <em>welcher</em> Gast. Ohne aufgelöste Identität beantwortet er Fragen über fünf Fremde. <em class='cue'>Der eigentliche Punkt, langsam:</em> Strukturell ist das nichts Neues. Genau dieselbe Maschinerie, die einen Fuzzy-Score absichert, sichert auch ihn ab – Schwellen, Review-Queue, Umkehrbarkeit. Seit Kurzem hält die Audit-Spur zusätzlich fest, <em>ob</em> ein Mensch oder ein benannter Agent entschieden hat. Damit wird die Regel «ein Agent hebt die Trennung eines Menschen nie auf» zu einem einzigen Vergleich."
+    data-notes-de="<em class='cue'>Hier kommt die Frage, die heute jeder stellt – und ich beantworte sie mit der Maschinerie, nicht mit dem Wort KI.</em> Ein Agent, der mit Gastdaten arbeitet, muss zuerst wissen, <em>welcher</em> Gast gemeint ist. Ohne aufgelöste Identität beantwortet er Fragen über fünf Fremde. <em class='cue'>Der eigentliche Punkt, langsam:</em> Strukturell ist das nichts Neues. Genau dieselbe Maschinerie, die einen Fuzzy-Score absichert, sichert auch den Agenten ab – Schwellen, Prüfwarteschlange, Umkehrbarkeit. Seit Kurzem hält der Audit-Trail zusätzlich fest, <em>ob</em> ein Mensch oder ein benannter Agent entschieden hat. Damit lässt sich die Regel «ein Agent hebt die Trennung eines Menschen nie auf» mit einem einzigen Vergleich prüfen."
     data-notes="<em class='cue'>Here comes the question everyone asks today — and I answer it with the machinery, not with the word AI.</em> An agent acting on guest data first has to know <em>which</em> guest. Without resolved identity it is answering questions about five strangers. <em class='cue'>The actual point, slowly:</em> Structurally it is nothing new. The very same machinery that gates a fuzzy score gates it — thresholds, review queue, reversibility. Recently the audit trail also records <em>whether</em> a human or a named agent decided. That turns the rule &#8220;an agent never lifts a human&#8217;s split&#8221; into a single comparison.">
     <div class="kicker mono" data-n="06" data-de="Wo KI hingehört">Where AI fits</div>
     <h1 data-de="Ein Agent ist nur <em>ein weiterer unsicherer Matcher</em>.">An agent is just <em>another uncertain matcher</em>.</h1>
     <div class="split">
       <ul class="blist">
-        <li><b data-de="Identität kommt zuerst">Identity comes first</b><span data-de="Ein Agent, der Gastdaten nutzt, muss wissen, welcher Gast. Ohne das beantwortet er Fragen über fünf Fremde.">An agent acting on guest data has to know which guest. Without that it answers questions about five strangers.</span></li>
-        <li><b data-de="Abgesichert durch vorhandene Maschinerie">Gated by machinery that exists</b><span data-de="Schwellen, Review-Queue, Umkehrbarkeit – der Agent bekommt keine Ausnahme, die ein Fuzzy-Score nicht auch bekäme.">Thresholds, review queue, reversibility — the agent gets no exemption a fuzzy score would not get.</span></li>
-        <li><b data-de="Die Audit-Spur benennt ihn">The audit trail names it</b><span data-de="Jede Entscheidung hält fest, ob das System, ein Mensch oder ein benannter Agent sie getroffen hat.">Every decision records whether the system, a person or a named agent made it.</span></li>
+        <li><b data-de="Identität kommt zuerst">Identity comes first</b><span data-de="Ein Agent, der mit Gastdaten arbeitet, muss wissen, welcher Gast gemeint ist. Sonst beantwortet er Fragen über fünf Fremde.">An agent acting on guest data has to know which guest. Without that it answers questions about five strangers.</span></li>
+        <li><b data-de="Abgesichert durch die vorhandenen Mechanismen">Gated by machinery that exists</b><span data-de="Schwellen, Prüfwarteschlange, Umkehrbarkeit – der Agent bekommt keine Ausnahme, die ein Fuzzy-Score nicht auch bekäme.">Thresholds, review queue, reversibility — the agent gets no exemption a fuzzy score would not get.</span></li>
+        <li><b data-de="Der Audit-Trail nennt ihn beim Namen">The audit trail names it</b><span data-de="Zu jedem Entscheid ist festgehalten, ob das System, ein Mensch oder ein benannter Agent ihn getroffen hat.">Every decision records whether the system, a person or a named agent made it.</span></li>
       </ul>
       <div class="diagram">
         <svg viewBox="0 0 420 220" role="img" aria-label="Three-tier stewardship: rules, agent, human">
@@ -576,13 +576,13 @@
           <path class="arrow" d="M210,68 L210,84"/>
           <rect class="flowbox hot" x="10" y="86" width="400" height="52" rx="9"/>
           <text class="flowlabel" x="210" y="106" style="font-size:13px; fill:var(--c-mid)">Agent · MCP</text>
-          <text class="flowlabel" x="210" y="124" style="font-size:11.5px; fill:var(--dim)" data-de="entscheidet, was er sicher belegen kann">decides what it can evidence</text>
+          <text class="flowlabel" x="210" y="124" style="font-size:11.5px; fill:var(--dim)" data-de="entscheidet, was er belegen kann">decides what it can evidence</text>
           <path class="arrow" d="M210,140 L210,156"/>
           <rect class="gate" x="10" y="158" width="400" height="52" rx="9" style="stroke:var(--c-flag)"/>
           <text class="flowlabel" x="210" y="178" style="font-size:13px; fill:var(--c-flag)" data-de="Mensch">Human</text>
           <text class="flowlabel" x="210" y="196" style="font-size:11.5px; fill:var(--dim)" data-de="bekommt den Rest, mit Empfehlung">gets the rest, with a recommendation</text>
         </svg>
-        <p class="caption" data-de="Jede Stufe gibt nach oben, was sie nicht belegen kann. <b>Eskalation ist der Normalfall</b>, nicht die Ausnahme.">Each tier hands upward what it cannot justify. <b>Escalation is the default</b>, not the exception.</p>
+        <p class="caption" data-de="Jede Stufe gibt nach oben weiter, was sie nicht begründen kann. <b>Eskalation ist der Normalfall</b>, nicht die Ausnahme.">Each tier hands upward what it cannot justify. <b>Escalation is the default</b>, not the exception.</p>
       </div>
     </div>
   </section>
@@ -590,20 +590,20 @@
   <!-- 07 · Das Schwungrad -->
   <section class="slide"
     data-time="7:40"
-    data-notes-de="<em class='cue'>Das ist der Teil, bei dem technische Zuhörer aufhorchen.</em> Jede Entscheidung speichert schon heute ihren vollständigen Merkmalsvektor, und jede Review trägt ein Bestätigt oder Abgelehnt. Das heisst: Stewards erzeugen im normalen Arbeiten beschriftete Trainingsdaten – auf den eigenen Daten des Betriebs, nicht auf einem generischen Korpus. <em class='cue'>Ehrlich bleiben:</em> Es gibt kein Modell und keine Pipeline. Aber die Daten fallen in der richtigen Form an, und der Matcher hängt hinter genau einer Methode: Kandidaten rein, bewertete Entscheidungen raus. Ein Modell wäre die dritte Implementierung davon, nicht ein Umbau."
+    data-notes-de="<em class='cue'>Das ist der Teil, bei dem technische Zuhörer aufhorchen.</em> Jeder Entscheid speichert schon heute seinen vollständigen Merkmalsvektor, und jedes Review endet mit bestätigt oder abgelehnt. Das heisst: Die Mitarbeitenden, die prüfen, erzeugen bei ihrer normalen Arbeit nebenbei gelabelte Trainingsdaten – auf den eigenen Daten des Betriebs, nicht auf einem generischen Korpus. <em class='cue'>Ehrlich bleiben:</em> Es gibt kein Modell und keine Pipeline. Aber die Daten fallen in der richtigen Form an, und der Matcher steckt hinter genau einer Methode: Kandidaten rein, bewertete Entscheide raus. Ein Modell wäre ihre dritte Implementierung, kein Umbau."
     data-notes="<em class='cue'>This is the part where technical listeners lean in.</em> Every decision already stores its full feature vector, and every review carries a confirmed or rejected. Which means stewards produce labeled training data as a side effect of ordinary work — on the operation&#8217;s own data, not a generic corpus. <em class='cue'>Stay honest:</em> There is no model and no pipeline. But the data accrues in the right shape, and the matcher sits behind exactly one method: candidates in, scored decisions out. A model would be its third implementation, not a rebuild.">
     <div class="kicker mono" data-n="07" data-de="Das Schwungrad">The flywheel</div>
-    <h1 data-de="Jede menschliche Entscheidung ist ein <em>beschriftetes Beispiel</em>.">Every human decision is a <em>labeled example</em>.</h1>
+    <h1 data-de="Jeder menschliche Entscheid ist ein <em>gelabeltes Beispiel</em>.">Every human decision is a <em>labeled example</em>.</h1>
     <div class="thennow">
       <div class="col now">
         <h4 data-de="Was schon anfällt">What already accrues</h4>
         <p data-de="Merkmalsvektor + menschliches Urteil.">Feature vector + human verdict.</p>
-        <p class="small" data-de="Jede Entscheidung speichert, warum sie so bewertet wurde. Jede Review sagt bestätigt oder abgelehnt. Auf den eigenen Daten des Betriebs.">Every decision stores why it scored what it scored. Every review says confirmed or rejected. On the operation&#8217;s own data.</p>
+        <p class="small" data-de="Jeder Entscheid speichert, warum er so bewertet wurde. Jedes Review sagt: bestätigt oder abgelehnt. Auf den eigenen Daten des Betriebs.">Every decision stores why it scored what it scored. Every review says confirmed or rejected. On the operation&#8217;s own data.</p>
       </div>
       <div class="col">
-        <h4 data-de="Was daraus wird">What it enables</h4>
+        <h4 data-de="Was das ermöglicht">What it enables</h4>
         <p data-de="Heute Regeln, später ein Modell.">Rules today, a model later.</p>
-        <p class="small" data-de="Der Matcher hängt hinter einer Methode – Kandidaten rein, bewertete Entscheidungen raus. Ein Modell ist die dritte Implementierung, kein Umbau.">The matcher sits behind one method — candidates in, scored decisions out. A model is its third implementation, not a rebuild.</p>
+        <p class="small" data-de="Der Matcher steckt hinter einer einzigen Methode – Kandidaten rein, bewertete Entscheide raus. Ein Modell ist ihre dritte Implementierung, kein Umbau.">The matcher sits behind one method — candidates in, scored decisions out. A model is its third implementation, not a rebuild.</p>
       </div>
     </div>
     <p class="verdict" data-de="Noch kein Modell, keine Pipeline. Aber die Daten fallen <em>in der richtigen Form</em> an.">No model yet, and no pipeline. But the data is accruing <em>in the right shape</em>.</p>
@@ -612,18 +612,18 @@
   <!-- 08 · Stand -->
   <section class="slide"
     data-time="8:40"
-    data-notes-de="<em class='cue'>Ehrlich bleiben – das ist der Teil, der Glaubwürdigkeit schafft.</em> Die Engine steht: deterministisch, wahrscheinlichkeitsbasiert, Review-Queue, Timeline. Und der erste Connector steht jetzt auch – Apaleo, ein echtes PMS, Reservationen und Buchungen, per Webhook und per Vollabgleich. Genau von diesem Teil habe ich gesagt, er entscheide über die Nutzbarkeit. <em class='cue'>Dann gleich wieder bremsen:</em> Ein PMS ist noch keine Systemlandschaft. POS, WLAN und Bewertungsportal stehen weiterhin auf der anderen Liste – und genau von dort kommen die Fremden. <em class='cue'>Klar sagen:</em> Es läuft noch nirgends produktiv. Es gibt keine Kunden. Ich zeige eine Grundlage, kein Produkt."
+    data-notes-de="<em class='cue'>Ehrlich bleiben – das ist der Teil, der Glaubwürdigkeit schafft.</em> Die Engine steht: deterministisch, wahrscheinlichkeitsbasiert, Prüfwarteschlange, Timeline. Und der erste Connector steht jetzt auch – Apaleo, ein echtes PMS, Reservationen und Buchungen, per Webhook und per Vollabgleich. Von genau diesem Teil habe ich gesagt, er entscheide darüber, ob das Ganze nutzbar ist. <em class='cue'>Dann gleich wieder bremsen:</em> Ein PMS ist noch keine Systemlandschaft. POS, WLAN und Bewertungsportal sind weiterhin nicht angebunden – und genau von dort kommen die Fremden. <em class='cue'>Klar sagen:</em> Es läuft noch nirgends produktiv. Es gibt keine Kunden. Ich zeige eine Grundlage, kein Produkt."
     data-notes="<em class='cue'>Stay honest — this is the part that earns credibility.</em> The engine is there: deterministic, probabilistic, review queue, timeline. And the first connector is there now too — Apaleo, a real PMS, reservations and bookings, by webhook and by full sync. That is the part I said would decide whether any of this is usable. <em class='cue'>Then take it straight back down:</em> one PMS is not an estate. The POS, the wifi and the review platform are still on the other list — and that is where the strangers come from. <em class='cue'>Say it plainly:</em> It runs nowhere in production. There are no customers. I am showing a foundation, not a product.">
     <div class="kicker mono" data-n="08" data-de="Stand der Dinge">Where it stands</div>
     <h1 data-de="Die Engine steht. <em>Ein echtes System</em> ist angebunden.">The engine is built. <em>One real system</em> is connected.</h1>
     <div class="status">
-      <span class="tick">✓</span><span class="lbl"><b data-de="Identitätsauflösung">Identity resolution</b> <span data-de="– deterministisch und wahrscheinlichkeitsbasiert, mit Review-Queue">— deterministic and probabilistic, with a human review queue</span></span>
-      <span class="tick">✓</span><span class="lbl"><b data-de="Erklären, Umkehren, Audit-Spur">Explain, undo, audit trail</b> <span data-de="– jede Entscheidung, inklusive wer sie getroffen hat">— every decision, including who made it</span></span>
+      <span class="tick">✓</span><span class="lbl"><b data-de="Identitätsauflösung">Identity resolution</b> <span data-de="– deterministisch und wahrscheinlichkeitsbasiert, mit Prüfwarteschlange für Menschen">— deterministic and probabilistic, with a human review queue</span></span>
+      <span class="tick">✓</span><span class="lbl"><b data-de="Erklären, Umkehren, Audit-Trail">Explain, undo, audit trail</b> <span data-de="– jeder Entscheid, auch wer ihn getroffen hat">— every decision, including who made it</span></span>
       <span class="tick">✓</span><span class="lbl"><b data-de="Gast-Timeline">Guest timeline</b> <span data-de="– was ein Gast aktuell hat, nicht nur was beobachtet wurde">— what a guest currently has, not just what was observed</span></span>
       <span class="tick">✓</span><span class="lbl"><b data-de="Connectors">Connectors</b> <span data-de="– Apaleo, ein echtes PMS: Reservationen und Buchungen, per Webhook und per Vollabgleich">— Apaleo, a real PMS: reservations and bookings, by webhook and by full sync</span></span>
       <span class="todo">○</span><span class="lbl"><b data-de="Alle anderen Systeme">Every other system</b> <span data-de="– POS, WLAN, Buchungsmaschinen, Bewertungen. Ein PMS ist noch keine Systemlandschaft.">— POS, wifi, booking engines, reviews. One PMS is not an estate.</span></span>
-      <span class="todo">○</span><span class="lbl"><b data-de="Agent als Steward, MCP">Agent steward, MCP</b> <span data-de="– vorgesehen, nicht gebaut. Die Audit-Spur benennt bereits einen Agenten; noch handelt keiner.">— designed for, not built. The audit trail already names an agent; nothing acts as one yet.</span></span>
-      <span class="todo">○</span><span class="lbl"><b data-de="ML-basiertes Matching">ML-based matching</b> <span data-de="– kein Modell, keine Trainings-Pipeline. Heute sind es handgeschriebene Regeln, und der Matcher heisst auch so.">— no model, no training pipeline. Today the matcher is hand-written rules, and says so in its name.</span></span>
+      <span class="todo">○</span><span class="lbl"><b data-de="Agent als verantwortliche Person, MCP">Agent steward, MCP</b> <span data-de="– vorgesehen, nicht gebaut. Der Audit-Trail kann einen Agenten bereits nennen; noch handelt aber keiner als Agent.">— designed for, not built. The audit trail already names an agent; nothing acts as one yet.</span></span>
+      <span class="todo">○</span><span class="lbl"><b data-de="ML-basiertes Matching">ML-based matching</b> <span data-de="– kein Modell, keine Trainings-Pipeline. Heute besteht der Matcher aus handgeschriebenen Regeln, und sein Name sagt das auch.">— no model, no training pipeline. Today the matcher is hand-written rules, and says so in its name.</span></span>
       <span class="todo">○</span><span class="lbl"><b data-de="Produktivbetrieb">Production use</b> <span data-de="– noch keiner. Keine Kunden. Das ist eine Grundlage, kein Produkt.">— none yet. No customers. This is a foundation, not a product.</span></span>
     </div>
   </section>
@@ -631,20 +631,20 @@
   <!-- 09 · Das Modell -->
   <section class="slide"
     data-time="9:40"
-    data-notes-de="<em class='cue'>Kurz halten – das ist Kontext, keine Pointe.</em> Der Kern ist Apache 2.0 und bleibt es. Wer ihn selbst betreiben will, kann das. Kommerziell wären gehostetes Angebot, Konsole, MCP-Zugang für KI-Agenten. <em class='cue'>Der Grund, den ich nenne:</em> Bei einem Identitätsgraphen muss man nachvollziehen können, wie entschieden wurde. Eine Blackbox, die Gäste zusammenführt, würde ich selbst nicht einsetzen."
+    data-notes-de="<em class='cue'>Kurz halten – das ist Kontext, keine Pointe.</em> Der Kern steht unter Apache 2.0 und bleibt dabei. Wer ihn selbst betreiben will, kann das. Kommerziell wären das Hosting, eine Konsole und MCP-Zugang für KI-Agenten. <em class='cue'>Der Grund, den ich nenne:</em> Bei einem Identitätsgraphen muss man nachvollziehen können, wie er entschieden hat. Eine Blackbox, die Gäste zusammenführt, würde ich selbst nicht einsetzen."
     data-notes="<em class='cue'>Keep this short — it is context, not the punchline.</em> The core is Apache 2.0 and stays that way. Anyone who wants to run it themselves can. Commercially: hosting, a console, MCP access for AI agents. <em class='cue'>The reason I give:</em> With an identity graph, you have to be able to follow how it decided. A black box that merges guests is not something I would deploy myself.">
     <div class="kicker mono" data-n="09" data-de="Das Modell">The model</div>
-    <h1 data-de="Offener Kern – weil man <em>nachprüfen können muss</em>.">Open core — because <em>you have to be able to check it</em>.</h1>
+    <h1 data-de="Open Core – weil man es <em>nachprüfen können muss</em>.">Open core — because <em>you have to be able to check it</em>.</h1>
     <div class="thennow">
       <div class="col now">
-        <h4 data-de="Open Source · Apache 2.0">Open source · Apache 2.0</h4>
+        <h4 data-de="Quelloffen · Apache 2.0">Open source · Apache 2.0</h4>
         <p data-de="Engine, Graph, API, Connectors.">Engine, graph, API, connectors.</p>
         <p class="small" data-de="Selbst betreiben. Genau nachlesen, wie entschieden wurde, zwei Ihrer Gäste zusammenzuführen.">Run it yourself. Read exactly how it decided to merge two of your guests.</p>
       </div>
       <div class="col">
         <h4 data-de="Kommerziell (geplant)">Commercial (planned)</h4>
         <p data-de="Hosting, Konsole, MCP für KI-Agenten.">Hosting, console, MCP for AI agents.</p>
-        <p class="small" data-de="Der Kern hängt nie davon ab und wird nie beschnitten, um es zu verkaufen.">The core never depends on it, and is never degraded to sell it.</p>
+        <p class="small" data-de="Der Kern hängt nie vom kommerziellen Angebot ab und wird nie beschnitten, um dieses zu verkaufen.">The core never depends on it, and is never degraded to sell it.</p>
       </div>
     </div>
     <p class="verdict" data-de="Eine Blackbox, die Gäste zusammenführt, würde <em>ich</em> nicht einsetzen.">A black box that merges guests is not something <em>I</em> would deploy.</p>
@@ -658,8 +658,8 @@
     <div class="kicker mono" data-n="10" data-de="Worum ich bitte">What I am asking</div>
     <h1 data-de="Sagen Sie mir, wo das <em>falsch</em> ist.">Tell me where this is <em>wrong</em>.</h1>
     <ul class="ask">
-      <li><b>1 ·</b> <span data-de="Ist das Problem der verstreuten Gastdaten in Ihrem Betrieb real genug, dass jemand für die Lösung zahlen würde?">Is the scattered-guest problem real enough in your operation that someone would pay to fix it?</span></li>
-      <li><b>2 ·</b> <span data-de="Würde eine Review-Queue tatsächlich benutzt – oder ignoriert, wie jede andere Warteschlange?">Would a review queue be used — or ignored, like every other queue?</span></li>
+      <li><b>1 ·</b> <span data-de="Ist das Problem der verstreuten Gastdaten in Ihrem Betrieb so real, dass jemand für die Lösung zahlen würde?">Is the scattered-guest problem real enough in your operation that someone would pay to fix it?</span></li>
+      <li><b>2 ·</b> <span data-de="Würde eine Prüfwarteschlange tatsächlich benutzt – oder ignoriert, wie jede andere Warteschlange?">Would a review queue be used — or ignored, like every other queue?</span></li>
       <li><b>3 ·</b> <span data-de="Welches System müsste zuerst angebunden sein, damit das überhaupt etwas wert ist?">Which system would have to be connected first for this to be worth anything at all?</span></li>
       <li><b>4 ·</b> <span data-de="Würden Sie einen Agenten über eine Zusammenführung entscheiden lassen – und was müsste er Ihnen vorher zeigen?">Would you let an agent decide a merge — and what would it have to show you first?</span></li>
     </ul>
@@ -753,7 +753,7 @@
   /* This talk's own strings. Everything else about the deck's chrome comes from
      @robertblust/design — it is in deck.js now. */
   var TALK = {
-    de:{ title:'GuestGraph – eine Einführung · ein Vortrag von Robert Blust', desc:'Ein Vortrag darüber, warum ein Stammgast wie fünf Fremde aussieht – und wie gestufte Sicherheit jede Zusammenführung erklärbar und umkehrbar macht.' },
+    de:{ title:'GuestGraph – eine Einführung · ein Vortrag von Robert Blust', desc:'Ein Vortrag darüber, warum ein Stammgast wie fünf Fremde aussieht – und wie mehrstufige Konfidenz jede Zusammenführung erklärbar und umkehrbar macht.' },
     en:{ title:'GuestGraph — an introduction · a talk by Robert Blust', desc:'A talk on why a returning guest looks like five strangers, and how layered confidence makes every merge explainable and reversible.' }
   };
   var UI = {

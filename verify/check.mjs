@@ -21,9 +21,7 @@ const FOOTER = ["Robert Blust", "GitHub", "License", "Privacy"];
 
 const PAGES = [
   { path: "/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
-    translates: { lang: "de", shows: ["Einführungsvortrag ansehen", "Code lesen", "VORTRÄGE", "ABRECHNUNG"], hides: ["Watch intro talk", "Read the code"],
-                  title: "GuestGraph – der Open-Source-Identitätsgraph für Gäste",
-                  desc: "Ein erklärbares Gastprofil, aus Daten, die über jedes System im Hotel verstreut liegen. Quelloffen, Apache 2.0." },
+    translates: { lang: "de", shows: ["Einführungsvortrag ansehen", "Code lesen", "VORTRÄGE", "ABRECHNUNG"], hides: ["Watch intro talk", "Read the code"] },
     contains: ["Five strangers", "One guest", "GuestGraph"],
     links: ["https://github.com/guestgraph/engine"],
     // the deck carries its own way back now, so it no longer needs its own tab
@@ -40,9 +38,7 @@ const PAGES = [
   // open. Drop that second sentence and the page stops describing an intention and
   // starts advertising a product that does not exist.
   { path: "/billing/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
-    translates: { lang: "de", shows: ["Ein einziger Zähler", "Alles andere ist kostenlos", "Wie sich die Rechnung verhält"], hides: ["One meter", "Everything else is free", "How the bill behaves"],
-                  title: "Abrechnung – GuestGraph",
-                  desc: "Wie der gehostete GuestGraph abrechnen wird: ein einziger Zähler, und das sind Anreisen. Datenzufuhr, Import, Speicher und Abfragen sind kostenlos." },
+    translates: { lang: "de", shows: ["Eine einzige Abrechnungsgrösse", "Alles andere ist kostenlos", "Wie sich die Rechnung verhält"], hides: ["One meter", "Everything else is free", "How the bill behaves"] },
     contains: ["Not per record", "1 arrival = 1 reservation that checked in", "not open yet"],
     // no call to action here: the page ends on its argument, so the only outbound link
     // left to hold to the new-tab rule is the one in the footer.
@@ -59,9 +55,7 @@ const PAGES = [
   // and the suite's own `requestfailed`/`links` machinery cannot see that. If a font, an
   // analytics tag or an embed ever creeps in, this is what fails.
   { path: "/privacy/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
-    translates: { lang: "de", shows: ["Was diese Seite tut", "Gastdaten, sobald es welche gibt", "Wer das betreibt"], hides: ["What this site does", "Guest data, when there is any", "Who runs this"],
-                  title: "Datenschutz – GuestGraph",
-                  desc: "Diese Seite setzt keine Cookies, führt keine Statistik und stellt keine Anfragen an Dritte. Wie der gehostete GuestGraph Gastdaten behandeln wird, aufgeschrieben, bevor es welche gibt." },
+    translates: { lang: "de", shows: ["Was diese Website tut", "Gastdaten, sobald es welche gibt", "Wer das betreibt"], hides: ["What this site does", "Guest data, when there is any", "Who runs this"] },
     contains: ["This site collects", "There is no imprint yet"],
     links: ["https://github.com/guestgraph"],
     sameTab: ["../talks/", "../", "../billing/", "./"],
@@ -82,9 +76,7 @@ const PAGES = [
   { path: "/api/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
     // The rows stay English in both languages: a method, a path and an operation summary are
     // the document's own words. `hides` therefore names prose only, never a summary.
-    translates: { lang: "de", shows: ["Zwei APIs", "Was hereinkommt", "Wenn ein Aufruf abgelehnt wird"], hides: ["Two APIs", "What arrives", "When a call is refused"],
-                  title: "API – GuestGraph",
-                  desc: "Zwei HTTP-APIs: Die eine hält den Gast-Graphen und beantwortet Fragen dazu, die andere füllt ihn. Was jeder Aufruf tut und was eine Ablehnung bedeutet." },
+    translates: { lang: "de", shows: ["Zwei APIs", "Was hereinkommt", "Wenn ein Aufruf abgelehnt wird"], hides: ["Two APIs", "What arrives", "When a call is refused"] },
     contains: ["Two APIs", "One fills it", "What arrives", "What came out", "When it is wrong",
                "There is no instance to call", "POST", "/records", "/guests/{guestId}/explain"],
     ids: ["connector", "arrives", "came-out", "wrong", "refusals"],
@@ -98,9 +90,7 @@ const PAGES = [
 
   // section.
   { path: "/problems/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
-    translates: { lang: "de", shows: ["Jede Ablehnung", "Ungültige Anfrage", "Interner Serverfehler"], hides: ["Every refusal", "Invalid request", "Internal server error"],
-                  title: "Probleme – GuestGraph",
-                  desc: "Jede Ablehnung, mit der ein GuestGraph-Dienst antwortet, trägt einen Typ. Was jeder Typ bedeutet, welcher Dienst damit antwortet und was dagegen zu tun ist." },
+    translates: { lang: "de", shows: ["Jede Ablehnung", "Ungültige Anfrage", "Interner Serverfehler"], hides: ["Every refusal", "Invalid request", "Internal server error"] },
     contains: ["Every refusal", "invalid-request", "invalid-actor-claim", "invalid-unmerge", "unauthorized", "not-found", "conflict", "review-already-decided", "run-in-progress", "guest-retired", "payload-too-large", "apaleo-unreachable", "internal-error"],
     ids: ["invalid-request", "invalid-actor-claim", "invalid-unmerge", "unauthorized", "not-found", "conflict", "review-already-decided", "run-in-progress", "guest-retired", "payload-too-large", "apaleo-unreachable", "internal-error"],
     // The standard itself, linked where the page names it: a reader who wants the shape of a
@@ -117,9 +107,7 @@ const PAGES = [
     // The German PDF is reached by data-de-href, which `sameTab` cannot see: it reads the href as
     // delivered, and the swap happens only after a click. `dlHref` reads the first such link.
     translates: { lang: "de", shows: ["Vorträge über", "Vortrag ansehen", "PDF herunterladen"], hides: ["Watch the talk", "Download PDF"],
-                  dlHref: { de: "intro/guestgraph-de.pdf", en: "intro/guestgraph-en.pdf" },
-                  title: "GuestGraph – Vorträge über Gastidentität in der Hotellerie",
-                  desc: "Vorträge über GuestGraph, den Open-Source-Identitätsgraphen für Gäste in der Hotellerie – auf Deutsch und Englisch." },
+                  dlHref: { de: "intro/guestgraph-de.pdf", en: "intro/guestgraph-en.pdf" } },
     contains: ["GuestGraph", "guest identity"],
     // the nav no longer carries a Code item — the footer's org link is the way to the
     // source from here, one click further out than it used to be
@@ -136,10 +124,9 @@ const PAGES = [
   // repo's root — so the suite must be run with `npm run verify` from here, not from elsewhere.
   { path: "/talks/intro/", typography: true, storageKeys: true, opensFromFile: true, carriesLang: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en", wayOut: "../",
     // The deck's German is the whole second half of the talk, including every speaker note.
-    // "Architekt"/"Architect" is the pair: one letter apart, present in exactly one language each.
-    translates: { lang: "de", shows: ["Architekt", "Gastprofil"], hides: ["Architect"], id: "langDe", backId: "langEn",
-                  title: "GuestGraph – eine Einführung · ein Vortrag von Robert Blust",
-                  desc: "Ein Vortrag darüber, warum ein Stammgast wie fünf Fremde aussieht – und wie gestufte Sicherheit jede Zusammenführung erklärbar und umkehrbar macht." },
+    // The byline's title is English in both views, so the pair is the title slide's subtitle:
+    // "erklärbares Gastprofil" against "explainable guest profile", one in each language.
+    translates: { lang: "de", shows: ["erklärbares Gastprofil"], hides: ["explainable guest profile"], id: "langDe", backId: "langEn" },
     // The footer's other two destinations. `landing` covers the lockup, which is relative and
     // therefore invisible to `links`; blust.ch is absolute, so `links` catches a typo in it and
     // `newTab` holds it to the rule the pages already follow — a talk the presenter navigates
