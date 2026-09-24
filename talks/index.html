@@ -122,6 +122,7 @@
 </script>
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="../page.css">
+<link rel="stylesheet" href="../chat.css">
 <style>
 /* Self-hosted, same origin — no third party sees a visitor, and the files resolve
    from file:// as well as from the domain. */
@@ -338,7 +339,11 @@
 
   // The key still works — a presenter remote and muscle memory both reach for it — but it
   // is no longer advertised on screen, because the control in the header says it better.
+  // Never while the visitor is typing: a letter typed into a field, the chat's among them, is text.
   document.addEventListener('keydown', function(e){
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    var t = e.target;
+    if (t && t.closest && t.closest("input, textarea, select, [contenteditable=''], [contenteditable='true']")) return;
     if(e.key === 'l' || e.key === 'L'){ toggle(); }
   });
 
@@ -373,5 +378,8 @@
   window.rbPage = { lang: lang, applyLang: applyLang };
 </script>
 <script src="../page.js" defer></script>
+
+<!-- The chat: one tag, the design package's widget. It loads nothing and sends nothing until a visitor opens it; the privacy page says what leaves the browser then. -->
+<script src="../chat.js" data-chat="https://chat.guestgraph.io/chat" data-model="/model/" defer></script>
 </body>
 </html>

@@ -116,6 +116,7 @@
 </script>
 <link rel="stylesheet" href="../tokens.css">
 <link rel="stylesheet" href="../page.css">
+<link rel="stylesheet" href="../chat.css">
 <style>
 /* Self-hosted, same origin — which is the subject of this page as well as a rule of it.
    Relative, because a root-absolute path breaks under file://. */
@@ -235,14 +236,15 @@
       <!-- no data-de: this is the value itself, and it says the same thing in either language.
            Both cases are shown because pinning one would be wrong the moment you switch. -->
       <p class="unit mono"><b>localStorage</b><br>lang = "de" | "en"<br>theme = "light" | "dark"<br>stage-card, stage-card-modal = a width in pixels</p>
-      <p class="lede" data-de="Das ist alles, was gespeichert wird: Ihre Sprachwahl, zwei Buchstaben, und Ihre Darstellungswahl, ein Wort, damit die nächste Seite sie kennt, sowie die Breite, die Sie für den Detailbereich auf der Modell-Seite eingestellt haben. Diese Breite wird erst gespeichert, wenn Sie den Trenner verschoben haben, einmal für die Seite und einmal für die vergrösserte Ansicht. Nichts davon erreicht einen Server oder identifiziert jemanden.">That is everything that gets stored: your choice of language, two letters, your choice of appearance, one word, so the next page knows them, and how wide you set the details panel on the model page, stored only once you have moved its divider, once for the page and once for the expanded view. None of it reaches a server or identifies anybody.</p>
+      <p class="unit mono"><b>sessionStorage</b><br>chat = the conversation in this tab<br>chat-size = the panel's size in pixels</p>
+      <p class="lede" data-de="Das ist alles, was gespeichert wird: Ihre Sprachwahl, zwei Buchstaben, und Ihre Darstellungswahl, ein Wort, damit die nächste Seite sie kennt, sowie die Breite, die Sie für den Detailbereich auf der Modell-Seite eingestellt haben. Diese Breite wird erst gespeichert, wenn Sie den Trenner verschoben haben, einmal für die Seite und einmal für die vergrösserte Ansicht. Nichts davon erreicht einen Server oder identifiziert jemanden. Der Chat speichert zwei weitere Angaben, nur solange dieser Tab offen ist: den Verlauf aus Ihren Fragen und seinen Antworten, damit das Gespräch nicht verloren geht, wenn Sie einem Link folgen, und die Grösse des Chatfensters. Beide verschwinden, wenn der Tab geschlossen wird.">That is everything that gets stored: your choice of language, two letters, your choice of appearance, one word, so the next page knows them, and how wide you set the details panel on the model page, stored only once you have moved its divider, once for the page and once for the expanded view. None of it reaches a server or identifies anybody. The chat adds two more, and only while this tab is open: what you asked and what you were told, so that following a link does not lose the conversation, and how big you made the panel. Both go when the tab closes.</p>
       <div class="cols">
         <div class="card never wide">
           <h3 data-de="Gar nicht erst verwendet">Not used at all</h3>
           <ul>
             <li><b data-de="Cookies">Cookies</b><i data-de="Keine, gleich welcher Art. Es gibt kein Banner, weil es nichts gibt, dem Sie zustimmen müssten.">None, of any kind. There is no banner because there is nothing to consent to.</i></li>
             <li><b data-de="Webanalyse">Analytics</b><i data-de="Nichts zählt Ihre Besuche, und niemandem wird mitgeteilt, dass Sie hier waren.">Nothing counts you, and nobody is told that you were here.</i></li>
-            <li><b data-de="Anfragen an Dritte">Third-party requests</b><i data-de="Schriften, Bilder und Stylesheets kommen alle von dieser Domain. Kein CDN sieht Ihre Adresse.">Fonts, images and styles all come from this origin. No CDN sees your address.</i></li>
+            <li><b data-de="Anfragen an Dritte">Third-party requests</b><i data-de="Schriften, Bilder und Stylesheets kommen alle von dieser Domain. Kein CDN sieht Ihre Adresse. Die einzige Ausnahme ist der Chat, und auch das erst, wenn Sie ihn geöffnet und auf Senden gedrückt haben: Ihre Nachricht geht an chat.guestgraph.io und von dort an Anthropic.">Fonts, images and styles all come from this origin. No CDN sees your address. The one exception is the chat, and only once you have opened it and pressed send: that message goes to chat.guestgraph.io and from there to Anthropic.</i></li>
             <li><b data-de="Formulare und Konten">Forms and accounts</b><i data-de="Nichts auszufüllen, keine Anmeldung, nichts zu speichern.">Nothing to fill in, nothing to sign up for, nothing to store.</i></li>
             <li><b data-de="Fingerprinting">Fingerprinting</b><i data-de="Es wird nicht versucht, Sie über Besuche hinweg wiederzuerkennen. Die gespeicherte Sprach- und Darstellungswahl ist kein Erkennungsmerkmal.">No attempt is made to recognize you across visits. The language and theme keys are not identifiers.</i></li>
           </ul>
@@ -250,6 +252,13 @@
       </div>
     </section>
 
+    <section>
+      <h2 data-de="Der Chat">The chat</h2>
+      <div class="rules">
+        <p data-de="Die Schaltfläche am Fuss jeder Seite öffnet einen Chat mit unserem Modell. Bis Sie ihn öffnen und auf Senden drücken, geschieht nichts. Dann gehen Ihre Nachricht und die vorherigen Nachrichten dieses Gesprächs an chat.guestgraph.io, einen Dienst dieser Website. Er befragt das Modell bei <a href='https://mcp.guestgraph.io/'>mcp.guestgraph.io</a> mit dessen Werkzeugen. Aus dem, was die Werkzeuge liefern, schreibt Claude die Antwort, das Sprachmodell von Anthropic, aufgerufen über die API von Anthropic in den USA. Anthropic bewahrt, was es erhält, gemäss eigenen Bedingungen bis zu dreissig Tage auf; diese Website behält nichts davon. Der Dienst zählt, was eine Antwort gekostet hat, und speichert kein Wort dessen, was gesagt wurde. Ihr Browser behält das Gespräch und die Grösse des Chatfensters nur in diesem Tab: Beides bleibt erhalten, wenn Sie einem Link folgen, und endet, wenn Sie den Tab schliessen.">The button at the foot of each page opens a chat with our model. Nothing happens until you open it and press send. Then your message, and the messages before it in that conversation, go to chat.guestgraph.io, a service of this site, which asks the model at <a href="https://mcp.guestgraph.io/">mcp.guestgraph.io</a> through its tools and asks Claude, Anthropic's language model, through Anthropic's API in the United States, to write the answer from what the tools said. Anthropic keeps what it receives for up to thirty days under its own terms; this site keeps nothing of it. The service counts what an answer cost and stores no word of what was said. Your browser keeps the conversation, and how big you have made the panel, in this tab alone, so both survive following a link, and closing the tab ends them.</p>
+        <p data-de="Die Antworten des Chats stammen aus dem Modell und nennen die Einträge, auf die sie sich stützen; sie werden von einem Sprachmodell geschrieben und können falsch sein. Das Modell beschreibt GuestGraph und enthält keine Daten von Gästen. Der Chat kann deshalb keine Auskunft über die Gäste eines Hotels geben, und Personendaten eines Gastes gehören nicht in eine Frage. Der Dienst weist eine Nachricht ab, bevor er das Modell fragt: wenn das Tageskontingent an Antworten aufgebraucht ist, wenn von einer Adresse innert einer Stunde zu viele kommen oder wenn der Chat abgeschaltet ist. Eine Ablehnung kostet nichts und erreicht niemanden.">What the chat answers comes from the model and names the entries it rests on; it is written by a language model and can be wrong. The model describes GuestGraph and holds no guest's data, so the chat cannot answer about a hotel's guests, and a guest's personal data does not belong in a question. The service refuses a message before asking the model when the day's share of answers is spent, when an address sends too many in an hour, or when the chat is switched off, and a refusal costs nothing and reaches nobody.</p>
+      </div>
+    </section>
     <section>
       <h2 data-de="Gastdaten, sobald es welche gibt">Guest data, when there is any</h2>
       <p class="lede" data-de="Der gehostete Dienst läuft noch nicht, also liegen dort keine Gastdaten. So werden sie behandelt, sobald es sie gibt – jetzt aufgeschrieben, weil ein Hotel diese Frage vor der nach dem Preis stellt.">The hosted service is not running yet, so there is no guest data in it. This is how it will be handled when there is — written down now, because a hotel asks this before it asks the price.</p>
@@ -373,7 +382,14 @@
   document.getElementById("len").addEventListener("click", function(){ if (lang !== "en") toggle(); });
   document.getElementById("thLight").addEventListener("click", function(){ setTheme("light"); });
   document.getElementById("thDark").addEventListener("click", function(){ setTheme("dark"); });
-  document.addEventListener("keydown", function(e){ if(e.key === "l" || e.key === "L") toggle(); });
+  // L switches the language, but never while the visitor is typing: a letter typed into a field,
+  // the chat's among them, is text, and the language changes only when the visitor asks for it.
+  document.addEventListener("keydown", function(e){
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+    var t = e.target;
+    if (t && t.closest && t.closest("input, textarea, select, [contenteditable=''], [contenteditable='true']")) return;
+    if (e.key === "l" || e.key === "L") toggle();
+  });
 
   applyTheme();
 
@@ -383,5 +399,8 @@
 })();
 </script>
 <script src="../page.js" defer></script>
+
+<!-- The chat: one tag, the design package's widget. It loads nothing and sends nothing until a visitor opens it; the privacy page says what leaves the browser then. -->
+<script src="../chat.js" data-chat="https://chat.guestgraph.io/chat" data-model="/model/" defer></script>
 </body>
 </html>
