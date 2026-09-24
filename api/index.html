@@ -267,13 +267,13 @@
   <div class="shell">
     <div class="title">
       <h1 data-de="<span class='r70'>Zwei APIs.</span><span class='rcl'>Eine ist der <em>Graph</em>.</span>"><span class="r70">Two APIs.</span><span class="rcl">One is the <em>graph</em>.</span></h1>
-      <p class="tagline" data-de="Die eine hält den Gast-Graphen und beantwortet Fragen dazu. Die andere füllt ihn.">One holds the guest graph and answers questions about it. One fills it.</p>
-      <p class="lede intro" data-de="Die Engine ist die API, gegen die Sie entwickeln: Sie senden, was ein System über eine Person weiss, und sie antwortet mit der Person. Ein Connector ist ein Client dieser API und hat eine kleine eigene Schnittstelle – die ruft ein Betreiber auf, um ihn zu überwachen und einen Durchlauf zu starten. Jeder Aufruf unten wird aus dem OpenAPI-Dokument des jeweiligen Dienstes erzeugt, aus dem Commit, den diese Seite festhält. Ein Pfad hier ist deshalb ein Pfad, den es gibt. Diese Zeilen stehen in der einen Sprache, in der die Dokumente geschrieben sind. Der Rest dieser Seite ist zweisprachig.">The engine is the API you build against: you send what a system knows about a person, and it
+      <p class="tagline" data-de="Die eine verwaltet den Gast-Graphen und beantwortet Fragen dazu. Die andere füllt ihn.">One holds the guest graph and answers questions about it. One fills it.</p>
+      <p class="lede intro" data-de="Die Engine ist die API, gegen die Sie entwickeln: Sie senden, was ein System über eine Person weiss, und sie antwortet mit der Person. Ein Connector ist ein Client dieser API mit einer kleinen eigenen API, über die ein Betreiber ihn überwacht und einen Durchlauf startet. Jeder Aufruf unten wird aus dem OpenAPI-Dokument des jeweiligen Dienstes erzeugt, und zwar aus dem Commit, auf den diese Seite gepinnt ist. Jeder Pfad hier existiert also tatsächlich. Diese Zeilen stehen nur in der Sprache der Dokumente; der Rest dieser Seite ist zweisprachig.">The engine is the API you build against: you send what a system knows about a person, and it
         answers with the person. A connector is a client of that API with a small surface of its own, the one
         an operator uses to watch it and to start a run. Every call below is generated from the service's own
         OpenAPI document at the commit this page pins, so a path here is a path that exists. Those rows are in the one language the documents are
         written in; the rest of this page is bilingual.</p>
-      <p class="note" data-de="Es gibt keine Instanz, die Sie aufrufen können. GuestGraph ist Apache-2.0, und Sie betreiben es selbst. Die Pfade unten sind relativ zu Ihrer eigenen Installation, und eine laufende Instanz liefert ihr vollständiges Dokument unter <code class='mono'>/api-docs</code> aus, ohne Schlüssel.">There is no instance to call. GuestGraph is Apache-2.0 and you run it yourself; the
+      <p class="note" data-de="Es gibt keine Instanz, die Sie aufrufen können. GuestGraph steht unter Apache 2.0, und Sie betreiben es selbst. Die Pfade unten sind relativ zu Ihrer eigenen Installation, und eine laufende Instanz stellt ihr vollständiges Dokument ohne Schlüssel unter <code class='mono'>/api-docs</code> bereit.">There is no instance to call. GuestGraph is Apache-2.0 and you run it yourself; the
         paths below are relative to your own deployment, and a running instance serves its complete document at
         <code class="mono">/api-docs</code> with no key.</p>
     </div>
@@ -283,7 +283,7 @@
       <h2 id="connector" data-de="Die andere füllt ihn">One fills it</h2>
       <a class="origin mono" href="https://github.com/guestgraph/connector-apaleo">connector-apaleo</a>
     </div>
-    <p class="lede" data-de="Ein Connector ist ein Client wie jeder andere: Er liest ein Quellsystem und übermittelt, was er dort findet. Seine eigene Schnittstelle ruft ein Betreiber auf, keine Integration. Sie verlangt ein Bearer-Token, nicht den Schlüssel eines Mandanten.">A connector is a client like any other: it reads one source system and submits what it
+    <p class="lede" data-de="Ein Connector ist ein Client wie jeder andere: Er liest ein Quellsystem und übermittelt, was er dort findet. Seine eigene API ruft ein Betreiber auf, keine Integration. Sie verlangt ein Bearer-Token, nicht den Schlüssel eines Mandanten.">A connector is a client like any other: it reads one source system and submits what it
       finds. Its own surface is what an operator calls, not what an integration calls, and it answers to a
       bearer token rather than to a tenant's key.</p>
     <ul class="ops"><!-- ops:connector -->
@@ -340,7 +340,7 @@
       <h2 id="arrives" data-de="Was hereinkommt">What arrives</h2>
       <a class="origin mono" href="https://github.com/guestgraph/engine">engine</a>
     </div>
-    <p class="lede" data-de="Ein System registriert sich und sendet dann, was es über eine Person weiss. Die Auflösung geschieht in derselben Anfrage. Die Antwort nennt deshalb den Gast, zu dem der Datensatz gehört.">A system registers itself, then sends what it knows about a person. Resolution happens
+    <p class="lede" data-de="Ein System registriert sich und sendet dann, was es über eine Person weiss. Die Auflösung geschieht in derselben Anfrage. Die Antwort nennt deshalb den Gast, dem der Datensatz zugeordnet wurde.">A system registers itself, then sends what it knows about a person. Resolution happens
       in the same request, so the answer names the guest the record turned out to belong to.</p>
     <ul class="ops"><!-- ops:arrives -->
       <li><details>
@@ -363,10 +363,10 @@
 
   <section>
     <div class="head">
-      <h2 id="came-out" data-de="Was herauskommt">What came out</h2>
+      <h2 id="came-out" data-de="Was dabei herauskommt">What came out</h2>
       <a class="origin mono" href="https://github.com/guestgraph/engine">engine</a>
     </div>
-    <p class="lede" data-de="Eine Person, zusammengesetzt aus allen Datensätzen, die sich als diese Person erwiesen haben, mit den Belegen dafür. Eine Gast-ID, die Sie speichern, antwortet auch nach einer Zusammenführung weiter.">One person, assembled from every record that turned out to be them, with the evidence
+    <p class="lede" data-de="Eine Person, zusammengesetzt aus allen Datensätzen, die sich als ihre erwiesen haben – samt den Hinweisen dafür. Eine Gast-ID, die Sie speichern, bleibt auch nach einer Zusammenführung gültig.">One person, assembled from every record that turned out to be them, with the evidence
       for it. A guest id you store keeps answering after a merge.</p>
     <ul class="ops"><!-- ops:came-out -->
       <li><details>
@@ -410,7 +410,7 @@
       <h2 id="wrong" data-de="Wenn es falsch ist">When it is wrong</h2>
       <a class="origin mono" href="https://github.com/guestgraph/engine">engine</a>
     </div>
-    <p class="lede" data-de="Jede Zusammenführung der Engine lässt sich zurücknehmen. Und die Entscheidung eines Stewards überlebt den nächsten Import, statt von ihm überschrieben zu werden.">Every merge the engine makes can be taken back, and a steward's decision outlives the
+    <p class="lede" data-de="Jede Zusammenführung der Engine lässt sich zurücknehmen, und der Entscheid der verantwortlichen Person übersteht jeden weiteren Import.">Every merge the engine makes can be taken back, and a steward's decision outlives the
       next import rather than being overwritten by it.</p>
     <ul class="ops"><!-- ops:wrong -->
       <li class="undo"><details>
@@ -451,7 +451,7 @@
       <h2 id="tuning" data-de="Was der Mandant entscheidet">What the tenant decides</h2>
       <a class="origin mono" href="https://github.com/guestgraph/engine">engine</a>
     </div>
-    <p class="lede" data-de="Schwellenwerte und das Vertrauen in einzelne Identifikatoren gelten pro Mandant. Denn was bei der einen Marke die gemeinsame Nummer der Rezeption ist, ist bei der anderen eine echte.">Thresholds and identifier trust are per tenant, because one brand's shared front-desk
+    <p class="lede" data-de="Schwellenwerte und das Vertrauen in einzelne Identifikatoren gelten pro Mandant. Denn was bei der einen Marke die gemeinsame Nummer der Rezeption ist, ist bei der anderen die Nummer eines Gastes.">Thresholds and identifier trust are per tenant, because one brand's shared front-desk
       number is another brand's real one.</p>
     <ul class="ops"><!-- ops:tuning -->
       <li><details>
@@ -487,18 +487,18 @@
   </section>
   <section class="out">
     <h2 id="refusals" data-de="Wenn ein Aufruf abgelehnt wird">When a call is refused</h2>
-    <p class="lede" data-de="Beide Dienste lehnen auf dieselbe Weise ab: mit einem Problem Detail nach RFC 9457, dessen <code class='mono'>type</code> ein Abschnitt der Problemseite ist. Folgen Sie ihm, und Sie landen bei dem, was dieser Typ bedeutet und was dagegen zu tun ist – nicht bei einem Statuscode, den Sie erst deuten müssen. Zwei Ablehnungen gehören zu jedem Aufruf und stehen deshalb bei keiner der Zeilen: eine fehlerhafte Akteur-Angabe, die der Filter für den Schlüssel abfängt, bevor eine Operation läuft, und ein Body, der die Obergrenze des Dienstes überschreitet.">Both services answer a refusal the same way: an RFC 9457 problem detail whose
+    <p class="lede" data-de="Beide Dienste lehnen auf dieselbe Weise ab: mit einem Problem Detail nach RFC 9457, dessen <code class='mono'>type</code> auf einen Abschnitt der Problemseite verweist. Wenn Sie diesem Verweis folgen, erfahren Sie, was der Typ bedeutet und was dagegen zu tun ist – statt einen Statuscode erst deuten zu müssen. Zwei Ablehnungen gehören zu jedem Aufruf und stehen deshalb bei keiner der Zeilen: ein fehlerhafter Actor-Claim, den der Filter für den Schlüssel abfängt, bevor eine Operation läuft, und ein Body, der die Grössenobergrenze des Dienstes überschreitet.">Both services answer a refusal the same way: an RFC 9457 problem detail whose
       <code class="mono">type</code> is a section of the problems page. Follow it and you land on what that
       type means and what to do about it, rather than on a status code you have to interpret. Two refusals belong to every call and so appear on none of the rows: a malformed actor claim, which the key filter raises before an operation runs, and a body over the service's size cap.</p>
     <ul>
-      <li data-de="<b><a href='../problems/'>Was jeder Ablehnungstyp bedeutet</a></b> – elf davon, mit dem Dienst, der jeweils damit antwortet"><b><a href="../problems/">What each refusal type means</a></b> — eleven of them, with the service that answers each</li>
+      <li data-de="<b><a href='../problems/'>Was jeder Ablehnungstyp bedeutet</a></b> – jeder mit dem Dienst, der damit antwortet"><b><a href="../problems/">What each refusal type means</a></b> — each with the service that answers it</li>
       <li data-de="<b>Die Dokumente selbst</b> – <a href='https://github.com/guestgraph/engine/blob/main/src/main/resources/api/openapi.yaml'>das der Engine</a> und <a href='https://github.com/guestgraph/connector-apaleo/blob/main/src/main/resources/api/openapi.yaml'>das des Connectors</a>, aus denen diese Seite gebaut ist"><b>The documents themselves</b> — <a href="https://github.com/guestgraph/engine/blob/main/src/main/resources/api/openapi.yaml">the engine's</a> and <a href="https://github.com/guestgraph/connector-apaleo/blob/main/src/main/resources/api/openapi.yaml">the connector's</a>, which this page is built from</li>
-      <li data-de="<b>Wie Identität entschieden wird</b> – <a href='https://github.com/guestgraph/engine/blob/main/docs/matching.md'>was zwei Datensätze zu einer Person macht</a> und <a href='https://github.com/guestgraph/engine/blob/main/docs/continuity.md'>was eine gespeicherte Gast-ID später bedeutet</a>"><b>How identity is decided</b> — <a href="https://github.com/guestgraph/engine/blob/main/docs/matching.md">what makes two records one person</a>, and <a href="https://github.com/guestgraph/engine/blob/main/docs/continuity.md">what a stored guest id means later</a></li>
+      <li data-de="<b>Wie Identität festgestellt wird</b> – <a href='https://github.com/guestgraph/engine/blob/main/docs/matching.md'>was zwei Datensätze zu einer Person macht</a> und <a href='https://github.com/guestgraph/engine/blob/main/docs/continuity.md'>was eine gespeicherte Gast-ID später bedeutet</a>"><b>How identity is decided</b> — <a href="https://github.com/guestgraph/engine/blob/main/docs/matching.md">what makes two records one person</a>, and <a href="https://github.com/guestgraph/engine/blob/main/docs/continuity.md">what a stored guest id means later</a></li>
     </ul>
   </section>
 
     <!-- ops:derived -->
-      <p class="derived"><span data-de="Erzeugt aus">Generated from</span> <a href="https://github.com/guestgraph/engine/blob/c8b205c2f204ac8dd092b60a75dc97f427670cbf/src/main/resources/api/openapi.yaml">guestgraph/engine</a>@<span>c8b205c</span> <span data-de="und">and</span> <a href="https://github.com/guestgraph/connector-apaleo/blob/65d24ccfb3e669e57e6529547df8bcbded45e412/src/main/resources/api/openapi.yaml">guestgraph/connector-apaleo</a>@<span>65d24cc</span><span data-de=", den Dokumenten, die diese Commits enthalten.">, the documents those commits hold.</span></p>
+      <p class="derived"><span data-de="Erzeugt aus">Generated from</span> <a href="https://github.com/guestgraph/engine/blob/c8b205c2f204ac8dd092b60a75dc97f427670cbf/src/main/resources/api/openapi.yaml">guestgraph/engine</a>@<span>c8b205c</span> <span data-de="und">and</span> <a href="https://github.com/guestgraph/connector-apaleo/blob/65d24ccfb3e669e57e6529547df8bcbded45e412/src/main/resources/api/openapi.yaml">guestgraph/connector-apaleo</a>@<span>65d24cc</span><span data-de=", den Dokumenten, wie sie in diesen Commits stehen.">, the documents those commits hold.</span></p>
       <!-- end ops -->
 </main>
 
@@ -562,7 +562,7 @@
 
   var UI = {
     de:{ title:"API – GuestGraph",
-         desc:"Zwei HTTP-APIs: Die eine hält den Gast-Graphen und beantwortet Fragen dazu, die andere füllt ihn. Was jeder Aufruf tut und was eine Ablehnung bedeutet." },
+         desc:"Zwei HTTP-APIs: Die eine verwaltet den Gast-Graphen und beantwortet Fragen dazu, die andere füllt ihn. Was jeder Aufruf tut und was eine Ablehnung bedeutet." },
     en:{ title:"API — GuestGraph",
          desc:"Two HTTP APIs: one holds the guest graph and answers questions about it, one fills it. What each call does, and what a refusal means." }
   };

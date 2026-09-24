@@ -280,7 +280,7 @@ function derived() {
     `@<span>${src.commit.slice(0, 7)}</span>`;
   return `      <p class="derived"><span data-de="Erzeugt aus">Generated from</span> ` +
     `${one("engine", SOURCES.engine)} <span data-de="und">and</span> ${one("connector", SOURCES.connector)}` +
-    `<span data-de=", den Dokumenten, die diese Commits enthalten.">, the documents those commits hold.</span></p>`;
+    `<span data-de=", den Dokumenten, wie sie in diesen Commits stehen.">, the documents those commits hold.</span></p>`;
 }
 
 function sections(engine, connector) {
