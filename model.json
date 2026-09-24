@@ -1,5 +1,5 @@
 {
-  "commit": "ae180650846dd0f86019d5ddfdd120d0a3a58345",
+  "commit": "4b5b4c74cbec2335c0962c94904c17e4efa0ef31",
   "root": "GuestGraph",
   "rootId": "identity",
   "types": [
@@ -48,6 +48,12 @@
     {
       "type": "profile",
       "folder": "profiles",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "question",
+      "folder": "questions",
       "owner": null,
       "singular": false
     },
@@ -3550,6 +3556,1048 @@
       "path": "model/profiles/german-voice/german-voice.md"
     },
     {
+      "id": "questions/are-guests-kept-apart-between-our-hotels-or-brands",
+      "type": "question",
+      "name": "Are guests kept apart between our hotels or brands?",
+      "tagline": "The value says nothing in one tenant is readable from another, and the tenant says what one is: a brand, a property or a group whose guests stay wholly apart.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "value",
+                  "Tenants never meet",
+                  "",
+                  "nothing crosses"
+                ],
+                [
+                  "concept",
+                  "Tenant",
+                  "",
+                  "what is kept apart"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "value",
+                "Tenants never meet",
+                "",
+                "nothing crosses"
+              ],
+              [
+                "concept",
+                "Tenant",
+                "",
+                "what is kept apart"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/are-guests-kept-apart-between-our-hotels-or-brands.md"
+    },
+    {
+      "id": "questions/can-i-see-why-it-thinks-two-records-are-the-same-person",
+      "type": "question",
+      "name": "Can I see why it thinks two records are the same person?",
+      "tagline": "The feature says anyone reading a guest can ask why, the merge says what every decision keeps to answer it, and the matcher says which rule decided and how sure it was.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "feature",
+                  "Ask why records are one guest",
+                  "",
+                  "asking why"
+                ],
+                [
+                  "concept",
+                  "Merge",
+                  "",
+                  "what each decision keeps"
+                ],
+                [
+                  "concept",
+                  "Matcher",
+                  "",
+                  "which rule decided"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "feature",
+                "Ask why records are one guest",
+                "",
+                "asking why"
+              ],
+              [
+                "concept",
+                "Merge",
+                "",
+                "what each decision keeps"
+              ],
+              [
+                "concept",
+                "Matcher",
+                "",
+                "which rule decided"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/can-i-see-why-it-thinks-two-records-are-the-same-person.md"
+    },
+    {
+      "id": "questions/can-we-run-guestgraph-ourselves-and-what-does-it-cost",
+      "type": "question",
+      "name": "Can we run GuestGraph ourselves, and what does it cost?",
+      "tagline": "The open core strategy says what anyone may run for free and what could ever be paid for, the value says why the core stays open, and the billing strategy says what a hosted service would count.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "strategy",
+                  "Open Core Strategy",
+                  "",
+                  "free to run, and what could be paid"
+                ],
+                [
+                  "value",
+                  "The core stays open",
+                  "",
+                  "why it stays open"
+                ],
+                [
+                  "strategy",
+                  "Per-Arrival Billing Strategy",
+                  "",
+                  "what a hosted service would count"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "strategy",
+                "Open Core Strategy",
+                "",
+                "free to run, and what could be paid"
+              ],
+              [
+                "value",
+                "The core stays open",
+                "",
+                "why it stays open"
+              ],
+              [
+                "strategy",
+                "Per-Arrival Billing Strategy",
+                "",
+                "what a hosted service would count"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/can-we-run-guestgraph-ourselves-and-what-does-it-cost.md"
+    },
+    {
+      "id": "questions/can-we-see-everything-a-guest-has-booked-in-one-place",
+      "type": "question",
+      "name": "Can we see everything a guest has booked, in one place?",
+      "tagline": "The feature says a guest's reservations and bookings are listed as the guest holds them now, and the timeline says what that list is and how past ones are asked for.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "feature",
+                  "See what a guest currently has",
+                  "",
+                  "the current list"
+                ],
+                [
+                  "concept",
+                  "Timeline",
+                  "",
+                  "what the list is, past ones too"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "feature",
+                "See what a guest currently has",
+                "",
+                "the current list"
+              ],
+              [
+                "concept",
+                "Timeline",
+                "",
+                "what the list is, past ones too"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/can-we-see-everything-a-guest-has-booked-in-one-place.md"
+    },
+    {
+      "id": "questions/does-it-change-or-delete-our-original-records",
+      "type": "question",
+      "name": "Does it change or delete our original records?",
+      "tagline": "One value says every record is kept exactly as its system sent it, with a guest drawn from them rather than edited into them, the other says a record that can be read is never dropped, and the connector strategy says nothing is written back into the hotel's own systems.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "value",
+                  "Store what happened, derive who it was",
+                  "",
+                  "kept as sent, never edited"
+                ],
+                [
+                  "value",
+                  "Never drop what can be parsed",
+                  "",
+                  "never dropped"
+                ],
+                [
+                  "strategy",
+                  "One-Direction Connector Strategy",
+                  "",
+                  "nothing written back"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "value",
+                "Store what happened, derive who it was",
+                "",
+                "kept as sent, never edited"
+              ],
+              [
+                "value",
+                "Never drop what can be parsed",
+                "",
+                "never dropped"
+              ],
+              [
+                "strategy",
+                "One-Direction Connector Strategy",
+                "",
+                "nothing written back"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/does-it-change-or-delete-our-original-records.md"
+    },
+    {
+      "id": "questions/how-do-i-connect-my-own-system",
+      "type": "question",
+      "name": "How do I connect my own system?",
+      "tagline": "The feature says any system can hand its records over as they are, the value says everything the engine does is on its REST API, and the connector strategy says how a connector of one's own reads a system and submits what it finds.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "feature",
+                  "Submit a record from any system",
+                  "",
+                  "handing records over"
+                ],
+                [
+                  "value",
+                  "Everything the engine does is on its API",
+                  "",
+                  "the API it goes through"
+                ],
+                [
+                  "strategy",
+                  "One-Direction Connector Strategy",
+                  "",
+                  "writing a connector"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "feature",
+                "Submit a record from any system",
+                "",
+                "handing records over"
+              ],
+              [
+                "value",
+                "Everything the engine does is on its API",
+                "",
+                "the API it goes through"
+              ],
+              [
+                "strategy",
+                "One-Direction Connector Strategy",
+                "",
+                "writing a connector"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/how-do-i-connect-my-own-system.md"
+    },
+    {
+      "id": "questions/is-guestgraph-a-business-or-an-open-source-project",
+      "type": "question",
+      "name": "Is GuestGraph a business, or an open-source project?",
+      "tagline": "The open core strategy says what is open and what could ever be paid for, and the objective says that whether a hotel would pay is being settled by hotels, in either direction.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "strategy",
+                  "Open Core Strategy",
+                  "",
+                  "open, and what could be paid"
+                ],
+                [
+                  "strategic-objective",
+                  "Whether a hotel would pay to know its guests is answered",
+                  "",
+                  "whether it is a business"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "strategy",
+                "Open Core Strategy",
+                "",
+                "open, and what could be paid"
+              ],
+              [
+                "strategic-objective",
+                "Whether a hotel would pay to know its guests is answered",
+                "",
+                "whether it is a business"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/is-guestgraph-a-business-or-an-open-source-project.md"
+    },
+    {
+      "id": "questions/what-about-gdpr-and-our-guests-privacy",
+      "type": "question",
+      "name": "What about GDPR and our guests' privacy?",
+      "tagline": "One value says records are never changed or deleted except for lawful erasure under data protection law, the other says one tenant's guests are never readable from another, and the website's privacy page says how the hosted service will treat guest data.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "value",
+                  "Store what happened, derive who it was",
+                  "",
+                  "erasure is the one exception"
+                ],
+                [
+                  "value",
+                  "Tenants never meet",
+                  "",
+                  "nothing crosses tenants"
+                ],
+                [
+                  "surface",
+                  "guestgraph.io website",
+                  "",
+                  "where the privacy page says the rest"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "value",
+                "Store what happened, derive who it was",
+                "",
+                "erasure is the one exception"
+              ],
+              [
+                "value",
+                "Tenants never meet",
+                "",
+                "nothing crosses tenants"
+              ],
+              [
+                "surface",
+                "guestgraph.io website",
+                "",
+                "where the privacy page says the rest"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/what-about-gdpr-and-our-guests-privacy.md"
+    },
+    {
+      "id": "questions/what-happens-if-two-different-guests-get-merged-by-mistake",
+      "type": "question",
+      "name": "What happens if two different guests get merged by mistake?",
+      "tagline": "The value says every merge can be taken back, the feature says how a person splits them again, and the do-not-merge rule says why they stay apart afterwards.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "value",
+                  "Every merge can be explained and undone",
+                  "",
+                  "that it can be taken back"
+                ],
+                [
+                  "feature",
+                  "Undo a merge",
+                  "",
+                  "how to split them"
+                ],
+                [
+                  "concept",
+                  "Do-not-merge rule",
+                  "",
+                  "why they stay apart"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "value",
+                "Every merge can be explained and undone",
+                "",
+                "that it can be taken back"
+              ],
+              [
+                "feature",
+                "Undo a merge",
+                "",
+                "how to split them"
+              ],
+              [
+                "concept",
+                "Do-not-merge rule",
+                "",
+                "why they stay apart"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/what-happens-if-two-different-guests-get-merged-by-mistake.md"
+    },
+    {
+      "id": "questions/what-happens-to-a-guest-id-we-stored-when-guests-are-merged",
+      "type": "question",
+      "name": "What happens to a guest id we stored when guests are merged?",
+      "tagline": "The feature says a guest id kept elsewhere goes on answering after a merge or a split, and the retired guest id says what it answers with: how it was retired and where the person is now.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "feature",
+                  "Keep a guest id you stored",
+                  "",
+                  "it keeps answering"
+                ],
+                [
+                  "concept",
+                  "Retired guest id",
+                  "",
+                  "what it answers with"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "feature",
+                "Keep a guest id you stored",
+                "",
+                "it keeps answering"
+              ],
+              [
+                "concept",
+                "Retired guest id",
+                "",
+                "what it answers with"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/what-happens-to-a-guest-id-we-stored-when-guests-are-merged.md"
+    },
+    {
+      "id": "questions/which-of-our-systems-can-it-read-from",
+      "type": "question",
+      "name": "Which of our systems can it read from?",
+      "tagline": "The connectors say which systems it reads by itself, any other system can hand its records over through the engine's API, and the objective says which systems it is working toward.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "product",
+                  "Apaleo Connector",
+                  "",
+                  "a system it reads by itself"
+                ],
+                [
+                  "feature",
+                  "Submit a record from any system",
+                  "",
+                  "any other system"
+                ],
+                [
+                  "strategic-objective",
+                  "Every system a guest passes through feeds the graph",
+                  "",
+                  "what it is working toward"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "product",
+                "Apaleo Connector",
+                "",
+                "a system it reads by itself"
+              ],
+              [
+                "feature",
+                "Submit a record from any system",
+                "",
+                "any other system"
+              ],
+              [
+                "strategic-objective",
+                "Every system a guest passes through feeds the graph",
+                "",
+                "what it is working toward"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/which-of-our-systems-can-it-read-from.md"
+    },
+    {
+      "id": "questions/who-answers-this-chat",
+      "type": "question",
+      "name": "Who answers this chat?",
+      "tagline": "The Answerer is the seat that answers, and says what it may never do; the Answering process says how an answer is made; and the chat says it reads this very model through its MCP server.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "role",
+                  "Answerer",
+                  "",
+                  "who answers, and what it may never do"
+                ],
+                [
+                  "process",
+                  "Answering",
+                  "",
+                  "how an answer is made"
+                ],
+                [
+                  "surface",
+                  "chat.guestgraph.io chat",
+                  "",
+                  "that it reads this model"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "role",
+                "Answerer",
+                "",
+                "who answers, and what it may never do"
+              ],
+              [
+                "process",
+                "Answering",
+                "",
+                "how an answer is made"
+              ],
+              [
+                "surface",
+                "chat.guestgraph.io chat",
+                "",
+                "that it reads this model"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/who-answers-this-chat.md"
+    },
+    {
+      "id": "questions/who-decides-a-match-the-system-isn-t-sure-about-a-person-or-ai",
+      "type": "question",
+      "name": "Who decides a match the system isn't sure about, a person or AI?",
+      "tagline": "The value says an uncertain match is escalated rather than made, the feature and the match review say a person decides it until the objective is met, and the objective says what it would take for an agent to decide it instead.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "value",
+                  "A match is not trusted until it is justified",
+                  "",
+                  "uncertain matches are escalated"
+                ],
+                [
+                  "feature",
+                  "Review an uncertain match",
+                  "",
+                  "a person decides"
+                ],
+                [
+                  "concept",
+                  "Match review",
+                  "",
+                  "what waits for the decision"
+                ],
+                [
+                  "strategic-objective",
+                  "An agent can decide a merge a hotel would accept",
+                  "",
+                  "when an agent could"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "value",
+                "A match is not trusted until it is justified",
+                "",
+                "uncertain matches are escalated"
+              ],
+              [
+                "feature",
+                "Review an uncertain match",
+                "",
+                "a person decides"
+              ],
+              [
+                "concept",
+                "Match review",
+                "",
+                "what waits for the decision"
+              ],
+              [
+                "strategic-objective",
+                "An agent can decide a merge a hotel would accept",
+                "",
+                "when an agent could"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/who-decides-a-match-the-system-isn-t-sure-about-a-person-or-ai.md"
+    },
+    {
+      "id": "questions/why-do-we-have-the-same-guest-five-times",
+      "type": "question",
+      "name": "Why do we have the same guest five times?",
+      "tagline": "The vision says why a hotel sees one person as several, the guest concept says what the graph makes of them instead, and the feature says how their records end up as one.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "vision",
+                  "One guest, not five strangers",
+                  "",
+                  "why it happens"
+                ],
+                [
+                  "concept",
+                  "Guest",
+                  "",
+                  "what one guest is"
+                ],
+                [
+                  "feature",
+                  "Resolve records into one guest",
+                  "",
+                  "how records become one"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "vision",
+                "One guest, not five strangers",
+                "",
+                "why it happens"
+              ],
+              [
+                "concept",
+                "Guest",
+                "",
+                "what one guest is"
+              ],
+              [
+                "feature",
+                "Resolve records into one guest",
+                "",
+                "how records become one"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/why-do-we-have-the-same-guest-five-times.md"
+    },
+    {
       "id": "roles/answerer",
       "type": "role",
       "name": "Answerer",
@@ -6459,6 +7507,480 @@
     },
     {
       "from": "profiles/german-voice",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/are-guests-kept-apart-between-our-hotels-or-brands",
+      "to": "concepts/tenant",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "concept",
+        "Owner": "",
+        "For": "what is kept apart"
+      }
+    },
+    {
+      "from": "questions/are-guests-kept-apart-between-our-hotels-or-brands",
+      "to": "values/tenants-never-meet",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "value",
+        "Owner": "",
+        "For": "nothing crosses"
+      }
+    },
+    {
+      "from": "questions/are-guests-kept-apart-between-our-hotels-or-brands",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/can-i-see-why-it-thinks-two-records-are-the-same-person",
+      "to": "concepts/matcher",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "concept",
+        "Owner": "",
+        "For": "which rule decided"
+      }
+    },
+    {
+      "from": "questions/can-i-see-why-it-thinks-two-records-are-the-same-person",
+      "to": "concepts/merge",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "concept",
+        "Owner": "",
+        "For": "what each decision keeps"
+      }
+    },
+    {
+      "from": "questions/can-i-see-why-it-thinks-two-records-are-the-same-person",
+      "to": "features/ask-why-records-are-one-guest",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "feature",
+        "Owner": "",
+        "For": "asking why"
+      }
+    },
+    {
+      "from": "questions/can-i-see-why-it-thinks-two-records-are-the-same-person",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/can-we-run-guestgraph-ourselves-and-what-does-it-cost",
+      "to": "strategies/open-core-strategy",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "strategy",
+        "Owner": "",
+        "For": "free to run, and what could be paid"
+      }
+    },
+    {
+      "from": "questions/can-we-run-guestgraph-ourselves-and-what-does-it-cost",
+      "to": "strategies/per-arrival-billing-strategy",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "strategy",
+        "Owner": "",
+        "For": "what a hosted service would count"
+      }
+    },
+    {
+      "from": "questions/can-we-run-guestgraph-ourselves-and-what-does-it-cost",
+      "to": "values/the-core-stays-open",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "value",
+        "Owner": "",
+        "For": "why it stays open"
+      }
+    },
+    {
+      "from": "questions/can-we-run-guestgraph-ourselves-and-what-does-it-cost",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/can-we-see-everything-a-guest-has-booked-in-one-place",
+      "to": "concepts/timeline",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "concept",
+        "Owner": "",
+        "For": "what the list is, past ones too"
+      }
+    },
+    {
+      "from": "questions/can-we-see-everything-a-guest-has-booked-in-one-place",
+      "to": "features/see-what-a-guest-currently-has",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "feature",
+        "Owner": "",
+        "For": "the current list"
+      }
+    },
+    {
+      "from": "questions/can-we-see-everything-a-guest-has-booked-in-one-place",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/does-it-change-or-delete-our-original-records",
+      "to": "strategies/one-direction-connector-strategy",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "strategy",
+        "Owner": "",
+        "For": "nothing written back"
+      }
+    },
+    {
+      "from": "questions/does-it-change-or-delete-our-original-records",
+      "to": "values/never-drop-what-can-be-parsed",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "value",
+        "Owner": "",
+        "For": "never dropped"
+      }
+    },
+    {
+      "from": "questions/does-it-change-or-delete-our-original-records",
+      "to": "values/store-what-happened-derive-who-it-was",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "value",
+        "Owner": "",
+        "For": "kept as sent, never edited"
+      }
+    },
+    {
+      "from": "questions/does-it-change-or-delete-our-original-records",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/how-do-i-connect-my-own-system",
+      "to": "features/submit-a-record-from-any-system",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "feature",
+        "Owner": "",
+        "For": "handing records over"
+      }
+    },
+    {
+      "from": "questions/how-do-i-connect-my-own-system",
+      "to": "strategies/one-direction-connector-strategy",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "strategy",
+        "Owner": "",
+        "For": "writing a connector"
+      }
+    },
+    {
+      "from": "questions/how-do-i-connect-my-own-system",
+      "to": "values/everything-the-engine-does-is-on-its-api",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "value",
+        "Owner": "",
+        "For": "the API it goes through"
+      }
+    },
+    {
+      "from": "questions/how-do-i-connect-my-own-system",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/is-guestgraph-a-business-or-an-open-source-project",
+      "to": "strategic-objectives/whether-a-hotel-would-pay-to-know-its-guests-is-answered",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "strategic-objective",
+        "Owner": "",
+        "For": "whether it is a business"
+      }
+    },
+    {
+      "from": "questions/is-guestgraph-a-business-or-an-open-source-project",
+      "to": "strategies/open-core-strategy",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "strategy",
+        "Owner": "",
+        "For": "open, and what could be paid"
+      }
+    },
+    {
+      "from": "questions/is-guestgraph-a-business-or-an-open-source-project",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/what-about-gdpr-and-our-guests-privacy",
+      "to": "surfaces/guestgraph-io-website",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "surface",
+        "Owner": "",
+        "For": "where the privacy page says the rest"
+      }
+    },
+    {
+      "from": "questions/what-about-gdpr-and-our-guests-privacy",
+      "to": "values/store-what-happened-derive-who-it-was",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "value",
+        "Owner": "",
+        "For": "erasure is the one exception"
+      }
+    },
+    {
+      "from": "questions/what-about-gdpr-and-our-guests-privacy",
+      "to": "values/tenants-never-meet",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "value",
+        "Owner": "",
+        "For": "nothing crosses tenants"
+      }
+    },
+    {
+      "from": "questions/what-about-gdpr-and-our-guests-privacy",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/what-happens-if-two-different-guests-get-merged-by-mistake",
+      "to": "concepts/do-not-merge-rule",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "concept",
+        "Owner": "",
+        "For": "why they stay apart"
+      }
+    },
+    {
+      "from": "questions/what-happens-if-two-different-guests-get-merged-by-mistake",
+      "to": "features/undo-a-merge",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "feature",
+        "Owner": "",
+        "For": "how to split them"
+      }
+    },
+    {
+      "from": "questions/what-happens-if-two-different-guests-get-merged-by-mistake",
+      "to": "values/every-merge-can-be-explained-and-undone",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "value",
+        "Owner": "",
+        "For": "that it can be taken back"
+      }
+    },
+    {
+      "from": "questions/what-happens-if-two-different-guests-get-merged-by-mistake",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/what-happens-to-a-guest-id-we-stored-when-guests-are-merged",
+      "to": "concepts/retired-guest-id",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "concept",
+        "Owner": "",
+        "For": "what it answers with"
+      }
+    },
+    {
+      "from": "questions/what-happens-to-a-guest-id-we-stored-when-guests-are-merged",
+      "to": "features/keep-a-guest-id-you-stored",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "feature",
+        "Owner": "",
+        "For": "it keeps answering"
+      }
+    },
+    {
+      "from": "questions/what-happens-to-a-guest-id-we-stored-when-guests-are-merged",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/which-of-our-systems-can-it-read-from",
+      "to": "features/submit-a-record-from-any-system",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "feature",
+        "Owner": "",
+        "For": "any other system"
+      }
+    },
+    {
+      "from": "questions/which-of-our-systems-can-it-read-from",
+      "to": "products/apaleo-connector",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "product",
+        "Owner": "",
+        "For": "a system it reads by itself"
+      }
+    },
+    {
+      "from": "questions/which-of-our-systems-can-it-read-from",
+      "to": "strategic-objectives/every-system-a-guest-passes-through-feeds-the-graph",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "strategic-objective",
+        "Owner": "",
+        "For": "what it is working toward"
+      }
+    },
+    {
+      "from": "questions/which-of-our-systems-can-it-read-from",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/who-answers-this-chat",
+      "to": "processes/answering",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "process",
+        "Owner": "",
+        "For": "how an answer is made"
+      }
+    },
+    {
+      "from": "questions/who-answers-this-chat",
+      "to": "roles/answerer",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": "",
+        "For": "who answers, and what it may never do"
+      }
+    },
+    {
+      "from": "questions/who-answers-this-chat",
+      "to": "surfaces/chat-guestgraph-io-chat",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "surface",
+        "Owner": "",
+        "For": "that it reads this model"
+      }
+    },
+    {
+      "from": "questions/who-answers-this-chat",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/who-decides-a-match-the-system-isn-t-sure-about-a-person-or-ai",
+      "to": "concepts/match-review",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "concept",
+        "Owner": "",
+        "For": "what waits for the decision"
+      }
+    },
+    {
+      "from": "questions/who-decides-a-match-the-system-isn-t-sure-about-a-person-or-ai",
+      "to": "features/review-an-uncertain-match",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "feature",
+        "Owner": "",
+        "For": "a person decides"
+      }
+    },
+    {
+      "from": "questions/who-decides-a-match-the-system-isn-t-sure-about-a-person-or-ai",
+      "to": "strategic-objectives/an-agent-can-decide-a-merge-a-hotel-would-accept",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "strategic-objective",
+        "Owner": "",
+        "For": "when an agent could"
+      }
+    },
+    {
+      "from": "questions/who-decides-a-match-the-system-isn-t-sure-about-a-person-or-ai",
+      "to": "values/a-match-is-not-trusted-until-it-is-justified",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "value",
+        "Owner": "",
+        "For": "uncertain matches are escalated"
+      }
+    },
+    {
+      "from": "questions/who-decides-a-match-the-system-isn-t-sure-about-a-person-or-ai",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/why-do-we-have-the-same-guest-five-times",
+      "to": "concepts/guest",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "concept",
+        "Owner": "",
+        "For": "what one guest is"
+      }
+    },
+    {
+      "from": "questions/why-do-we-have-the-same-guest-five-times",
+      "to": "features/resolve-records-into-one-guest",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "feature",
+        "Owner": "",
+        "For": "how records become one"
+      }
+    },
+    {
+      "from": "questions/why-do-we-have-the-same-guest-five-times",
+      "to": "vision",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "vision",
+        "Owner": "",
+        "For": "why it happens"
+      }
+    },
+    {
+      "from": "questions/why-do-we-have-the-same-guest-five-times",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
