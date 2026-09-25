@@ -23,7 +23,7 @@
     "pin:check": "node pin-check.mjs"
   },
   "devDependencies": {
-    "@robertblust/design": "github:robertblust/design#v0.87.0",
+    "@robertblust/design": "github:robertblust/design#v0.89.0",
     "companygraph-meta-model": "github:companygraph/meta-model#v0.46.1",
     "pdf-lib": "^1.17.1",
     "playwright": "^1.63.0",
