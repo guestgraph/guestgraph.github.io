@@ -43,7 +43,7 @@ This narrows the rule above; it does not repeal it. Product status, matching beh
 
 It was written as a bare path first, to keep the footer strictly to data — the strip is set in the data face, and a bare word there looked like navigation in mono. That was the wrong reading of the rule. The strip is not URLs: `Apache 2.0` is a license name and `Robert Blust` is a person's name, and both are links. It is *identifiers that happen to be links*, and a page name belongs in that slot. What settled it is that someone looking for a privacy statement scans for the word, not for a path — on a page that exists to be found by exactly that person, findability beats formal tidiness. The mono rule's real target is nav bars, buttons and prose, which is the scope `verify` encodes.
 
-**The one fact this site restates** is the talk's length ("12 minutes", in `index.html` and `README.md`). It is duplicated from the talks repo because a call-to-action needs it inline. If the talk's length changes, both files here change too — it is the only number carrying that obligation, which is what makes it worth naming.
+**The one fact this site restates** is the talk's length ("6 minutes", "7 Minuten" in German, in `index.html`, `talks/index.html` and `README.md`). It is duplicated from the talks repo because a call-to-action needs it inline. If the talk's length changes, both files here change too — it is the only number carrying that obligation, which is what makes it worth naming.
 
 The billing page carries no call to action and so no copy of the length: it ends on its argument and lets the nav and the footer do the routing. The obligation above stays a two-file obligation, which is the point.
 
@@ -396,8 +396,11 @@ The key is not in a tool shell's environment — see **Secrets** below for why, 
   between separate clips, owned by the player. Don't re-litigate this by feel.
 - **Audio is committed, not LFS.** GitHub Pages does not resolve LFS objects — it would
   serve the pointer text. `.gitattributes` records why.
-- **Two durations, both true.** ~6 min narrated, 12 min live. The live figure is the one
-  quoted publicly; presenting involves pauses a recording does not take.
+- **The length quoted is the one a visitor plays.** The narration of every clip plus the
+  player's pause between slides (`SETTLE_MS` and `READ_MS` in `deck.js`): about 6 minutes in
+  English and 7 in German, rounded to the minute. Until Sep 25, 2026 the live figure, 12
+  minutes, was quoted; a visitor never hears that version, so the owner chose the one they
+  do. Re-measure when a clip is regenerated.
 
 ### The deck has no package.json of its own
 
