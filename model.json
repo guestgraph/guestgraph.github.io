@@ -1,5 +1,5 @@
 {
-  "commit": "4f1387995f6b39e38401e0d2413972026d125fc9",
+  "commit": "6ca9da902df44ed8b91bbfb40dab62bb6b6f17f4",
   "root": "GuestGraph",
   "rootId": "identity",
   "types": [
@@ -12,6 +12,24 @@
     {
       "type": "concept",
       "folder": "concepts",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "decision",
+      "folder": "decisions",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "decision-kind",
+      "folder": "decision-kinds",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "decision-status",
+      "folder": "decision-statuses",
       "owner": null,
       "singular": false
     },
@@ -1338,6 +1356,908 @@
       ],
       "owner": null,
       "path": "model/concepts/timeline.md"
+    },
+    {
+      "id": "decision-kinds/architecture",
+      "type": "decision-kind",
+      "name": "Architecture",
+      "tagline": "A call about how the engine and what runs beside it are built: what is stored and what is derived, what talks to what, what a matcher may do.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "A decision whose subject is the shape of the system: a record kept as it arrived, a connector outside the engine, a matcher admitted through a contract. It is this kind even when a hotel feels the result, because what was decided is the structure.\n\nWhat is built first and for whom is Product. How the project earns is Business.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/decision-kinds/architecture.md"
+    },
+    {
+      "id": "decision-kinds/business",
+      "type": "decision-kind",
+      "name": "Business",
+      "tagline": "A call about how the project earns and under which license: what is open, what is paid for, and what the meter counts.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "A decision whose subject is the relationship between us and a hotel or an integrator: the license on the core, what a hosted service charges for, what stays free. It is this kind even when it shapes the engine, because what was decided is the terms.\n\nWhat the engine does is Architecture or Product.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/decision-kinds/business.md"
+    },
+    {
+      "id": "decision-kinds/product",
+      "type": "decision-kind",
+      "name": "Product",
+      "tagline": "A call about what is built first and for whom: which system is connected, which capability ships, which hotel it is for.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "A decision whose subject is the offer and its order: the first connector, the first feature a hotel sees, what the console does before anything else. It is this kind even when it forces a structural change, because what was decided is what a hotel gets.\n\nHow the thing is built is Architecture; what it costs a hotel is Business.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/decision-kinds/product.md"
+    },
+    {
+      "id": "decision-statuses/dropped",
+      "type": "decision-status",
+      "name": "Dropped",
+      "tagline": "The call is no longer pursued, and nothing replaced it.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "A decision is Dropped when the call was given up without another decision taking its place: a proposed call declined, or a standing call abandoned because what it depended on went away. The file stays as written, and one dated sentence closing `## Consequences` says when and why it was dropped, since no later decision exists to say so. A reader treats the question as open again. A Dropped decision never returns to Standing: taking the call up again is a new decision.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/decision-statuses/dropped.md"
+    },
+    {
+      "id": "decision-statuses/proposed",
+      "type": "decision-status",
+      "name": "Proposed",
+      "tagline": "The call is put forward with its alternatives and not yet made; nothing acts on it.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "A decision is Proposed from the day it is written until the seat named in `by` makes the call. It is written in full, the question, the alternatives and the reasons, so that it can be argued before it binds, and `decided` holds the date it was put forward. Nothing acts on a Proposed decision, and a reader treats the question as open. It leaves this state when the call is made, becoming Standing with `decided` set to the day of the call, or when it is declined, becoming Dropped.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/decision-statuses/proposed.md"
+    },
+    {
+      "id": "decision-statuses/revised",
+      "type": "decision-status",
+      "name": "Revised",
+      "tagline": "A later decision replaced this call, and the call is read through that decision.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "A decision is Revised when another decision names it in `supersedes`. Its file stays as it was written, because what was decided on that date does not stop having happened; what holds now is the decision that replaced it, and a reader who arrives here follows the reference forward. A Revised decision never returns to Standing: a change of mind is a third decision.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/decision-statuses/revised.md"
+    },
+    {
+      "id": "decision-statuses/standing",
+      "type": "decision-status",
+      "name": "Standing",
+      "tagline": "The call holds as written, and the work follows it.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "A decision is Standing from the day it was made until a later decision replaces it or the call is given up. While it stands, a reader acts on it as written and re-opens it only by making a decision that names it in `supersedes`. It leaves this state the day that later decision is made, becoming Revised, or the day the call is given up with nothing in its place, becoming Dropped.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/decision-statuses/standing.md"
+    },
+    {
+      "id": "decisions/2026-apaleo-first",
+      "type": "decision",
+      "name": "Apaleo is the first connector",
+      "tagline": "The first source system connected to the graph is a real property management system, Apaleo, and the connector is built against its API rather than against a PMS in general.",
+      "fields": {
+        "source": "Local",
+        "decided": "2026-09-10",
+        "kind": "Product",
+        "status": "Standing",
+        "by": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "Which system to connect first, and whether the first connector is for one system or for a class of them. It had to be decided in September 2026, when the engine could resolve records and had none to resolve.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "A generic PMS adapter",
+                  "An adapter for every PMS fits none, and the rules a connector follows would be guessed instead of read from one real API."
+                ],
+                [
+                  "A booking engine or the wifi first",
+                  "A PMS is where the reservation and the check-in live, which is what decides whether any of this is usable for a hotel at all."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "A generic PMS adapter",
+                "An adapter for every PMS fits none, and the rules a connector follows would be guessed instead of read from one real API."
+              ],
+              [
+                "A booking engine or the wifi first",
+                "A PMS is where the reservation and the check-in live, which is what decides whether any of this is usable for a hotel at all."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "A PMS is what decides whether any of this is usable, and Apaleo is a PMS with a public API that a connector can be built and tested against without a hotel's help. Every rule a connector follows is then decided in the engine's specification against something real, and a change taken while building is carried forward into the roadmap notes.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "The connector's rules are decided once against a real API; the second connector, for a different kind of system, is what proves the API rather than the first. What it gave up is breadth on the first day. It stays right for as long as hotels that keep their stays in Apaleo are the ones asking.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "product",
+                  "Apaleo Connector",
+                  "",
+                  "made it"
+                ],
+                [
+                  "feature",
+                  "Bring reservations and bookings into the graph",
+                  "",
+                  "made it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "product",
+                "Apaleo Connector",
+                "",
+                "made it"
+              ],
+              [
+                "feature",
+                "Bring reservations and bookings into the graph",
+                "",
+                "made it"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-apaleo-first.md"
+    },
+    {
+      "id": "decisions/2026-connectors",
+      "type": "decision",
+      "name": "Each source system gets its own one-direction connector",
+      "tagline": "A connector is a separate service that reads one external system and submits what it finds through the engine's API, so the engine calls nothing outward and runs with any number of connectors or none.",
+      "fields": {
+        "source": "Local",
+        "decided": "2026-09-10",
+        "kind": "Architecture",
+        "status": "Standing",
+        "by": "Owner",
+        "upholds": [
+          "Everything the engine does is on its API"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "Where integration with a hotel's systems lives, inside the engine or beside it, and whether anything flows back. It had to be decided in September 2026, when the first connector was about to be built, because integration code inside the engine cannot be taken out once the engine depends on it.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "Integration code inside the engine",
+                  "The engine would change with every system a hotel runs and would call out to systems it should never reach."
+                ],
+                [
+                  "A bidirectional sync",
+                  "Writing back into a hotel's PMS makes the graph a system of record it was never meant to be, and a wrong merge would then reach the desk through the hotel's own system."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "Integration code inside the engine",
+                "The engine would change with every system a hotel runs and would call out to systems it should never reach."
+              ],
+              [
+                "A bidirectional sync",
+                "Writing back into a hotel's PMS makes the graph a system of record it was never meant to be, and a wrong merge would then reach the desk through the hotel's own system."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "A connector is a client of the engine's REST API and nothing more: it submits one observation per person per version of a source object, keyed by the source's own clock so retries and full re-syncs are idempotent, and it holds the guest ids the engine answers. Everything the engine does is on its API, so a connector needs nothing else.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "A connector owns a database schema of its own and connects as a role that sees nothing else; whether it shares the engine's database is a deployment choice; deliveries are retried rather than lost when either side is down. What it gave up is the shortcut of reading the engine's tables. It stays right for as long as a second connector, for a different kind of system, can be built against the same API without a change to the engine.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "strategy",
+                  "One-Direction Connector Strategy",
+                  "",
+                  "made it"
+                ],
+                [
+                  "product",
+                  "Apaleo Connector",
+                  "",
+                  "made it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "strategy",
+                "One-Direction Connector Strategy",
+                "",
+                "made it"
+              ],
+              [
+                "product",
+                "Apaleo Connector",
+                "",
+                "made it"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-connectors.md"
+    },
+    {
+      "id": "decisions/2026-matcher-off",
+      "type": "decision",
+      "name": "The probabilistic matcher ships switched off",
+      "tagline": "The machinery that makes a merge safe to allow, explanation, undo, the review queue and a confidence behind each decision, is built first, and the probabilistic matcher is admitted through it switched off, for a tenant to turn on under its own threshold.",
+      "fields": {
+        "source": "Local",
+        "decided": "2026-07-09",
+        "kind": "Architecture",
+        "status": "Standing",
+        "by": "Owner",
+        "upholds": [
+          "Every merge can be explained and undone",
+          "A match is not trusted until it is justified"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "Whether uncertain matching is allowed to merge before a hotel can see why and undo it, and in what order the safety machinery and the matchers are built. It had to be decided in July 2026, before any matcher beyond the deterministic one existed, because a safeguard added after the decisions it guards cannot reach the ones made before it.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "On by default under a threshold",
+                  "A hotel would get merges it never chose to allow before it had seen one explained, and a wrong merge shows one guest another's stays and invoices."
+                ],
+                [
+                  "No probabilistic matcher at all",
+                  "Deterministic matching alone leaves the returning guest with a typo in the email as a stranger, and the review decisions that would train a better matcher would never accumulate."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "On by default under a threshold",
+                "A hotel would get merges it never chose to allow before it had seen one explained, and a wrong merge shows one guest another's stays and invoices."
+              ],
+              [
+                "No probabilistic matcher at all",
+                "Deterministic matching alone leaves the returning guest with a typo in the email as a stranger, and the review decisions that would train a better matcher would never accumulate."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "Every merge is recorded with its matcher, its confidence and its evidence, can be asked why and undone, and a suspicious match queues for review under a threshold each tenant sets, and all of that existed while matching was still deterministic. A new matcher is then one more implementation of the same contract, candidates in and scored decisions out, and an agent is treated as one more uncertain matcher behind it.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "No matcher merges before it can be explained and undone; no agent path around the review queue; a split holds against new evidence through a do-not-merge rule; the review decisions accumulate with the feature vector each was scored on. What it gave up is a higher merge rate out of the box. It stays right for as long as a wrong merge is rarer than a missed one.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "concept",
+                  "Matcher",
+                  "",
+                  "changed it"
+                ],
+                [
+                  "strategy",
+                  "Safety-First Strategy",
+                  "",
+                  "made it"
+                ],
+                [
+                  "feature",
+                  "Review an uncertain match",
+                  "",
+                  "made it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "concept",
+                "Matcher",
+                "",
+                "changed it"
+              ],
+              [
+                "strategy",
+                "Safety-First Strategy",
+                "",
+                "made it"
+              ],
+              [
+                "feature",
+                "Review an uncertain match",
+                "",
+                "made it"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-matcher-off.md"
+    },
+    {
+      "id": "decisions/2026-open-core",
+      "type": "decision",
+      "name": "Open core under Apache 2.0, with paid hosting later",
+      "tagline": "Everything that resolves a guest, the engine, the graph, the API and the connectors, is open source under Apache 2.0 for anyone to run, and what could ever be paid for is running it: managed hosting, a console and MCP access for agents.",
+      "fields": {
+        "source": "Local",
+        "decided": "2026-07-09",
+        "kind": "Business",
+        "status": "Standing",
+        "by": "Owner",
+        "upholds": [
+          "The core stays open"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "What is open and what could be sold, and whether the license on the core can ever change. It had to be decided before the first public commit, in July 2026, because a license that closes later is read as one that will.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "A closed SaaS",
+                  "A hotel could not read how a merge was decided before trusting one, and the people arguing with the engine in the open, who are the first signal the idea is right, would not exist."
+                ],
+                [
+                  "A source-available license",
+                  "It says open and means later, and integrators who would run the engine themselves would not build on a license that can close."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "A closed SaaS",
+                "A hotel could not read how a merge was decided before trusting one, and the people arguing with the engine in the open, who are the first signal the idea is right, would not exist."
+              ],
+              [
+                "A source-available license",
+                "It says open and means later, and integrators who would run the engine themselves would not build on a license that can close."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "A hotel or an integrator can read exactly how a merge was decided before trusting one, and can run it without us. The commercial layer is planned on top of the core and never inside it, so the hosted service runs the same engine anyone can run, and the pages can say plainly that there is no product for sale yet and ask where the idea is wrong.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "No proprietary edition, no capability held back to make hosting worth buying, authentication beyond per-tenant API keys belongs to the commercial layer, and no license change on the core later. What has to stay true is that the core does not depend on commercial code.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "strategy",
+                  "Open Core Strategy",
+                  "",
+                  "made it"
+                ],
+                [
+                  "product",
+                  "GuestGraph Engine",
+                  "",
+                  "changed it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "strategy",
+                "Open Core Strategy",
+                "",
+                "made it"
+              ],
+              [
+                "product",
+                "GuestGraph Engine",
+                "",
+                "changed it"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-open-core.md"
+    },
+    {
+      "id": "decisions/2026-per-arrival",
+      "type": "decision",
+      "name": "The hosted service bills per arrival",
+      "tagline": "The hosted service counts one thing, a reservation that checked in, as an annual allowance paid in twelve installments, and everything that makes the graph better is free.",
+      "fields": {
+        "source": "Local",
+        "decided": "2026-08-23",
+        "kind": "Business",
+        "status": "Standing",
+        "by": "Owner",
+        "upholds": [
+          "The core stays open"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "What the meter counts, once there is a hosted service, and what it must never count. It had to be decided in August 2026, before the pages described a commercial layer, because a billing model shapes what a hotel is willing to feed into the graph.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "Per record ingested",
+                  "It puts the largest invoice at the backfill, before a single profile is resolved."
+                ],
+                [
+                  "Per connector",
+                  "It taxes the fifth system, the one where identity resolution earns its keep."
+                ],
+                [
+                  "Per stored profile",
+                  "It makes a hotel delete records and the graph worse."
+                ],
+                [
+                  "Prepaid credit wallets",
+                  "They leave a hotel wondering in August whether the balance holds."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "Per record ingested",
+                "It puts the largest invoice at the backfill, before a single profile is resolved."
+              ],
+              [
+                "Per connector",
+                "It taxes the fifth system, the one where identity resolution earns its keep."
+              ],
+              [
+                "Per stored profile",
+                "It makes a hotel delete records and the graph worse."
+              ],
+              [
+                "Prepaid credit wallets",
+                "They leave a hotel wondering in August whether the balance holds."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "An arrival is a number already on a hotel's own occupancy report every morning, so every invoice can be checked against a system we do not own, and a resolved profile is worth something at the moment someone is standing at the desk. Everything that makes the graph better, ingestion, the backfill, stored profiles, lookups and self-hosting, has to cost nothing or the hotel holds it back.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "One meter, walk-ins included and cancellations and no-shows not; an allowance paid in twelve equal installments because hotels are seasonal; going over it never stops resolution; a group pools one allowance across its properties. What has to stay true is that a hotel can say what its bill would be from its own report, without asking us.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "strategy",
+                  "Per-Arrival Billing Strategy",
+                  "",
+                  "made it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "strategy",
+                "Per-Arrival Billing Strategy",
+                "",
+                "made it"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-per-arrival.md"
+    },
+    {
+      "id": "decisions/2026-source-record",
+      "type": "decision",
+      "name": "A source record is never edited, and the guest is derived from it",
+      "tagline": "A record enters exactly as its system sent it and is never changed or deleted by application code; a guest is a conclusion recomputed from the records, not a row anyone edits.",
+      "fields": {
+        "source": "Local",
+        "decided": "2026-07-09",
+        "kind": "Architecture",
+        "status": "Standing",
+        "by": "Owner",
+        "upholds": [
+          "Store what happened, derive who it was"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "What the engine stores and what it computes, and whether a correction changes what was stored. It had to be decided before the first table existed, in July 2026, because a store that edits records in place cannot be turned into one that does not without losing what it already overwrote.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "A master record edited in place",
+                  "Every correction would overwrite what a system actually sent, and no merge could be explained or undone from what was left."
+                ],
+                [
+                  "A golden record kept as a CRM keeps one",
+                  "A row someone edits is a claim nobody can recompute, and the survivorship that produced it is lost the moment it is saved."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "A master record edited in place",
+                "Every correction would overwrite what a system actually sent, and no merge could be explained or undone from what was left."
+              ],
+              [
+                "A golden record kept as a CRM keeps one",
+                "A row someone edits is a claim nobody can recompute, and the survivorship that produced it is lost the moment it is saved."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "An explanation, an undo and a replay of resolution are possible only from records kept as they arrived. If the golden profile is computed from the records by survivorship rules, it can be recomputed at any time, which is what makes a wrong merge reversible and a right one explainable.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "A correction arrives as a new record; the profile is derived and can be recomputed; lawful erasure under data protection law is the one exception and is named as one. What it gave up is the cheap fix: nobody can edit a profile to make it right. It stays right for as long as no code path writes to a record after it entered.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "concept",
+                  "Source record",
+                  "",
+                  "made it"
+                ],
+                [
+                  "concept",
+                  "Golden profile",
+                  "",
+                  "made it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "concept",
+                "Source record",
+                "",
+                "made it"
+              ],
+              [
+                "concept",
+                "Golden profile",
+                "",
+                "made it"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-source-record.md"
     },
     {
       "id": "domains/guest-identity",
@@ -7105,6 +8025,348 @@
       "from": "concepts/timeline",
       "to": "sources/local",
       "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decision-kinds/architecture",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decision-kinds/business",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decision-kinds/product",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decision-statuses/dropped",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decision-statuses/proposed",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decision-statuses/revised",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decision-statuses/standing",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-apaleo-first",
+      "to": "features/bring-reservations-and-bookings-into-the-graph",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "feature",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-apaleo-first",
+      "to": "products/apaleo-connector",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "product",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-apaleo-first",
+      "to": "roles/owner",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-apaleo-first",
+      "to": "decision-kinds/product",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-apaleo-first",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-apaleo-first",
+      "to": "decision-statuses/standing",
+      "via": "status",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-connectors",
+      "to": "products/apaleo-connector",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "product",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-connectors",
+      "to": "strategies/one-direction-connector-strategy",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "strategy",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-connectors",
+      "to": "roles/owner",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-connectors",
+      "to": "decision-kinds/architecture",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-connectors",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-connectors",
+      "to": "decision-statuses/standing",
+      "via": "status",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-connectors",
+      "to": "values/everything-the-engine-does-is-on-its-api",
+      "via": "upholds",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-matcher-off",
+      "to": "concepts/matcher",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "concept",
+        "Owner": "",
+        "How": "changed it"
+      }
+    },
+    {
+      "from": "decisions/2026-matcher-off",
+      "to": "features/review-an-uncertain-match",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "feature",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-matcher-off",
+      "to": "strategies/safety-first-strategy",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "strategy",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-matcher-off",
+      "to": "roles/owner",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-matcher-off",
+      "to": "decision-kinds/architecture",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-matcher-off",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-matcher-off",
+      "to": "decision-statuses/standing",
+      "via": "status",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-matcher-off",
+      "to": "values/a-match-is-not-trusted-until-it-is-justified",
+      "via": "upholds",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-matcher-off",
+      "to": "values/every-merge-can-be-explained-and-undone",
+      "via": "upholds",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-open-core",
+      "to": "products/guestgraph-engine",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "product",
+        "Owner": "",
+        "How": "changed it"
+      }
+    },
+    {
+      "from": "decisions/2026-open-core",
+      "to": "strategies/open-core-strategy",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "strategy",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-open-core",
+      "to": "roles/owner",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-open-core",
+      "to": "decision-kinds/business",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-open-core",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-open-core",
+      "to": "decision-statuses/standing",
+      "via": "status",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-open-core",
+      "to": "values/the-core-stays-open",
+      "via": "upholds",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-per-arrival",
+      "to": "strategies/per-arrival-billing-strategy",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "strategy",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-per-arrival",
+      "to": "roles/owner",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-per-arrival",
+      "to": "decision-kinds/business",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-per-arrival",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-per-arrival",
+      "to": "decision-statuses/standing",
+      "via": "status",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-per-arrival",
+      "to": "values/the-core-stays-open",
+      "via": "upholds",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-source-record",
+      "to": "concepts/golden-profile",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "concept",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-source-record",
+      "to": "concepts/source-record",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "concept",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-source-record",
+      "to": "roles/owner",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-source-record",
+      "to": "decision-kinds/architecture",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-source-record",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-source-record",
+      "to": "decision-statuses/standing",
+      "via": "status",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-source-record",
+      "to": "values/store-what-happened-derive-who-it-was",
+      "via": "upholds",
       "attrs": {}
     },
     {
