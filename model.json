@@ -1,5 +1,5 @@
 {
-  "commit": "6ca9da902df44ed8b91bbfb40dab62bb6b6f17f4",
+  "commit": "f6ccfcd2ea189afb57d380c949807c1f4204a3e0",
   "root": "GuestGraph",
   "rootId": "identity",
   "types": [
@@ -84,6 +84,12 @@
     {
       "type": "question",
       "folder": "questions",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "question-kind",
+      "folder": "question-kinds",
       "owner": null,
       "singular": false
     },
@@ -5149,12 +5155,127 @@
       "path": "model/profiles/german-voice/german-voice.md"
     },
     {
+      "id": "question-kinds/brand-and-chat",
+      "type": "question-kind",
+      "name": "Brand and chat",
+      "tagline": "Questions about how guestgraph.io looks, what a visitor may reuse, and the chat that answers on it.",
+      "fields": {
+        "source": "Local",
+        "rank": "60"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "A question about the site itself rather than the product: its colors and faces and whether they may be reused, and who answers in the chat and how well. They share a kind because each holds too few questions to stand alone.\n\nA question the chat is asked about GuestGraph, or about what a sentence on the site claims, takes the kind of what it asks about, not this one.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/question-kinds/brand-and-chat.md"
+    },
+    {
+      "id": "question-kinds/connecting",
+      "type": "question-kind",
+      "name": "Connecting",
+      "tagline": "Questions about how GuestGraph reads from a hotel's systems.",
+      "fields": {
+        "source": "Local",
+        "rank": "40"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "A question about which systems it reads and how a system not yet connected is added. What is done with the data once read is Data and privacy.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/question-kinds/connecting.md"
+    },
+    {
+      "id": "question-kinds/data-and-privacy",
+      "type": "question-kind",
+      "name": "Data and privacy",
+      "tagline": "Questions about what happens to a hotel's data: the original records, the separation between hotels and brands, and the law on guests' personal data.",
+      "fields": {
+        "source": "Local",
+        "rank": "30"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "A question about custody and the law: whether source records are changed, whether guests are kept apart between properties, and what the data protection law asks.\n\nHow a match is made is Matching, even where a privacy rule limits it.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/question-kinds/data-and-privacy.md"
+    },
+    {
+      "id": "question-kinds/matching",
+      "type": "question-kind",
+      "name": "Matching",
+      "tagline": "Questions about how records are judged to be one guest, and what happens when a judgment is wrong or unsure.",
+      "fields": {
+        "source": "Local",
+        "rank": "20"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "A question about the match itself: why two records were joined, who decides an unsure one, what a mistaken merge does, and what becomes of an id stored before a merge.\n\nWhat happens to the original records and to guests' personal data is Data and privacy.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/question-kinds/matching.md"
+    },
+    {
+      "id": "question-kinds/terms",
+      "type": "question-kind",
+      "name": "Terms",
+      "tagline": "Questions about what running GuestGraph costs and what kind of project it is.",
+      "fields": {
+        "source": "Local",
+        "rank": "50"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "A question about the arrangement: running it yourself, the price, the license, and whether it is a business. What it does for a hotel is the kind of that question.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/question-kinds/terms.md"
+    },
+    {
+      "id": "question-kinds/the-problem",
+      "type": "question-kind",
+      "name": "The problem",
+      "tagline": "Questions from a hotel that sees the problem before it knows the product: why one guest appears many times, and whether one view of a guest is possible.",
+      "fields": {
+        "source": "Local",
+        "rank": "10"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "A question about duplicates and the missing single view, asked in the hotel's own words. How GuestGraph decides two records are one guest is Matching.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/question-kinds/the-problem.md"
+    },
+    {
       "id": "questions/are-guests-kept-apart-between-our-hotels-or-brands",
       "type": "question",
       "name": "Are guests kept apart between our hotels or brands?",
       "tagline": "The value says nothing in one tenant is readable from another, and the tenant says what one is: a brand, a property or a group whose guests stay wholly apart.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "Data and privacy"
       },
       "sections": [
         {
@@ -5219,7 +5340,8 @@
       "name": "Can I see why it thinks two records are the same person?",
       "tagline": "The feature says anyone reading a guest can ask why, the merge says what every decision keeps to answer it, and the matcher says which rule decided and how sure it was.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "Matching"
       },
       "sections": [
         {
@@ -5296,7 +5418,8 @@
       "name": "Can I use GuestGraph's colors and fonts for my own site?",
       "tagline": "The brand says what each color and typeface is for and points at the design repository that masters the values, and that repository's own license says what may be reused; the website is where the design is seen whole.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "Brand and chat"
       },
       "sections": [
         {
@@ -5361,7 +5484,8 @@
       "name": "Can we run GuestGraph ourselves, and what does it cost?",
       "tagline": "The open core strategy says what anyone may run for free and what could ever be paid for, the value says why the core stays open, and the billing strategy says what a hosted service would count.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "Terms"
       },
       "sections": [
         {
@@ -5438,7 +5562,8 @@
       "name": "Can we see everything a guest has booked, in one place?",
       "tagline": "The feature says a guest's reservations and bookings are listed as the guest holds them now, and the timeline says what that list is and how past ones are asked for.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "The problem"
       },
       "sections": [
         {
@@ -5503,7 +5628,8 @@
       "name": "Does it change or delete our original records?",
       "tagline": "One value says every record is kept exactly as its system sent it, with a guest drawn from them rather than edited into them, the other says a record that can be read is never dropped, and the connector strategy says nothing is written back into the hotel's own systems.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "Data and privacy"
       },
       "sections": [
         {
@@ -5580,7 +5706,8 @@
       "name": "How do I connect my own system?",
       "tagline": "The feature says any system can hand its records over as they are, the value says everything the engine does is on its REST API, and the connector strategy says how a connector of one's own reads a system and submits what it finds.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "Connecting"
       },
       "sections": [
         {
@@ -5657,7 +5784,8 @@
       "name": "How well does this chat answer?",
       "tagline": "Grounded Answer Rate says what is watched: whether an answer rested on what the model returned, not whether it was true, and its value is kept outside the model, in the chat's report the KPI links. The Answering process says how an answer is made.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "Brand and chat"
       },
       "sections": [
         {
@@ -5722,7 +5850,8 @@
       "name": "Is GuestGraph a business, or an open-source project?",
       "tagline": "The open core strategy says what is open and what could ever be paid for, and the objective says that whether a hotel would pay is being settled by hotels, in either direction.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "Terms"
       },
       "sections": [
         {
@@ -5787,7 +5916,8 @@
       "name": "What about GDPR and our guests' privacy?",
       "tagline": "One value says records are never changed or deleted except for lawful erasure under data protection law, the other says one tenant's guests are never readable from another, and the website's privacy page says how the hosted service will treat guest data.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "Data and privacy"
       },
       "sections": [
         {
@@ -5864,7 +5994,8 @@
       "name": "What do the colors on guestgraph.io mean?",
       "tagline": "Each color is a role, and the brand's Color table says what a thing painted in it is saying and what it is never used for; the values themselves live where the brand's References point.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "Brand and chat"
       },
       "sections": [
         {
@@ -5917,7 +6048,8 @@
       "name": "What happens if two different guests get merged by mistake?",
       "tagline": "The value says every merge can be taken back, the feature says how a person splits them again, and the do-not-merge rule says why they stay apart afterwards.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "Matching"
       },
       "sections": [
         {
@@ -5994,7 +6126,8 @@
       "name": "What happens to a guest id we stored when guests are merged?",
       "tagline": "The feature says a guest id kept elsewhere goes on answering after a merge or a split, and the retired guest id says what it answers with: how it was retired and where the person is now.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "Matching"
       },
       "sections": [
         {
@@ -6059,7 +6192,8 @@
       "name": "Which of our systems can it read from?",
       "tagline": "The connectors say which systems it reads by itself, any other system can hand its records over through the engine's API, and the objective says which systems it is working toward.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "Connecting"
       },
       "sections": [
         {
@@ -6136,7 +6270,8 @@
       "name": "Who answers this chat?",
       "tagline": "The Answerer is the seat that answers, and says what it may never do; the Answering process says how an answer is made; and the chat says it reads this very model through its MCP server.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "Brand and chat"
       },
       "sections": [
         {
@@ -6213,7 +6348,8 @@
       "name": "Who decides a match the system isn't sure about, a person or AI?",
       "tagline": "The value says an uncertain match is escalated rather than made, the feature and the match review say a person decides it until the objective is met, and the objective says what it would take for an agent to decide it instead.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "Matching"
       },
       "sections": [
         {
@@ -6302,7 +6438,8 @@
       "name": "Why do we have the same guest five times?",
       "tagline": "The vision says why a hotel sees one person as several, the guest concept says what the graph makes of them instead, and the feature says how their records end up as one.",
       "fields": {
-        "source": "Local"
+        "source": "Local",
+        "kind": "The problem"
       },
       "sections": [
         {
@@ -9774,6 +9911,42 @@
       "attrs": {}
     },
     {
+      "from": "question-kinds/brand-and-chat",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "question-kinds/connecting",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "question-kinds/data-and-privacy",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "question-kinds/matching",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "question-kinds/terms",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "question-kinds/the-problem",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
       "from": "questions/are-guests-kept-apart-between-our-hotels-or-brands",
       "to": "concepts/tenant",
       "via": "Rests on.Entity",
@@ -9792,6 +9965,12 @@
         "Owner": "",
         "For": "nothing crosses"
       }
+    },
+    {
+      "from": "questions/are-guests-kept-apart-between-our-hotels-or-brands",
+      "to": "question-kinds/data-and-privacy",
+      "via": "kind",
+      "attrs": {}
     },
     {
       "from": "questions/are-guests-kept-apart-between-our-hotels-or-brands",
@@ -9831,6 +10010,12 @@
     },
     {
       "from": "questions/can-i-see-why-it-thinks-two-records-are-the-same-person",
+      "to": "question-kinds/matching",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "questions/can-i-see-why-it-thinks-two-records-are-the-same-person",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
@@ -9854,6 +10039,12 @@
         "Owner": "",
         "For": "where the design is seen whole"
       }
+    },
+    {
+      "from": "questions/can-i-use-guestgraph-s-colors-and-fonts-for-my-own-site",
+      "to": "question-kinds/brand-and-chat",
+      "via": "kind",
+      "attrs": {}
     },
     {
       "from": "questions/can-i-use-guestgraph-s-colors-and-fonts-for-my-own-site",
@@ -9893,6 +10084,12 @@
     },
     {
       "from": "questions/can-we-run-guestgraph-ourselves-and-what-does-it-cost",
+      "to": "question-kinds/terms",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "questions/can-we-run-guestgraph-ourselves-and-what-does-it-cost",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
@@ -9916,6 +10113,12 @@
         "Owner": "",
         "For": "the current list"
       }
+    },
+    {
+      "from": "questions/can-we-see-everything-a-guest-has-booked-in-one-place",
+      "to": "question-kinds/the-problem",
+      "via": "kind",
+      "attrs": {}
     },
     {
       "from": "questions/can-we-see-everything-a-guest-has-booked-in-one-place",
@@ -9955,6 +10158,12 @@
     },
     {
       "from": "questions/does-it-change-or-delete-our-original-records",
+      "to": "question-kinds/data-and-privacy",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "questions/does-it-change-or-delete-our-original-records",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
@@ -9991,6 +10200,12 @@
     },
     {
       "from": "questions/how-do-i-connect-my-own-system",
+      "to": "question-kinds/connecting",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "questions/how-do-i-connect-my-own-system",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
@@ -10017,6 +10232,12 @@
     },
     {
       "from": "questions/how-well-does-this-chat-answer",
+      "to": "question-kinds/brand-and-chat",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "questions/how-well-does-this-chat-answer",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
@@ -10040,6 +10261,12 @@
         "Owner": "",
         "For": "open, and what could be paid"
       }
+    },
+    {
+      "from": "questions/is-guestgraph-a-business-or-an-open-source-project",
+      "to": "question-kinds/terms",
+      "via": "kind",
+      "attrs": {}
     },
     {
       "from": "questions/is-guestgraph-a-business-or-an-open-source-project",
@@ -10079,6 +10306,12 @@
     },
     {
       "from": "questions/what-about-gdpr-and-our-guests-privacy",
+      "to": "question-kinds/data-and-privacy",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "questions/what-about-gdpr-and-our-guests-privacy",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
@@ -10092,6 +10325,12 @@
         "Owner": "",
         "For": "what each color role means and never does"
       }
+    },
+    {
+      "from": "questions/what-do-the-colors-on-guestgraph-io-mean",
+      "to": "question-kinds/brand-and-chat",
+      "via": "kind",
+      "attrs": {}
     },
     {
       "from": "questions/what-do-the-colors-on-guestgraph-io-mean",
@@ -10131,6 +10370,12 @@
     },
     {
       "from": "questions/what-happens-if-two-different-guests-get-merged-by-mistake",
+      "to": "question-kinds/matching",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "questions/what-happens-if-two-different-guests-get-merged-by-mistake",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
@@ -10154,6 +10399,12 @@
         "Owner": "",
         "For": "it keeps answering"
       }
+    },
+    {
+      "from": "questions/what-happens-to-a-guest-id-we-stored-when-guests-are-merged",
+      "to": "question-kinds/matching",
+      "via": "kind",
+      "attrs": {}
     },
     {
       "from": "questions/what-happens-to-a-guest-id-we-stored-when-guests-are-merged",
@@ -10193,6 +10444,12 @@
     },
     {
       "from": "questions/which-of-our-systems-can-it-read-from",
+      "to": "question-kinds/connecting",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "questions/which-of-our-systems-can-it-read-from",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
@@ -10226,6 +10483,12 @@
         "Owner": "",
         "For": "that it reads this model"
       }
+    },
+    {
+      "from": "questions/who-answers-this-chat",
+      "to": "question-kinds/brand-and-chat",
+      "via": "kind",
+      "attrs": {}
     },
     {
       "from": "questions/who-answers-this-chat",
@@ -10275,6 +10538,12 @@
     },
     {
       "from": "questions/who-decides-a-match-the-system-isn-t-sure-about-a-person-or-ai",
+      "to": "question-kinds/matching",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "questions/who-decides-a-match-the-system-isn-t-sure-about-a-person-or-ai",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
@@ -10308,6 +10577,12 @@
         "Owner": "",
         "For": "why it happens"
       }
+    },
+    {
+      "from": "questions/why-do-we-have-the-same-guest-five-times",
+      "to": "question-kinds/the-problem",
+      "via": "kind",
+      "attrs": {}
     },
     {
       "from": "questions/why-do-we-have-the-same-guest-five-times",
