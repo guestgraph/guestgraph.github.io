@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@robertblust/design": "github:robertblust/design#v0.90.0",
-    "companygraph-meta-model": "github:companygraph/meta-model#v0.46.1",
+    "companygraph-meta-model": "github:companygraph/meta-model#v0.47.0",
     "pdf-lib": "^1.17.1",
     "playwright": "^1.63.0",
     "yaml": "^2.8.1"
