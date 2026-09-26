@@ -1,5 +1,6 @@
-/* @robertblust/design — page.css, assembled from the shared blocks: reset v2 · header v14 ·
-   title v1 · lines v1 · footer v1 · principles v1 · team v2 · surfaces v1.
+/* @robertblust/design — page.css, assembled from the shared blocks: reset v3 · link v1 ·
+   header v16 · title v1 · lines v1 · footer v3 · principles v1 · team v2 · surfaces v1 ·
+   index v2.
    Editing this file in a site does nothing: the next npm run design overwrites it. */
 
 *{box-sizing:border-box; margin:0; padding:0}
@@ -11,7 +12,6 @@ body{
   display:flex; flex-direction:column;
 }
 .mono{font-family:"Plex Mono", ui-monospace, "SF Mono", Menlo, monospace}
-a{color:inherit}
 /* The gutter is proportional until it has enough, and then it stops. `box-sizing` is
    border-box here, so the padding comes out of the max-width rather than sitting outside it:
    with a bare `7vw` the column got narrower the wider the screen got — 1001px at 1280,
@@ -23,6 +23,10 @@ a{color:inherit}
    so every width below the widest laptop is unchanged to the pixel and only the screens
    where this was broken move. */
 .shell{width:100%; max-width:1180px; margin:0 auto; padding:0 min(7vw, 80px)}
+
+:where(a){color:inherit}
+:where(a:not([class])){color:var(--c-mid); text-decoration:none; border-bottom:1px solid transparent}
+:where(a:not([class]):hover, a:not([class]):focus-visible){border-bottom-color:var(--c-mid)}
 
 /* `align-items:center`, not the default `stretch`: a stretched link is a box the height of
    the whole row with its text at the top, which put the words above the language control
@@ -89,6 +93,12 @@ nav a[aria-current="page"]{color:var(--c-firm)}
   nav{gap:1.4rem}
   .navlinks{gap:1.4rem}
 }
+/* The tight row: what `nav fit` tries before the button, when the wide row does not fit.
+   The same links, closer and with less letter-spacing, so a long row in German reads as a
+   row on a desktop instead of collapsing. Nothing else changes: a row that fits wide never
+   carries this attribute. */
+:root[data-nav="tight"] nav{gap:1.2rem; letter-spacing:.11em}
+:root[data-nav="tight"] .navlinks{gap:1.2rem}
 /* One mobile behavior for the whole family. Below this width the links do not fit beside
    the wordmark, and every page in the three sites used to answer that differently — some
    wrapped the bar, some wrapped the nav, and the two whose `.bar` had no `flex-wrap` at
@@ -207,11 +217,9 @@ nav a[aria-current="page"]{color:var(--c-firm)}
 
 footer{padding:0 0 2rem; display:flex; flex-wrap:wrap; gap:.9rem 2.6rem; align-items:center;
        font-family:"Plex Mono",monospace; font-size:.76rem; letter-spacing:.08em; color:var(--dim)}
-footer a{color:var(--c-mid); text-decoration:none}
-footer a:hover, footer a:focus-visible{text-decoration:underline}
 footer .credit{display:inline-flex; align-items:center; gap:.5em; vertical-align:-.25em;
                font-family:"Instrument Sans", ui-sans-serif, system-ui, sans-serif;
-               font-size:.84rem; letter-spacing:0; color:var(--ink)}
+               font-size:.84rem; letter-spacing:0; color:var(--ink); text-decoration:none}
 footer .credit .rbmark{display:flex}
 footer .credit .rbmark svg{width:14px; height:14px; display:block}
 footer .credit .plate{fill:var(--raise); stroke:var(--rule); stroke-width:1.5}
@@ -405,4 +413,31 @@ footer a[aria-current="page"]{color:var(--c-firm)}
   .ln-group{grid-template-columns:minmax(0,1fr); padding-bottom:1.2rem}
   .ln-surfaces{margin-left:.7rem; padding-left:1rem; border-left:1.5px solid var(--rule)}
   .ln-group.hand .ln-surfaces{border-left-style:dashed}
+}
+
+.index{margin-top:clamp(3rem,6vh,5rem)}
+.index .row{border-top:2px solid var(--rule)}
+.index .row:last-child{border-bottom:2px solid var(--rule)}
+.index .entry{
+  display:grid; grid-template-columns:minmax(0,1fr) auto; gap:.5rem 2.5rem; align-items:baseline;
+  padding:clamp(1.6rem,3vh,2.4rem) 0;
+  text-decoration:none; color:inherit; transition:border-color .2s ease;
+}
+.index .entry:hover .t, .index .entry:focus-visible .t{color:var(--c-mid)}
+.index .t{font-family:"Bricolage Grotesque",sans-serif; font-size:clamp(1.32rem,2.65vw,2rem); font-weight:700; line-height:1.2;
+          letter-spacing:-.015em; transition:color .2s ease}
+.index .d{grid-column:1; margin-top:.7rem; color:var(--dim);
+          font-size:clamp(1rem,1.35vw,1.15rem); line-height:1.5; max-width:62ch}
+.index .meta{font-family:"Plex Mono",monospace; font-size:.78rem;
+             color:var(--dim); letter-spacing:.1em; white-space:nowrap; text-align:right}
+.index .meta b{color:var(--ink); font-weight:600}
+.index .dl{margin:0 0 clamp(1.6rem,3vh,2.4rem); font-size:.78rem; letter-spacing:.06em}
+.index .sep{color:var(--dim); margin:0 .7em}
+@media (max-width:900px){
+  .index .entry{grid-template-columns:minmax(0,1fr); gap:.5rem}
+  .index .meta{grid-column:1; text-align:left; margin-top:.4rem}
+  .index .d{grid-column:1; max-width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .index .entry, .index .t{transition:none}
 }

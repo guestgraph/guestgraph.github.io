@@ -1,5 +1,10 @@
-/* @robertblust/design — deck.css, assembled from the shared blocks: lockup v1 · transport v9.
+/* @robertblust/design — deck.css, assembled from the shared blocks: link v1 · lockup v1 ·
+   transport v9.
    Editing this file in a site does nothing: the next npm run design overwrites it. */
+
+:where(a){color:inherit}
+:where(a:not([class])){color:var(--c-mid); text-decoration:none; border-bottom:1px solid transparent}
+:where(a:not([class]):hover, a:not([class]):focus-visible){border-bottom-color:var(--c-mid)}
 
 .name{display:flex; align-items:center; gap:.5em}
 .name{grid-column:1; justify-self:start;
