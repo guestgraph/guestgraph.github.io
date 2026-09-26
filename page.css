@@ -1,5 +1,5 @@
 /* @robertblust/design — page.css, assembled from the shared blocks: reset v3 · link v1 ·
-   header v16 · title v1 · lines v1 · footer v3 · principles v1 · team v2 · surfaces v1 ·
+   header v16 · title v2 · lines v1 · footer v3 · principles v1 · team v2 · surfaces v1 ·
    index v2.
    Editing this file in a site does nothing: the next npm run design overwrites it. */
 
@@ -207,7 +207,7 @@ nav a[aria-current="page"]{color:var(--c-firm)}
 .title h1 .rcl{display:block; font-weight:800}
 .title h1 em{font-style:normal; color:var(--c-firm)}
 .tagline{margin-top:1.6rem; font-size:clamp(1.1rem,1.9vw,1.4rem); color:var(--dim);
-         max-width:46ch; line-height:1.4}
+         max-width:46ch; line-height:1.4; text-wrap:balance}
 @media (max-width:900px){ .tagline{max-width:100%} }
 
 .title .note{margin-top:2rem; max-width:54ch; padding-left:1rem;
