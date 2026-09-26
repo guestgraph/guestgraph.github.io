@@ -1,5 +1,5 @@
 // @robertblust/design — page.js, assembled from the shared blocks: lang v5 · theme v5 ·
-// navFit v1.
+// navFit v2.
 // Editing this file in a site does nothing: the next npm run design overwrites it.
 
 (function () {
@@ -155,6 +155,10 @@ function setTheme(v){ theme = v; themeRemember(v); applyTheme(); }
     var wrap = bar.style.flexWrap;
     bar.style.flexWrap = "nowrap";
     var over = bar.scrollWidth > bar.clientWidth;
+    if (over) {
+      root.setAttribute("data-nav", "tight");
+      over = bar.scrollWidth > bar.clientWidth;
+    }
     bar.style.flexWrap = wrap;
     if (over) root.setAttribute("data-nav", "compact");
   }
