@@ -1,5 +1,5 @@
 {
-  "commit": "6ed755b74a347b3733bd850c1c507bf65de2565f",
+  "commit": "2de8728ad22d84e3cbd33bd37dda76b0e51aaef2",
   "root": "GuestGraph",
   "rootId": "identity",
   "types": [
@@ -1741,6 +1741,188 @@
       "path": "model/decisions/2026-connectors.md"
     },
     {
+      "id": "decisions/2026-decisions-name-their-actor",
+      "type": "decision",
+      "name": "Every decision on the graph names who made it, and the credential says what kind",
+      "tagline": "We record on every merge, split, review decision and do-not-merge rule whether the system, a person or an agent made it, and who; the credential that made the call fixes whether it was a person or an agent, the request may only name which one, and automatic resolution is always the system.",
+      "fields": {
+        "source": "Local",
+        "decided": "2026-08-21",
+        "kind": "Architecture",
+        "status": "Standing",
+        "by": "Owner",
+        "serves": [
+          "An agent can decide a merge a hotel would accept"
+        ],
+        "upholds": [
+          "Every merge can be explained and undone"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "Whether the audit trail says who decided, and whom to believe about it. It had to be decided in August 2026, before any agent acted as a steward, because the rule that an agent never overrides a person's split is a comparison between two recorded actors, and a decision recorded without one cannot be attributed afterwards.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "The actor as the request states it",
+                  "A header would then authorize what it only describes, and any caller could record its decision as a person's."
+                ],
+                [
+                  "The actor carried as ambient request state, as the tenant is",
+                  "The resolution logic would read request scope it is otherwise free of, and under test it would fall back silently to someone it should not."
+                ],
+                [
+                  "The actor recorded on a rule's creation only",
+                  "Lifting a do-not-merge rule is overriding a split, the exact act the actor exists to gate, and a deleted rule would leave nowhere to say who lifted it."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "The actor as the request states it",
+                "A header would then authorize what it only describes, and any caller could record its decision as a person's."
+              ],
+              [
+                "The actor carried as ambient request state, as the tenant is",
+                "The resolution logic would read request scope it is otherwise free of, and under test it would fall back silently to someone it should not."
+              ],
+              [
+                "The actor recorded on a rule's creation only",
+                "Lifting a do-not-merge rule is overriding a split, the exact act the actor exists to gate, and a deleted rule would leave nowhere to say who lifted it."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "Binding the kind of actor to the credential puts the trust boundary where the key is: a key registered for an agent can never record a person's decision, and the request's header names the individual without authorizing anything. Passing the actor explicitly to the three operations that take a steward's decision makes it visible at every call, and the resolution logic takes no actor at all, so there is no path by which an automatic merge reads as a person's.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "Explain, review decisions and do-not-merge rules show their actor; a rule is lifted with its lifter recorded rather than deleted, so the person's split and the agent's lift sit on one row; decisions from before the change read as unattributed rather than guessed. What it gave up is a hard delete of a rule. It stays right for as long as no path records a decision without the credential that made it.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "concept",
+                  "Do-not-merge rule",
+                  "",
+                  "changed it"
+                ],
+                [
+                  "feature",
+                  "Ask why records are one guest",
+                  "",
+                  "changed it"
+                ],
+                [
+                  "feature",
+                  "Review an uncertain match",
+                  "",
+                  "changed it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "concept",
+                "Do-not-merge rule",
+                "",
+                "changed it"
+              ],
+              [
+                "feature",
+                "Ask why records are one guest",
+                "",
+                "changed it"
+              ],
+              [
+                "feature",
+                "Review an uncertain match",
+                "",
+                "changed it"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The timeline and attributed decisions research, R4 and R8",
+                  "https://github.com/guestgraph/engine/blob/main/specs/003-timeline-journey/research.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The timeline and attributed decisions research, R4 and R8",
+                "https://github.com/guestgraph/engine/blob/main/specs/003-timeline-journey/research.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-decisions-name-their-actor.md"
+    },
+    {
       "id": "decisions/2026-matcher-off",
       "type": "decision",
       "name": "The probabilistic matcher ships switched off",
@@ -1879,6 +2061,354 @@
       ],
       "owner": null,
       "path": "model/decisions/2026-matcher-off.md"
+    },
+    {
+      "id": "decisions/2026-one-schema-one-role",
+      "type": "decision",
+      "name": "Each service owns one database schema and connects as a role that owns nothing else",
+      "tagline": "We put every service, the engine first, in a schema of its own inside the database and connect it as a role that owns that schema and is granted nothing else, and nothing in a service's migrations or queries names the schema, so whether two services share one database is a deployment's choice.",
+      "fields": {
+        "source": "Local",
+        "decided": "2026-09-10",
+        "kind": "Architecture",
+        "status": "Standing",
+        "by": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "Where the engine's tables live once a second service, the connector, runs beside it, and what stops one service reading another's data when they share a database. It had to be decided in September 2026, before the first release, while the first migration could still be edited and no deployment had data that would need moving.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "The engine stays in the database's default schema",
+                  "Any role that reaches the database reaches the engine's tables, and a second service in the same database shares a namespace with it."
+                ],
+                [
+                  "A database of its own for every service",
+                  "It decides for every deployment what only a deployment knows, and makes a small hotel run and back up two databases where one would do."
+                ],
+                [
+                  "The schema written into every migration and query",
+                  "The build would know its layout, and moving a service would mean editing every file it has."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "The engine stays in the database's default schema",
+                "Any role that reaches the database reaches the engine's tables, and a second service in the same database shares a namespace with it."
+              ],
+              [
+                "A database of its own for every service",
+                "It decides for every deployment what only a deployment knows, and makes a small hotel run and back up two databases where one would do."
+              ],
+              [
+                "The schema written into every migration and query",
+                "The build would know its layout, and moving a service would mean editing every file it has."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "Owning the schema is the one privilege that makes the rest unnecessary: the owner may create and change what is inside it, and no other role reads it unless granted. Since PostgreSQL 15 an ordinary role cannot create in the default schema, so a role that owns its schema and nothing else cannot stray even by accident. One configuration value names the schema and sets both the connection's search path and where migrations run, so the same build runs in a shared database and in a dedicated one.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "A deployment runs two statements per service, one creating the role and one the schema, and the connector's role cannot read a single guest; a check holds every service to the pattern. What it gave up is a database that was set up by starting the engine alone, and the local databases from before the move, which were dropped rather than migrated. It stays right for as long as no service is granted another's schema to save a call through its API.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "product",
+                  "GuestGraph Engine",
+                  "",
+                  "changed it"
+                ],
+                [
+                  "product",
+                  "Apaleo Connector",
+                  "",
+                  "changed it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "product",
+                "GuestGraph Engine",
+                "",
+                "changed it"
+              ],
+              [
+                "product",
+                "Apaleo Connector",
+                "",
+                "changed it"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The engine schema specification",
+                  "https://github.com/guestgraph/engine/blob/main/specs/006-engine-schema/spec.md"
+                ],
+                [
+                  "The engine schema research, R1 and R2",
+                  "https://github.com/guestgraph/engine/blob/main/specs/006-engine-schema/research.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The engine schema specification",
+                "https://github.com/guestgraph/engine/blob/main/specs/006-engine-schema/spec.md"
+              ],
+              [
+                "The engine schema research, R1 and R2",
+                "https://github.com/guestgraph/engine/blob/main/specs/006-engine-schema/research.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-one-schema-one-role.md"
+    },
+    {
+      "id": "decisions/2026-one-stack",
+      "type": "decision",
+      "name": "Every service is written in Java 25 and Spring Boot 4 on PostgreSQL",
+      "tagline": "We build the engine and every service beside it on one stack, Java 25 with virtual threads, Spring Boot 4, PostgreSQL and Maven, and a language, framework or datastore outside it enters only by amending the engine's constitution.",
+      "fields": {
+        "source": "Local",
+        "decided": "2026-07-09",
+        "kind": "Architecture",
+        "status": "Standing",
+        "by": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "What the engine is written in and what it stores in, and whether each later service chooses its own. It had to be decided before the first line of code, in July 2026, because the persistence layer, the test harness and the guardrails a contributor meets are all built for one stack and are not moved to another.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "Python, for the matching libraries",
+                  "The engine's work is ingest and lookup, waiting on the database and the network, and a matcher that needs Python can run beside it behind the matcher contract without moving the rest."
+                ],
+                [
+                  "A graph database as the store",
+                  "A graph store alone is a commodity, and what makes the graph worth having is resolution, which needs transactions, locks and constraints PostgreSQL already gives."
+                ],
+                [
+                  "Each service choosing its own stack",
+                  "Every stack is a second toolchain in CI, a second set of guardrails and a second harness, and the connector needs nothing the one stack does not give."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "Python, for the matching libraries",
+                "The engine's work is ingest and lookup, waiting on the database and the network, and a matcher that needs Python can run beside it behind the matcher contract without moving the rest."
+              ],
+              [
+                "A graph database as the store",
+                "A graph store alone is a commodity, and what makes the graph worth having is resolution, which needs transactions, locks and constraints PostgreSQL already gives."
+              ],
+              [
+                "Each service choosing its own stack",
+                "Every stack is a second toolchain in CI, a second set of guardrails and a second harness, and the connector needs nothing the one stack does not give."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "The workload waits on I/O, and virtual threads make blocking code in a request cheap, so resolution can run inside the ingest request and stay simple. It is the stack the owner can maintain alone and the one enterprise Java contributors expect, and one stack means one set of shared rules every service takes at a pinned release. When the connector was built, an embedded database was weighed and PostgreSQL kept, because the engine's test harness carried over unchanged.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "The connector and every later service start from the same parent build, checks and runtime code; a probabilistic matcher in another language may run as a sidecar behind the matcher contract, and nothing else leaves the stack without an amendment. What it gave up is the machine learning ecosystem inside the engine. It stays right for as long as a second stack, when one is needed, can be added beside the first as its own set of rules rather than replacing it.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "product",
+                  "GuestGraph Engine",
+                  "",
+                  "made it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "product",
+                "GuestGraph Engine",
+                "",
+                "made it"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The engine's constitution, technology constraints",
+                  "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
+                ],
+                [
+                  "The core design, fixed decisions",
+                  "https://github.com/guestgraph/engine/blob/main/docs/superpowers/specs/2026-07-09-guestgraph-core-design.md"
+                ],
+                [
+                  "The Apaleo connector's research, R1",
+                  "https://github.com/guestgraph/engine/blob/main/specs/005-apaleo-connector/research.md"
+                ],
+                [
+                  "The service conventions' research, R9",
+                  "https://github.com/guestgraph/engine/blob/main/specs/007-service-conventions/research.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The engine's constitution, technology constraints",
+                "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
+              ],
+              [
+                "The core design, fixed decisions",
+                "https://github.com/guestgraph/engine/blob/main/docs/superpowers/specs/2026-07-09-guestgraph-core-design.md"
+              ],
+              [
+                "The Apaleo connector's research, R1",
+                "https://github.com/guestgraph/engine/blob/main/specs/005-apaleo-connector/research.md"
+              ],
+              [
+                "The service conventions' research, R9",
+                "https://github.com/guestgraph/engine/blob/main/specs/007-service-conventions/research.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-one-stack.md"
     },
     {
       "id": "decisions/2026-open-core",
@@ -2139,6 +2669,693 @@
       "path": "model/decisions/2026-per-arrival.md"
     },
     {
+      "id": "decisions/2026-resolution-engine-first",
+      "type": "decision",
+      "name": "The product is an engine that resolves guests, and the graph is what it emits",
+      "tagline": "What we build first and at the center is identity resolution: an engine that decides which records from a hotel's systems are one person, and emits the guest graph as the result of those decisions rather than offering a place to store one.",
+      "fields": {
+        "source": "Local",
+        "decided": "2026-07-09",
+        "kind": "Product",
+        "status": "Standing",
+        "by": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "What GuestGraph is at its core, before anything else is built on it: a store for guest data shaped as a graph, a view of a guest's stays across systems, or the engine that works out which records are one guest. It had to be decided before the first specification, in July 2026, because everything later, the matchers, the timeline and the connectors, is built on whichever of them comes first.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "A graph store for guest data",
+                  "A graph store alone is a commodity, and a hotel that loads its records into one still does not know which of them are the same person."
+                ],
+                [
+                  "The guest's journey across systems first",
+                  "A timeline is only as right as the resolution under it: until records are known to be one guest, a journey either splits one person or joins two."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "A graph store for guest data",
+                "A graph store alone is a commodity, and a hotel that loads its records into one still does not know which of them are the same person."
+              ],
+              [
+                "The guest's journey across systems first",
+                "A timeline is only as right as the resolution under it: until records are known to be one guest, a journey either splits one person or joins two."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "Deciding which records are one person is the hard problem and the defensible one: hospitality data arrives from many systems with different keys and dirty values, and the answer has to be explainable and reversible to be trusted. The graph and the timeline follow from resolution once it is right, and neither can be right without it.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "The engine is where the effort goes, and the matchers, the review queue and the explanation of each merge are the product rather than features around it; the timeline came as a later slice on resolved guests; the store is PostgreSQL, not a graph database. What it gave up is a product a hotel could use on the first day without resolution. It stays right for as long as knowing which records are one guest is what a hotel cannot get elsewhere.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "product",
+                  "GuestGraph Engine",
+                  "",
+                  "made it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "product",
+                "GuestGraph Engine",
+                "",
+                "made it"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The core design, vision and fixed decisions",
+                  "https://github.com/guestgraph/engine/blob/main/docs/superpowers/specs/2026-07-09-guestgraph-core-design.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The core design, vision and fixed decisions",
+                "https://github.com/guestgraph/engine/blob/main/docs/superpowers/specs/2026-07-09-guestgraph-core-design.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-resolution-engine-first.md"
+    },
+    {
+      "id": "decisions/2026-resolve-on-ingest",
+      "type": "decision",
+      "name": "A record is resolved inside the request that submits it, one merge at a time per tenant",
+      "tagline": "We resolve every record before we answer its submission, and we serialize every change to a tenant's graph behind one lock per tenant, so the caller learns which guest its record belongs to in the same answer and concurrent submissions end where the same submissions one after another would have.",
+      "fields": {
+        "source": "Local",
+        "decided": "2026-07-09",
+        "kind": "Architecture",
+        "status": "Standing",
+        "by": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "Whether resolution happens while the submitter waits or afterwards from a queue, and how two submissions that touch the same guests at once are kept from corrupting each other. It had to be decided with the ingest contract, in July 2026, because a submitter built against an answer that names the guest cannot be moved to one that names a job, and a locking scheme is built into every operation that changes the graph.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "Accept the record and resolve it later from a queue",
+                  "The submitter would poll for a guest it could have been told, and a connector could not hold the guest id of what it just sent."
+                ],
+                [
+                  "Lock the guests a record touches, row by row",
+                  "A transitive merge touches a set of guests nobody knows in advance, and locks taken in varying order deadlock."
+                ],
+                [
+                  "Serializable isolation with retries",
+                  "A retry loop inside a synchronous submission makes its answer time unpredictable, and every caller would have to handle the retries it leaks."
+                ],
+                [
+                  "A lock per identifier",
+                  "A record with several identifiers needs several locks in a fixed order, which is more machinery for little more parallelism."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "Accept the record and resolve it later from a queue",
+                "The submitter would poll for a guest it could have been told, and a connector could not hold the guest id of what it just sent."
+              ],
+              [
+                "Lock the guests a record touches, row by row",
+                "A transitive merge touches a set of guests nobody knows in advance, and locks taken in varying order deadlock."
+              ],
+              [
+                "Serializable isolation with retries",
+                "A retry loop inside a synchronous submission makes its answer time unpredictable, and every caller would have to handle the retries it leaks."
+              ],
+              [
+                "A lock per identifier",
+                "A record with several identifiers needs several locks in a fixed order, which is more machinery for little more parallelism."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "A transaction-scoped PostgreSQL advisory lock keyed by the tenant is the simplest scheme that is correct under concurrency: every operation that creates, merges or unmerges a guest takes it first, the lock releases itself at commit or rollback, and tenants never wait for each other. Virtual threads make a blocking request cheap, so resolving inside it costs the submitter little, and one tenant's ingest volume fits in one serial section.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "The answer to a submission names, per record, the guest and whether it was created, attached, merged or flagged; a batch is processed record by record inside the request and never fails as a whole; every later feature that changes the graph, unmerge and review decisions among them, runs under the same lock. What it gave up is parallel resolution within one tenant. It stays right for as long as a tenant's busiest hour fits through one serial section within the time a submitter will wait.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "feature",
+                  "Submit a record from any system",
+                  "",
+                  "made it"
+                ],
+                [
+                  "feature",
+                  "Resolve records into one guest",
+                  "",
+                  "made it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "feature",
+                "Submit a record from any system",
+                "",
+                "made it"
+              ],
+              [
+                "feature",
+                "Resolve records into one guest",
+                "",
+                "made it"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The engine's constitution, concurrency model",
+                  "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
+                ],
+                [
+                  "The core resolution research, R3 and R11",
+                  "https://github.com/guestgraph/engine/blob/main/specs/001-core-identity-resolution/research.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The engine's constitution, concurrency model",
+                "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
+              ],
+              [
+                "The core resolution research, R3 and R11",
+                "https://github.com/guestgraph/engine/blob/main/specs/001-core-identity-resolution/research.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-resolve-on-ingest.md"
+    },
+    {
+      "id": "decisions/2026-retired-ids-resolve",
+      "type": "decision",
+      "name": "A retired guest id answers where the person is now, and never redirects",
+      "tagline": "We answer a read of a guest id that a merge absorbed or a split emptied with how it was retired and the guest or guests that hold the person now, worked out from the merge history rather than recorded apart from it, and we refuse the operations under that id with a pointer instead of carrying them out on the new guest.",
+      "fields": {
+        "source": "Local",
+        "decided": "2026-09-09",
+        "kind": "Architecture",
+        "status": "Standing",
+        "by": "Owner",
+        "upholds": [
+          "Store what happened, derive who it was"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "What another system gets back when it reads a guest id it stored and a merge or split has since retired. It had to be decided in September 2026, before the first connector held guest ids, because a connector that gets a bare not found cannot tell a retired id from one that never existed and drops a reference that was still good.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "A bare not found, as before",
+                  "A retired id and an unknown one would read the same, and the one failure a stored reference has would stay silent."
+                ],
+                [
+                  "A redirect to the current guest",
+                  "A split has no single target, and a client that follows redirects on its own reads the new guest without ever learning its stored id is stale."
+                ],
+                [
+                  "A separate endpoint that resolves ids",
+                  "The guest read would still answer not found to a client that did not know to ask elsewhere, which is the silent failure left in place."
+                ],
+                [
+                  "Retirements recorded in a table of their own",
+                  "A second copy of what the merge events already say, kept in step at two points, and every retirement before it would need a backfill computed by the walk it was meant to replace."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "A bare not found, as before",
+                "A retired id and an unknown one would read the same, and the one failure a stored reference has would stay silent."
+              ],
+              [
+                "A redirect to the current guest",
+                "A split has no single target, and a client that follows redirects on its own reads the new guest without ever learning its stored id is stale."
+              ],
+              [
+                "A separate endpoint that resolves ids",
+                "The guest read would still answer not found to a client that did not know to ask elsewhere, which is the silent failure left in place."
+              ],
+              [
+                "Retirements recorded in a table of their own",
+                "A second copy of what the merge events already say, kept in step at two points, and every retirement before it would need a backfill computed by the walk it was meant to replace."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "Every retirement was already recorded once, in the merge event that absorbed the id or the unmerge that emptied it, in a table nothing may edit. Walking those events forward answers where the person went with nothing new to store and nothing to drift. One field on the read, whether the id is active, merged, split or retired, answers the only question a client has: can it replace the id it holds with one id.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "A stored guest id is safe to keep, and the rule for integrators is one sentence: an id may be retired, and reading it tells you the current one. An operation under a retired id is refused as gone with the current ids, so nothing is done to a guest the caller did not name; a split names every current guest and never picks one. What it gave up is the convenience of a client that never checks. It stays right for as long as every merge and unmerge is recorded as an event nothing edits.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "concept",
+                  "Retired guest id",
+                  "",
+                  "made it"
+                ],
+                [
+                  "feature",
+                  "Keep a guest id you stored",
+                  "",
+                  "made it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "concept",
+                "Retired guest id",
+                "",
+                "made it"
+              ],
+              [
+                "feature",
+                "Keep a guest id you stored",
+                "",
+                "made it"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The retired guest ids specification",
+                  "https://github.com/guestgraph/engine/blob/main/specs/004-retired-guest-ids/spec.md"
+                ],
+                [
+                  "The retired guest ids research, R1 and R4",
+                  "https://github.com/guestgraph/engine/blob/main/specs/004-retired-guest-ids/research.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The retired guest ids specification",
+                "https://github.com/guestgraph/engine/blob/main/specs/004-retired-guest-ids/spec.md"
+              ],
+              [
+                "The retired guest ids research, R1 and R4",
+                "https://github.com/guestgraph/engine/blob/main/specs/004-retired-guest-ids/research.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-retired-ids-resolve.md"
+    },
+    {
+      "id": "decisions/2026-shared-code-vendored",
+      "type": "decision",
+      "name": "What every service shares is copied in at a pinned release, never published",
+      "tagline": "We keep the build, the checks and the runtime code every service shares in one repository, and each service vendors a copy at the release it pins, held to that release by a check; nothing is published to a package registry.",
+      "fields": {
+        "source": "Local",
+        "decided": "2026-09-11",
+        "kind": "Architecture",
+        "status": "Standing",
+        "by": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "How the engine and the connector share the rules and the code they had each carried by hand, the parent build, the architecture tests, the error shape and the filters, once the copies had begun to differ. It had to be decided in September 2026, when the connector had become the second service and every later one would start from whichever copy it found.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "A parent build and a library published to a package registry",
+                  "Nothing in the family is published, and a registry would put a credential into every build, the public ones included."
+                ],
+                [
+                  "A jar committed into each service",
+                  "A binary in git that no one can review in a diff, held no better than source."
+                ],
+                [
+                  "Each service keeping its own copy by hand",
+                  "The copies were already drifting, and a service with a rule missing passes its own checks."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "A parent build and a library published to a package registry",
+                "Nothing in the family is published, and a registry would put a credential into every build, the public ones included."
+              ],
+              [
+                "A jar committed into each service",
+                "A binary in git that no one can review in a diff, held no better than source."
+              ],
+              [
+                "Each service keeping its own copy by hand",
+                "The copies were already drifting, and a service with a rule missing passes its own checks."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "The family already shares its writing rules and the design system by vendoring at a pin, and the tag is the release, so a service takes shared files the one way it takes everything else. Maven reads a parent build by path, which shares plugins and versions without a repository, and the shared runtime code sits under the package name a published library would carry, so the copy can become a dependency later without a rename in any service. A check reads each copy against the release it pins, so a copy that drifts fails rather than diverges.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "A rule changed once reaches every service by moving its pin; a service with a shared file edited in place fails its check; a new service is scaffolded from the rule set and passes on its first run. What it gave up is a dependency a build resolves on its own. It stays right for as long as nothing in the family publishes, and the day something does, the copies are replaced by the dependency under the same names.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "product",
+                  "GuestGraph Engine",
+                  "",
+                  "changed it"
+                ],
+                [
+                  "product",
+                  "Apaleo Connector",
+                  "",
+                  "changed it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "product",
+                "GuestGraph Engine",
+                "",
+                "changed it"
+              ],
+              [
+                "product",
+                "Apaleo Connector",
+                "",
+                "changed it"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The service conventions research, R1 and R2",
+                  "https://github.com/guestgraph/engine/blob/main/specs/007-service-conventions/research.md"
+                ],
+                [
+                  "The shared runtime research, R1",
+                  "https://github.com/guestgraph/engine/blob/main/specs/008-shared-runtime/research.md"
+                ],
+                [
+                  "The shared repository",
+                  "https://github.com/guestgraph/service-conventions"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The service conventions research, R1 and R2",
+                "https://github.com/guestgraph/engine/blob/main/specs/007-service-conventions/research.md"
+              ],
+              [
+                "The shared runtime research, R1",
+                "https://github.com/guestgraph/engine/blob/main/specs/008-shared-runtime/research.md"
+              ],
+              [
+                "The shared repository",
+                "https://github.com/guestgraph/service-conventions"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-shared-code-vendored.md"
+    },
+    {
       "id": "decisions/2026-source-record",
       "type": "decision",
       "name": "A source record is never edited, and the guest is derived from it",
@@ -2264,6 +3481,181 @@
       ],
       "owner": null,
       "path": "model/decisions/2026-source-record.md"
+    },
+    {
+      "id": "decisions/2026-tenant-scoped",
+      "type": "decision",
+      "name": "Every row, query and lock carries its tenant from the first line of code",
+      "tagline": "We run one engine for many tenants, a hotel, a brand or a property, and put the wall between them in the data itself: every stored row, query, uniqueness rule, lock and API operation carries its tenant.",
+      "fields": {
+        "source": "Local",
+        "decided": "2026-07-09",
+        "kind": "Architecture",
+        "status": "Standing",
+        "by": "Owner",
+        "upholds": [
+          "Tenants never meet"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "Whether one running engine serves many hotels or each hotel gets its own, and if many, where the wall between them stands. It had to be decided before the first table existed, in July 2026, because a column added to every table and a parameter added to every query after the fact is a rewrite of everything written before it.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "One deployment per hotel, tenancy added later",
+                  "Process isolation stands in for data isolation until the hosted service needs many hotels in one engine, and then every table, query and lock is retrofitted at once."
+                ],
+                [
+                  "A database or schema per tenant",
+                  "The wall moves out of the code into provisioning, a hotel group's brands cannot share one engine without one schema each, and the hosted service would run different code from the one anyone can run."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "One deployment per hotel, tenancy added later",
+                "Process isolation stands in for data isolation until the hosted service needs many hotels in one engine, and then every table, query and lock is retrofitted at once."
+              ],
+              [
+                "A database or schema per tenant",
+                "The wall moves out of the code into provisioning, a hotel group's brands cannot share one engine without one schema each, and the hosted service would run different code from the one anyone can run."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "Tenancy is cheap on the first day and brutal to retrofit, and a leak between tenants in an identity graph shows one hotel's guests to another. Carried in the data, the rule can be checked mechanically: a repository method without its tenant fails the build, and an id from another tenant is answered exactly as one that never existed. When the connector's first draft served one hotel per process, it was held to the same rule before it was built, with a connection in the tenant's place.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "Merges are serialized per tenant, so tenants never wait for each other; a service beside the engine that serves many hotels scopes its rows the same way; the hosted service runs the same code as a self-hosted engine; a hotel group chooses whether a brand or a property is a tenant. What it gave up is the simplicity of a query that forgets whose data it reads. It stays right for as long as no code path, for an operator or for ourselves, reads across tenants.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "concept",
+                  "Tenant",
+                  "",
+                  "made it"
+                ],
+                [
+                  "product",
+                  "GuestGraph Engine",
+                  "",
+                  "made it"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "concept",
+                "Tenant",
+                "",
+                "made it"
+              ],
+              [
+                "product",
+                "GuestGraph Engine",
+                "",
+                "made it"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The engine's constitution, principle I",
+                  "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
+                ],
+                [
+                  "The core design, fixed decisions",
+                  "https://github.com/guestgraph/engine/blob/main/docs/superpowers/specs/2026-07-09-guestgraph-core-design.md"
+                ],
+                [
+                  "The Apaleo connector's research, R12",
+                  "https://github.com/guestgraph/engine/blob/main/specs/005-apaleo-connector/research.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The engine's constitution, principle I",
+                "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
+              ],
+              [
+                "The core design, fixed decisions",
+                "https://github.com/guestgraph/engine/blob/main/docs/superpowers/specs/2026-07-09-guestgraph-core-design.md"
+              ],
+              [
+                "The Apaleo connector's research, R12",
+                "https://github.com/guestgraph/engine/blob/main/specs/005-apaleo-connector/research.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-tenant-scoped.md"
     },
     {
       "id": "domains/guest-identity",
@@ -8451,6 +9843,72 @@
       "attrs": {}
     },
     {
+      "from": "decisions/2026-decisions-name-their-actor",
+      "to": "concepts/do-not-merge-rule",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "concept",
+        "Owner": "",
+        "How": "changed it"
+      }
+    },
+    {
+      "from": "decisions/2026-decisions-name-their-actor",
+      "to": "features/ask-why-records-are-one-guest",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "feature",
+        "Owner": "",
+        "How": "changed it"
+      }
+    },
+    {
+      "from": "decisions/2026-decisions-name-their-actor",
+      "to": "features/review-an-uncertain-match",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "feature",
+        "Owner": "",
+        "How": "changed it"
+      }
+    },
+    {
+      "from": "decisions/2026-decisions-name-their-actor",
+      "to": "roles/owner",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-decisions-name-their-actor",
+      "to": "decision-kinds/architecture",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-decisions-name-their-actor",
+      "to": "strategic-objectives/an-agent-can-decide-a-merge-a-hotel-would-accept",
+      "via": "serves",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-decisions-name-their-actor",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-decisions-name-their-actor",
+      "to": "decision-statuses/standing",
+      "via": "status",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-decisions-name-their-actor",
+      "to": "values/every-merge-can-be-explained-and-undone",
+      "via": "upholds",
+      "attrs": {}
+    },
+    {
       "from": "decisions/2026-matcher-off",
       "to": "concepts/matcher",
       "via": "Bears on.Entity",
@@ -8514,6 +9972,84 @@
       "from": "decisions/2026-matcher-off",
       "to": "values/every-merge-can-be-explained-and-undone",
       "via": "upholds",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-one-schema-one-role",
+      "to": "products/apaleo-connector",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "product",
+        "Owner": "",
+        "How": "changed it"
+      }
+    },
+    {
+      "from": "decisions/2026-one-schema-one-role",
+      "to": "products/guestgraph-engine",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "product",
+        "Owner": "",
+        "How": "changed it"
+      }
+    },
+    {
+      "from": "decisions/2026-one-schema-one-role",
+      "to": "roles/owner",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-one-schema-one-role",
+      "to": "decision-kinds/architecture",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-one-schema-one-role",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-one-schema-one-role",
+      "to": "decision-statuses/standing",
+      "via": "status",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-one-stack",
+      "to": "products/guestgraph-engine",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "product",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-one-stack",
+      "to": "roles/owner",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-one-stack",
+      "to": "decision-kinds/architecture",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-one-stack",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-one-stack",
+      "to": "decision-statuses/standing",
+      "via": "status",
       "attrs": {}
     },
     {
@@ -8607,6 +10143,178 @@
       "attrs": {}
     },
     {
+      "from": "decisions/2026-resolution-engine-first",
+      "to": "products/guestgraph-engine",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "product",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-resolution-engine-first",
+      "to": "roles/owner",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-resolution-engine-first",
+      "to": "decision-kinds/product",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-resolution-engine-first",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-resolution-engine-first",
+      "to": "decision-statuses/standing",
+      "via": "status",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-resolve-on-ingest",
+      "to": "features/resolve-records-into-one-guest",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "feature",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-resolve-on-ingest",
+      "to": "features/submit-a-record-from-any-system",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "feature",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-resolve-on-ingest",
+      "to": "roles/owner",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-resolve-on-ingest",
+      "to": "decision-kinds/architecture",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-resolve-on-ingest",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-resolve-on-ingest",
+      "to": "decision-statuses/standing",
+      "via": "status",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-retired-ids-resolve",
+      "to": "concepts/retired-guest-id",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "concept",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-retired-ids-resolve",
+      "to": "features/keep-a-guest-id-you-stored",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "feature",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-retired-ids-resolve",
+      "to": "roles/owner",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-retired-ids-resolve",
+      "to": "decision-kinds/architecture",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-retired-ids-resolve",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-retired-ids-resolve",
+      "to": "decision-statuses/standing",
+      "via": "status",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-retired-ids-resolve",
+      "to": "values/store-what-happened-derive-who-it-was",
+      "via": "upholds",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-shared-code-vendored",
+      "to": "products/apaleo-connector",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "product",
+        "Owner": "",
+        "How": "changed it"
+      }
+    },
+    {
+      "from": "decisions/2026-shared-code-vendored",
+      "to": "products/guestgraph-engine",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "product",
+        "Owner": "",
+        "How": "changed it"
+      }
+    },
+    {
+      "from": "decisions/2026-shared-code-vendored",
+      "to": "roles/owner",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-shared-code-vendored",
+      "to": "decision-kinds/architecture",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-shared-code-vendored",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-shared-code-vendored",
+      "to": "decision-statuses/standing",
+      "via": "status",
+      "attrs": {}
+    },
+    {
       "from": "decisions/2026-source-record",
       "to": "concepts/golden-profile",
       "via": "Bears on.Entity",
@@ -8653,6 +10361,56 @@
     {
       "from": "decisions/2026-source-record",
       "to": "values/store-what-happened-derive-who-it-was",
+      "via": "upholds",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-tenant-scoped",
+      "to": "concepts/tenant",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "concept",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-tenant-scoped",
+      "to": "products/guestgraph-engine",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "product",
+        "Owner": "",
+        "How": "made it"
+      }
+    },
+    {
+      "from": "decisions/2026-tenant-scoped",
+      "to": "roles/owner",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-tenant-scoped",
+      "to": "decision-kinds/architecture",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-tenant-scoped",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-tenant-scoped",
+      "to": "decision-statuses/standing",
+      "via": "status",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-tenant-scoped",
+      "to": "values/tenants-never-meet",
       "via": "upholds",
       "attrs": {}
     },
