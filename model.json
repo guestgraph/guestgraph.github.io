@@ -1,5 +1,5 @@
 {
-  "commit": "aa73f84233acdc479337a40c6c0d1a939f1f3359",
+  "commit": "ef9d52aae385a36689d7f4b6b49bb5e3901bbf0b",
   "root": "GuestGraph",
   "rootId": "identity",
   "types": [
@@ -4377,6 +4377,71 @@
       "path": "model/questions/how-do-i-connect-my-own-system.md"
     },
     {
+      "id": "questions/how-well-does-this-chat-answer",
+      "type": "question",
+      "name": "How well does this chat answer?",
+      "tagline": "Grounded Answer Rate says what is watched: whether an answer rested on what the model returned, not whether it was true, and its value is kept outside the model, in the chat's report the KPI links. The Answering process says how an answer is made.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "kpi",
+                  "Grounded Answer Rate",
+                  "",
+                  "what is watched, and where its value is kept"
+                ],
+                [
+                  "process",
+                  "Answering",
+                  "",
+                  "how an answer is made"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "kpi",
+                "Grounded Answer Rate",
+                "",
+                "what is watched, and where its value is kept"
+              ],
+              [
+                "process",
+                "Answering",
+                "",
+                "how an answer is made"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/how-well-does-this-chat-answer.md"
+    },
+    {
       "id": "questions/is-guestgraph-a-business-or-an-open-source-project",
       "type": "question",
       "name": "Is GuestGraph a business, or an open-source project?",
@@ -8224,6 +8289,32 @@
     },
     {
       "from": "questions/how-do-i-connect-my-own-system",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/how-well-does-this-chat-answer",
+      "to": "kpis/grounded-answer-rate",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "kpi",
+        "Owner": "",
+        "For": "what is watched, and where its value is kept"
+      }
+    },
+    {
+      "from": "questions/how-well-does-this-chat-answer",
+      "to": "processes/answering",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "process",
+        "Owner": "",
+        "For": "how an answer is made"
+      }
+    },
+    {
+      "from": "questions/how-well-does-this-chat-answer",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
