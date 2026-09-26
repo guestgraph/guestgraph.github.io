@@ -1,5 +1,5 @@
 {
-  "commit": "f6ccfcd2ea189afb57d380c949807c1f4204a3e0",
+  "commit": "6ed755b74a347b3733bd850c1c507bf65de2565f",
   "root": "GuestGraph",
   "rootId": "identity",
   "types": [
@@ -5482,7 +5482,7 @@
       "id": "questions/can-we-run-guestgraph-ourselves-and-what-does-it-cost",
       "type": "question",
       "name": "Can we run GuestGraph ourselves, and what does it cost?",
-      "tagline": "The open core strategy says what anyone may run for free and what could ever be paid for, the value says why the core stays open, and the billing strategy says what a hosted service would count.",
+      "tagline": "The open core strategy says what anyone may run for free and what could ever be paid for, the value says why the core stays open, and the billing strategy says what a hosted service would count; the two decisions say what else was weighed.",
       "fields": {
         "source": "Local",
         "kind": "Terms"
@@ -5518,6 +5518,18 @@
                   "Per-Arrival Billing Strategy",
                   "",
                   "what a hosted service would count"
+                ],
+                [
+                  "decision",
+                  "Open core under Apache 2.0, with paid hosting later",
+                  "",
+                  "what else was weighed for the core"
+                ],
+                [
+                  "decision",
+                  "The hosted service bills per arrival",
+                  "",
+                  "what else was weighed for the price"
                 ]
               ]
             }
@@ -5548,6 +5560,18 @@
                 "Per-Arrival Billing Strategy",
                 "",
                 "what a hosted service would count"
+              ],
+              [
+                "decision",
+                "Open core under Apache 2.0, with paid hosting later",
+                "",
+                "what else was weighed for the core"
+              ],
+              [
+                "decision",
+                "The hosted service bills per arrival",
+                "",
+                "what else was weighed for the price"
               ]
             ]
           }
@@ -5623,10 +5647,88 @@
       "path": "model/questions/can-we-see-everything-a-guest-has-booked-in-one-place.md"
     },
     {
+      "id": "questions/does-guestgraph-merge-guests-automatically",
+      "type": "question",
+      "name": "Does GuestGraph merge guests automatically?",
+      "tagline": "The feature says how records are resolved into one guest, the matcher says which rules judge that two records are one, and the decision says why the matcher that would merge on likeness ships switched off and who may turn it on.",
+      "fields": {
+        "source": "Local",
+        "kind": "Matching"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "feature",
+                  "Resolve records into one guest",
+                  "",
+                  "how records become one guest"
+                ],
+                [
+                  "concept",
+                  "Matcher",
+                  "",
+                  "which rules judge"
+                ],
+                [
+                  "decision",
+                  "The probabilistic matcher ships switched off",
+                  "",
+                  "why it is off, and who turns it on"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "feature",
+                "Resolve records into one guest",
+                "",
+                "how records become one guest"
+              ],
+              [
+                "concept",
+                "Matcher",
+                "",
+                "which rules judge"
+              ],
+              [
+                "decision",
+                "The probabilistic matcher ships switched off",
+                "",
+                "why it is off, and who turns it on"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/does-guestgraph-merge-guests-automatically.md"
+    },
+    {
       "id": "questions/does-it-change-or-delete-our-original-records",
       "type": "question",
       "name": "Does it change or delete our original records?",
-      "tagline": "One value says every record is kept exactly as its system sent it, with a guest drawn from them rather than edited into them, the other says a record that can be read is never dropped, and the connector strategy says nothing is written back into the hotel's own systems.",
+      "tagline": "One value says every record is kept exactly as its system sent it, with a guest drawn from them rather than edited into them, the other says a record that can be read is never dropped, and the connector strategy says nothing is written back into the hotel's own systems; the decision says why a record is kept as sent rather than corrected.",
       "fields": {
         "source": "Local",
         "kind": "Data and privacy"
@@ -5662,6 +5764,12 @@
                   "One-Direction Connector Strategy",
                   "",
                   "nothing written back"
+                ],
+                [
+                  "decision",
+                  "A source record is never edited, and the guest is derived from it",
+                  "",
+                  "why it is kept as sent"
                 ]
               ]
             }
@@ -5692,6 +5800,12 @@
                 "One-Direction Connector Strategy",
                 "",
                 "nothing written back"
+              ],
+              [
+                "decision",
+                "A source record is never edited, and the guest is derived from it",
+                "",
+                "why it is kept as sent"
               ]
             ]
           }
@@ -5704,7 +5818,7 @@
       "id": "questions/how-do-i-connect-my-own-system",
       "type": "question",
       "name": "How do I connect my own system?",
-      "tagline": "The feature says any system can hand its records over as they are, the value says everything the engine does is on its REST API, and the connector strategy says how a connector of one's own reads a system and submits what it finds.",
+      "tagline": "The feature says any system can hand its records over as they are, the value says everything the engine does is on its REST API, and the connector strategy says how a connector of one's own reads a system and submits what it finds; the decision says why a connector reads in one direction only.",
       "fields": {
         "source": "Local",
         "kind": "Connecting"
@@ -5740,6 +5854,12 @@
                   "One-Direction Connector Strategy",
                   "",
                   "writing a connector"
+                ],
+                [
+                  "decision",
+                  "Each source system gets its own one-direction connector",
+                  "",
+                  "why one direction"
                 ]
               ]
             }
@@ -5770,6 +5890,12 @@
                 "One-Direction Connector Strategy",
                 "",
                 "writing a connector"
+              ],
+              [
+                "decision",
+                "Each source system gets its own one-direction connector",
+                "",
+                "why one direction"
               ]
             ]
           }
@@ -6190,7 +6316,7 @@
       "id": "questions/which-of-our-systems-can-it-read-from",
       "type": "question",
       "name": "Which of our systems can it read from?",
-      "tagline": "The connectors say which systems it reads by itself, any other system can hand its records over through the engine's API, and the objective says which systems it is working toward.",
+      "tagline": "The connectors say which systems it reads by itself, any other system can hand its records over through the engine's API, and the objective says which systems it is working toward; the decision says why Apaleo came first.",
       "fields": {
         "source": "Local",
         "kind": "Connecting"
@@ -6226,6 +6352,12 @@
                   "Every system a guest passes through feeds the graph",
                   "",
                   "what it is working toward"
+                ],
+                [
+                  "decision",
+                  "Apaleo is the first connector",
+                  "",
+                  "why Apaleo first"
                 ]
               ]
             }
@@ -6256,6 +6388,12 @@
                 "Every system a guest passes through feeds the graph",
                 "",
                 "what it is working toward"
+              ],
+              [
+                "decision",
+                "Apaleo is the first connector",
+                "",
+                "why Apaleo first"
               ]
             ]
           }
@@ -6346,7 +6484,7 @@
       "id": "questions/who-decides-a-match-the-system-isn-t-sure-about-a-person-or-ai",
       "type": "question",
       "name": "Who decides a match the system isn't sure about, a person or AI?",
-      "tagline": "The value says an uncertain match is escalated rather than made, the feature and the match review say a person decides it until the objective is met, and the objective says what it would take for an agent to decide it instead.",
+      "tagline": "The value says an uncertain match is escalated rather than made, the feature and the match review say a person decides it until the objective is met, and the objective says what it would take for an agent to decide it instead; the decision says why the matcher that could decide it ships switched off.",
       "fields": {
         "source": "Local",
         "kind": "Matching"
@@ -6388,6 +6526,12 @@
                   "An agent can decide a merge a hotel would accept",
                   "",
                   "when an agent could"
+                ],
+                [
+                  "decision",
+                  "The probabilistic matcher ships switched off",
+                  "",
+                  "why the matcher is off"
                 ]
               ]
             }
@@ -6424,6 +6568,12 @@
                 "An agent can decide a merge a hotel would accept",
                 "",
                 "when an agent could"
+              ],
+              [
+                "decision",
+                "The probabilistic matcher ships switched off",
+                "",
+                "why the matcher is off"
               ]
             ]
           }
@@ -10054,6 +10204,26 @@
     },
     {
       "from": "questions/can-we-run-guestgraph-ourselves-and-what-does-it-cost",
+      "to": "decisions/2026-open-core",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "decision",
+        "Owner": "",
+        "For": "what else was weighed for the core"
+      }
+    },
+    {
+      "from": "questions/can-we-run-guestgraph-ourselves-and-what-does-it-cost",
+      "to": "decisions/2026-per-arrival",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "decision",
+        "Owner": "",
+        "For": "what else was weighed for the price"
+      }
+    },
+    {
+      "from": "questions/can-we-run-guestgraph-ourselves-and-what-does-it-cost",
       "to": "strategies/open-core-strategy",
       "via": "Rests on.Entity",
       "attrs": {
@@ -10127,6 +10297,58 @@
       "attrs": {}
     },
     {
+      "from": "questions/does-guestgraph-merge-guests-automatically",
+      "to": "concepts/matcher",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "concept",
+        "Owner": "",
+        "For": "which rules judge"
+      }
+    },
+    {
+      "from": "questions/does-guestgraph-merge-guests-automatically",
+      "to": "decisions/2026-matcher-off",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "decision",
+        "Owner": "",
+        "For": "why it is off, and who turns it on"
+      }
+    },
+    {
+      "from": "questions/does-guestgraph-merge-guests-automatically",
+      "to": "features/resolve-records-into-one-guest",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "feature",
+        "Owner": "",
+        "For": "how records become one guest"
+      }
+    },
+    {
+      "from": "questions/does-guestgraph-merge-guests-automatically",
+      "to": "question-kinds/matching",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "questions/does-guestgraph-merge-guests-automatically",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/does-it-change-or-delete-our-original-records",
+      "to": "decisions/2026-source-record",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "decision",
+        "Owner": "",
+        "For": "why it is kept as sent"
+      }
+    },
+    {
       "from": "questions/does-it-change-or-delete-our-original-records",
       "to": "strategies/one-direction-connector-strategy",
       "via": "Rests on.Entity",
@@ -10167,6 +10389,16 @@
       "to": "sources/local",
       "via": "source",
       "attrs": {}
+    },
+    {
+      "from": "questions/how-do-i-connect-my-own-system",
+      "to": "decisions/2026-connectors",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "decision",
+        "Owner": "",
+        "For": "why one direction"
+      }
     },
     {
       "from": "questions/how-do-i-connect-my-own-system",
@@ -10414,6 +10646,16 @@
     },
     {
       "from": "questions/which-of-our-systems-can-it-read-from",
+      "to": "decisions/2026-apaleo-first",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "decision",
+        "Owner": "",
+        "For": "why Apaleo first"
+      }
+    },
+    {
+      "from": "questions/which-of-our-systems-can-it-read-from",
       "to": "features/submit-a-record-from-any-system",
       "via": "Rests on.Entity",
       "attrs": {
@@ -10504,6 +10746,16 @@
         "Type": "concept",
         "Owner": "",
         "For": "what waits for the decision"
+      }
+    },
+    {
+      "from": "questions/who-decides-a-match-the-system-isn-t-sure-about-a-person-or-ai",
+      "to": "decisions/2026-matcher-off",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "decision",
+        "Owner": "",
+        "For": "why the matcher is off"
       }
     },
     {
