@@ -1,5 +1,5 @@
 {
-  "commit": "4b5b4c74cbec2335c0962c94904c17e4efa0ef31",
+  "commit": "aa73f84233acdc479337a40c6c0d1a939f1f3359",
   "root": "GuestGraph",
   "rootId": "identity",
   "types": [
@@ -26,6 +26,12 @@
       "folder": null,
       "owner": null,
       "singular": true
+    },
+    {
+      "type": "kpi",
+      "folder": "kpis",
+      "owner": null,
+      "singular": false
     },
     {
       "type": "phase",
@@ -1352,6 +1358,383 @@
       "path": "model/identity.md"
     },
     {
+      "id": "kpis/change-fail-rate",
+      "type": "kpi",
+      "name": "Change Fail Rate",
+      "tagline": "The share of deployments that need immediate intervention once they are in production.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "measures": "Delivery",
+        "unit": "percent of deployments",
+        "direction": "lower",
+        "read-with": [
+          "Deployment Frequency"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is measured",
+          "text": "A deployment is a merge to `main` in a repository whose workflows publish one of this model's surfaces: the guestgraph.io website, which GitHub Pages publishes, and the mcp.guestgraph.io MCP server and the chat.guestgraph.io chat, which that repository's deploy and chat workflows publish. A merge counts once, however many of its workflows publish. The MCP Registry listing, republished when the MCP server's repository tags a release, is not a deployment. A release of the Apaleo Connector or of the shared conventions each service vendors into its build is not a deployment while nothing in production runs one.\n\nThe deployments of a calendar month in UTC that were followed, before the next planned change to the same surface, by a revert, a fix or a re-pin made because of them, divided by all deployments of that month. Deployments and their times are read from the merges to `main` in the GitHub history of guestgraph/guestgraph.github.io and guestgraph/mcp-guestgraph-io; their publishing runs are GitHub Pages' own `pages-build-deployment` runs for the site and mcp-guestgraph-io's `deploy` and `chat` workflow runs on `main`. A failure is what a visitor, an agent or a check against the live surface met, not a workflow run that failed before publishing anything.",
+          "tables": []
+        },
+        {
+          "heading": "What it can hide",
+          "text": "It falls when fewer changes ship, and when a failure is folded into the next planned change instead of being named as one. Deployment Frequency, read beside it, shows the first; the second shows only if failures are named when they happen.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "DORA's definition",
+                  "https://dora.dev/guides/dora-metrics/"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "DORA's definition",
+                "https://dora.dev/guides/dora-metrics/"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/kpis/change-fail-rate.md"
+    },
+    {
+      "id": "kpis/change-lead-time",
+      "type": "kpi",
+      "name": "Change Lead Time",
+      "tagline": "The time a change takes from being committed to version control to running in production.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "measures": "Delivery",
+        "unit": "hours",
+        "direction": "lower",
+        "read-with": [
+          "Change Fail Rate"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is measured",
+          "text": "A deployment is a merge to `main` in a repository whose workflows publish one of this model's surfaces: the guestgraph.io website, which GitHub Pages publishes, and the mcp.guestgraph.io MCP server and the chat.guestgraph.io chat, which that repository's deploy and chat workflows publish. A merge counts once, however many of its workflows publish. The MCP Registry listing, republished when the MCP server's repository tags a release, is not a deployment. A release of the Apaleo Connector or of the shared conventions each service vendors into its build is not a deployment while nothing in production runs one.\n\nFor each deployment, the time from the earliest commit it carries that no earlier deployment carried to the moment it is live; a change to the model counts from its commit in guestgraph/mental-model to the deployment of the re-pin that carries it. The value is the median over the deployments of a calendar month in UTC, read from the merges to `main` and their times in the GitHub history of guestgraph/guestgraph.github.io and guestgraph/mcp-guestgraph-io, and from their publishing runs on `main` — GitHub Pages' own `pages-build-deployment` for the site, and mcp-guestgraph-io's `deploy` and `chat` workflow runs.",
+          "tables": []
+        },
+        {
+          "heading": "What it can hide",
+          "text": "It shortens when changes get smaller and when review gets thinner, and only the first is progress. Thinner review shows as a higher Change Fail Rate, which is why the two are read together. A median also hides the change that waited a week behind a re-pin.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "DORA's definition",
+                  "https://dora.dev/guides/dora-metrics/"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "DORA's definition",
+                "https://dora.dev/guides/dora-metrics/"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/kpis/change-lead-time.md"
+    },
+    {
+      "id": "kpis/deployment-frequency",
+      "type": "kpi",
+      "name": "Deployment Frequency",
+      "tagline": "How often a change reaches production.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "measures": "Delivery",
+        "unit": "deployments per week",
+        "direction": "higher",
+        "read-with": [
+          "Change Fail Rate"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is measured",
+          "text": "A deployment is a merge to `main` in a repository whose workflows publish one of this model's surfaces: the guestgraph.io website, which GitHub Pages publishes, and the mcp.guestgraph.io MCP server and the chat.guestgraph.io chat, which that repository's deploy and chat workflows publish. A merge counts once, however many of its workflows publish. The MCP Registry listing, republished when the MCP server's repository tags a release, is not a deployment. A release of the Apaleo Connector or of the shared conventions each service vendors into its build is not a deployment while nothing in production runs one.\n\nThe number of deployments in an ISO week, Monday midnight UTC to the next. Deployments and their times are read from the merges to `main` in the GitHub history of guestgraph/guestgraph.github.io and guestgraph/mcp-guestgraph-io; their publishing runs are GitHub Pages' own `pages-build-deployment` runs for the site and mcp-guestgraph-io's `deploy` and `chat` workflow runs on `main`. A workflow run that failed and published nothing is not a deployment.",
+          "tables": []
+        },
+        {
+          "heading": "What it can hide",
+          "text": "It rises when one change is split into several deployments and when something ships that did not need to; the first is the point and the second is noise. A rise bought with rushed changes shows in Change Fail Rate. A week without deployments reads the same whether nothing was ready or nothing was worth shipping.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "DORA's definition",
+                  "https://dora.dev/guides/dora-metrics/"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "DORA's definition",
+                "https://dora.dev/guides/dora-metrics/"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/kpis/deployment-frequency.md"
+    },
+    {
+      "id": "kpis/deployment-rework-rate",
+      "type": "kpi",
+      "name": "Deployment Rework Rate",
+      "tagline": "The share of deployments that were not planned and happened because of an incident in production.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "measures": "Delivery",
+        "unit": "percent of deployments",
+        "direction": "lower",
+        "read-with": [
+          "Deployment Frequency"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is measured",
+          "text": "A deployment is a merge to `main` in a repository whose workflows publish one of this model's surfaces: the guestgraph.io website, which GitHub Pages publishes, and the mcp.guestgraph.io MCP server and the chat.guestgraph.io chat, which that repository's deploy and chat workflows publish. A merge counts once, however many of its workflows publish. The MCP Registry listing, republished when the MCP server's repository tags a release, is not a deployment. A release of the Apaleo Connector or of the shared conventions each service vendors into its build is not a deployment while nothing in production runs one.\n\nThe deployments of a calendar month in UTC made because something in production was wrong, a revert, a hotfix or an emergency re-pin, divided by all deployments of that month. Deployments and their times are read from the merges to `main` in the GitHub history of guestgraph/guestgraph.github.io and guestgraph/mcp-guestgraph-io; their publishing runs are GitHub Pages' own `pages-build-deployment` runs for the site and mcp-guestgraph-io's `deploy` and `chat` workflow runs on `main`. Whether a deployment is rework is read from why it was made, which its pull request says, not from its size.",
+          "tables": []
+        },
+        {
+          "heading": "What it can hide",
+          "text": "It falls when fixes are held back and shipped inside planned work, so the incident lasts longer and the rate looks better. Deployment Frequency, read beside it, shows whether planned deployments are still going out.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "DORA's definition",
+                  "https://dora.dev/guides/dora-metrics/"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "DORA's definition",
+                "https://dora.dev/guides/dora-metrics/"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/kpis/deployment-rework-rate.md"
+    },
+    {
+      "id": "kpis/failed-deployment-recovery-time",
+      "type": "kpi",
+      "name": "Failed Deployment Recovery Time",
+      "tagline": "The time it takes to recover from a deployment that fails and needs immediate intervention.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "measures": "Delivery",
+        "unit": "hours",
+        "direction": "lower",
+        "read-with": [
+          "Change Fail Rate"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is measured",
+          "text": "A deployment is a merge to `main` in a repository whose workflows publish one of this model's surfaces: the guestgraph.io website, which GitHub Pages publishes, and the mcp.guestgraph.io MCP server and the chat.guestgraph.io chat, which that repository's deploy and chat workflows publish. A merge counts once, however many of its workflows publish. The MCP Registry listing, republished when the MCP server's repository tags a release, is not a deployment. A release of the Apaleo Connector or of the shared conventions each service vendors into its build is not a deployment while nothing in production runs one.\n\nFor each failed deployment, as Change Fail Rate counts them, the time from that deployment going live to the deployment that restores the surface going live, whether a revert, a fix or a re-pin to an earlier release. The value is the median over a calendar quarter in UTC. Deployments and their times are read from the merges to `main` in the GitHub history of guestgraph/guestgraph.github.io and guestgraph/mcp-guestgraph-io; their publishing runs are GitHub Pages' own `pages-build-deployment` runs for the site and mcp-guestgraph-io's `deploy` and `chat` workflow runs on `main`. A failure no deployment caused, a provider's outage, is not counted.",
+          "tables": []
+        },
+        {
+          "heading": "What it can hide",
+          "text": "It shortens when every failure is reverted rather than fixed, which restores the surface and leaves the change undone, so the change comes back as rework. Failures are rare here, so a quarter's median can rest on one or two events, and one slow recovery moves it a long way.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "DORA's definition",
+                  "https://dora.dev/guides/dora-metrics/"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "DORA's definition",
+                "https://dora.dev/guides/dora-metrics/"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/kpis/failed-deployment-recovery-time.md"
+    },
+    {
+      "id": "kpis/grounded-answer-rate",
+      "type": "kpi",
+      "name": "Grounded Answer Rate",
+      "tagline": "The share of a week's questions, asked at any chat that answers from the model, whose answer rested on what the model's tools returned.",
+      "fields": {
+        "source": "Local",
+        "owner": "Owner",
+        "measures": "Answering",
+        "unit": "percent of questions per week",
+        "direction": "higher"
+      },
+      "sections": [
+        {
+          "heading": "How it is measured",
+          "text": "The chats this KPI counts are the surfaces of this model that answer a visitor's question from it, whatever MCP hosts stand behind them. Every message one of them accepted from a page it is deployed for leaves one line in that chat's log: the question, its language, the entities the answer cited, how many tool calls the answer made, how many of them found nothing, and whether the fence refused it. The answer itself is not kept. A question counts as answered when the fence did not refuse it and the model had material from the tools: an entity it cited, or more calls than found nothing, since a list answer names rows without citing one entity. A call found nothing when the host refused it, when it failed, or when it returned a list with no rows.\n\nEach chat's weekly report reads its lines of the ISO week that ended, Monday midnight UTC to the next, and applies that rule; the value is read per chat, the questions its report counts as answered divided by all its questions of the week, refused ones included. The rule lives in the report and not in the server that writes the line, so it can change while the lines stand.",
+          "tables": []
+        },
+        {
+          "heading": "What it can hide",
+          "text": "An answer that cites the right entity and says something wrong about it counts as answered: the rate measures whether the answer rested on the model, not whether it was true, and nothing kept can tell the two apart, because the answer is not kept. It rises when the model reads the identity entity for every question, since one cite is enough, so a week where every answer cites the same entity reads as well as one where each cites the entity the question was about; the report's table of most cited entities shows the difference. It falls when the fence refuses, for a spent share or a host that is down, which is the fence working and not the answer failing; the report's table of unanswered questions separates a refusal from an answer without material. A question that was not about the model, which the Answerer meets with one sentence and no tool, counts as not answered though it got the right reply.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The kept line's fields and the rule for an answered question",
+                  "https://github.com/companygraph/chat-server/blob/main/docs/INTERFACE.md"
+                ],
+                [
+                  "The chat.guestgraph.io chat's weekly report, which computes its value",
+                  "https://github.com/guestgraph/mcp-guestgraph-io/blob/main/.github/workflows/report.yml"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The kept line's fields and the rule for an answered question",
+                "https://github.com/companygraph/chat-server/blob/main/docs/INTERFACE.md"
+              ],
+              [
+                "The chat.guestgraph.io chat's weekly report, which computes its value",
+                "https://github.com/guestgraph/mcp-guestgraph-io/blob/main/.github/workflows/report.yml"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/kpis/grounded-answer-rate.md"
+    },
+    {
       "id": "processes/answering",
       "type": "process",
       "name": "Answering",
@@ -1419,7 +1802,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never lets a claim stand that no tool returned in that conversation.\n- Never keeps a conversation, a question or an answer; the tab holds it and the meter counts only what was spent.\n- Never spends past the ceiling the deployment wrote down, and refuses before asking the model.\n- Never answers from a model commit other than the one the host pins.\n- Never answers about a hotel's guests; the model describes GuestGraph, and no guest's data is in it.",
+          "text": "- Never lets a claim stand that no tool returned in that conversation.\n- Never keeps a conversation or an answer; the tab holds the conversation and the meter counts only what was spent.\n- Never keeps more of a question than the question itself and whether the model could answer it, never with an address and never past ninety days, as the privacy page says.\n- Never spends past the ceiling the deployment wrote down, and refuses before asking the model.\n- Never answers from a model commit other than the one the host pins.\n- Never answers about a hotel's guests; the model describes GuestGraph, and no guest's data is in it.",
           "tables": []
         },
         {
@@ -6523,6 +6906,144 @@
     },
     {
       "from": "identity",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/change-fail-rate",
+      "to": "processes/delivery",
+      "via": "measures",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/change-fail-rate",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/change-fail-rate",
+      "to": "kpis/deployment-frequency",
+      "via": "read-with",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/change-fail-rate",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/change-lead-time",
+      "to": "processes/delivery",
+      "via": "measures",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/change-lead-time",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/change-lead-time",
+      "to": "kpis/change-fail-rate",
+      "via": "read-with",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/change-lead-time",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/deployment-frequency",
+      "to": "processes/delivery",
+      "via": "measures",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/deployment-frequency",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/deployment-frequency",
+      "to": "kpis/change-fail-rate",
+      "via": "read-with",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/deployment-frequency",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/deployment-rework-rate",
+      "to": "processes/delivery",
+      "via": "measures",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/deployment-rework-rate",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/deployment-rework-rate",
+      "to": "kpis/deployment-frequency",
+      "via": "read-with",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/deployment-rework-rate",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/failed-deployment-recovery-time",
+      "to": "processes/delivery",
+      "via": "measures",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/failed-deployment-recovery-time",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/failed-deployment-recovery-time",
+      "to": "kpis/change-fail-rate",
+      "via": "read-with",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/failed-deployment-recovery-time",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/grounded-answer-rate",
+      "to": "processes/answering",
+      "via": "measures",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/grounded-answer-rate",
+      "to": "roles/owner",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "kpis/grounded-answer-rate",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
