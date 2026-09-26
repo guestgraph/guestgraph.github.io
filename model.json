@@ -1,8 +1,14 @@
 {
-  "commit": "ef9d52aae385a36689d7f4b6b49bb5e3901bbf0b",
+  "commit": "4f1387995f6b39e38401e0d2413972026d125fc9",
   "root": "GuestGraph",
   "rootId": "identity",
   "types": [
+    {
+      "type": "brand",
+      "folder": null,
+      "owner": null,
+      "singular": true
+    },
     {
       "type": "concept",
       "folder": "concepts",
@@ -113,6 +119,290 @@
     }
   ],
   "entities": [
+    {
+      "id": "brand",
+      "type": "brand",
+      "name": "GuestGraph",
+      "tagline": "One guest, one profile, and every merge behind it able to say why it was made and able to be undone.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Mark",
+          "text": "The mark is three lines resolving into one dot, the records every system in a hotel keeps of a guest, drawn into one profile, set in the accent color on the ground, and its master is `favicon.svg` in the site's repository; every other render, a tile a host is handed, a slide's corner, is made from that file and never drawn again. The mark's colors are the design tokens' ground and accent.\n\n- A tile is a full-bleed square with no rounded corner, because the host rounds it and a transparent corner shows as a checkerboard.\n- The mark fills about 60% of the tile, so it survives a circular crop.\n- A change to the mark is made in the favicon first and rendered everywhere else after.\n- Where a render carries values other than the tokens', the favicon included, the tokens are the master and the render follows.",
+          "tables": []
+        },
+        {
+          "heading": "Color",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Name",
+                "Means",
+                "Never"
+              ],
+              "rows": [
+                [
+                  "`--c-weak`",
+                  "A candidate: considered, not accepted",
+                  "Text, a border or an outline on its own, in either theme"
+                ],
+                [
+                  "`--c-mid`",
+                  "Anything interactive: a link, a control, the brand accent",
+                  "The resolved thing, which would then read as still open"
+                ],
+                [
+                  "`--c-firm`",
+                  "The resolved thing: the thesis, the current page",
+                  "A link, which would then read as settled"
+                ],
+                [
+                  "`--c-flag`",
+                  "A reversal, at most once per page",
+                  "Decoration"
+                ],
+                [
+                  "`--c-sum`",
+                  "A conclusion, what a section's figures add up to, as the line of a conclusion and at most once per section",
+                  "Text"
+                ],
+                [
+                  "`--c-path`",
+                  "Where you are and how you got here: the ancestors of the focused node and the line through them",
+                  "The resolved thing, which only happens to look alike"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Name",
+              "Means",
+              "Never"
+            ],
+            "rows": [
+              [
+                "`--c-weak`",
+                "A candidate: considered, not accepted",
+                "Text, a border or an outline on its own, in either theme"
+              ],
+              [
+                "`--c-mid`",
+                "Anything interactive: a link, a control, the brand accent",
+                "The resolved thing, which would then read as still open"
+              ],
+              [
+                "`--c-firm`",
+                "The resolved thing: the thesis, the current page",
+                "A link, which would then read as settled"
+              ],
+              [
+                "`--c-flag`",
+                "A reversal, at most once per page",
+                "Decoration"
+              ],
+              [
+                "`--c-sum`",
+                "A conclusion, what a section's figures add up to, as the line of a conclusion and at most once per section",
+                "Text"
+              ],
+              [
+                "`--c-path`",
+                "Where you are and how you got here: the ancestors of the focused node and the line through them",
+                "The resolved thing, which only happens to look alike"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Typography",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Face",
+                "Job"
+              ],
+              "rows": [
+                [
+                  "Instrument Sans",
+                  "Prose: the body of every page and every deck"
+                ],
+                [
+                  "Plex Mono",
+                  "The ledger and the chrome: the footer, the stage and a deck's transport"
+                ],
+                [
+                  "Bricolage Grotesque",
+                  "A section's mark: the small heading that names a principle, a seat or a surface"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Face",
+              "Job"
+            ],
+            "rows": [
+              [
+                "Instrument Sans",
+                "Prose: the body of every page and every deck"
+              ],
+              [
+                "Plex Mono",
+                "The ledger and the chrome: the footer, the stage and a deck's transport"
+              ],
+              [
+                "Bricolage Grotesque",
+                "A section's mark: the small heading that names a principle, a seat or a surface"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Voice",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Trait",
+                "Means",
+                "Never"
+              ],
+              "rows": [
+                [
+                  "Plain",
+                  "We say what happens to a guest's record in the words the front desk uses for it",
+                  "An adjective that sells: nothing here is seamless, intelligent or robust"
+                ],
+                [
+                  "Shown",
+                  "We claim what a merge can show, and every merge shows why it was made",
+                  "A match presented as certain, or a count that still moves"
+                ],
+                [
+                  "Cause first",
+                  "We say why a record is matched before we say how the score was reached",
+                  "A score with no reason beside it"
+                ],
+                [
+                  "Reversible",
+                  "We say how a decision is undone in the sentence that says how it is made",
+                  "An action described without its way back"
+                ],
+                [
+                  "Read twice",
+                  "We would rather be read twice than skimmed once: one idea per sentence, the point in the first",
+                  "A header that segments a text which fits on a screen"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Trait",
+              "Means",
+              "Never"
+            ],
+            "rows": [
+              [
+                "Plain",
+                "We say what happens to a guest's record in the words the front desk uses for it",
+                "An adjective that sells: nothing here is seamless, intelligent or robust"
+              ],
+              [
+                "Shown",
+                "We claim what a merge can show, and every merge shows why it was made",
+                "A match presented as certain, or a count that still moves"
+              ],
+              [
+                "Cause first",
+                "We say why a record is matched before we say how the score was reached",
+                "A score with no reason beside it"
+              ],
+              [
+                "Reversible",
+                "We say how a decision is undone in the sentence that says how it is made",
+                "An action described without its way back"
+              ],
+              [
+                "Read twice",
+                "We would rather be read twice than skimmed once: one idea per sentence, the point in the first",
+                "A header that segments a text which fits on a screen"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Design tokens",
+                  "https://github.com/robertblust/design/blob/main/blocks/tokens.css"
+                ],
+                [
+                  "Mark",
+                  "https://github.com/guestgraph/guestgraph.github.io/blob/main/favicon.svg"
+                ],
+                [
+                  "Rulebook of the voice",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+                ],
+                [
+                  "Typefaces, as the pages set them",
+                  "https://github.com/robertblust/design/blob/main/blocks/reset.css"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Design tokens",
+                "https://github.com/robertblust/design/blob/main/blocks/tokens.css"
+              ],
+              [
+                "Mark",
+                "https://github.com/guestgraph/guestgraph.github.io/blob/main/favicon.svg"
+              ],
+              [
+                "Rulebook of the voice",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+              ],
+              [
+                "Typefaces, as the pages set them",
+                "https://github.com/robertblust/design/blob/main/blocks/reset.css"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/brand.md"
+    },
     {
       "id": "concepts/connection",
       "type": "concept",
@@ -4081,6 +4371,71 @@
       "path": "model/questions/can-i-see-why-it-thinks-two-records-are-the-same-person.md"
     },
     {
+      "id": "questions/can-i-use-guestgraph-s-colors-and-fonts-for-my-own-site",
+      "type": "question",
+      "name": "Can I use GuestGraph's colors and fonts for my own site?",
+      "tagline": "The brand says what each color and typeface is for and points at the design repository that masters the values, and that repository's own license says what may be reused; the website is where the design is seen whole.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "brand",
+                  "GuestGraph",
+                  "",
+                  "the roles, the faces, and where the values are"
+                ],
+                [
+                  "surface",
+                  "guestgraph.io website",
+                  "",
+                  "where the design is seen whole"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "brand",
+                "GuestGraph",
+                "",
+                "the roles, the faces, and where the values are"
+              ],
+              [
+                "surface",
+                "guestgraph.io website",
+                "",
+                "where the design is seen whole"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/can-i-use-guestgraph-s-colors-and-fonts-for-my-own-site.md"
+    },
+    {
       "id": "questions/can-we-run-guestgraph-ourselves-and-what-does-it-cost",
       "type": "question",
       "name": "Can we run GuestGraph ourselves, and what does it cost?",
@@ -4582,6 +4937,59 @@
       ],
       "owner": null,
       "path": "model/questions/what-about-gdpr-and-our-guests-privacy.md"
+    },
+    {
+      "id": "questions/what-do-the-colors-on-guestgraph-io-mean",
+      "type": "question",
+      "name": "What do the colors on guestgraph.io mean?",
+      "tagline": "Each color is a role, and the brand's Color table says what a thing painted in it is saying and what it is never used for; the values themselves live where the brand's References point.",
+      "fields": {
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Rests on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "For"
+              ],
+              "rows": [
+                [
+                  "brand",
+                  "GuestGraph",
+                  "",
+                  "what each color role means and never does"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "For"
+            ],
+            "rows": [
+              [
+                "brand",
+                "GuestGraph",
+                "",
+                "what each color role means and never does"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/questions/what-do-the-colors-on-guestgraph-io-mean.md"
     },
     {
       "id": "questions/what-happens-if-two-different-guests-get-merged-by-mistake",
@@ -6345,6 +6753,12 @@
     }
   ],
   "edges": [
+    {
+      "from": "brand",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
     {
       "from": "concepts/connection",
       "to": "concepts/source-system",
@@ -8160,6 +8574,32 @@
       "attrs": {}
     },
     {
+      "from": "questions/can-i-use-guestgraph-s-colors-and-fonts-for-my-own-site",
+      "to": "brand",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "brand",
+        "Owner": "",
+        "For": "the roles, the faces, and where the values are"
+      }
+    },
+    {
+      "from": "questions/can-i-use-guestgraph-s-colors-and-fonts-for-my-own-site",
+      "to": "surfaces/guestgraph-io-website",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "surface",
+        "Owner": "",
+        "For": "where the design is seen whole"
+      }
+    },
+    {
+      "from": "questions/can-i-use-guestgraph-s-colors-and-fonts-for-my-own-site",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
       "from": "questions/can-we-run-guestgraph-ourselves-and-what-does-it-cost",
       "to": "strategies/open-core-strategy",
       "via": "Rests on.Entity",
@@ -8377,6 +8817,22 @@
     },
     {
       "from": "questions/what-about-gdpr-and-our-guests-privacy",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "questions/what-do-the-colors-on-guestgraph-io-mean",
+      "to": "brand",
+      "via": "Rests on.Entity",
+      "attrs": {
+        "Type": "brand",
+        "Owner": "",
+        "For": "what each color role means and never does"
+      }
+    },
+    {
+      "from": "questions/what-do-the-colors-on-guestgraph-io-mean",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
