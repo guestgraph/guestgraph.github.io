@@ -22,10 +22,12 @@ const FOOTER = ["Robert Blust", "GitHub", "License", "Privacy", "model.json"];
 
 const PAGES = [
   { path: "/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
+    home: { model: "/model.json" },
     // The hero carries no button of its own — the talk is the nav's `Talks` link, the model
     // and the API are tiles in the vision section below. VORTRÄGE and ABRECHNUNG are the nav's
-    // own labels, unrelated to the removed buttons, and stay asserted.
-    translates: { lang: "de", shows: ["VORTRÄGE", "ABRECHNUNG"], hides: [] },
+    // own labels, unrelated to the removed buttons, and stay asserted. The page's own words —
+    // the kickers, the tiles and the values heading's frame — now carry German too.
+    translates: { lang: "de", shows: ["VORTRÄGE", "ABRECHNUNG", "DIE VISION", "Sieben Werte – jeder mit dem", "Fünf Datensätze"], hides: ["THE VISION", "Five records"] },
     // "Read the API" is the vision section's third tile, named here rather than left to
     // `internalLinks` because a tile's own words are worth holding, not only its target.
     contains: ["Five strangers", "One guest", "GuestGraph", "Read the API"],

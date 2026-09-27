@@ -40,10 +40,7 @@ const RENDERERS = [
   (d, o) => writePrinciples(d, { ...o, de: german.de }),
   (d, o) => writeTeam(d, { ...o, order: ["Delivery", "Contribution", "Feature request", "Answering", "Narrating"] }),
   writeSurfaces,
-  // The heading carries no German yet — the home page's own words, the kickers and the
-  // tiles among them, stay English until the owner has reviewed them rendered, the same gate
-  // every other page's words waited behind.
-  (d, o) => writeHome(d, { ...o, root: ROOT, de: german.de, heading: { en: "{n} values, each with the thing <em>we never do</em>." } }),
+  (d, o) => writeHome(d, { ...o, root: ROOT, de: german.de, heading: { en: "{n} values, each with the thing <em>we never do</em>.", de: "{n} Werte – jeder mit dem, <em>was wir nie tun</em>." } }),
   writeJsonLd,
 ];
 
