@@ -12,6 +12,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { writePrinciples } from "@robertblust/design/render/principles";
 import { writeTeam } from "@robertblust/design/render/team";
+import { processDiagram } from "companygraph-mcp-server/diagram";
 import { writeSurfaces } from "@robertblust/design/render/surfaces";
 import { writeHome } from "@robertblust/design/render/home";
 import { loadGerman } from "@robertblust/design/render/german";
@@ -38,7 +39,9 @@ const german = loadGerman(path.join(ROOT, "build", "principles.de.json"));
 // renderer refuses the build if a name leaves the model.
 const RENDERERS = [
   (d, o) => writePrinciples(d, { ...o, de: german.de }),
-  (d, o) => writeTeam(d, { ...o, order: ["Delivery", "Contribution", "Feature request", "Answering", "Narrating"] }),
+  // Each board shows its process as the chat draws it, from the same drawer, over the artifact
+  // at the commit source.json pins, so the picture moves only when the pin does.
+  (d, o) => writeTeam(d, { ...o, order: ["Delivery", "Contribution", "Feature request", "Answering", "Narrating"], diagram: (data, p) => processDiagram(data, p.id) }),
   writeSurfaces,
   (d, o) => writeHome(d, { ...o, root: ROOT, de: german.de, heading: { en: "{n} values, each with the thing <em>we never do</em>.", de: "{n} Werte – jeder mit dem, <em>was wir nie tun</em>." } }),
   writeJsonLd,
