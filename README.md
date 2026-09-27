@@ -107,7 +107,7 @@ npm run sitemap:check              # are those dates still what git says?
 
 ## What it says, and what it deliberately does not
 
-One screen, one job: say what GuestGraph is and send the visitor to the talk or the code. The landing page carries the title, the hook, and two links — nothing else. Everything a visitor would ask next is answered in the [six-minute talk](https://guestgraph.io/talks/intro/), which is a better medium for it than a scrolling page of claims.
+The landing page opens on the title and the hook, then on the model's own vision and values, in a `#vision` and a `#values` section `build/pages.mjs` writes from `model.json` with `@robertblust/design/render/home`, each value's German name and never-line held to the same `build/principles.de.json` `/principles/` reads. Its tiles send the visitor onward — to the chat, to the model or to the API — and the talk is reached from the nav rather than a button here; it is a better medium for what a visitor would ask next than a scrolling page of claims, and the [six-minute talk](https://guestgraph.io/talks/intro/) is where that is answered.
 
 That is also why it makes no claim about matching behavior, roadmap, or status. Those live where they are maintained — in the core repository and in [`docs/matching.md`](https://github.com/guestgraph/engine/blob/main/docs/matching.md) — so a change there cannot leave this page quietly wrong.
 

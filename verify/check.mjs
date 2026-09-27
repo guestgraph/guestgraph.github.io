@@ -22,11 +22,17 @@ const FOOTER = ["Robert Blust", "GitHub", "License", "Privacy", "model.json"];
 
 const PAGES = [
   { path: "/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /GuestGraph/, lang: "en", sourceLang: "en",
-    translates: { lang: "de", shows: ["Einführungsvortrag ansehen", "Code lesen", "VORTRÄGE", "ABRECHNUNG"], hides: ["Watch intro talk", "Read the code"] },
-    contains: ["Five strangers", "One guest", "GuestGraph"],
-    links: ["https://github.com/guestgraph/engine"],
-    // the deck carries its own way back now, so it no longer needs its own tab
-    sameTab: ["talks/", "talks/intro/", "billing/", "privacy/"],
+    // The hero carries no button of its own — the talk is the nav's `Talks` link, the model
+    // and the API are tiles in the vision section below. VORTRÄGE and ABRECHNUNG are the nav's
+    // own labels, unrelated to the removed buttons, and stay asserted.
+    translates: { lang: "de", shows: ["VORTRÄGE", "ABRECHNUNG"], hides: [] },
+    // "Read the API" is the vision section's third tile, named here rather than left to
+    // `internalLinks` because a tile's own words are worth holding, not only its target.
+    contains: ["Five strangers", "One guest", "GuestGraph", "Read the API"],
+    links: ["https://blust.ch/", "https://github.com/guestgraph", "https://github.com/guestgraph/engine/blob/HEAD/LICENSE"],
+    // the deck carries its own way back now, so it no longer needs its own tab. The vision
+    // section's tiles go to model/ and api/, on this domain, so they stay in the tab too.
+    sameTab: ["talks/", "billing/", "privacy/", "model/", "api/"],
     // This page links tokens.css and page.css instead of fencing design tokens, header
     // contract, prose reset and prose footer, so fences is empty; tokenVersion reads
     // tokens.css's own opening comment instead of a page marker.
