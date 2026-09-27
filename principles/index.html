@@ -237,43 +237,43 @@
 
     <section>
       <h2 data-de="Werte">Values</h2>
-      <article class="value">
+      <article class="value" id="a-match-is-not-trusted-until-it-is-justified">
         <h3>A match is not trusted until it is justified</h3>
         <p class="tagline">Finding a match is the easy part; knowing when not to trust one is the work, and a match that cannot justify itself is escalated rather than made.</p>
         <p>Each layer of matching decides only what it is entitled to and hands the rest upward: a shared strong identifier merges outright, a probabilistic score merges only above a threshold the tenant chose, and everything else queues for a person, whose decision sticks. Automatic probabilistic merging ships switched off, so out of the box a score suggests and a person decides, and lowering the threshold is an explicit, reversible act of trust. An agent gets no exemption a score would not get: it passes through the same thresholds, the same review queue and the same undo.</p>
         <p>We never switch on a merge that no person asked to trust.</p>
       </article>
-      <article class="value">
+      <article class="value" id="every-merge-can-be-explained-and-undone">
         <h3>Every merge can be explained and undone</h3>
         <p class="tagline">Whichever layer decided that two records are one person, the decision can be asked why and can be taken back, and the taking back holds.</p>
         <p>Every merge records what it joined, the matcher that decided it, how confident it was, on what evidence, when and whether the system, a person or a named agent made it, and asking why two records are one guest returns that whole chain. An unmerge splits them again and writes a do-not-merge rule, so new evidence cannot quietly put them back together. This was built before any uncertain decision was possible, because a probabilistic merge is only safe to allow once it can be explained and reversed.</p>
         <p>We never ship a way of merging guests whose decisions cannot be read back and undone.</p>
       </article>
-      <article class="value">
+      <article class="value" id="everything-the-engine-does-is-on-its-api">
         <h3>Everything the engine does is on its API</h3>
         <p class="tagline">Every capability of the engine is reachable through its versioned REST API, and every refusal carries a type a program can act on and a person can look up.</p>
         <p>Registering a source system, submitting a record, reading a guest, asking why, undoing a merge, deciding a review and setting the matching thresholds are all operations of the API, and a connector reaches the engine through that API like any other client. Every refusal is a problem detail whose type leads to a page saying what it means and what to do next. The hosted service will run this same engine, so the API is the product's contract from the first day.</p>
         <p>We never build an engine capability that can only be reached through a job, an internal call or the database.</p>
       </article>
-      <article class="value">
+      <article class="value" id="never-drop-what-can-be-parsed">
         <h3>Never drop what can be parsed</h3>
         <p class="tagline">Data loss is the cardinal sin: a record that can be read at all is kept, however wrong it looks.</p>
         <p>Hospitality systems are dirty by nature, so a malformed record that can still be parsed is stored and flagged for review rather than rejected, and only a request that cannot be parsed at all is refused, with a problem detail saying exactly what was wrong. A connector keeps a delivery it could not fetch or submit, with its reason and its next attempt, and retries it rather than dropping it. A flagged record can be repaired and resolved again; a discarded one is a guest interaction lost for good.</p>
         <p>We never discard a parseable record because it does not look the way we expected.</p>
       </article>
-      <article class="value">
+      <article class="value" id="store-what-happened-derive-who-it-was">
         <h3>Store what happened, derive who it was</h3>
         <p class="tagline">A source record is kept exactly as its system sent it, and a guest is a conclusion drawn from those records rather than a row anyone edits.</p>
         <p>A record enters as it arrived, its raw payload beside the fields extracted from it, and application code never changes or deletes it; a correction arrives as a new record. The golden profile is computed from the records by survivorship rules and can be recomputed at any time, which is what makes an explanation, an undo and a replay of resolution possible at all. Lawful erasure under data protection law is the one exception, and it is named as one.</p>
         <p>We never overwrite a source record to fix what a guest's profile says.</p>
       </article>
-      <article class="value">
+      <article class="value" id="tenants-never-meet">
         <h3>Tenants never meet</h3>
         <p class="tagline">One instance serves many brands, properties or customers, and nothing in one tenant is readable from another, from the first line of code on.</p>
         <p>Every stored row, query, uniqueness rule, lock and API operation carries its tenant, and resolution, lookup and merging happen within one tenant only. An id that belongs to another tenant is answered exactly as one that never existed, so a refusal cannot say whether an id is in use elsewhere, and the core has no administrative path that reads across tenants. Tenancy was there on the first day because it is cheap then and brutal to retrofit, and a leak between tenants in an identity graph is a privacy incident.</p>
         <p>We never add a path, for an operator or for ourselves, that reads one tenant's guests from another's.</p>
       </article>
-      <article class="value">
+      <article class="value" id="the-core-stays-open">
         <h3>The core stays open</h3>
         <p class="tagline">The engine, the graph, the API and the connectors are Apache 2.0 and stay that way, because a hotel has to be able to check how an identity graph decided before it can trust one.</p>
         <p>Anyone can run the core themselves and read exactly how it decided to merge two of their guests. What is planned as commercial, managed hosting, a console and MCP access for agents, goes on top of the core and never inside it: the core does not depend on commercial code, and self-hosting stays free. A black box that merges guests is not something we would deploy ourselves, so it is not something we ask a hotel to.</p>
