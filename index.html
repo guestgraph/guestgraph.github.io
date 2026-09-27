@@ -179,7 +179,10 @@
   .tagline{margin-top:1.6rem; font-size:clamp(1.1rem,1.9vw,1.5rem); color:var(--dim);
            max-width:44ch; line-height:1.4}
 
-  .figure{margin-top:clamp(2.6rem,6vh,4.6rem)}
+  /* No margin-top of its own: the figure now opens a .sec, whose own margin-top spaces it
+     from the section before, same as every other section here. A margin here too doubled
+     that gap. */
+  .figure{margin-top:0}
   /* Five across is inherently wide, and a phone is not. The band used to keep its landscape
      canvas below the breakpoint and scroll inside its own box; that put two of the five
      records on screen and cut the profile they resolve into in half, so the one thing the
@@ -192,20 +195,6 @@
      exact width the old `min-width` was propping up. Nothing here scrolls sideways at any
      width. */
   .figure .tall{display:none}
-  h2{font-weight:600; letter-spacing:-.025em; line-height:1.06; font-size:clamp(1.9rem,3.7vw,3rem)}
-  h2 em{font-style:normal; color:var(--c-mid)}
-  .lede{margin-top:2rem; font-size:clamp(1rem,1.3vw,1.14rem); color:var(--dim); max-width:64ch}
-
-  .cta{margin-top:2.3rem; display:flex; flex-wrap:wrap; gap:1rem}
-  .btn{
-    font-size:.82rem; font-weight:500; letter-spacing:.07em;
-    text-decoration:none; padding:.9rem 1.25rem; border-radius:7px; border:1.5px solid var(--rule);
-    color:var(--ink); background:var(--raise); transition:border-color .18s ease, color .18s ease;
-  }
-  .btn:hover, .btn:focus-visible{border-color:var(--c-mid); color:var(--c-mid)}
-  .btn.primary{border-color:var(--c-mid); color:var(--c-mid)}
-  .btn.primary:hover, .btn.primary:focus-visible{background:var(--press)}
-  .ctameta{margin-top:1.1rem; font-size:.78rem; color:var(--dim); letter-spacing:.05em}
 
   /* records resolving into one profile */
   .figure svg{width:100%; height:auto; display:block; overflow:visible}
@@ -318,13 +307,40 @@
     <div class="title">
       <h1 data-de="<span class='r70'>Fünf Fremde.</span><span class='rcl'>Ein <em>Gast</em>.</span>"><span class="r70">Five strangers.</span><span class="rcl">One <em>guest</em>.</span></h1>
       <p class="tagline" data-de="Ein erklärbares Gastprofil aus Daten, die über alle Systeme im Hotel verstreut sind.">One explainable guest profile, from data scattered across every system in the hotel.</p>
-      <div class="cta">
-        <a class="btn primary" href="talks/intro/" data-de="Einführungsvortrag ansehen">Watch intro talk</a>
-        <a class="btn" href="https://github.com/guestgraph/engine" data-de="Code lesen">Read the code</a>
-      </div>
-      <p class="ctameta mono" data-de="7 Minuten · Deutsch oder Englisch">6 minutes · German or English</p>
     </div>
 
+    <section class="sec" id="vision">
+      <p class="kicker" data-de="Die Vision">The vision</p>
+      <!-- vision:start -->
+      <h2 data-de="Ein Gast, <em>nicht fünf Fremde</em>.">One guest, <em>not five strangers</em>.</h2>
+      <p class="lede" data-de="Wir arbeiten darauf hin, dass Hotels einen wiederkehrenden Gast als eine Person kennen, gleich in welchem ihrer Systeme er erfasst wurde – mit einem Profil, das auf Nachfrage sagt, warum es annimmt, was es annimmt, und das sich korrigieren lässt, wenn es falsch liegt.">We are working toward hotels that know a returning guest as one person, whichever of their systems the guest passed through, from a profile they can ask why it believes what it does, and correct when it is wrong.</p>
+      <!-- vision:end -->
+      <div class="tiles">
+        <button class="tile" type="button" data-chat-open><b data-de="Das Modell fragen">Ask</b><span data-de="Ein Agent, der nur aus dem Modell antwortet und unter jeder Antwort die Belege nennt.">An agent that answers only from the model, and names the evidence under each answer.</span><i data-de="Chat öffnen →">Open the chat →</i></button>
+        <a class="tile" href="model/"><b data-de="Das Modell ansehen">See the model</b><span data-de="Was GuestGraph ist, wohin es will und wie es funktioniert – gezeichnet als der Graph, den seine Dateien bilden.">What GuestGraph is, where it is going and how it works, drawn as the graph its files form.</span><i data-de="Modell öffnen →">Open the model →</i></a>
+        <a class="tile" href="api/"><b data-de="Die API kennenlernen">Read the API</b><span data-de="Alles, was die Engine tut, und der Connector, der den Graphen füllt.">Everything the engine does, and the connector that fills it.</span><i data-de="API öffnen →">Open the API →</i></a>
+      </div>
+    </section>
+
+    <section class="sec" id="values">
+      <p class="kicker" data-de="Woran wir uns halten">What we hold to</p>
+      <!-- values:start -->
+      <h2 data-de="Sieben Werte – jeder mit dem, <em>was wir nie tun</em>.">Seven values, each with the thing <em>we never do</em>.</h2>
+      <div class="values">
+        <a href="principles/#a-match-is-not-trusted-until-it-is-justified"><b data-de="Einem Treffer wird erst vertraut, wenn er begründet ist">A match is not trusted until it is justified</b><span data-de="Wir schalten nie eine Zusammenführung ein, ohne dass ein Mensch ihr ausdrücklich vertraut.">We never switch on a merge that no person asked to trust.</span></a>
+        <a href="principles/#every-merge-can-be-explained-and-undone"><b data-de="Jede Zusammenführung lässt sich erklären und zurücknehmen">Every merge can be explained and undone</b><span data-de="Wir liefern nie ein Verfahren zur Zusammenführung von Gästen aus, dessen Entscheide sich nicht nachlesen und zurücknehmen lassen.">We never ship a way of merging guests whose decisions cannot be read back and undone.</span></a>
+        <a href="principles/#everything-the-engine-does-is-on-its-api"><b data-de="Alles, was die Engine tut, läuft über ihre API">Everything the engine does is on its API</b><span data-de="Wir bauen nie eine Fähigkeit der Engine, die sich nur über einen Job, einen internen Aufruf oder die Datenbank erreichen lässt.">We never build an engine capability that can only be reached through a job, an internal call or the database.</span></a>
+        <a href="principles/#never-drop-what-can-be-parsed"><b data-de="Nie verwerfen, was sich parsen lässt">Never drop what can be parsed</b><span data-de="Wir verwerfen nie einen Datensatz, der sich parsen lässt, weil er anders aussieht, als wir erwartet haben.">We never discard a parseable record because it does not look the way we expected.</span></a>
+        <a href="principles/#store-what-happened-derive-who-it-was"><b data-de="Speichern, was geschah – ableiten, wer es war">Store what happened, derive who it was</b><span data-de="Wir überschreiben nie einen Quelldatensatz, um zu korrigieren, was im Profil eines Gastes steht.">We never overwrite a source record to fix what a guest's profile says.</span></a>
+        <a href="principles/#tenants-never-meet"><b data-de="Mandanten begegnen sich nie">Tenants never meet</b><span data-de="Wir bauen nie einen Weg ein – weder für einen Betreiber noch für uns selbst –, über den sich die Gäste eines Mandanten aus einem anderen lesen lassen.">We never add a path, for an operator or for ourselves, that reads one tenant's guests from another's.</span></a>
+        <a href="principles/#the-core-stays-open"><b data-de="Der Kern bleibt offen">The core stays open</b><span data-de="Wir halten nie eine Fähigkeit des Kerns zurück oder verschlechtern sie, um den gehosteten Dienst zu verkaufen.">We never hold back or degrade a capability of the core to sell the hosted service.</span></a>
+      </div>
+      <!-- values:end -->
+    </section>
+
+    <section class="sec" id="idea">
+      <p class="kicker" data-de="Die Idee">The idea</p>
+      <h2 data-de="Fünf Datensätze, <em>ein Profil</em>.">Five records, <em>one profile</em>.</h2>
     <!-- The band runs the full width because five records across is what the argument
          looks like; boxed into a column beside the headline the two competed and
          neither won. The lede sits under it as the caption it always was. -->
@@ -413,6 +429,7 @@
         and can always tell you why.
       </p>
     </div>
+    </section>
   </main>
 
 <div class="shell">
