@@ -1,0 +1,134 @@
+[
+  {
+    "en": "One guest, not five strangers",
+    "de": "Ein Gast, nicht fünf Fremde"
+  },
+  {
+    "en": "We are working toward hotels that know a returning guest as one person, whichever of their systems the guest passed through, from a profile they can ask why it believes what it does, and correct when it is wrong.",
+    "de": "Wir arbeiten darauf hin, dass Hotels einen wiederkehrenden Gast als eine Person kennen, gleich in welchem ihrer Systeme er erfasst wurde – mit einem Profil, das auf Nachfrage sagt, warum es annimmt, was es annimmt, und das sich korrigieren lässt, wenn es falsch liegt."
+  },
+  {
+    "en": "What it means",
+    "de": "Was das bedeutet"
+  },
+  {
+    "en": "It holds when the person at the desk, and an agent acting on guest data, are looking at the same guest the booking engine, the PMS, the restaurant and the wifi each saw separately, and when either of them can ask why two records are one person and get the whole chain of decisions back. It holds only while a wrong merge is rarer than a missed one, because a wrong merge shows one guest another's stays and invoices, and that is a data protection incident rather than a flaw.",
+    "de": "Erreicht ist das, wenn die Person an der Rezeption und ein KI-Agent, der auf Grundlage von Gastdaten handelt, denselben Gast vor sich haben – den Gast, den Buchungsmaschine, PMS, Restaurant und WLAN je für sich gesehen haben. Und wenn beide fragen können, warum zwei Datensätze eine Person sind, und als Antwort die ganze Kette der Entscheide erhalten. Erreicht bleibt es nur, solange eine falsche Zusammenführung seltener ist als eine verpasste. Denn eine falsche Zusammenführung zeigt einem Gast die Aufenthalte und Rechnungen eines anderen, und das ist ein Datenschutzvorfall, kein Schönheitsfehler."
+  },
+  {
+    "en": "It does not ask a hotel to replace the systems it runs or to clean their data first: the records stay as each system sent them, and the profile is derived from them. It is also not a marketing profile built by guessing. A match nobody can justify is left unmade and handed to a person, and a hotel that ends up with fewer merged guests and none of them wrong is closer to it than one with more.",
+    "de": "Das verlangt von keinem Hotel, seine Systeme zu ersetzen oder deren Daten zuerst zu bereinigen: Die Datensätze bleiben, wie jedes System sie gesendet hat, und das Profil wird aus ihnen abgeleitet. Gemeint ist auch kein Marketingprofil, das auf Vermutungen beruht. Ein Treffer, den niemand begründen kann, wird nicht zusammengeführt, sondern einem Menschen vorgelegt. Ein Hotel, das am Ende weniger zusammengeführte Gäste hat und keinen davon falsch, ist dem Ziel näher als eines mit mehr."
+  },
+  {
+    "en": "A match is not trusted until it is justified",
+    "de": "Einem Treffer wird erst vertraut, wenn er begründet ist"
+  },
+  {
+    "en": "Finding a match is the easy part; knowing when not to trust one is the work, and a match that cannot justify itself is escalated rather than made.",
+    "de": "Einen Treffer zu finden, ist einfach. Schwierig ist zu wissen, wann man ihm nicht trauen darf – und ein Treffer, der sich nicht begründen lässt, wird einem Menschen vorgelegt, statt vollzogen zu werden."
+  },
+  {
+    "en": "Each layer of matching decides only what it is entitled to and hands the rest upward: a shared strong identifier merges outright, a probabilistic score merges only above a threshold the tenant chose, and everything else queues for a person, whose decision sticks. Automatic probabilistic merging ships switched off, so out of the box a score suggests and a person decides, and lowering the threshold is an explicit, reversible act of trust. An agent gets no exemption a score would not get: it passes through the same thresholds, the same review queue and the same undo.",
+    "de": "Jede Stufe des Abgleichs entscheidet nur, was ihr zusteht, und reicht den Rest nach oben weiter: Ein gemeinsamer starker Identifikator führt direkt zusammen, ein Wahrscheinlichkeits-Score nur oberhalb eines Schwellenwerts, den der Mandant gewählt hat, und alles Übrige wartet auf einen Menschen, dessen Entscheid Bestand hat. Die automatische Zusammenführung nach Wahrscheinlichkeit wird ausgeschaltet ausgeliefert. Ab Werk schlägt also ein Score vor, und ein Mensch entscheidet; den Schwellenwert zu senken, ist ein ausdrücklicher und umkehrbarer Vertrauensbeweis. Ein KI-Agent bekommt keine Ausnahme, die ein Score nicht auch bekäme: Er durchläuft dieselben Schwellenwerte und dieselbe Prüfwarteschlange, und was er zusammenführt, lässt sich genauso zurücknehmen."
+  },
+  {
+    "en": "We never switch on a merge that no person asked to trust.",
+    "de": "Wir schalten nie eine Zusammenführung ein, ohne dass ein Mensch ihr ausdrücklich vertraut."
+  },
+  {
+    "en": "Every merge can be explained and undone",
+    "de": "Jede Zusammenführung lässt sich erklären und zurücknehmen"
+  },
+  {
+    "en": "Whichever layer decided that two records are one person, the decision can be asked why and can be taken back, and the taking back holds.",
+    "de": "Gleich welche Stufe entschieden hat, dass zwei Datensätze eine Person sind: Der Entscheid lässt sich nach seinem Grund fragen und zurücknehmen, und die Rücknahme hat Bestand."
+  },
+  {
+    "en": "Every merge records what it joined, the matcher that decided it, how confident it was, on what evidence, when and whether the system, a person or a named agent made it, and asking why two records are one guest returns that whole chain. An unmerge splits them again and writes a do-not-merge rule, so new evidence cannot quietly put them back together. This was built before any uncertain decision was possible, because a probabilistic merge is only safe to allow once it can be explained and reversed.",
+    "de": "Jede Zusammenführung hält fest, was sie verbunden hat, welcher Matcher darüber entschieden hat, wie sicher er war, auf welche Hinweise er sich stützte, wann das war und ob das System, ein Mensch oder ein namentlich genannter KI-Agent sie vorgenommen hat. Wer fragt, warum zwei Datensätze ein Gast sind, bekommt diese ganze Kette zurück. Eine Trennung teilt die Datensätze wieder auf und schreibt eine Regel, dass sie nicht zusammengeführt werden dürfen, sodass neue Hinweise sie nicht stillschweigend wieder zusammenfügen können. Gebaut wurde das, bevor überhaupt ein Entscheid ohne Gewissheit möglich war, denn eine Zusammenführung nach Wahrscheinlichkeit lässt sich erst gefahrlos zulassen, wenn sie sich erklären und rückgängig machen lässt."
+  },
+  {
+    "en": "We never ship a way of merging guests whose decisions cannot be read back and undone.",
+    "de": "Wir liefern nie ein Verfahren zur Zusammenführung von Gästen aus, dessen Entscheide sich nicht nachlesen und zurücknehmen lassen."
+  },
+  {
+    "en": "Everything the engine does is on its API",
+    "de": "Alles, was die Engine tut, läuft über ihre API"
+  },
+  {
+    "en": "Every capability of the engine is reachable through its versioned REST API, and every refusal carries a type a program can act on and a person can look up.",
+    "de": "Jede Fähigkeit der Engine ist über ihre versionierte REST-API erreichbar, und jede Ablehnung nennt ihren Typ, nach dem ein Programm handeln und den ein Mensch nachschlagen kann."
+  },
+  {
+    "en": "Registering a source system, submitting a record, reading a guest, asking why, undoing a merge, deciding a review and setting the matching thresholds are all operations of the API, and a connector reaches the engine through that API like any other client. Every refusal is a problem detail whose type leads to a page saying what it means and what to do next. The hosted service will run this same engine, so the API is the product's contract from the first day.",
+    "de": "Ein Quellsystem registrieren, einen Datensatz übermitteln, einen Gast lesen, nach dem Grund fragen, eine Zusammenführung zurücknehmen, über einen vorgelegten Treffer entscheiden und die Schwellenwerte für den Abgleich setzen: All das sind Operationen der API, und ein Connector erreicht die Engine über diese API wie jeder andere Client. Jede Ablehnung ist ein Problem Detail, dessen Typ auf eine Seite führt, die sagt, was er bedeutet und was als Nächstes zu tun ist. Der gehostete Dienst wird dieselbe Engine betreiben; die API ist also vom ersten Tag an verbindlich."
+  },
+  {
+    "en": "We never build an engine capability that can only be reached through a job, an internal call or the database.",
+    "de": "Wir bauen nie eine Fähigkeit der Engine, die sich nur über einen Job, einen internen Aufruf oder die Datenbank erreichen lässt."
+  },
+  {
+    "en": "Never drop what can be parsed",
+    "de": "Nie verwerfen, was sich parsen lässt"
+  },
+  {
+    "en": "Data loss is the cardinal sin: a record that can be read at all is kept, however wrong it looks.",
+    "de": "Datenverlust ist die Todsünde: Ein Datensatz, der sich überhaupt lesen lässt, wird behalten, wie falsch er auch aussieht."
+  },
+  {
+    "en": "Hospitality systems are dirty by nature, so a malformed record that can still be parsed is stored and flagged for review rather than rejected, and only a request that cannot be parsed at all is refused, with a problem detail saying exactly what was wrong. A connector keeps a delivery it could not fetch or submit, with its reason and its next attempt, and retries it rather than dropping it. A flagged record can be repaired and resolved again; a discarded one is a guest interaction lost for good.",
+    "de": "Die Systeme der Hotellerie sind von Natur aus unsauber. Ein fehlerhafter Datensatz, der sich noch parsen lässt, wird deshalb gespeichert und zur Prüfung markiert statt abgelehnt. Abgelehnt wird nur eine Anfrage, die sich gar nicht parsen lässt, und zwar mit einem Problem Detail, das genau sagt, was falsch war. Eine Lieferung, die ein Connector nicht abrufen oder übermitteln konnte, behält er samt Grund und Zeitpunkt des nächsten Versuchs und versucht es erneut, statt sie zu verwerfen. Ein markierter Datensatz lässt sich reparieren und erneut auflösen; ein verworfener ist eine Interaktion mit einem Gast, die für immer verloren ist."
+  },
+  {
+    "en": "We never discard a parseable record because it does not look the way we expected.",
+    "de": "Wir verwerfen nie einen Datensatz, der sich parsen lässt, weil er anders aussieht, als wir erwartet haben."
+  },
+  {
+    "en": "Store what happened, derive who it was",
+    "de": "Speichern, was geschah – ableiten, wer es war"
+  },
+  {
+    "en": "A source record is kept exactly as its system sent it, and a guest is a conclusion drawn from those records rather than a row anyone edits.",
+    "de": "Ein Quelldatensatz wird genau so aufbewahrt, wie sein System ihn gesendet hat, und ein Gast ist ein Schluss, der aus diesen Datensätzen gezogen wird, keine Zeile, die jemand ändert."
+  },
+  {
+    "en": "A record enters as it arrived, its raw payload beside the fields extracted from it, and application code never changes or deletes it; a correction arrives as a new record. The golden profile is computed from the records by survivorship rules and can be recomputed at any time, which is what makes an explanation, an undo and a replay of resolution possible at all. Lawful erasure under data protection law is the one exception, and it is named as one.",
+    "de": "Ein Datensatz wird gespeichert, wie er angekommen ist – die unveränderten Rohdaten neben den Feldern, die daraus extrahiert wurden –, und der Anwendungscode ändert oder löscht ihn nie; eine Korrektur kommt als neuer Datensatz. Das goldene Profil wird mit festen Regeln, welcher Wert gilt, aus den Datensätzen berechnet und lässt sich jederzeit neu berechnen. Erst das macht eine Erklärung, eine Rücknahme und ein erneutes Durchspielen der Auflösung überhaupt möglich. Die rechtmässige Löschung nach Datenschutzrecht ist die einzige Ausnahme, und sie wird als solche benannt."
+  },
+  {
+    "en": "We never overwrite a source record to fix what a guest's profile says.",
+    "de": "Wir überschreiben nie einen Quelldatensatz, um zu korrigieren, was im Profil eines Gastes steht."
+  },
+  {
+    "en": "Tenants never meet",
+    "de": "Mandanten begegnen sich nie"
+  },
+  {
+    "en": "One instance serves many brands, properties or customers, and nothing in one tenant is readable from another, from the first line of code on.",
+    "de": "Eine Instanz bedient viele Marken, Häuser oder Kunden, und nichts in einem Mandanten ist aus einem anderen lesbar – von der ersten Codezeile an."
+  },
+  {
+    "en": "Every stored row, query, uniqueness rule, lock and API operation carries its tenant, and resolution, lookup and merging happen within one tenant only. An id that belongs to another tenant is answered exactly as one that never existed, so a refusal cannot say whether an id is in use elsewhere, and the core has no administrative path that reads across tenants. Tenancy was there on the first day because it is cheap then and brutal to retrofit, and a leak between tenants in an identity graph is a privacy incident.",
+    "de": "Jede gespeicherte Zeile, jede Abfrage, jede Eindeutigkeitsregel, jede Datenbanksperre und jede Operation der API ist an ihren Mandanten gebunden, und Auflösung, Suche und Zusammenführung geschehen nur innerhalb eines einzigen Mandanten. Eine ID, die zu einem anderen Mandanten gehört, bekommt genau dieselbe Antwort wie eine, die es nie gab. So kann eine Ablehnung nicht verraten, ob eine ID anderswo in Gebrauch ist. Und der Kern hat keinen administrativen Zugang, der über Mandanten hinweg liest. Die Mandantenfähigkeit war vom ersten Tag an da, weil sie dann wenig kostet und das Nachrüsten enorm aufwendig ist – und ein Leck zwischen Mandanten ist in einem Identitätsgraphen ein Datenschutzvorfall."
+  },
+  {
+    "en": "We never add a path, for an operator or for ourselves, that reads one tenant's guests from another's.",
+    "de": "Wir bauen nie einen Weg ein – weder für einen Betreiber noch für uns selbst –, über den sich die Gäste eines Mandanten aus einem anderen lesen lassen."
+  },
+  {
+    "en": "The core stays open",
+    "de": "Der Kern bleibt offen"
+  },
+  {
+    "en": "The engine, the graph, the API and the connectors are Apache 2.0 and stay that way, because a hotel has to be able to check how an identity graph decided before it can trust one.",
+    "de": "Die Engine, der Graph, die API und die Connectors stehen unter der Lizenz Apache 2.0, und das bleibt so, denn ein Hotel muss nachprüfen können, wie ein Identitätsgraph entschieden hat, bevor es ihm vertrauen kann."
+  },
+  {
+    "en": "Anyone can run the core themselves and read exactly how it decided to merge two of their guests. What is planned as commercial, managed hosting, a console and MCP access for agents, goes on top of the core and never inside it: the core does not depend on commercial code, and self-hosting stays free. A black box that merges guests is not something we would deploy ourselves, so it is not something we ask a hotel to.",
+    "de": "Wer will, kann den Kern selbst betreiben und genau nachlesen, wie er entschieden hat, zwei der eigenen Gäste zusammenzuführen. Was als kommerzielles Angebot geplant ist – verwaltetes Hosting, eine Konsole und MCP-Zugang für KI-Agenten –, baut auf dem Kern auf und fliesst nie in ihn ein: Der Kern hängt nicht von kommerziellem Code ab, und wer selbst hostet, zahlt weiterhin nichts. Eine Blackbox, die Gäste zusammenführt, würden wir selbst nicht einsetzen, also verlangen wir das auch von keinem Hotel."
+  },
+  {
+    "en": "We never hold back or degrade a capability of the core to sell the hosted service.",
+    "de": "Wir halten nie eine Fähigkeit des Kerns zurück oder verschlechtern sie, um den gehosteten Dienst zu verkaufen."
+  }
+]
