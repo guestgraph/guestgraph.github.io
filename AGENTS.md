@@ -21,9 +21,9 @@ No build. `python3 -m http.server 8000` and open it. Check both themes and at le
 
 GitHub Pages rebuilds a minute or two after a push, so a change that looks missing on guestgraph.io is usually just not deployed yet.
 
-## One screen, one job
+## What the landing page does
 
-The landing page says what GuestGraph is, opens on the model's own vision and values, and sends the visitor onward through its tiles — to the chat, to the model or to the API — with the talk one click away in the nav rather than a button of its own. That is the whole scope of `index.html`. It deliberately makes **no claim about matching behavior, roadmap, or status** — those are owned by the engine repository and go stale here within a slice.
+The landing page opens on the headline, then the model's own vision with its tiles onward — to the chat, to the model or to the API — then the model's values, then the picture that argues five records resolve to one profile. The talk stays one click away in the nav rather than a button of its own. That is the whole scope of `index.html`. It deliberately makes **no claim about matching behavior, roadmap, or status** — those are owned by the engine repository and go stale here within a slice.
 
 This is not hypothetical: the org profile at `guestgraph/.github` once advertised "Core in development" while two slices had shipped, because it restated a roadmap that lives elsewhere. No CI in one repository can catch drift in another.
 
@@ -43,11 +43,11 @@ This narrows the rule above; it does not repeal it. Product status, matching beh
 
 It was written as a bare path first, to keep the footer strictly to data — the strip is set in the data face, and a bare word there looked like navigation in mono. That was the wrong reading of the rule. The strip is not URLs: `Apache 2.0` is a license name and `Robert Blust` is a person's name, and both are links. It is *identifiers that happen to be links*, and a page name belongs in that slot. What settled it is that someone looking for a privacy statement scans for the word, not for a path — on a page that exists to be found by exactly that person, findability beats formal tidiness. The mono rule's real target is nav bars, buttons and prose, which is the scope `verify` encodes.
 
-**The talk has no button of its own on the landing page.** It is reached from the nav's `Talks` link, and from `talks/` and `talks/intro/` directly; the vision section's tiles are the landing page's own call to action now — Ask, See the model, Read the API — so nothing here restates the talk's length.
+**The talk has no button of its own on the landing page.** It is reached from the nav's `Talks` link, and from `talks/` and `talks/intro/` directly; the vision section's tiles — Ask, See the model, Read the API — are the landing page's own ways onward now, so nothing here restates the talk's length, and no button call to action remains anywhere on the page.
 
-**The one fact this site restates** is the talk's length ("6 minutes", "7 Minuten" in German, in `talks/index.html` and `README.md`). It is duplicated from the talks repo because a call-to-action needs it inline there. If the talk's length changes, both files change too — it is the only number carrying that obligation, which is what makes it worth naming.
+**The one fact this site restates** is the talk's length ("6 min", German "7 min", in `talks/index.html`; "six-minute" in `README.md`). It is duplicated from the talks repo because a call-to-action needs it inline there. If the talk's length changes, all three copies change too — it is the only number carrying that obligation, which is what makes it worth naming.
 
-The billing page carries no call to action either, for the same reason the landing page no longer does: it ends on its argument and lets the nav and the footer do the routing.
+The billing page carries no call to action either: it ends on its argument and lets the nav and the footer do the routing.
 
 ## Constraints
 
@@ -367,7 +367,7 @@ Three more places carry German, and none of their names ends in `-de`. The `UI.d
 
 A page generated from a pinned model — blust.ch's `/model/`, companygraph.io's `/model/` and `/example/` — shows the model's own words in the one language the model is written in, and the German page shows them unchanged under `lang="de"`. Each of those pages says so in its note; the site's own words around them are bilingual like everything else. A translated copy would be a second thing to keep true, which is the argument each of those pages makes against it.
 
-`/principles/` on all three sites is the one page generated from a pinned model that carries a translation anyway: the model still stays English, but each site's `build/principles.de.json` holds the German for the exact English string a value or the vision states, looked up rather than typed a second time, and the build refuses to run the moment the English moves and the German has not caught up. The page's own note says so — `NOTE_TRANSLATED_EN`/`NOTE_TRANSLATED_DE` in `@robertblust/design/render/note`, not the plain `NOTE_EN`/`NOTE_DE` that `/model/` still carries — and the `translates` check presses the language toggle and reads the German back.
+`/principles/` on all three sites is a page generated from a pinned model that carries a translation anyway: the model still stays English, but each site's `build/principles.de.json` holds the German for the exact English string a value or the vision states, looked up rather than typed a second time, and the build refuses to run the moment the English moves and the German has not caught up. The page's own note says so — `NOTE_TRANSLATED_EN`/`NOTE_TRANSLATED_DE` in `@robertblust/design/render/note`, not the plain `NOTE_EN`/`NOTE_DE` that `/model/` still carries — and the `translates` check presses the language toggle and reads the German back. On this site the home page's `#vision` and `#values` regions are generated from the same pin and translated from the same `build/principles.de.json`, beside `/principles/`, though the home page carries no note of its own to say so.
 
 `translates` is the check that clicks. Every other DOM check reads the page as it first renders, which is English; this one presses DE, asserts the German is there and the English is gone — body text, `<title>`, meta description and, on a talks index, the PDF link — then presses EN and requires the page back exactly as it was. It is shared, in `@robertblust/design`, and every page in `PAGES` declares a spec for it, because a page without one is a page whose German half no test has seen.
 

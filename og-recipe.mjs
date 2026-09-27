@@ -35,10 +35,10 @@ const DECK_HIDE = `.chrome,.bar,.notes,.langind,.hint,.rbchat-open{display:none!
 
 // The landing card keeps its header — the committed card has always shown it — and drops the
 // figure. Not for want of room: the card's job is the headline and the opening claim of the
-// vision, the part a reader takes in before deciding to care — the hero's own buttons are
-// gone from the page now, so there is no call to action left for the crop to reach. The figure
-// is the five-record argument that leads there, and an argument does not survive being glanced
-// at in a feed.
+// vision, the part a reader takes in before deciding to care — the vision section's tiles are
+// the page's own way onward now, and they sit low enough that the crop only reaches their tops.
+// The figure is the five-record argument that leads there, and an argument does not survive
+// being glanced at in a feed.
 // `.rbchat-open` is the chat's button, fixed to the viewport's corner: a card is a still image,
 // and a button nobody can press has no place on it.
 const HOME_HIDE = `.figure{display:none!important} .rbchat-open{display:none!important}`;
