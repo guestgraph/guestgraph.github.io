@@ -1,5 +1,5 @@
 {
-  "commit": "2de8728ad22d84e3cbd33bd37dda76b0e51aaef2",
+  "commit": "915c6f996c9a6e8658841af32fb57e4424d8156c",
   "root": "GuestGraph",
   "rootId": "identity",
   "types": [
@@ -4526,8 +4526,40 @@
         },
         {
           "heading": "Gate",
-          "text": "Answer is the only phase. An answer has left it when:\n\n- Every claim in it names the entity a tool returned it from.\n- Where the tools did not say, it says the model does not say.\n- It was written inside the fence: the rounds, the output length and the share.\n\nWhere they cannot be met, the Owner closes the chat at its switch, corrects the rules or the model, and opens it again; no answer is corrected after the fact, because none is kept.",
+          "text": "Answer is the only phase. An answer has left it when:\n\n- Every claim in it names the entity a tool returned it from.\n- Where the tools did not say, it says the model does not say.\n- It was written inside the fence: the rounds, the output length and the share.",
           "tables": []
+        },
+        {
+          "heading": "If not met",
+          "text": "The rules or the model are corrected through Delivery, and the chat opens again; no answer is corrected after the fact, because none is kept.",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Outcome",
+                "Leads to"
+              ],
+              "rows": [
+                [
+                  "chat closed",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Outcome",
+              "Leads to"
+            ],
+            "rows": [
+              [
+                "chat closed",
+                ""
+              ]
+            ]
+          }
         }
       ],
       "owner": "processes/answering",
@@ -4768,8 +4800,40 @@
         },
         {
           "heading": "Gate",
-          "text": "To leave Consider, all of these hold:\n\n- The pull request says what is now true that was not before.\n- The Owner has said the change is wanted.\n- The status checks have reported.\n\nWhere they cannot be met, the Owner says which of them failed and closes the pull request, with what would make a later one succeed.",
+          "text": "To leave Consider, all of these hold:\n\n- The pull request says what is now true that was not before.\n- The Owner has said the change is wanted.\n- The status checks have reported.",
           "tables": []
+        },
+        {
+          "heading": "If not met",
+          "text": "The Owner says which of the criteria failed, with what would make a later pull request succeed.",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Outcome",
+                "Leads to"
+              ],
+              "rows": [
+                [
+                  "pull request closed",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Outcome",
+              "Leads to"
+            ],
+            "rows": [
+              [
+                "pull request closed",
+                ""
+              ]
+            ]
+          }
         }
       ],
       "owner": "processes/contribution",
@@ -4849,8 +4913,40 @@
         },
         {
           "heading": "Gate",
-          "text": "To leave Integrate, all of these hold:\n\n- The default branch carries the change under the address its author committed with.\n- Where something vendored moved, a release exists and its notes say what a consumer must do.\n- Every pin that names it has moved, or is recorded as deliberately behind.\n\nWhere they cannot be met, the Owner reverts rather than leaving the default branch in a state nobody chose.",
+          "text": "To leave Integrate, all of these hold:\n\n- The default branch carries the change under the address its author committed with.\n- Where something vendored moved, a release exists and its notes say what a consumer must do.\n- Every pin that names it has moved, or is recorded as deliberately behind.",
           "tables": []
+        },
+        {
+          "heading": "If not met",
+          "text": "The Owner reverts rather than leave the default branch in a state nobody chose.",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Outcome",
+                "Leads to"
+              ],
+              "rows": [
+                [
+                  "reverted",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Outcome",
+              "Leads to"
+            ],
+            "rows": [
+              [
+                "reverted",
+                ""
+              ]
+            ]
+          }
         }
       ],
       "owner": "processes/contribution",
@@ -4870,7 +4966,7 @@
         "gate-approvers": [
           "Contributor"
         ],
-        "escalation-authority": "Owner",
+        "escalation-authority": "Contributor",
         "gate-to": "Consider"
       },
       "sections": [
@@ -4923,8 +5019,48 @@
         },
         {
           "heading": "Gate",
-          "text": "To leave Propose, all of these hold:\n\n- A pull request exists against the default branch.\n- It says what is now true that was not before.\n- Its commits carry the address their author means to be known by.\n\nWhere they cannot be met, the Contributor decides whether to carry on or to stop; nothing here obliges anyone to finish what they started.",
+          "text": "To leave Propose, all of these hold:\n\n- A pull request exists against the default branch.\n- It says what is now true that was not before.\n- Its commits carry the address their author means to be known by.",
           "tables": []
+        },
+        {
+          "heading": "If not met",
+          "text": "Nothing here obliges anyone to finish what they started.",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Outcome",
+                "Leads to"
+              ],
+              "rows": [
+                [
+                  "carried on",
+                  "Propose"
+                ],
+                [
+                  "stopped",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Outcome",
+              "Leads to"
+            ],
+            "rows": [
+              [
+                "carried on",
+                "Propose"
+              ],
+              [
+                "stopped",
+                ""
+              ]
+            ]
+          }
         }
       ],
       "owner": "processes/contribution",
@@ -5001,8 +5137,56 @@
         },
         {
           "heading": "Gate",
-          "text": "To leave Review, all of these hold:\n\n- Every finding carries a severity and the line it sits on.\n- The Owner has read the findings and said which are to be acted on.\n- What the review could not verify is written down.\n\nWhere they cannot be met, the Owner decides whether the change is narrowed, carried on by someone else, or declined.",
+          "text": "To leave Review, all of these hold:\n\n- Every finding carries a severity and the line it sits on.\n- The Owner has read the findings and said which are to be acted on.\n- What the review could not verify is written down.",
           "tables": []
+        },
+        {
+          "heading": "If not met",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Outcome",
+                "Leads to"
+              ],
+              "rows": [
+                [
+                  "narrowed",
+                  "Review"
+                ],
+                [
+                  "carried on by someone else",
+                  "Review"
+                ],
+                [
+                  "declined",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Outcome",
+              "Leads to"
+            ],
+            "rows": [
+              [
+                "narrowed",
+                "Review"
+              ],
+              [
+                "carried on by someone else",
+                "Review"
+              ],
+              [
+                "declined",
+                ""
+              ]
+            ]
+          }
         }
       ],
       "owner": "processes/contribution",
@@ -5272,8 +5456,48 @@
         },
         {
           "heading": "Gate",
-          "text": "To leave Implement, all of these hold:\n\n- Every task's findings are resolved, or parked for the Owner and named in the pull request.\n- The repository's checks pass on the branch.\n- Where a model changed, both halves of the validation pass have run over it: the mechanical checks, and an agent reading each entity against its schema's writing rules.\n- The branch does what the specification said, and nothing else.\n\nWhere they cannot be met, the Owner decides whether the branch is reworked or abandoned.",
+          "text": "To leave Implement, all of these hold:\n\n- Every task's findings are resolved, or parked for the Owner and named in the pull request.\n- The repository's checks pass on the branch.\n- Where a model changed, both halves of the validation pass have run over it: the mechanical checks, and an agent reading each entity against its schema's writing rules.\n- The branch does what the specification said, and nothing else.",
           "tables": []
+        },
+        {
+          "heading": "If not met",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Outcome",
+                "Leads to"
+              ],
+              "rows": [
+                [
+                  "reworked",
+                  "Implement"
+                ],
+                [
+                  "abandoned",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Outcome",
+              "Leads to"
+            ],
+            "rows": [
+              [
+                "reworked",
+                "Implement"
+              ],
+              [
+                "abandoned",
+                ""
+              ]
+            ]
+          }
         }
       ],
       "owner": "processes/delivery",
@@ -5363,8 +5587,48 @@
         },
         {
           "heading": "Gate",
-          "text": "Integrate is the last phase. The work is done when all of these hold:\n\n- The checks pass on the pull request.\n- The Owner has merged it.\n- Where a release was due it is tagged, and its notes say whether a consumer re-syncs, re-pins or does more.\n- Every pin that names the release has moved with it, and every surface built from one of them has been rebuilt.\n\nWhere they cannot be met, the Owner decides whether the change is reverted or the release held.",
+          "text": "Integrate is the last phase. The work is done when all of these hold:\n\n- The checks pass on the pull request.\n- The Owner has merged it.\n- Where a release was due it is tagged, and its notes say whether a consumer re-syncs, re-pins or does more.\n- Every pin that names the release has moved with it, and every surface built from one of them has been rebuilt.",
           "tables": []
+        },
+        {
+          "heading": "If not met",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Outcome",
+                "Leads to"
+              ],
+              "rows": [
+                [
+                  "release held",
+                  "Integrate"
+                ],
+                [
+                  "reverted",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Outcome",
+              "Leads to"
+            ],
+            "rows": [
+              [
+                "release held",
+                "Integrate"
+              ],
+              [
+                "reverted",
+                ""
+              ]
+            ]
+          }
         }
       ],
       "owner": "processes/delivery",
@@ -5440,8 +5704,48 @@
         },
         {
           "heading": "Gate",
-          "text": "To leave Plan, all of these hold:\n\n- The Owner has read the plan and approved it.\n- Every brief states how its holder can tell the task is done.\n- The order is one the briefs can actually be worked in.\n\nWhere they cannot be met, the Owner decides whether the plan is recut or the specification reopened.",
+          "text": "To leave Plan, all of these hold:\n\n- The Owner has read the plan and approved it.\n- Every brief states how its holder can tell the task is done.\n- The order is one the briefs can actually be worked in.",
           "tables": []
+        },
+        {
+          "heading": "If not met",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Outcome",
+                "Leads to"
+              ],
+              "rows": [
+                [
+                  "recut",
+                  "Plan"
+                ],
+                [
+                  "specification reopened",
+                  "Spec"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Outcome",
+              "Leads to"
+            ],
+            "rows": [
+              [
+                "recut",
+                "Plan"
+              ],
+              [
+                "specification reopened",
+                "Spec"
+              ]
+            ]
+          }
         }
       ],
       "owner": "processes/delivery",
@@ -5538,8 +5842,48 @@
         },
         {
           "heading": "Gate",
-          "text": "To leave Shape, all of these hold:\n\n- The request is stated as one sentence.\n- The track is named.\n- What the change makes stale is named, or named as nothing.\n- The classification is stated, and the phases that will write a document are named.\n\nWhere they cannot be met, the Owner decides whether the request is reshaped or dropped.",
+          "text": "To leave Shape, all of these hold:\n\n- The request is stated as one sentence.\n- The track is named.\n- What the change makes stale is named, or named as nothing.\n- The classification is stated, and the phases that will write a document are named.",
           "tables": []
+        },
+        {
+          "heading": "If not met",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Outcome",
+                "Leads to"
+              ],
+              "rows": [
+                [
+                  "reshaped",
+                  "Shape"
+                ],
+                [
+                  "dropped",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Outcome",
+              "Leads to"
+            ],
+            "rows": [
+              [
+                "reshaped",
+                "Shape"
+              ],
+              [
+                "dropped",
+                ""
+              ]
+            ]
+          }
         }
       ],
       "owner": "processes/delivery",
@@ -5623,8 +5967,56 @@
         },
         {
           "heading": "Gate",
-          "text": "To leave Spec, all of these hold:\n\n- The Owner has read the specification or the brief and approved it.\n- What is explicitly not being done is written down.\n- Where the change reaches another repository, what its release asks of a consumer is written down.\n- Every parked question has the Owner's word on it.\n\nWhere they cannot be met, the Owner decides whether the change is reshaped, narrowed or dropped.",
+          "text": "To leave Spec, all of these hold:\n\n- The Owner has read the specification or the brief and approved it.\n- What is explicitly not being done is written down.\n- Where the change reaches another repository, what its release asks of a consumer is written down.\n- Every parked question has the Owner's word on it.",
           "tables": []
+        },
+        {
+          "heading": "If not met",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Outcome",
+                "Leads to"
+              ],
+              "rows": [
+                [
+                  "reshaped",
+                  "Shape"
+                ],
+                [
+                  "narrowed",
+                  "Spec"
+                ],
+                [
+                  "dropped",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Outcome",
+              "Leads to"
+            ],
+            "rows": [
+              [
+                "reshaped",
+                "Shape"
+              ],
+              [
+                "narrowed",
+                "Spec"
+              ],
+              [
+                "dropped",
+                ""
+              ]
+            ]
+          }
         }
       ],
       "owner": "processes/delivery",
@@ -5867,8 +6259,40 @@
         },
         {
           "heading": "Gate",
-          "text": "To leave Answer, all of these hold:\n\n- The answer says what was decided and why, in the issue.\n- The asker has something to do next, or is told plainly that there is nothing.\n- No date appears that has not actually been chosen.\n\nWhere they cannot be met, the issue stays open; an answer nobody can act on is not an answer and closing it does not make it one.",
+          "text": "To leave Answer, all of these hold:\n\n- The answer says what was decided and why, in the issue.\n- The asker has something to do next, or is told plainly that there is nothing.\n- No date appears that has not actually been chosen.",
           "tables": []
+        },
+        {
+          "heading": "If not met",
+          "text": "An answer nobody can act on is not an answer, and closing the issue does not make it one.",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Outcome",
+                "Leads to"
+              ],
+              "rows": [
+                [
+                  "left open",
+                  "Answer"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Outcome",
+              "Leads to"
+            ],
+            "rows": [
+              [
+                "left open",
+                "Answer"
+              ]
+            ]
+          }
         }
       ],
       "owner": "processes/feature-request",
@@ -5941,8 +6365,40 @@
         },
         {
           "heading": "Gate",
-          "text": "To leave Raise, all of these hold:\n\n- An issue exists, in the open, on the repository the request concerns.\n- It says what the Requestor was trying to do and could not.\n\nWhere they cannot be met, the Owner helps state it rather than closing it; a request nobody could phrase is still a finding.",
+          "text": "To leave Raise, all of these hold:\n\n- An issue exists, in the open, on the repository the request concerns.\n- It says what the Requestor was trying to do and could not.",
           "tables": []
+        },
+        {
+          "heading": "If not met",
+          "text": "The Owner helps state it rather than closing it; a request nobody could phrase is still a finding.",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Outcome",
+                "Leads to"
+              ],
+              "rows": [
+                [
+                  "stated with help",
+                  "Raise"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Outcome",
+              "Leads to"
+            ],
+            "rows": [
+              [
+                "stated with help",
+                "Raise"
+              ]
+            ]
+          }
         }
       ],
       "owner": "processes/feature-request",
@@ -6023,8 +6479,40 @@
         },
         {
           "heading": "Gate",
-          "text": "To leave Triage, all of these hold:\n\n- The gap is classified as an engine capability, a connector, the commercial layer or no gap.\n- The reason is written where the request was made.\n- Where the gap is real, the roadmap notes carry it.\n\nWhere they cannot be met, the Owner leaves the request open and says what would settle it, rather than classifying it to be finished with it.",
+          "text": "To leave Triage, all of these hold:\n\n- The gap is classified as an engine capability, a connector, the commercial layer or no gap.\n- The reason is written where the request was made.\n- Where the gap is real, the roadmap notes carry it.",
           "tables": []
+        },
+        {
+          "heading": "If not met",
+          "text": "The Owner says what would settle it, rather than classifying it to be finished with it.",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Outcome",
+                "Leads to"
+              ],
+              "rows": [
+                [
+                  "left open",
+                  "Triage"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Outcome",
+              "Leads to"
+            ],
+            "rows": [
+              [
+                "left open",
+                "Triage"
+              ]
+            ]
+          }
         }
       ],
       "owner": "processes/feature-request",
@@ -6100,8 +6588,40 @@
         },
         {
           "heading": "Gate",
-          "text": "To leave Understand, all of these hold:\n\n- The request names the system, the operation or the decision that was missing.\n- Whoever raised it has seen the restatement and not disputed it.\n\nWhere they cannot be met, the Owner says so in the issue and closes it as not understood, which is an answer and is not a refusal.",
+          "text": "To leave Understand, all of these hold:\n\n- The request names the system, the operation or the decision that was missing.\n- Whoever raised it has seen the restatement and not disputed it.",
           "tables": []
+        },
+        {
+          "heading": "If not met",
+          "text": "The Owner says so in the issue; not understood is an answer, and is not a refusal.",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Outcome",
+                "Leads to"
+              ],
+              "rows": [
+                [
+                  "closed as not understood",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Outcome",
+              "Leads to"
+            ],
+            "rows": [
+              [
+                "closed as not understood",
+                ""
+              ]
+            ]
+          }
         }
       ],
       "owner": "processes/feature-request",
@@ -6300,8 +6820,48 @@
         },
         {
           "heading": "Gate",
-          "text": "- The Owner has listened to every new clip.\n- Every clip's stamp matches the note on its slide.\n\nWhere a clip cannot be made to sound right, the Owner decides whether the note changes, back through Delivery, or the voice does.",
+          "text": "- The Owner has listened to every new clip.\n- Every clip's stamp matches the note on its slide.",
           "tables": []
+        },
+        {
+          "heading": "If not met",
+          "text": "A note that changes goes back through Delivery.",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Outcome",
+                "Leads to"
+              ],
+              "rows": [
+                [
+                  "voice changes",
+                  "Narrate"
+                ],
+                [
+                  "note changes",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Outcome",
+              "Leads to"
+            ],
+            "rows": [
+              [
+                "voice changes",
+                "Narrate"
+              ],
+              [
+                "note changes",
+                ""
+              ]
+            ]
+          }
         }
       ],
       "owner": "processes/narrating",
@@ -10974,7 +11534,15 @@
     },
     {
       "from": "processes/contribution/phases/propose",
-      "to": "roles/owner",
+      "to": "processes/contribution/phases/propose",
+      "via": "If not met.Leads to",
+      "attrs": {
+        "Outcome": "carried on"
+      }
+    },
+    {
+      "from": "processes/contribution/phases/propose",
+      "to": "roles/contributor",
       "via": "escalation-authority",
       "attrs": {}
     },
@@ -11007,6 +11575,22 @@
       "to": "sources/local",
       "via": "source",
       "attrs": {}
+    },
+    {
+      "from": "processes/contribution/phases/review",
+      "to": "processes/contribution/phases/review",
+      "via": "If not met.Leads to",
+      "attrs": {
+        "Outcome": "narrowed"
+      }
+    },
+    {
+      "from": "processes/contribution/phases/review",
+      "to": "processes/contribution/phases/review",
+      "via": "If not met.Leads to",
+      "attrs": {
+        "Outcome": "carried on by someone else"
+      }
     },
     {
       "from": "processes/contribution/phases/review",
@@ -11130,6 +11714,14 @@
     },
     {
       "from": "processes/delivery/phases/implement",
+      "to": "processes/delivery/phases/implement",
+      "via": "If not met.Leads to",
+      "attrs": {
+        "Outcome": "reworked"
+      }
+    },
+    {
+      "from": "processes/delivery/phases/implement",
       "to": "roles/owner",
       "via": "escalation-authority",
       "attrs": {}
@@ -11202,6 +11794,14 @@
     },
     {
       "from": "processes/delivery/phases/integrate",
+      "to": "processes/delivery/phases/integrate",
+      "via": "If not met.Leads to",
+      "attrs": {
+        "Outcome": "release held"
+      }
+    },
+    {
+      "from": "processes/delivery/phases/integrate",
       "to": "roles/owner",
       "via": "escalation-authority",
       "attrs": {}
@@ -11256,6 +11856,22 @@
     },
     {
       "from": "processes/delivery/phases/plan",
+      "to": "processes/delivery/phases/plan",
+      "via": "If not met.Leads to",
+      "attrs": {
+        "Outcome": "recut"
+      }
+    },
+    {
+      "from": "processes/delivery/phases/plan",
+      "to": "processes/delivery/phases/spec",
+      "via": "If not met.Leads to",
+      "attrs": {
+        "Outcome": "specification reopened"
+      }
+    },
+    {
+      "from": "processes/delivery/phases/plan",
       "to": "roles/owner",
       "via": "escalation-authority",
       "attrs": {}
@@ -11295,6 +11911,14 @@
       "to": "roles/specifier",
       "via": "supported-by",
       "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/shape",
+      "to": "processes/delivery/phases/shape",
+      "via": "If not met.Leads to",
+      "attrs": {
+        "Outcome": "reshaped"
+      }
     },
     {
       "from": "processes/delivery/phases/shape",
@@ -11343,6 +11967,22 @@
       "to": "processes/delivery/tracks/prose",
       "via": "Activities.Track",
       "attrs": {}
+    },
+    {
+      "from": "processes/delivery/phases/spec",
+      "to": "processes/delivery/phases/shape",
+      "via": "If not met.Leads to",
+      "attrs": {
+        "Outcome": "reshaped"
+      }
+    },
+    {
+      "from": "processes/delivery/phases/spec",
+      "to": "processes/delivery/phases/spec",
+      "via": "If not met.Leads to",
+      "attrs": {
+        "Outcome": "narrowed"
+      }
     },
     {
       "from": "processes/delivery/phases/spec",
@@ -11454,6 +12094,14 @@
     },
     {
       "from": "processes/feature-request/phases/answer",
+      "to": "processes/feature-request/phases/answer",
+      "via": "If not met.Leads to",
+      "attrs": {
+        "Outcome": "left open"
+      }
+    },
+    {
+      "from": "processes/feature-request/phases/answer",
       "to": "roles/owner",
       "via": "escalation-authority",
       "attrs": {}
@@ -11490,6 +12138,14 @@
     },
     {
       "from": "processes/feature-request/phases/raise",
+      "to": "processes/feature-request/phases/raise",
+      "via": "If not met.Leads to",
+      "attrs": {
+        "Outcome": "stated with help"
+      }
+    },
+    {
+      "from": "processes/feature-request/phases/raise",
       "to": "roles/owner",
       "via": "escalation-authority",
       "attrs": {}
@@ -11523,6 +12179,14 @@
       "to": "sources/local",
       "via": "source",
       "attrs": {}
+    },
+    {
+      "from": "processes/feature-request/phases/triage",
+      "to": "processes/feature-request/phases/triage",
+      "via": "If not met.Leads to",
+      "attrs": {
+        "Outcome": "left open"
+      }
     },
     {
       "from": "processes/feature-request/phases/triage",
@@ -11655,6 +12319,14 @@
       "to": "roles/requestor",
       "via": "supported-by",
       "attrs": {}
+    },
+    {
+      "from": "processes/narrating/phases/narrate",
+      "to": "processes/narrating/phases/narrate",
+      "via": "If not met.Leads to",
+      "attrs": {
+        "Outcome": "voice changes"
+      }
     },
     {
       "from": "processes/narrating/phases/narrate",
