@@ -63,10 +63,13 @@ const PAGES = [
     card: true, cardBase: SITE, internalLinks: true, board: true },
 
   // The principles page. Its region is rendered from model.json by build/pages.mjs; the model's
-  // words stay English, which the region's note says, so `translates` names the note and the one
-  // heading the region translates, never a principle.
+  // own words now carry a German translation held to the exact English in
+  // build/principles.de.json, so `translates` reads one of them: the note that says so, and a
+  // value's German name, with the note's English and that value's English gone.
   { path: "/principles/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /Principles/, lang: "en", sourceLang: "en",
-    translates: { lang: "de", shows: ["Aus dem Modell erzeugt", "Werte"], hides: ["Generated from the model, so"] },
+    translates: { lang: "de",
+      shows: ["Aus dem Modell erzeugt", "Werte", "übersetzt aus dem Englischen", "Mandanten begegnen sich nie"],
+      hides: ["Generated from the model, so", "Tenants never meet"] },
     contains: ["One guest,", "not five", "Values", "Generated from"],
     links: ["https://github.com/guestgraph/mental-model"],
     sameOrigin: true,
