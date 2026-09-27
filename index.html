@@ -179,7 +179,10 @@
   .tagline{margin-top:1.6rem; font-size:clamp(1.1rem,1.9vw,1.5rem); color:var(--dim);
            max-width:44ch; line-height:1.4}
 
-  .figure{margin-top:clamp(2.6rem,6vh,4.6rem)}
+  /* No margin-top of its own: the figure now opens a .sec, whose own margin-top spaces it
+     from the section before, same as every other section here. A margin here too doubled
+     that gap. */
+  .figure{margin-top:0}
   /* Five across is inherently wide, and a phone is not. The band used to keep its landscape
      canvas below the breakpoint and scroll inside its own box; that put two of the five
      records on screen and cut the profile they resolve into in half, so the one thing the
@@ -349,6 +352,9 @@
       <!-- values:end -->
     </section>
 
+    <section class="sec" id="idea">
+      <p class="kicker">The idea</p>
+      <h2>Five records, <em>one profile</em>.</h2>
     <!-- The band runs the full width because five records across is what the argument
          looks like; boxed into a column beside the headline the two competed and
          neither won. The lede sits under it as the caption it always was. -->
@@ -437,6 +443,7 @@
         and can always tell you why.
       </p>
     </div>
+    </section>
   </main>
 
 <div class="shell">
