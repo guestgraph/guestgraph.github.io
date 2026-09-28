@@ -1,5 +1,6 @@
 {
   "commit": "915c6f996c9a6e8658841af32fb57e4424d8156c",
+  "core": "0.46.0",
   "root": "GuestGraph",
   "rootId": "identity",
   "types": [
