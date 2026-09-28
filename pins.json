@@ -15,12 +15,11 @@
     "npm run og:check",
     "npm run design:check",
     "npm run sitemap:check",
-    "npm run model:check",
+    "GITHUB_TOKEN=${GITHUB_TOKEN:-$(gh auth token)} npm run model:check",
     "npm run pages:check",
     "npm run api:check",
-    "npm run pin:check",
+    "GITHUB_TOKEN=${GITHUB_TOKEN:-$(gh auth token)} npm run pin:check",
     "npx playwright install --with-deps chromium",
-    "npm run verify",
-    "npx design links"
+    "python3 -m http.server 8000 >/dev/null 2>&1 & SERVER_PID=$!; sleep 1; npm run verify && npx design links; STATUS=$?; kill $SERVER_PID; exit $STATUS"
   ]
 }
