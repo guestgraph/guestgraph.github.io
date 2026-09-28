@@ -2,11 +2,11 @@
   "pins": [
     { "kind": "conventions", "file": "conventions.json", "repo": "robertblust/conventions" },
     { "kind": "npm-tag", "file": "package.json", "repo": "robertblust/design", "after": ["npm run design", "npm run og"] },
-    { "kind": "npm-tag", "file": "package.json", "repo": "companygraph/meta-model", "after": ["npm run model", "npm run pages"] },
-    { "kind": "npm-tag", "file": "package.json", "repo": "companygraph/mcp-server", "after": ["npm run pages"] },
-    { "kind": "source-commit", "file": "source.json", "repo": "guestgraph/mental-model", "after": ["npm run model", "npm run pages"] },
-    { "kind": "source-commit", "file": "api-sources.json", "repo": "guestgraph/engine", "watch": ["src/main/resources/api/openapi.yaml"], "after": ["npm run api"] },
-    { "kind": "source-commit", "file": "api-sources.json", "repo": "guestgraph/connector-apaleo", "watch": ["src/main/resources/api/openapi.yaml"], "after": ["npm run api"] }
+    { "kind": "npm-tag", "file": "package.json", "repo": "companygraph/meta-model", "after": ["npm run model", "npm run pages", "npm run og"] },
+    { "kind": "npm-tag", "file": "package.json", "repo": "companygraph/mcp-server", "after": ["npm run pages", "npm run og"] },
+    { "kind": "source-commit", "file": "source.json", "repo": "guestgraph/mental-model", "after": ["npm run model", "npm run pages", "npm run og"] },
+    { "kind": "source-commit", "file": "api-sources.json", "repo": "guestgraph/engine", "watch": ["src/main/resources/api/openapi.yaml"], "after": ["npm run api", "npm run og"] },
+    { "kind": "source-commit", "file": "api-sources.json", "repo": "guestgraph/connector-apaleo", "watch": ["src/main/resources/api/openapi.yaml"], "after": ["npm run api", "npm run og"] }
   ],
   "verify": [
     "npm ci",
