@@ -129,6 +129,12 @@ The billing page carries no call to action either: it ends on its argument and l
   `noNewTab` now parses every `[data-de]` value and reports what it finds with a `[de]` suffix;
   any new link check must do the same. A translated link and its English original are two
   separate attributes and nothing pairs them.
+- **Each page preloads its own fonts.** The faces its `@font-face` rules name are preloaded
+  in its head, `<link rel="preload" as="font" type="font/woff2" href="…" crossorigin>`,
+  and declared `font-display: fallback`: a page painted before its font file was ready
+  showed one frame in the fallback font and then swapped, on every page change, and with
+  the preload the first frame is already in the right font. A new page copies both from
+  its neighbor.
 - **Self-contained. No external asset at all** — the fonts are served from `fonts/`, and
   nothing else is fetched off-origin. Reference them relatively (`../fonts/…` from
   `billing/`): a root-absolute path works on the domain and breaks under `file://`, which
