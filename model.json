@@ -1,6 +1,6 @@
 {
-  "commit": "4945b5fb2af3b7c116467aeaf405c9462932a8fb",
-  "core": "0.47.0",
+  "commit": "935514f1be114aad8aff505f485c1e45f7273ac8",
+  "core": "0.48.0",
   "root": "GuestGraph",
   "rootId": "identity",
   "types": [
@@ -1491,6 +1491,110 @@
       "path": "model/decision-statuses/standing.md"
     },
     {
+      "id": "decisions/2026-agents-write-a-person-approves",
+      "type": "decision",
+      "name": "Agents write the model, and a person approves every change to it",
+      "tagline": "The pages of GuestGraph's model are written by agents, on a person's request or in a workflow that runs on its own, and no change enters the model until a person who answers for it has approved it; the checks prove a change has the right shape, and only the person approving it says it is true.",
+      "fields": {
+        "source": "Local",
+        "decided": "2026-09-29",
+        "kind": "Architecture",
+        "status": "Standing",
+        "by": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "Who writes our model, and who lets a change into it. Agents already draft and implement under the seats our processes name, and CompanyGraph decided on September 29, 2026 that a company's model is written this way. It had to be decided for our model then too, because the model is what a hotel, a partner or an agent reads about GuestGraph.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "People write the pages by hand",
+                  "The format costs a person time an agent spends without effort, and that time is better spent on whether a page is true."
+                ],
+                [
+                  "A change from a workflow that runs on its own merges once the checks pass",
+                  "A check proves a page has the right shape, not that it is true, and nobody would answer for what the model then claims about GuestGraph."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "People write the pages by hand",
+                "The format costs a person time an agent spends without effort, and that time is better spent on whether a page is true."
+              ],
+              [
+                "A change from a workflow that runs on its own merges once the checks pass",
+                "A check proves a page has the right shape, not that it is true, and nobody would answer for what the model then claims about GuestGraph."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "What only a person can supply is whether a change is true and whether we mean it. Putting the writing with agents and the approving with a person spends a person's time on the one part nobody else can do.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "Every change reaches the model through a person's approval, whether a person asked for it or a workflow made it, and nothing merges on the checks alone. Answers on the chat change nothing and still go out unread. The call is about our model, not the engine: whether an agent may decide a guest merge is the product's own question, and the objective on merges answers it. The call stays right for as long as the person approving actually judges each change.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "CompanyGraph's decision",
+                  "https://github.com/companygraph/mental-model/blob/main/model/decisions/2026-agents-write-a-person-approves.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "CompanyGraph's decision",
+                "https://github.com/companygraph/mental-model/blob/main/model/decisions/2026-agents-write-a-person-approves.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-agents-write-a-person-approves.md"
+    },
+    {
       "id": "decisions/2026-apaleo-first",
       "type": "decision",
       "name": "Apaleo is the first connector",
@@ -1703,7 +1807,7 @@
         },
         {
           "heading": "Consequences",
-          "text": "Every seat that commits needs an address on our domain, a mail alias onto the owner's mailbox verified on the owner's GitHub account. The Owner, the Controller, the Reviewer, the Answerer, the Visitor, the Contributor and the Requestor get none, because they never commit as a seat: the owner commits under the owner's own name, the Controller writes nothing, the Reviewer returns findings, the Answerer answers at runtime, and a Visitor, a Contributor or a Requestor commits under their own name. The hook stays off in our repositories until guestgraph.io receives mail. The owner's own commits are authored as robert@blust.ch, the address our identity carries, so the report counts them as the owner's. Commits made before the rule keep the author they have, because rewriting published history would force-push every repository. The call stays right for as long as agents do the work under seats our processes name, and the processes stay what the check reads.",
+          "text": "Every seat that commits needs an address on our domain, a mail alias onto the owner's mailbox verified on the owner's GitHub account. The Owner, the Controller, the Reviewer, the Answerer, the Visitor, the Contributor and the Requestor get none, because they never commit as a seat: the owner commits under the owner's own name, the Controller writes nothing, the Reviewer returns findings, the Answerer answers at runtime, and a Visitor, a Contributor or a Requestor commits under their own name. guestgraph.io receives mail, so the hook is on in our repositories, in every clone that has run `conventions-sync`. The owner's own commits are authored as robert@blust.ch, the address the owner's profile carries, so the report counts them as the owner's. Commits made before the rule keep the author they have, because rewriting published history would force-push every repository. The call stays right for as long as agents do the work under seats our processes name, and the processes stay what the check reads.",
           "tables": []
         },
         {
@@ -4158,7 +4262,7 @@
       "tagline": "The open-source guest identity graph for hospitality: one explainable, reversible guest profile, derived from the records every system in a hotel keeps of the same person.",
       "fields": {
         "source": "Local",
-        "email": "robert@blust.ch",
+        "email": "info@guestgraph.io",
         "url": "https://guestgraph.io"
       },
       "sections": [
@@ -7343,6 +7447,20 @@
       ],
       "owner": null,
       "path": "model/profiles/german-voice/german-voice.md"
+    },
+    {
+      "id": "profiles/robert-blust",
+      "type": "profile",
+      "name": "Robert Blust",
+      "tagline": "Maintainer of GuestGraph.",
+      "fields": {
+        "source": "Local",
+        "nature": "human",
+        "email": "robert@blust.ch"
+      },
+      "sections": [],
+      "owner": null,
+      "path": "model/profiles/robert-blust/robert-blust.md"
     },
     {
       "id": "question-kinds/brand-and-chat",
@@ -10547,6 +10665,30 @@
       "attrs": {}
     },
     {
+      "from": "decisions/2026-agents-write-a-person-approves",
+      "to": "roles/owner",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-agents-write-a-person-approves",
+      "to": "decision-kinds/architecture",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-agents-write-a-person-approves",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "decisions/2026-agents-write-a-person-approves",
+      "to": "decision-statuses/standing",
+      "via": "status",
+      "attrs": {}
+    },
+    {
       "from": "decisions/2026-apaleo-first",
       "to": "features/bring-reservations-and-bookings-into-the-graph",
       "via": "Bears on.Entity",
@@ -12808,6 +12950,12 @@
     },
     {
       "from": "profiles/german-voice",
+      "to": "sources/local",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "profiles/robert-blust",
       "to": "sources/local",
       "via": "source",
       "attrs": {}
