@@ -1,5 +1,5 @@
 {
-  "commit": "935514f1be114aad8aff505f485c1e45f7273ac8",
+  "commit": "286e3e831b8a208a0a1796b20ef5abe604eb6e0f",
   "core": "0.48.0",
   "root": "GuestGraph",
   "rootId": "identity",
@@ -380,6 +380,10 @@
               ],
               "rows": [
                 [
+                  "Design system",
+                  "https://github.com/robertblust/design/tree/main/docs/design-system"
+                ],
+                [
                   "Design tokens",
                   "https://github.com/robertblust/design/blob/main/blocks/tokens.css"
                 ],
@@ -405,6 +409,10 @@
               "URL"
             ],
             "rows": [
+              [
+                "Design system",
+                "https://github.com/robertblust/design/tree/main/docs/design-system"
+              ],
               [
                 "Design tokens",
                 "https://github.com/robertblust/design/blob/main/blocks/tokens.css"
@@ -7269,7 +7277,7 @@
       "sections": [
         {
           "heading": "Summary",
-          "text": "It holds every seat in Delivery but the Owner's, the Reviewer's seat in Contribution and the Answerer's in Answering, and none of the seats work is brought from: a request is raised by a person, a change offered by one and a question asked by one. Whichever model runs it, the rulebooks are the same, every question it parks ends with the Owner's word, and nothing it produces reaches the default branch without the Owner merging it.\n\nThis profile is here so the model can say what holds a seat. A seat no profile names is held by a person, and which person is a fact this repository does not carry.",
+          "text": "It holds every seat in Delivery but the Owner's, the Reviewer's seat in Contribution and the Answerer's in Answering, and none of the seats work is brought from: a request is raised by a person, a change offered by one and a question asked by one. Whichever model runs it, the rulebooks are the same, every question it parks ends with the Owner's word, and nothing it produces reaches the default branch without the Owner merging it.\n\nThis profile is here so the model can say what holds a seat, as Robert Blust's says who holds the Owner's; a seat no profile names is held by whichever person brings the work to it.",
           "tables": []
         }
       ],
@@ -7456,9 +7464,45 @@
       "fields": {
         "source": "Local",
         "nature": "human",
-        "email": "robert@blust.ch"
+        "email": "robert@blust.ch",
+        "roles": [
+          "Owner"
+        ]
       },
-      "sections": [],
+      "sections": [
+        {
+          "heading": "Also at",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Where",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "blust.ch",
+                  "https://blust.ch"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Where",
+              "URL"
+            ],
+            "rows": [
+              [
+                "blust.ch",
+                "https://blust.ch"
+              ]
+            ]
+          }
+        }
+      ],
       "owner": null,
       "path": "model/profiles/robert-blust/robert-blust.md"
     },
@@ -12952,6 +12996,12 @@
       "from": "profiles/german-voice",
       "to": "sources/local",
       "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "profiles/robert-blust",
+      "to": "roles/owner",
+      "via": "roles",
       "attrs": {}
     },
     {

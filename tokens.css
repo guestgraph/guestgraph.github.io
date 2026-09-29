@@ -1,4 +1,4 @@
-/* @robertblust/design — tokens.css, assembled from the shared blocks: tokens v14.
+/* @robertblust/design — tokens.css, assembled from the shared blocks: tokens v15.
    Editing this file in a site does nothing: the next npm run design overwrites it. */
 
 /* The same eleven names, re-picked. The ramp's axis flips: on dark, brightness is
@@ -7,10 +7,9 @@
    falls to 2.45:1 on this ground, --c-firm to 1.49:1. These clear AA on every text stop
    (ink 16.86, dim 6.04, mid 5.09, firm 10.28, flag 5.61).
 
-   --c-weak is 2.37:1 and that is deliberate, exactly as its 2.64:1 on dark is: its job is
-   "a candidate, considered but not accepted", and darkening it until it clears the 3:1 UI
-   threshold stops it reading as tentative. It must never carry text, a border or an
-   outline on its own, in either theme.
+   --c-weak is 2.37:1 and that is deliberate, exactly as its 2.64:1 on dark is: darkening
+   it until it clears the 3:1 UI threshold stops it reading as tentative, and that is why
+   its Never on the tokens page is what it is.
 
    --press carries text now, not just a hover wash: `.seg button[aria-pressed="true"]`
    paints --c-mid on it, and the pressed segment is how a visitor tells which language and
