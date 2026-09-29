@@ -293,6 +293,7 @@ To change one of them:
 3. Here: take the Dependabot pull request, run `npm run design && npm run og`, commit what changed.
    The design package has its own Dependabot group so a design bump never arrives beside a
    Playwright one — it is the pull request that has to be read rather than merged on sight.
+   When the release moves `chat.js` or Mermaid, run `npm run pages && npm run pictures && npm run pages` too and commit `team/pictures/`: the team page's process pictures are drawn when the site builds, by `build/pictures.mjs`, and `npm run pages:check` fails until they are drawn from what the page shows now.
 
 `design:check` runs in CI, so a page that drifts from the pinned release goes red without anyone remembering to look. That is the guarantee the old habit-with-a-tripwire never was.
 

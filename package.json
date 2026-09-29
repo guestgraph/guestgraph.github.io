@@ -13,6 +13,7 @@
     "model:check": "node build/model.mjs --check",
     "pages": "node build/pages.mjs",
     "pages:check": "node build/pages.mjs --check",
+    "pictures": "node build/pictures.mjs",
     "verify": "node verify/check.mjs",
     "pdf": "node export-pdf.mjs",
     "og": "node export-og.mjs",
@@ -23,7 +24,7 @@
     "pin:check": "node pin-check.mjs"
   },
   "devDependencies": {
-    "@robertblust/design": "github:robertblust/design#v0.122.0",
+    "@robertblust/design": "github:robertblust/design#v0.123.0",
     "companygraph-mcp-server": "github:companygraph/mcp-server#v0.41.0",
     "pdf-lib": "^1.17.1",
     "playwright": "^1.63.0",
