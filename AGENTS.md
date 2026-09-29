@@ -137,7 +137,12 @@ The billing page carries no call to action either: it ends on its argument and l
   rules it also starts loading them, `document.fonts.forEach(function(f){f.load()})`: a
   browser loads a face only when a layout first asks for it, and even from its cache that
   lands a frame after the first paint, so without the call the first frame of every page
-  showed its text without its font. A new page copies all three from its neighbor.
+  showed its text without its font. Starting them is not enough on its own: the load lands a
+  moment after the first paint, and a page painted then shows its text in the fallback face
+  and moves it when the font arrives. So a render-blocking module follows the call,
+  `<script type="module" blocking="render">`, and holds the first paint until the fonts
+  have loaded, for at most 300ms; the browser keeps the previous page on screen meanwhile.
+  A new page copies all four from its neighbor.
 - **Self-contained. No external asset at all** — the fonts are served from `fonts/`, and
   nothing else is fetched off-origin. Reference them relatively (`../fonts/…` from
   `billing/`): a root-absolute path works on the domain and breaks under `file://`, which
