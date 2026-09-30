@@ -45,7 +45,7 @@ const [files, schemas] = await Promise.all([
 // the file on GitHub.
 const data = { ...parseInstance(files, { sub: SUB, schemas }), commit, repo };
 const text = JSON.stringify(data, null, 2) + "\n";
-// The pictures the model names, copied beside model.json at `images/<entity id>.<extension>`
+// The pictures the model names, copied beside model.json at `images/<entity address>.<extension>`
 // and pinned exactly as it is: the site serves its own copy, so a visitor's browser asks no
 // third party for one, which is what the privacy page says.
 const images = imagesOf(files, data, { sub: SUB, schemas });
