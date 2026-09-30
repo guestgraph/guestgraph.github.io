@@ -7,12 +7,26 @@
 // own and stay hand-written; each page names its head, and a graph whose head is not the one
 // named, or that carries a node after it this renderer does not own, is refused rather than
 // rewritten, because `npm run pages` would otherwise delete someone's work without a word.
+//
+// The head passes through untouched but for one thing: the company's @id. The Organization is
+// GuestGraph, the identity at the root of model.json, and its @id is that identity's stable id as
+// `npm run pages` publishes it, <site>/id/<uuid>, so the @id a crawler keeps outlives a rename.
+// Every `{ "@id": … }` that names the company by the fragment it carried before is rewritten to
+// it, head and tail alike.
 import fs from "node:fs";
 import path from "node:path";
+import { idUrl } from "@robertblust/design/render/ids";
 
 const SITE = "https://guestgraph.io";
 // guestgraph/mental-model is CC BY 4.0.
 const INSTANCE_LICENSE = "https://creativecommons.org/licenses/by/4.0/";
+
+// The fragment the company carried before its stable id; an identity without one keeps it, since
+// no page would stand behind an /id/ address for it.
+const LEGACY_ORGANIZATION = `${SITE}/#organization`;
+export function organizationId(data) {
+  return idUrl(data.entities?.find((e) => e.id === data.rootId), SITE) ?? LEGACY_ORGANIZATION;
+}
 
 const PAGE_HEAD = ["Organization", "WebSite", "WebPage", "BreadcrumbList"];
 export const PAGES = [
@@ -39,7 +53,7 @@ export function datasetNode(data) {
     url: `${SITE}/model/`,
     license: INSTANCE_LICENSE,
     isBasedOn: `https://github.com/${data.repo}`,
-    creator: { "@id": `${SITE}/#organization` },
+    creator: { "@id": organizationId(data) },
     distribution: [
       { "@type": "DataDownload", encodingFormat: "application/json", contentUrl: `${SITE}/model.json` },
     ],
@@ -70,6 +84,11 @@ export function writeJsonLd(data, { check = false, root, pages = PAGES } = {}) {
   const missing = pagesWithGraphs(root).filter((f) => !listed.has(f));
   if (missing.length) throw new Error(`${missing.join(", ")} carr${missing.length > 1 ? "y" : "ies"} JSON-LD but ${missing.length > 1 ? "are" : "is"} not in build/jsonld.mjs's PAGES`);
   const node = datasetNode(data);
+  const organization = organizationId(data);
+  const follow = (v) => Array.isArray(v) ? v.map(follow)
+    : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) =>
+      [k, k === "@id" && x === LEGACY_ORGANIZATION ? organization : follow(x)]))
+    : v;
   const stale = [];
   for (const { file: rel, head: HEAD } of pages) {
     const file = path.join(root, rel);
@@ -82,7 +101,7 @@ export function writeJsonLd(data, { check = false, root, pages = PAGES } = {}) {
     if (head.join() !== HEAD.join()) throw new Error(`${rel}: @graph must begin with ${HEAD.join(", ")}, not ${head.join(", ") || "nothing"}`);
     const foreign = doc["@graph"].slice(HEAD.length).filter((n) => !n || n["@id"] !== node["@id"]);
     if (foreign.length) throw new Error(`${rel}: @graph carries ${foreign.length} node(s) after ${HEAD.join(", ")} that this renderer does not own`);
-    doc["@graph"] = [...doc["@graph"].slice(0, HEAD.length), node];
+    doc["@graph"] = [...doc["@graph"].slice(0, HEAD.length).map(follow), node];
     // `<` keeps a `</` in any string from ending the script element early.
     const text = JSON.stringify(doc, null, 2).replace(/</g, "\\u003c");
     const next = page.replace(RE, (all, open, _body, close) => open + text + close);
