@@ -16,6 +16,7 @@ import { processDiagram } from "companygraph-mcp-server/diagram";
 import { writeSurfaces } from "@robertblust/design/render/surfaces";
 import { writeHome } from "@robertblust/design/render/home";
 import { loadGerman } from "@robertblust/design/render/german";
+import { writeIdPages } from "@robertblust/design/render/ids";
 import { writeJsonLd } from "./jsonld.mjs";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -45,6 +46,9 @@ const RENDERERS = [
   writeSurfaces,
   (d, o) => writeHome(d, { ...o, root: ROOT, de: german.de, heading: { en: "{n} values, each with the thing <em>we never do</em>.", de: "{n} Werte – jeder mit dem, <em>was wir nie tun</em>." } }),
   writeJsonLd,
+  // One redirect page per entity with a stable id, at the address build/jsonld.mjs gives the
+  // company as its @id, sending the reader on to the entity's place on /model/'s stage.
+  (d, o) => writeIdPages(d, { ...o, origin: "https://guestgraph.io", stage: "/model/" }),
 ];
 
 const stale = RENDERERS.flatMap((write) => write(data, { check, root: ROOT }));
