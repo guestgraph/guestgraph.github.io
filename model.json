@@ -1,6 +1,6 @@
 {
-  "commit": "4a060960baa8658f8b0d0dd84ba81cf1a23b7608",
-  "core": "0.49.0",
+  "commit": "368e57440b96a370c6bc15bf5b7f72e003cd67c1",
+  "core": "0.50.0",
   "root": "GuestGraph",
   "rootId": "01a0d2e2-f788-788d-ac26-56e9ef94fdd2",
   "types": [
@@ -63,6 +63,12 @@
       "folder": "kpis",
       "owner": null,
       "singular": false
+    },
+    {
+      "type": "localization",
+      "folder": null,
+      "owner": null,
+      "singular": true
     },
     {
       "type": "phase",
@@ -4824,6 +4830,53 @@
       ],
       "owner": null,
       "path": "model/kpis/grounded-answer-rate.md"
+    },
+    {
+      "id": "01a0f340-5b21-75b0-8177-6c4df451573c",
+      "address": "localization",
+      "type": "localization",
+      "name": "Languages",
+      "tagline": "This model is written in American English; the German its site and chat offer is translated from it and is not yet part of the model.",
+      "fields": {
+        "id": "01a0f340-5b21-75b0-8177-6c4df451573c",
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "Locales",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Locale",
+                "Role"
+              ],
+              "rows": [
+                [
+                  "en-US",
+                  "primary"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Locale",
+              "Role"
+            ],
+            "rows": [
+              [
+                "en-US",
+                "primary"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/localization.md"
     },
     {
       "id": "01a0d360-9b98-7ff9-bc00-0f521ad28bdb",
@@ -14357,6 +14410,12 @@
     },
     {
       "from": "01a0f1f9-7d8c-7678-9a08-84f4748c1a8b",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0f340-5b21-75b0-8177-6c4df451573c",
       "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
       "via": "source",
       "attrs": {}
