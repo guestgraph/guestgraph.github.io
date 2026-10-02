@@ -1,6 +1,6 @@
 {
-  "commit": "39f552bcf91d2445edbd965aae27a7d0c1a3a190",
-  "core": "0.51.0",
+  "commit": "dc652137acb4dff7eef26f6678f6f487a440dff3",
+  "core": "0.53.0",
   "root": "GuestGraph",
   "rootId": "01a0d2e2-f788-788d-ac26-56e9ef94fdd2",
   "types": [
@@ -109,6 +109,12 @@
     {
       "type": "role",
       "folder": "roles",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "rule",
+      "folder": "rules",
       "owner": null,
       "singular": false
     },
@@ -4836,45 +4842,13 @@
       "address": "localization",
       "type": "localization",
       "name": "Languages",
-      "tagline": "This model is written in American English; the German its site and chat offer is translated from it and is not yet part of the model.",
+      "tagline": "This model is written in American English; the German its site and chat offer is translated from it, outside the model.",
       "fields": {
         "id": "01a0f340-5b21-75b0-8177-6c4df451573c",
-        "source": "Local"
+        "source": "Local",
+        "locale": "en-US"
       },
-      "sections": [
-        {
-          "heading": "Locales",
-          "text": "",
-          "tables": [
-            {
-              "caption": null,
-              "columns": [
-                "Locale",
-                "Role"
-              ],
-              "rows": [
-                [
-                  "en-US",
-                  "primary"
-                ]
-              ]
-            }
-          ],
-          "table": {
-            "caption": null,
-            "columns": [
-              "Locale",
-              "Role"
-            ],
-            "rows": [
-              [
-                "en-US",
-                "primary"
-              ]
-            ]
-          }
-        }
-      ],
+      "sections": [],
       "owner": null,
       "path": "model/localization.md"
     },
@@ -5211,7 +5185,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never merges anything with a red check or no check.\n- Never squashes a pull request; a merge commit keeps the author it was given.\n- Never lets an agent merge, tag or release.\n- Never re-authors a contributor's commit, or asks a contributor to be anyone but themselves.\n- Never takes a change to the resolution engine without the scenario tests that hold it.\n- Never treats a review finding as a verdict; it is an input to whoever merges, and silence is a valid answer to one.",
+          "text": "- Never merges anything with a red check or no check.\n- Never treats a review finding as a verdict; it is an input to whoever merges, and silence is a valid answer to one.",
           "tables": []
         },
         {
@@ -5341,7 +5315,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never reviews the writing of a change it has not decided is wanted.\n- Never asks a contributor to commit under an address that is not theirs.\n- Never leaves a contributor to discover a rule from a failing check that could have been named.",
+          "text": "- Never reviews the writing of a change it has not decided is wanted.\n- Never leaves a contributor to discover a rule from a failing check that could have been named.",
           "tables": []
         },
         {
@@ -5396,7 +5370,8 @@
         "source": "Local",
         "owner": "Owner",
         "executed-by": [
-          "Owner"
+          "Owner",
+          "Surveyor"
         ],
         "gate-approvers": [
           "Owner"
@@ -5411,7 +5386,7 @@
         },
         {
           "heading": "Activities",
-          "text": "1. The Owner merges with a merge commit, never a squash, so the address the contributor committed under reaches the default branch unchanged.\n2. Where the change touches what another repository vendors, the Owner tags a release and writes its notes, saying what a consumer must do.\n3. The Owner moves every pin that names what moved, each in a commit that says why, or records it as deliberately behind.\n4. The Owner deletes the branch, as their own step.",
+          "text": "1. On the Owner's word the change is merged with a merge commit, never a squash, so the address the contributor committed under reaches the default branch unchanged.\n2. Where the change touches what another repository vendors, a release is tagged on the Owner's word, with notes the Owner has read saying what a consumer must do.\n3. The Owner moves every pin that names what moved, each in a commit that says why, or records it as deliberately behind.\n4. The Owner deletes the branch, as their own step.",
           "tables": []
         },
         {
@@ -5456,12 +5431,12 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never squashes, because a squash re-authors the commit to whoever pressed the button and a wrong identity would land looking correct.\n- Never merges on a contributor's say-so that a check passed.\n- Never chains deleting the branch to the merge, because a failed merge would still delete it.",
+          "text": "- Never leaves a pin behind a release without recording that it is deliberately behind.",
           "tables": []
         },
         {
           "heading": "Gate",
-          "text": "To leave Integrate, all of these hold:\n\n- The default branch carries the change under the address its author committed with.\n- Where something vendored moved, a release exists and its notes say what a consumer must do.\n- Every pin that names it has moved, or is recorded as deliberately behind.",
+          "text": "To leave Integrate, all of these hold:\n\n- The default branch carries the change under the address its author committed with.\n- Where something vendored moved, a release exists and its notes say what a consumer must do.\n- Every pin that names the release has moved with it, or is recorded as deliberately behind.",
           "tables": []
         },
         {
@@ -5564,7 +5539,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never commits under an address that is not the Contributor's own.\n- Never merges, tags or releases; that is the Owner's and is not delegated.\n- Never has to have read every convention first; where one was missed, naming it is our work.",
+          "text": "- Never merges, tags or releases.\n- Never has to have read every convention first; where one was missed, naming it is our work.",
           "tables": []
         },
         {
@@ -5684,7 +5659,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never merges, and never approves in a way that reads as merging.\n- Never states a finding as a decision the contributor must take.\n- Never counts a check nobody ran as a check that passed.\n- Never asks for a change of taste as though it were a rule.",
+          "text": "- Never merges, and never approves in a way that reads as merging.\n- Never states a finding as a decision the contributor must take.\n- Never asks for a change of taste as though it were a rule.",
           "tables": []
         },
         {
@@ -5843,7 +5818,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never decides on a state that was not checked in the conversation the decision is made in.\n- Never puts more than one decision to the Owner at a time.\n- Never carries out more than the Owner's word covers.",
+          "text": "- Never puts more than one decision to the Owner at a time.",
           "tables": []
         }
       ],
@@ -5921,7 +5896,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never does more than the word covered, however small the step beyond it.\n- Never does what another session was refused.",
+          "text": "- Never leaves out of the report a mistake made on the way.",
           "tables": []
         },
         {
@@ -6164,7 +6139,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never relies on a state it read earlier in the conversation without reading it again.\n- Never takes a session's transcript for what the session did, where the session can be asked.",
+          "text": "- Never proposes; a choice it finds open is set out for Propose.",
           "tables": []
         },
         {
@@ -6330,7 +6305,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never begins a phase whose predecessor's gate the Owner has not approved.\n- Never lets an agent merge, tag or release anything.\n- Never merges a change to the resolution engine without the scenario tests that were written for it first.\n- Never changes what another repository vendors without a release whose notes say what it asks of a consumer.\n- Never makes the German from English the Owner has not reviewed.\n- Never counts a check nobody ran as a check that passed.\n- Never lets a published page outlive a disagreement with the model; the model is corrected first and the page rebuilt from it.",
+          "text": "- Never begins a phase whose predecessor's gate the Owner has not approved.",
           "tables": []
         },
         {
@@ -6481,7 +6456,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never changes a test's expectation to make it pass.\n- Never makes the German from English the Owner has not reviewed.\n- Never dispatches the next task while the last one's findings are open.\n- Never commits a change to a model that no validation pass has read.\n- Never claims a check that was not run.\n- Never merges.",
+          "text": "- Never changes a test's expectation to make it pass.\n- Never dispatches the next task while the last one's findings are open.\n- Never commits a change to a model that no validation pass has read.",
           "tables": []
         },
         {
@@ -6561,7 +6536,7 @@
         },
         {
           "heading": "Activities",
-          "text": "1. The Reviewer reviews the whole branch against the specification, not task by task.\n2. The Controller opens the pull request and stops.\n3. The Owner reads the diff and, where a surface carries the change, the rendered page, and merges it with a merge commit.\n4. Where the change touches what another repository vendors or builds from, the Owner tags a release and writes its notes: a minor where a consumer re-syncs or re-pins, a major where it is asked to do more than either, and the notes say which.\n5. The Owner moves every pin that names the release, each in a commit that says why, and every surface built from one of them is rebuilt at the commit it now names.\n6. The Owner deletes the branch and its worktree, as their own step.",
+          "text": "1. The Reviewer reviews the whole branch against the specification, not task by task.\n2. The Controller opens the pull request and stops.\n3. The Owner reads the diff and, where a surface carries the change, the rendered page, and gives the word; the merge follows, with a merge commit.\n4. Where the change touches what another repository vendors or builds from, a release is tagged on the Owner's word, with notes the Owner has read: a minor where a consumer re-syncs or re-pins, a major where it is asked to do more than either, and the notes say which.\n5. The Owner moves every pin that names the release, each in a commit that says why, and every surface built from one of them is rebuilt at the commit it now names.\n6. The Owner deletes the branch and its worktree, as their own step.",
           "tables": []
         },
         {
@@ -6614,12 +6589,12 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never merges without the Owner; an agent opens and reports.\n- Never squashes a merge, because a squash re-authors the commit to whoever pressed the button and a wrong identity would land looking correct.\n- Never chains a branch delete after a merge, because a failed merge would still run the delete and close the pull request.\n- Never changes what another repository vendors without a release, because the change has made every copy of it stale.\n- Never leaves a consumer pinned to a release that no longer exists.\n- Never releases a change the model disagrees with.",
+          "text": "- Never leaves a consumer pinned to a release that no longer exists.",
           "tables": []
         },
         {
           "heading": "Gate",
-          "text": "Integrate is the last phase. The work is done when all of these hold:\n\n- The checks pass on the pull request.\n- The Owner has merged it.\n- Where a release was due it is tagged, and its notes say whether a consumer re-syncs, re-pins or does more.\n- Every pin that names the release has moved with it, and every surface built from one of them has been rebuilt.",
+          "text": "Integrate is the last phase. The work is done when all of these hold:\n\n- The checks pass on the pull request.\n- It is merged on the Owner's word.\n- Where a release was due it is tagged, and its notes say whether a consumer re-syncs, re-pins or does more.\n- Every pin that names the release has moved with it, or is recorded as deliberately behind, and every surface built from one of them has been rebuilt.",
           "tables": []
         },
         {
@@ -7000,7 +6975,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never writes the change it specifies.\n- Never decides a question that is the Owner's; it names the options and parks it.\n- Never specifies a capability of the engine that is reachable other than through its API.\n- Never states a fact the model does not hold, or one no published page shows.\n- Never leaves a question unasked because an assumption would be convenient.",
+          "text": "- Never writes the change it specifies.\n- Never decides a question that is the Owner's; it names the options and parks it.\n- Never specifies a capability of the engine that is reachable other than through its API.\n- Never leaves a question unasked because an assumption would be convenient.",
           "tables": []
         },
         {
@@ -7179,7 +7154,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never answers a request before knowing what the asker was trying to do and could not.\n- Never promises a date, a release or a place on the roadmap.\n- Never closes a request without the reason written where it was asked.\n- Never builds something because it was asked for; a request is evidence for the roadmap notes and never the decision to build.\n- Never asks which hotel a request comes from, and never asks for a guest's data to illustrate one.",
+          "text": "- Never answers a request before knowing what the asker was trying to do and could not.\n- Never promises a date, a release or a place on the roadmap.\n- Never closes a request without the reason written where it was asked.\n- Never builds something because it was asked for; a request is evidence for the roadmap notes and never the decision to build.",
           "tables": []
         },
         {
@@ -7408,7 +7383,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never has to be written in our terms; putting it in them is our work.\n- Never has to name the hotel it asks for, or carry a guest's data.\n- Never waits for a template, a label or a form; there is none, by design.",
+          "text": "- Never has to be written in our terms; putting it in them is our work.\n- Never waits for a template, a label or a form; there is none, by design.",
           "tables": []
         },
         {
@@ -7635,7 +7610,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never rewrites the asker's words as the record; the restatement sits beside them.\n- Never decides whether the gap is real.\n- Never asks which hotel the request comes from.",
+          "text": "- Never rewrites the asker's words as the record; the restatement sits beside them.\n- Never decides whether the gap is real.",
           "tables": []
         },
         {
@@ -9876,7 +9851,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never commits under an address that is not theirs, and is never asked to.\n- Never merges, tags or releases.",
+          "text": "- Never merges, tags or releases.",
           "tables": []
         },
         {
@@ -9938,7 +9913,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never writes the change or the test itself.\n- Never rewrites what a commit contains; a finding against a committed task is a new brief.\n- Never dispatches the next task while the last one's findings are open.\n- Never accepts a claim that a check passed without the check's output.\n- Never commits a change to a model before the validation pass has read it.\n- Never merges, tags or edits a pull request.",
+          "text": "- Never writes the change or the test itself.\n- Never rewrites what a commit contains; a finding against a committed task is a new brief.\n- Never dispatches the next task while the last one's findings are open.\n- Never commits a change to a model before the validation pass has read it.\n- Never edits a pull request it did not open.",
           "tables": []
         },
         {
@@ -10000,7 +9975,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never spawns a subagent or a reviewer; review comes from the Controller after the report.\n- Never changes a test's expectation to make it pass.\n- Never merges, tags or edits a pull request.\n- Never claims a check it did not run.",
+          "text": "- Never spawns a subagent or a reviewer; review comes from the Controller after the report.\n- Never changes a test's expectation to make it pass.\n- Never edits a pull request it did not open.",
           "tables": []
         },
         {
@@ -10114,7 +10089,7 @@
       "address": "roles/owner",
       "type": "role",
       "name": "Owner",
-      "tagline": "The seat that decides what the project is for, says the last word on every page, and is the only one that merges, tags and releases.",
+      "tagline": "The seat that decides what the project is for, says the last word on every page, and gives the word every merge, tag and release waits on.",
       "fields": {
         "id": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
         "source": "Local"
@@ -10132,7 +10107,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never delegates a merge, a tag or a release; an agent opens the pull request and reports, the Owner merges.\n- Never approves an amendment to a principle the constitution marks non-negotiable in passing inside a change.\n- Never releases a change to what another repository vendors without notes saying what it asks of a consumer.\n- Never lets a published page outlive a disagreement with the model; the model is corrected and the page rebuilt from it.\n- Never states a number that was not counted or a claim the model does not hold.",
+          "text": "- Never approves an amendment to a principle the constitution marks non-negotiable in passing inside a change.",
           "tables": []
         },
         {
@@ -10264,7 +10239,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never has to know our terms to be understood; restating the request in them is our work.\n- Never has to say which hotel it asks for, and is never asked.\n- Never puts a guest's data in a request.\n- Never decides whether the gap is filled.",
+          "text": "- Never has to know our terms to be understood; restating the request in them is our work.\n- Never decides whether the gap is filled.",
           "tables": []
         },
         {
@@ -10396,7 +10371,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never writes the change it specifies.\n- Never decides scope; it names the options and the Owner chooses.\n- Never specifies a capability of the engine that is reachable other than through its API.\n- Never leaves a question unasked because an assumption would be convenient.\n- Never states a fact the model does not hold.",
+          "text": "- Never writes the change it specifies.\n- Never decides scope; it names the options and the Owner chooses.\n- Never specifies a capability of the engine that is reachable other than through its API.\n- Never leaves a question unasked because an assumption would be convenient.",
           "tables": []
         },
         {
@@ -10474,7 +10449,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never reports a state it did not check in that conversation; a state checked earlier is checked again before it is relied on.\n- Never says what another session did on the strength of its transcript alone; where the two disagree, the session's own word is taken.\n- Never does what another session was refused, whatever that session asks.\n- Never merges, deletes, publishes or writes to the model without the Owner's word in that conversation, and does no more than that word covers.\n- Never commits in its own name; a commit it makes on the Owner's word is made in the seat whose work it carries, under that seat's author and trailers.\n- Never decides; where a choice is open, it proposes and the Owner decides.",
+          "text": "- Never deletes or writes to the model without the Owner's word in that conversation.\n- Never commits in its own name; a commit it makes on the Owner's word is made in the seat whose work it carries, under that seat's author and trailers.\n- Never decides; where a choice is open, it proposes and the Owner decides.",
           "tables": []
         }
       ],
@@ -10504,7 +10479,7 @@
         },
         {
           "heading": "What it never does",
-          "text": "- Never translates a draft.\n- Never edits the English.\n- Never writes German into a model; a model is English, and the German a surface carries lives in the surface's own attributes.\n- Never writes a family term in any form but the glossary's.\n- Never commits.",
+          "text": "- Never edits the English.\n- Never writes German into a model; a model is English, and the German a surface carries lives in the surface's own attributes.\n- Never writes a family term in any form but the glossary's.\n- Never commits.",
           "tables": []
         },
         {
@@ -10615,12 +10590,12 @@
         },
         {
           "heading": "What it produces",
-          "text": "The text in its file on the current branch, in the register the place calls for, and a reply naming what was written, what changed and which claims could not be traced to the brief or to prose we have already published.",
+          "text": "The text in its file on the current branch, in the register the place calls for, and a reply naming what was written, what changed and which claims could not be traced to the brief or the repository.",
           "tables": []
         },
         {
           "heading": "What it never does",
-          "text": "- Never writes a fact the brief, the repository or a page we have published does not show.\n- Never writes a count or a version of something that is still changing; it says where the number is read instead.\n- Never writes German; the translation is the Translator's, made after the English is reviewed.\n- Never commits and never runs the build.\n- Never uses an adjective that sells.",
+          "text": "- Never writes a fact the brief or the repository does not show.\n- Never writes a count or a version of something that is still changing; it says where the number is read instead.\n- Never writes German; the translation is the Translator's.\n- Never commits and never runs the build.\n- Never uses an adjective that sells.",
           "tables": []
         },
         {
@@ -10682,6 +10657,1110 @@
       ],
       "owner": null,
       "path": "model/roles/writer.md"
+    },
+    {
+      "id": "01a0fd97-1e47-72a0-af1f-2ea9d0e0afad",
+      "address": "rules/a-branch-is-deleted-only-after-its-merge-is-confirmed",
+      "type": "rule",
+      "name": "A branch is deleted only after its merge is confirmed",
+      "tagline": "A branch is deleted as a step of its own, once its merge is confirmed, and never chained after the merge.",
+      "fields": {
+        "id": "01a0fd97-1e47-72a0-af1f-2ea9d0e0afad",
+        "source": "Local",
+        "modality": "must"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "A delete chained after a merge runs even when the merge fails, and deleting a pull request's branch closes it, so a merge that failed would lose the change it was meant to take.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Contribution"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Contribution"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/a-branch-is-deleted-only-after-its-merge-is-confirmed.md"
+    },
+    {
+      "id": "01a0fd97-3bd6-7927-b759-6586861e448e",
+      "address": "rules/a-change-to-the-resolution-engine-merges-only-with-its-scenario-tests",
+      "type": "rule",
+      "name": "A change to the resolution engine merges only with its scenario tests",
+      "tagline": "The scenario tests that hold a change to the resolution engine are written before it, and the change is merged only with them passing.",
+      "fields": {
+        "id": "01a0fd97-3bd6-7927-b759-6586861e448e",
+        "source": "Local",
+        "modality": "must"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "A wrong merge shows one guest another's stays and invoices, so the engine that decides merges is written test first, with scenario tests for shared family addresses, transitive merges and an unmerge followed by new records. A change that arrives without the scenarios that hold it, from us or from a contributor, asks the engine to be trusted on less than it was built to show.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "process",
+                  "Delivery",
+                  ""
+                ],
+                [
+                  "process",
+                  "Contribution",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "process",
+                "Delivery",
+                ""
+              ],
+              [
+                "process",
+                "Contribution",
+                ""
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/a-change-to-the-resolution-engine-merges-only-with-its-scenario-tests.md"
+    },
+    {
+      "id": "01a0fd97-0f94-707f-9233-7bb13ee17cf2",
+      "address": "rules/a-change-to-what-another-repository-vendors-is-released",
+      "type": "rule",
+      "name": "A change to what another repository vendors is released",
+      "tagline": "A change to what another repository vendors reaches it only in a release whose notes say what it asks of a consumer: a re-sync, a re-pin or more than either.",
+      "fields": {
+        "id": "01a0fd97-0f94-707f-9233-7bb13ee17cf2",
+        "source": "Local",
+        "modality": "must"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "Each of our services vendors what they share at the release it pins, held to that release by a check, and nothing is published to a registry. A change with no release has made every copy of it stale without telling anyone, and notes that do not say what a consumer must do leave each one to find out by breaking.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "role",
+                  "Owner",
+                  ""
+                ],
+                [
+                  "process",
+                  "Delivery",
+                  ""
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Contribution"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "role",
+                "Owner",
+                ""
+              ],
+              [
+                "process",
+                "Delivery",
+                ""
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Contribution"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/a-change-to-what-another-repository-vendors-is-released.md"
+    },
+    {
+      "id": "01a0fd96-8ae6-7cc3-b367-9d9f6493125b",
+      "address": "rules/a-check-counts-only-when-its-output-was-seen",
+      "type": "rule",
+      "name": "A check counts only when its output was seen",
+      "tagline": "A check counts as passed only when its output, from a run over the change as it now stands, has been read; a report that it passed is not its output, and a check that finds nothing counts only once it has been shown to find something.",
+      "fields": {
+        "id": "01a0fd96-8ae6-7cc3-b367-9d9f6493125b",
+        "source": "Local",
+        "modality": "must"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "A report is a claim, and the person or agent writing it is the one least placed to see what it missed, whether it comes from one of our seats or from a contributor. A check run over an earlier state says nothing about the change as it stands, and a search that returns nothing may never have been asking the right question. Only an output, read, of a check that can find something tells us the change holds.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "role",
+                  "Controller",
+                  ""
+                ],
+                [
+                  "role",
+                  "Implementer",
+                  ""
+                ],
+                [
+                  "role",
+                  "Reviewer",
+                  ""
+                ],
+                [
+                  "process",
+                  "Delivery",
+                  ""
+                ],
+                [
+                  "process",
+                  "Contribution",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "role",
+                "Controller",
+                ""
+              ],
+              [
+                "role",
+                "Implementer",
+                ""
+              ],
+              [
+                "role",
+                "Reviewer",
+                ""
+              ],
+              [
+                "process",
+                "Delivery",
+                ""
+              ],
+              [
+                "process",
+                "Contribution",
+                ""
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/a-check-counts-only-when-its-output-was-seen.md"
+    },
+    {
+      "id": "01a0fd97-005e-7317-851d-c5292e5a1719",
+      "address": "rules/a-commit-keeps-the-author-it-was-made-with",
+      "type": "rule",
+      "name": "A commit keeps the author it was made with",
+      "tagline": "A commit reaches the default branch under the author and address it was made with.",
+      "fields": {
+        "id": "01a0fd97-005e-7317-851d-c5292e5a1719",
+        "source": "Local",
+        "modality": "must"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "Our history tells a contributor from a seat and a seat from the Owner by the author alone: on September 28, 2026 we decided that an agent's commit is authored by the seat it held, and a contributor commits under their own name. A squash re-authors a commit to whoever pressed the button, and a wrong identity lands looking correct. Merging with a merge commit, never a squash, is this rule, and so is never asking a contributor to commit as anyone but themselves.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "role",
+                  "Contributor",
+                  ""
+                ],
+                [
+                  "process",
+                  "Contribution",
+                  ""
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "role",
+                "Contributor",
+                ""
+              ],
+              [
+                "process",
+                "Contribution",
+                ""
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/a-commit-keeps-the-author-it-was-made-with.md"
+    },
+    {
+      "id": "01a0fd97-4c04-7bfe-bd43-bbe2dabe460a",
+      "address": "rules/a-feature-request-carries-no-guest-s-data",
+      "type": "rule",
+      "name": "A feature request carries no guest's data",
+      "tagline": "No feature request carries a guest's data, and nobody asks for one to illustrate it.",
+      "fields": {
+        "id": "01a0fd97-4c04-7bfe-bd43-bbe2dabe460a",
+        "source": "Local",
+        "modality": "must not"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "A request is a public GitHub issue, and a guest's data in it would be published where no tenant boundary holds it. Our model describes GuestGraph and holds no guest's data, and nothing written to ask for a change to it does either.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "role",
+                  "Requestor",
+                  ""
+                ],
+                [
+                  "process",
+                  "Feature request",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "role",
+                "Requestor",
+                ""
+              ],
+              [
+                "process",
+                "Feature request",
+                ""
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/a-feature-request-carries-no-guest-s-data.md"
+    },
+    {
+      "id": "01a0fd96-9996-7069-845d-acaa311d5008",
+      "address": "rules/a-refusal-is-not-carried-out-by-another-session",
+      "type": "rule",
+      "name": "A refusal is not carried out by another session",
+      "tagline": "An action refused in one session, by the Owner or by its permission settings, is not carried out by another session, whatever the first session asks.",
+      "fields": {
+        "id": "01a0fd96-9996-7069-845d-acaa311d5008",
+        "source": "Local",
+        "modality": "must not"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "A refusal is the Owner's decision. A session that does the refused thing for another bypasses it, and the history shows a change nobody approved.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/a-refusal-is-not-carried-out-by-another-session.md"
+    },
+    {
+      "id": "01a0fd96-a828-7ab7-a402-d88705435bb5",
+      "address": "rules/a-state-is-read-again-before-it-is-relied-on",
+      "type": "rule",
+      "name": "A state is read again before it is relied on",
+      "tagline": "A state — a branch, a pull request, a check, a release, another session's work — is read again from its source in the conversation that relies on it; an earlier reading, or a session's transcript where the session can be asked, is not the state.",
+      "fields": {
+        "id": "01a0fd96-a828-7ab7-a402-d88705435bb5",
+        "source": "Local",
+        "modality": "must"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "Several sessions and people move the same repositories at once, so a state read earlier in a conversation may have moved by the time it is acted on, and a transcript says what a session set out to do rather than what it did. Fetching main before a merge is this rule.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "role",
+                  "Surveyor",
+                  ""
+                ],
+                [
+                  "process",
+                  "Deciding",
+                  ""
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Contribution"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "role",
+                "Surveyor",
+                ""
+              ],
+              [
+                "process",
+                "Deciding",
+                ""
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Contribution"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/a-state-is-read-again-before-it-is-relied-on.md"
+    },
+    {
+      "id": "01a0fd96-b75c-7309-89d3-e68e3dcde4eb",
+      "address": "rules/german-follows-reviewed-english",
+      "type": "rule",
+      "name": "German follows reviewed English",
+      "tagline": "German is made only from English the Owner has reviewed, never from a draft.",
+      "fields": {
+        "id": "01a0fd96-b75c-7309-89d3-e68e3dcde4eb",
+        "source": "Local",
+        "modality": "must"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "A translation of a draft is translated twice: once now and again when the English changes under review, and the second time a sentence that moved in English is easily left behind in German. Translating once, from the reviewed text, makes the German follow a fixed text.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "role",
+                  "Translator",
+                  ""
+                ],
+                [
+                  "role",
+                  "Writer",
+                  ""
+                ],
+                [
+                  "process",
+                  "Delivery",
+                  ""
+                ],
+                [
+                  "phase",
+                  "Implement",
+                  "Delivery"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "role",
+                "Translator",
+                ""
+              ],
+              [
+                "role",
+                "Writer",
+                ""
+              ],
+              [
+                "process",
+                "Delivery",
+                ""
+              ],
+              [
+                "phase",
+                "Implement",
+                "Delivery"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/german-follows-reviewed-english.md"
+    },
+    {
+      "id": "01a0fd97-2d0f-7789-b3d0-65b1e24eecf7",
+      "address": "rules/nobody-is-asked-which-hotel-a-request-comes-from",
+      "type": "rule",
+      "name": "Nobody is asked which hotel a request comes from",
+      "tagline": "Nobody who asks GuestGraph for something it does not do is asked which hotel they ask for.",
+      "fields": {
+        "id": "01a0fd97-2d0f-7789-b3d0-65b1e24eecf7",
+        "source": "Local",
+        "modality": "must not"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "A request is worth what it says about what somebody could not do, and that is the same whichever hotel asked. A request is a public issue, and asking which hotel it comes from would put a customer's name where the hotel never offered it and the answer does not need it.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "role",
+                  "Requestor",
+                  ""
+                ],
+                [
+                  "process",
+                  "Feature request",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "role",
+                "Requestor",
+                ""
+              ],
+              [
+                "process",
+                "Feature request",
+                ""
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/nobody-is-asked-which-hotel-a-request-comes-from.md"
+    },
+    {
+      "id": "01a0fd96-c621-7f66-89a5-2cb3c213384a",
+      "address": "rules/nothing-claims-what-the-model-does-not-hold",
+      "type": "rule",
+      "name": "Nothing claims what the model does not hold",
+      "tagline": "No specification, page or statement made for us claims a fact or a number about us or our work that the model does not hold; a fact about code, such as a command's flags, is taken from the repository that holds the code.",
+      "fields": {
+        "id": "01a0fd96-c621-7f66-89a5-2cb3c213384a",
+        "source": "Local",
+        "modality": "must not"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "The model is where a fact about GuestGraph is mastered, entered only from prose we have already published and reviewed; a claim made anywhere else has neither, and a reader cannot tell it from one that does. Where a fact is missing, it is added to the model first, and then it can be said.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "role",
+                  "Owner",
+                  ""
+                ],
+                [
+                  "role",
+                  "Specifier",
+                  ""
+                ],
+                [
+                  "role",
+                  "Writer",
+                  ""
+                ],
+                [
+                  "phase",
+                  "Spec",
+                  "Delivery"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "role",
+                "Owner",
+                ""
+              ],
+              [
+                "role",
+                "Specifier",
+                ""
+              ],
+              [
+                "role",
+                "Writer",
+                ""
+              ],
+              [
+                "phase",
+                "Spec",
+                "Delivery"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/nothing-claims-what-the-model-does-not-hold.md"
+    },
+    {
+      "id": "01a0fd96-e33f-759b-ac5d-359f28f4d0a1",
+      "address": "rules/one-session-holds-a-piece-of-shared-work",
+      "type": "rule",
+      "name": "One session holds a piece of shared work",
+      "tagline": "Before shared work — a release, a re-pin, a re-sync, a change across repositories — a session checks for open pull requests, branches and tags and asks the running sessions; the first to claim it holds it, says so, and tells the others when it is done, and no one else opens a parallel change.",
+      "fields": {
+        "id": "01a0fd96-e33f-759b-ac5d-359f28f4d0a1",
+        "source": "Local",
+        "modality": "must"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "Several sessions work in our repositories at once, and the Surveyor already works from the list of them and what each is doing, and Carry tells the sessions a change touches what changed. Without a claim made before acting, two sessions cut the same release or overwrite each other's branch.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "role",
+                  "Surveyor",
+                  ""
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ],
+                [
+                  "phase",
+                  "Carry",
+                  "Deciding"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "role",
+                "Surveyor",
+                ""
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ],
+              [
+                "phase",
+                "Carry",
+                "Deciding"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/one-session-holds-a-piece-of-shared-work.md"
+    },
+    {
+      "id": "01a0fd96-d495-7350-a65a-0b835ed49c6a",
+      "address": "rules/the-model-is-corrected-first",
+      "type": "rule",
+      "name": "The model is corrected first",
+      "tagline": "Where something we publish — a page, a site, a release, an answer — disagrees with the model, the model is corrected first and the thing is rebuilt from it; nothing is released while the disagreement stands.",
+      "fields": {
+        "id": "01a0fd96-d495-7350-a65a-0b835ed49c6a",
+        "source": "Local",
+        "modality": "must"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "guestgraph.io, the MCP server and the chat draw what they say about us from a pinned commit of this model, and every page is mastered here. A page fixed by hand and left disagreeing with the model is a second source that the next build overwrites or, worse, contradicts; correcting the model first keeps one place where a fact is true.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "role",
+                  "Owner",
+                  ""
+                ],
+                [
+                  "process",
+                  "Delivery",
+                  ""
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "role",
+                "Owner",
+                ""
+              ],
+              [
+                "process",
+                "Delivery",
+                ""
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/the-model-is-corrected-first.md"
+    },
+    {
+      "id": "01a0fd96-f18b-731b-932f-1b021109ff23",
+      "address": "rules/the-owner-s-word-merges",
+      "type": "rule",
+      "name": "The Owner's word merges",
+      "tagline": "A merge, a tag or a release happens only on the Owner's word, given in the conversation where it is carried out, and goes no further than that word covers.",
+      "fields": {
+        "id": "01a0fd96-f18b-731b-932f-1b021109ff23",
+        "source": "Local",
+        "modality": "must"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "A change binds once it is merged, tagged or released, and whether it is true is the one thing an agent cannot supply; on September 29, 2026 we decided that agents write our model and a person approves every change to it. A word given in another conversation, or for another change, may rest on a state that has since moved, so it does not carry over, and an agent that asks for the word may carry out the step itself once it is given.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "role",
+                  "Controller",
+                  ""
+                ],
+                [
+                  "role",
+                  "Implementer",
+                  ""
+                ],
+                [
+                  "role",
+                  "Surveyor",
+                  ""
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Contribution"
+                ],
+                [
+                  "phase",
+                  "Carry",
+                  "Deciding"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "role",
+                "Controller",
+                ""
+              ],
+              [
+                "role",
+                "Implementer",
+                ""
+              ],
+              [
+                "role",
+                "Surveyor",
+                ""
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Contribution"
+              ],
+              [
+                "phase",
+                "Carry",
+                "Deciding"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/the-owner-s-word-merges.md"
     },
     {
       "id": "01a0d2e2-f788-7d70-903e-402e3f765e65",
@@ -12426,6 +13505,12 @@
     {
       "from": "01a0d360-9b98-7270-9bc1-054b5bc8c4cf",
       "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+      "via": "executed-by",
+      "attrs": {}
+    },
+    {
+      "from": "01a0d360-9b98-7270-9bc1-054b5bc8c4cf",
+      "to": "01a0fadf-c0cd-780a-a53a-a59709231e8f",
       "via": "executed-by",
       "attrs": {}
     },
@@ -15113,6 +16198,486 @@
       "from": "01a0fadf-c1db-78b0-a30e-8cc40905dc70",
       "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
       "via": "supported-by",
+      "attrs": {}
+    },
+    {
+      "from": "01a0fd96-8ae6-7cc3-b367-9d9f6493125b",
+      "to": "01a0d2e3-bec0-76fe-aa44-2b586920fa06",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "process",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-8ae6-7cc3-b367-9d9f6493125b",
+      "to": "01a0d2e3-bec0-7a2e-94b4-0e27ad0f7568",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-8ae6-7cc3-b367-9d9f6493125b",
+      "to": "01a0d2e3-bec0-7e84-8613-65039131e51c",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-8ae6-7cc3-b367-9d9f6493125b",
+      "to": "01a0d360-9b98-7d22-a48d-23aee45dfcbc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "process",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-8ae6-7cc3-b367-9d9f6493125b",
+      "to": "01a0d4bd-a710-765f-b25a-5227025665ff",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-8ae6-7cc3-b367-9d9f6493125b",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0fd96-9996-7069-845d-acaa311d5008",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0fd96-a828-7ab7-a402-d88705435bb5",
+      "to": "01a0d360-9b98-7270-9bc1-054b5bc8c4cf",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Contribution"
+      }
+    },
+    {
+      "from": "01a0fd96-a828-7ab7-a402-d88705435bb5",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0fd96-a828-7ab7-a402-d88705435bb5",
+      "to": "01a0fadf-c0cd-780a-a53a-a59709231e8f",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-a828-7ab7-a402-d88705435bb5",
+      "to": "01a0fadf-c104-7cb5-9552-d22ba8b14198",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "process",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-a828-7ab7-a402-d88705435bb5",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0fd96-b75c-7309-89d3-e68e3dcde4eb",
+      "to": "01a0d2e3-bec0-76fe-aa44-2b586920fa06",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "process",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-b75c-7309-89d3-e68e3dcde4eb",
+      "to": "01a0d2e3-bec0-779b-a0dc-cfd014dbef72",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0fd96-b75c-7309-89d3-e68e3dcde4eb",
+      "to": "01a0d4bd-a710-745a-a1b7-f3c508a47ab1",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-b75c-7309-89d3-e68e3dcde4eb",
+      "to": "01a0d4bd-a710-7f00-a679-07ee34f542ef",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-b75c-7309-89d3-e68e3dcde4eb",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0fd96-c621-7f66-89a5-2cb3c213384a",
+      "to": "01a0d2e3-bec0-7379-8ae0-87fd05aba8ad",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-c621-7f66-89a5-2cb3c213384a",
+      "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-c621-7f66-89a5-2cb3c213384a",
+      "to": "01a0d4bd-a710-745a-a1b7-f3c508a47ab1",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-c621-7f66-89a5-2cb3c213384a",
+      "to": "01a0d4bd-a710-780f-ac45-51f5aa44a073",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0fd96-c621-7f66-89a5-2cb3c213384a",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0fd96-d495-7350-a65a-0b835ed49c6a",
+      "to": "01a0d2e3-bec0-76fe-aa44-2b586920fa06",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "process",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-d495-7350-a65a-0b835ed49c6a",
+      "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-d495-7350-a65a-0b835ed49c6a",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0fd96-d495-7350-a65a-0b835ed49c6a",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0fd96-e33f-759b-ac5d-359f28f4d0a1",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0fd96-e33f-759b-ac5d-359f28f4d0a1",
+      "to": "01a0fadf-c0cd-780a-a53a-a59709231e8f",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-e33f-759b-ac5d-359f28f4d0a1",
+      "to": "01a0fadf-c1a5-7b77-bf09-aa0269a609e1",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Deciding"
+      }
+    },
+    {
+      "from": "01a0fd96-e33f-759b-ac5d-359f28f4d0a1",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0fd96-f18b-731b-932f-1b021109ff23",
+      "to": "01a0d2e3-bec0-7a2e-94b4-0e27ad0f7568",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-f18b-731b-932f-1b021109ff23",
+      "to": "01a0d360-9b98-7270-9bc1-054b5bc8c4cf",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Contribution"
+      }
+    },
+    {
+      "from": "01a0fd96-f18b-731b-932f-1b021109ff23",
+      "to": "01a0d4bd-a710-765f-b25a-5227025665ff",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-f18b-731b-932f-1b021109ff23",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0fd96-f18b-731b-932f-1b021109ff23",
+      "to": "01a0fadf-c0cd-780a-a53a-a59709231e8f",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd96-f18b-731b-932f-1b021109ff23",
+      "to": "01a0fadf-c1a5-7b77-bf09-aa0269a609e1",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Deciding"
+      }
+    },
+    {
+      "from": "01a0fd96-f18b-731b-932f-1b021109ff23",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0fd97-005e-7317-851d-c5292e5a1719",
+      "to": "01a0d360-9b98-7d22-a48d-23aee45dfcbc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "process",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd97-005e-7317-851d-c5292e5a1719",
+      "to": "01a0d360-9b98-7e50-a583-cfcd12e4b7c2",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd97-005e-7317-851d-c5292e5a1719",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0fd97-005e-7317-851d-c5292e5a1719",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0fd97-0f94-707f-9233-7bb13ee17cf2",
+      "to": "01a0d2e3-bec0-76fe-aa44-2b586920fa06",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "process",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd97-0f94-707f-9233-7bb13ee17cf2",
+      "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd97-0f94-707f-9233-7bb13ee17cf2",
+      "to": "01a0d360-9b98-7270-9bc1-054b5bc8c4cf",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Contribution"
+      }
+    },
+    {
+      "from": "01a0fd97-0f94-707f-9233-7bb13ee17cf2",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0fd97-0f94-707f-9233-7bb13ee17cf2",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0fd97-1e47-72a0-af1f-2ea9d0e0afad",
+      "to": "01a0d360-9b98-7270-9bc1-054b5bc8c4cf",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Contribution"
+      }
+    },
+    {
+      "from": "01a0fd97-1e47-72a0-af1f-2ea9d0e0afad",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0fd97-1e47-72a0-af1f-2ea9d0e0afad",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0fd97-2d0f-7789-b3d0-65b1e24eecf7",
+      "to": "01a0d360-9b98-7519-92ba-676eb4ef0d5e",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd97-2d0f-7789-b3d0-65b1e24eecf7",
+      "to": "01a0d360-9b98-7a12-8e19-7cb0e921c70f",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "process",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd97-2d0f-7789-b3d0-65b1e24eecf7",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0fd97-3bd6-7927-b759-6586861e448e",
+      "to": "01a0d2e3-bec0-76fe-aa44-2b586920fa06",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "process",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd97-3bd6-7927-b759-6586861e448e",
+      "to": "01a0d360-9b98-7d22-a48d-23aee45dfcbc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "process",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd97-3bd6-7927-b759-6586861e448e",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0fd97-4c04-7bfe-bd43-bbe2dabe460a",
+      "to": "01a0d360-9b98-7519-92ba-676eb4ef0d5e",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd97-4c04-7bfe-bd43-bbe2dabe460a",
+      "to": "01a0d360-9b98-7a12-8e19-7cb0e921c70f",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "process",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0fd97-4c04-7bfe-bd43-bbe2dabe460a",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
       "attrs": {}
     }
   ],
