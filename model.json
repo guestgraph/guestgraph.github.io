@@ -1,6 +1,6 @@
 {
-  "commit": "1b7facb0638af2211810e009066cc68e137f63db",
-  "core": "0.53.0",
+  "commit": "38dd3f3fa670152767435afb2e12e93414fe27b0",
+  "core": "0.54.0",
   "root": "GuestGraph",
   "rootId": "01a0d2e2-f788-788d-ac26-56e9ef94fdd2",
   "types": [
@@ -5632,6 +5632,88 @@
       ],
       "owner": null,
       "path": "model/kpis/grounded-answer-rate.md"
+    },
+    {
+      "id": "01a101e9-720b-712f-8836-97a081d86c9e",
+      "address": "kpis/merges-past-their-checks",
+      "type": "kpi",
+      "name": "Merges Past Their Checks",
+      "tagline": "The merges that reached a default branch of ours in one week while a required check had not passed.",
+      "fields": {
+        "id": "01a101e9-720b-712f-8836-97a081d86c9e",
+        "source": "Local",
+        "owner": "Owner",
+        "assesses": [
+          "Main takes a change only through a green, current pull request"
+        ],
+        "unit": "merges per week",
+        "direction": "lower",
+        "read-with": [
+          "Change Fail Rate"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is measured",
+          "text": "GitHub records a rule suite with the result `bypass` each time a change reaches a default branch although a rule of its ruleset did not pass, which only an admin can do. Every Monday, the `kpi` workflow of guestgraph/mcp-guestgraph-io reads the ISO week that ended, Monday 00:00 to Monday 00:00 UTC, across the guestgraph organization's repositories with its GitHub App, and classifies each bypass from its pull request. A merge counts here when a required check had not completed with success by the merge — still queued, running or failed — or when the change had no pull request, broke a rule other than the required checks, or could not be read. A merge whose branch was only behind main, with every required check passed, does not count. The week's object, `ruleset-bypasses/<year>-W<week>.json` in the bucket `kpi-reports-guestgraph-io-mcp`, holds this count as `past_checks`, beside `behind_main` and the total.",
+          "tables": []
+        },
+        {
+          "heading": "What it can hide",
+          "text": "A repository with no ruleset is never evaluated, and a check that is not required does not count. A merge behind main is not counted although its checks ran against an older main. A required check that a path filter skipped counts as not passed although nothing was skipped on purpose. Where the App cannot read a ruleset's history, the required checks are counted from the rule suite at the merge, and a check required today but not then can, if it ran green, stand in for one that never started. Change Fail Rate, read beside it, shows whether these merges failed more often than the rest.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The weekly workflow",
+                  "https://github.com/guestgraph/mcp-guestgraph-io/blob/main/.github/workflows/kpi.yml"
+                ],
+                [
+                  "Where the values are kept",
+                  "https://console.cloud.google.com/storage/browser/kpi-reports-guestgraph-io-mcp/ruleset-bypasses"
+                ],
+                [
+                  "GitHub's rule suites",
+                  "https://docs.github.com/en/rest/repos/rule-suites"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The weekly workflow",
+                "https://github.com/guestgraph/mcp-guestgraph-io/blob/main/.github/workflows/kpi.yml"
+              ],
+              [
+                "Where the values are kept",
+                "https://console.cloud.google.com/storage/browser/kpi-reports-guestgraph-io-mcp/ruleset-bypasses"
+              ],
+              [
+                "GitHub's rule suites",
+                "https://docs.github.com/en/rest/repos/rule-suites"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/kpis/merges-past-their-checks.md"
     },
     {
       "id": "01a0f340-5b21-75b0-8177-6c4df451573c",
@@ -17709,6 +17791,30 @@
     },
     {
       "from": "01a0ffcc-4180-7f62-b037-6f93c2ab8e4d",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a101e9-720b-712f-8836-97a081d86c9e",
+      "to": "01a0ffcc-23b4-7092-9bcf-940060921c56",
+      "via": "assesses",
+      "attrs": {}
+    },
+    {
+      "from": "01a101e9-720b-712f-8836-97a081d86c9e",
+      "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "01a101e9-720b-712f-8836-97a081d86c9e",
+      "to": "01a0d9fc-6540-7dea-9b00-37bc509cb620",
+      "via": "read-with",
+      "attrs": {}
+    },
+    {
+      "from": "01a101e9-720b-712f-8836-97a081d86c9e",
       "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
       "via": "source",
       "attrs": {}
