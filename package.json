@@ -31,6 +31,6 @@
     "yaml": "^2.8.1"
   },
   "dependencies": {
-    "companygraph-meta-model": "github:companygraph/meta-model#v0.71.0"
+    "companygraph-meta-model": "github:companygraph/meta-model#v0.71.1"
   }
 }

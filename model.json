@@ -1,5 +1,5 @@
 {
-  "commit": "dc652137acb4dff7eef26f6678f6f487a440dff3",
+  "commit": "1b7facb0638af2211810e009066cc68e137f63db",
   "core": "0.53.0",
   "root": "GuestGraph",
   "rootId": "01a0d2e2-f788-788d-ac26-56e9ef94fdd2",
@@ -13,6 +13,12 @@
     {
       "type": "concept",
       "folder": "concepts",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "control",
+      "folder": "controls",
       "owner": null,
       "singular": false
     },
@@ -1419,6 +1425,796 @@
       ],
       "owner": null,
       "path": "model/concepts/timeline.md"
+    },
+    {
+      "id": "01a0ffcb-e733-7ee1-9d61-2ad0074dbe14",
+      "address": "controls/a-reviewer-reads-the-output-not-the-report",
+      "type": "control",
+      "name": "A reviewer reads the output, not the report",
+      "tagline": "Each task's change is reviewed against its diff and the checks' output, and the implementer's report is read as a claim to verify.",
+      "fields": {
+        "id": "01a0ffcb-e733-7ee1-9d61-2ad0074dbe14",
+        "source": "Local",
+        "kind": "detective",
+        "mode": "manual",
+        "enforces": [
+          "A check counts only when its output was seen"
+        ],
+        "performed-by": "Reviewer"
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "The Reviewer, after each task in Implement and once over the whole branch at the start of Integrate: it reads the diff and the output of the checks the task ran, verifies each claim of the report against them, and names a gap as a finding; a check whose output it cannot see does not count as passed.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "role",
+                  "Reviewer",
+                  ""
+                ],
+                [
+                  "phase",
+                  "Implement",
+                  "Delivery"
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "role",
+                "Reviewer",
+                ""
+              ],
+              [
+                "phase",
+                "Implement",
+                "Delivery"
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Rulebook, superpowers",
+                  "https://github.com/obra/superpowers/blob/main/skills/subagent-driven-development/SKILL.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Rulebook, superpowers",
+                "https://github.com/obra/superpowers/blob/main/skills/subagent-driven-development/SKILL.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/a-reviewer-reads-the-output-not-the-report.md"
+    },
+    {
+      "id": "01a0ffcb-f64d-7b19-a126-b386e59263cc",
+      "address": "controls/a-vendored-copy-is-held-to-the-release-it-names",
+      "type": "control",
+      "name": "A vendored copy is held to the release it names",
+      "tagline": "A pull request fails where what a repository vendors differs from the release it pins, so a change reaches another repository only once it is released.",
+      "fields": {
+        "id": "01a0ffcb-f64d-7b19-a126-b386e59263cc",
+        "source": "Local",
+        "kind": "detective",
+        "mode": "automated",
+        "enforces": [
+          "A change to what another repository vendors is released"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "The conventions job, required on the default branch of each of our repositories, on every pull request: `conventions-sync check` compares the vendored `conventions/` with the release `conventions.json` names and fails for each file that differs. In the engine and the Apaleo connector, the required `service-conventions` job runs `service-conventions-sync check`, which fails where the vendored service conventions differ from the release they pin. In our model, the required instance check refuses a checker other than the release `.companygraph/manifest.json` names and fails where a vendored core file differs from the hash the manifest recorded when that release was taken. Nothing checks what a release's notes ask of a consumer.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Contribution"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Contribution"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The conventions job",
+                  "https://github.com/robertblust/conventions/blob/main/.github/workflows/check.yml"
+                ],
+                [
+                  "The conventions copy check",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/conventions-sync"
+                ],
+                [
+                  "The engine's CI",
+                  "https://github.com/guestgraph/engine/blob/main/.github/workflows/verify.yml"
+                ],
+                [
+                  "The service conventions copy check",
+                  "https://github.com/guestgraph/service-conventions/blob/main/spring/service-conventions-sync"
+                ],
+                [
+                  "The instance check",
+                  "https://github.com/companygraph/meta-model/blob/main/.github/workflows/instance-check.yml"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The conventions job",
+                "https://github.com/robertblust/conventions/blob/main/.github/workflows/check.yml"
+              ],
+              [
+                "The conventions copy check",
+                "https://github.com/robertblust/conventions/blob/main/conventions/conventions-sync"
+              ],
+              [
+                "The engine's CI",
+                "https://github.com/guestgraph/engine/blob/main/.github/workflows/verify.yml"
+              ],
+              [
+                "The service conventions copy check",
+                "https://github.com/guestgraph/service-conventions/blob/main/spring/service-conventions-sync"
+              ],
+              [
+                "The instance check",
+                "https://github.com/companygraph/meta-model/blob/main/.github/workflows/instance-check.yml"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/a-vendored-copy-is-held-to-the-release-it-names.md"
+    },
+    {
+      "id": "01a0ffcc-0534-753c-aca7-166b1b2dfd38",
+      "address": "controls/an-agent-s-permissions-refuse-a-merge-it-was-not-given",
+      "type": "control",
+      "name": "An agent's permissions refuse a merge it was not given",
+      "tagline": "The permission layer an agent runs under refuses a merge the agent attempts without the Owner's word for it in that conversation.",
+      "fields": {
+        "id": "01a0ffcc-0534-753c-aca7-166b1b2dfd38",
+        "source": "Local",
+        "kind": "preventive",
+        "mode": "automated",
+        "enforces": [
+          "The Owner's word merges"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "Claude Code's permission layer, before the agent's command runs: it judges the action against the conversation, and a merge without a review it can see is refused, so the agent stops and the merge waits for the Owner.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "role",
+                  "Controller",
+                  ""
+                ],
+                [
+                  "role",
+                  "Implementer",
+                  ""
+                ],
+                [
+                  "role",
+                  "Surveyor",
+                  ""
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "role",
+                "Controller",
+                ""
+              ],
+              [
+                "role",
+                "Implementer",
+                ""
+              ],
+              [
+                "role",
+                "Surveyor",
+                ""
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Claude Code permission modes",
+                  "https://code.claude.com/docs/en/permission-modes"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Claude Code permission modes",
+                "https://code.claude.com/docs/en/permission-modes"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/an-agent-s-permissions-refuse-a-merge-it-was-not-given.md"
+    },
+    {
+      "id": "01a0ffcc-14c5-7ff9-bce5-b3d4bd5998af",
+      "address": "controls/german-left-behind-is-found",
+      "type": "control",
+      "name": "German left behind is found",
+      "tagline": "A pull request to guestgraph.io fails where an English edit left its German unchanged, unless a commit says the German is right on purpose.",
+      "fields": {
+        "id": "01a0ffcc-14c5-7ff9-bce5-b3d4bd5998af",
+        "source": "Local",
+        "kind": "detective",
+        "mode": "automated",
+        "enforces": [
+          "German follows reviewed English"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "The site's CI, on every pull request, in the `verify` job the ruleset requires: `design german stale` compares the change with its base and fails for each element whose English moved while its German did not; a commit that names the element in a `German-unchanged:` trailer releases it.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "guestgraph.io's CI",
+                  "https://github.com/guestgraph/guestgraph.github.io/blob/main/.github/workflows/ci.yml"
+                ],
+                [
+                  "The German stale check",
+                  "https://github.com/robertblust/design#readme"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "guestgraph.io's CI",
+                "https://github.com/guestgraph/guestgraph.github.io/blob/main/.github/workflows/ci.yml"
+              ],
+              [
+                "The German stale check",
+                "https://github.com/robertblust/design#readme"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/german-left-behind-is-found.md"
+    },
+    {
+      "id": "01a0ffcc-23b4-7092-9bcf-940060921c56",
+      "address": "controls/main-takes-a-change-only-through-a-green-current-pull-request",
+      "type": "control",
+      "name": "Main takes a change only through a green, current pull request",
+      "tagline": "The default branch of each of our repositories refuses a push, and takes a change only through a pull request whose named checks pass on a branch that is up to date with it, merged with a merge commit.",
+      "fields": {
+        "id": "01a0ffcc-23b4-7092-9bcf-940060921c56",
+        "source": "Local",
+        "kind": "preventive",
+        "mode": "automated",
+        "enforces": [
+          "A check counts only when its output was seen",
+          "A state is read again before it is relied on",
+          "A commit keeps the author it was made with"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "GitHub's ruleset on each repository's default branch, on every attempt to change it: it refuses a force push and a deletion, takes a change only through a pull request, requires the named checks to pass, and requires the branch to be up to date with the default branch, so a pull request whose base has moved shows as behind until main is merged into it. A pull request merges only with a merge commit: in each repository either the ruleset allows no other merge method or the repository's settings turn squash and rebase off, so a commit reaches main under the author it was made with. The ruleset lets a repository admin bypass it, except on service-conventions.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Contribution"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Contribution"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "GitHub rulesets",
+                  "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets"
+                ],
+                [
+                  "GitHub merge methods",
+                  "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/about-merge-methods-on-github"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "GitHub rulesets",
+                "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets"
+              ],
+              [
+                "GitHub merge methods",
+                "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/about-merge-methods-on-github"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/main-takes-a-change-only-through-a-green-current-pull-request.md"
+    },
+    {
+      "id": "01a0ffcc-327f-7562-ac09-5df548965b62",
+      "address": "controls/pages-drawn-from-the-model-are-held-to-it",
+      "type": "control",
+      "name": "Pages drawn from the model are held to it",
+      "tagline": "A pull request to guestgraph.io fails where a page drawn from the model differs from what the model, at the commit the site pins, would draw.",
+      "fields": {
+        "id": "01a0ffcc-327f-7562-ac09-5df548965b62",
+        "source": "Local",
+        "kind": "detective",
+        "mode": "automated",
+        "enforces": [
+          "The model is corrected first"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "The site's CI, on every pull request, in the `verify` job the ruleset requires: `model:check` parses this model at the commit `source.json` pins and fails where the committed `model.json` differs, and `pages:check` renders every region drawn from it and fails where the committed page differs, so a page edited by hand, or one the model no longer produces, cannot merge until the model is corrected and the page drawn again.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "guestgraph.io's CI",
+                  "https://github.com/guestgraph/guestgraph.github.io/blob/main/.github/workflows/ci.yml"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "guestgraph.io's CI",
+                "https://github.com/guestgraph/guestgraph.github.io/blob/main/.github/workflows/ci.yml"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/pages-drawn-from-the-model-are-held-to-it.md"
+    },
+    {
+      "id": "01a0ffcc-4180-7f62-b037-6f93c2ab8e4d",
+      "address": "controls/the-engine-s-scenario-tests-run-on-every-pull-request",
+      "type": "control",
+      "name": "The engine's scenario tests run on every pull request",
+      "tagline": "A pull request to the resolution engine cannot merge unless its scenario tests, run over the change as it stands, pass.",
+      "fields": {
+        "id": "01a0ffcc-4180-7f62-b037-6f93c2ab8e4d",
+        "source": "Local",
+        "kind": "detective",
+        "mode": "automated",
+        "enforces": [
+          "A change to the resolution engine merges only with its scenario tests"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "The engine's CI, on every pull request: the `verify` job runs `./mvnw -B verify`, which runs every test under `src/test`, among them the resolution scenario tests for transitive merges, chains of shared identifiers, a shared identifier parked for review, and an unmerge followed by a fresh record; the ruleset on the engine's default branch requires `verify` to pass on a branch up to date with main. It holds a change to the scenarios that are there; whether they were written before the change is read in review.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Contribution"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Contribution"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The engine's CI",
+                  "https://github.com/guestgraph/engine/blob/main/.github/workflows/verify.yml"
+                ],
+                [
+                  "The scenario tests",
+                  "https://github.com/guestgraph/engine/tree/main/src/test/java/io/guestgraph/engine/resolution"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The engine's CI",
+                "https://github.com/guestgraph/engine/blob/main/.github/workflows/verify.yml"
+              ],
+              [
+                "The scenario tests",
+                "https://github.com/guestgraph/engine/tree/main/src/test/java/io/guestgraph/engine/resolution"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/the-engine-s-scenario-tests-run-on-every-pull-request.md"
     },
     {
       "id": "01a0dd52-d3a0-79fe-9c24-994ac9b255c9",
@@ -16676,6 +17472,243 @@
     },
     {
       "from": "01a0fd97-4c04-7bfe-bd43-bbe2dabe460a",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcb-e733-7ee1-9d61-2ad0074dbe14",
+      "to": "01a0d2e3-bec0-779b-a0dc-cfd014dbef72",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0ffcb-e733-7ee1-9d61-2ad0074dbe14",
+      "to": "01a0d2e3-bec0-7e84-8613-65039131e51c",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0ffcb-e733-7ee1-9d61-2ad0074dbe14",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0ffcb-e733-7ee1-9d61-2ad0074dbe14",
+      "to": "01a0fd96-8ae6-7cc3-b367-9d9f6493125b",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcb-e733-7ee1-9d61-2ad0074dbe14",
+      "to": "01a0d2e3-bec0-7e84-8613-65039131e51c",
+      "via": "performed-by",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcb-e733-7ee1-9d61-2ad0074dbe14",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcb-f64d-7b19-a126-b386e59263cc",
+      "to": "01a0d360-9b98-7270-9bc1-054b5bc8c4cf",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Contribution"
+      }
+    },
+    {
+      "from": "01a0ffcb-f64d-7b19-a126-b386e59263cc",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0ffcb-f64d-7b19-a126-b386e59263cc",
+      "to": "01a0fd97-0f94-707f-9233-7bb13ee17cf2",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcb-f64d-7b19-a126-b386e59263cc",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcc-0534-753c-aca7-166b1b2dfd38",
+      "to": "01a0d2e3-bec0-7a2e-94b4-0e27ad0f7568",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0ffcc-0534-753c-aca7-166b1b2dfd38",
+      "to": "01a0d4bd-a710-765f-b25a-5227025665ff",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0ffcc-0534-753c-aca7-166b1b2dfd38",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0ffcc-0534-753c-aca7-166b1b2dfd38",
+      "to": "01a0fadf-c0cd-780a-a53a-a59709231e8f",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "role",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a0ffcc-0534-753c-aca7-166b1b2dfd38",
+      "to": "01a0fd96-f18b-731b-932f-1b021109ff23",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcc-0534-753c-aca7-166b1b2dfd38",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcc-14c5-7ff9-bce5-b3d4bd5998af",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0ffcc-14c5-7ff9-bce5-b3d4bd5998af",
+      "to": "01a0fd96-b75c-7309-89d3-e68e3dcde4eb",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcc-14c5-7ff9-bce5-b3d4bd5998af",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcc-23b4-7092-9bcf-940060921c56",
+      "to": "01a0d360-9b98-7270-9bc1-054b5bc8c4cf",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Contribution"
+      }
+    },
+    {
+      "from": "01a0ffcc-23b4-7092-9bcf-940060921c56",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0ffcc-23b4-7092-9bcf-940060921c56",
+      "to": "01a0fd96-8ae6-7cc3-b367-9d9f6493125b",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcc-23b4-7092-9bcf-940060921c56",
+      "to": "01a0fd96-a828-7ab7-a402-d88705435bb5",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcc-23b4-7092-9bcf-940060921c56",
+      "to": "01a0fd97-005e-7317-851d-c5292e5a1719",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcc-23b4-7092-9bcf-940060921c56",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcc-327f-7562-ac09-5df548965b62",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0ffcc-327f-7562-ac09-5df548965b62",
+      "to": "01a0fd96-d495-7350-a65a-0b835ed49c6a",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcc-327f-7562-ac09-5df548965b62",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcc-4180-7f62-b037-6f93c2ab8e4d",
+      "to": "01a0d360-9b98-7270-9bc1-054b5bc8c4cf",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Contribution"
+      }
+    },
+    {
+      "from": "01a0ffcc-4180-7f62-b037-6f93c2ab8e4d",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a0ffcc-4180-7f62-b037-6f93c2ab8e4d",
+      "to": "01a0fd97-3bd6-7927-b759-6586861e448e",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a0ffcc-4180-7f62-b037-6f93c2ab8e4d",
       "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
       "via": "source",
       "attrs": {}
