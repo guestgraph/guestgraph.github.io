@@ -1,0 +1,74 @@
+[
+  {
+    "title": "Are guests kept apart between our hotels or brands?",
+    "text": "Bleiben die Gäste unserer Hotels oder Marken voneinander getrennt?"
+  },
+  {
+    "title": "Can I see why it thinks two records are the same person?",
+    "text": "Kann ich nachvollziehen, warum GuestGraph zwei Datensätze derselben Person zuordnet?"
+  },
+  {
+    "title": "Can I use GuestGraph's colors and fonts for my own site?",
+    "text": "Darf ich die Farben und Schriften von GuestGraph für meine eigene Website verwenden?"
+  },
+  {
+    "title": "Can we run GuestGraph ourselves, and what does it cost?",
+    "text": "Können wir GuestGraph selbst betreiben, und was kostet das?"
+  },
+  {
+    "title": "Can we see everything a guest has booked, in one place?",
+    "text": "Können wir alles, was ein Gast gebucht hat, auf einen Blick sehen?"
+  },
+  {
+    "title": "Does GuestGraph merge guests automatically?",
+    "text": "Führt GuestGraph die Datensätze eines Gastes automatisch zusammen?"
+  },
+  {
+    "title": "Does it change or delete our original records?",
+    "text": "Verändert oder löscht GuestGraph unsere ursprünglichen Datensätze?"
+  },
+  {
+    "title": "How do I connect my own system?",
+    "text": "Wie binde ich mein eigenes System an?"
+  },
+  {
+    "title": "How well does this chat answer?",
+    "text": "Wie gut antwortet dieser Chat?"
+  },
+  {
+    "title": "Is GuestGraph a business, or an open-source project?",
+    "text": "Steckt hinter GuestGraph ein Geschäft, oder ist es ein Open-Source-Projekt?"
+  },
+  {
+    "title": "What about GDPR and our guests' privacy?",
+    "text": "Wie steht es mit DSG, DSGVO und dem Datenschutz unserer Gäste?"
+  },
+  {
+    "title": "What do the colors on guestgraph.io mean?",
+    "text": "Was bedeuten die Farben auf guestgraph.io?"
+  },
+  {
+    "title": "What happens if two different guests get merged by mistake?",
+    "text": "Was passiert, wenn die Datensätze zweier verschiedener Gäste versehentlich zusammengeführt werden?"
+  },
+  {
+    "title": "What happens to a guest id we stored when guests are merged?",
+    "text": "Was passiert mit einer Gast-ID, die wir gespeichert haben, wenn Datensätze zusammengeführt werden?"
+  },
+  {
+    "title": "Which of our systems can it read from?",
+    "text": "Aus welchen unserer Systeme kann GuestGraph Daten lesen?"
+  },
+  {
+    "title": "Who answers this chat?",
+    "text": "Wer antwortet in diesem Chat?"
+  },
+  {
+    "title": "Who decides a match the system isn't sure about, a person or AI?",
+    "text": "Wer entscheidet über einen Treffer, bei dem sich das System nicht sicher ist – ein Mensch oder eine KI?"
+  },
+  {
+    "title": "Why do we have the same guest five times?",
+    "text": "Warum ist derselbe Gast bei uns fünfmal erfasst?"
+  }
+]
