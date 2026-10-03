@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "german:questions": "design german questions model.json",
     "serve": "python3 -m http.server 8000",
     "design": "design sync",
     "design:check": "design sync --check",
