@@ -5,9 +5,9 @@
 // Which decks there are and what their files are called is the only thing that varies between
 // this site and its two siblings, so it is the only thing that lives here. The rendering is
 // `@robertblust/design/decks/export`; the package imports neither Playwright nor pdf-lib, so
-// both are handed in from this file.
+// both are handed in from this file, `PDFString` with them so each slide's links stay links.
 import { chromium } from "playwright";
-import { PDFDocument } from "pdf-lib";
+import { PDFDocument, PDFString } from "pdf-lib";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { exportDecks } from "@robertblust/design/decks/export";
@@ -15,6 +15,7 @@ import { exportDecks } from "@robertblust/design/decks/export";
 await exportDecks({
   chromium,
   PDFDocument,
+  PDFString,
   root: path.dirname(fileURLToPath(import.meta.url)),
   decks: [{ dir: "talks/intro", slug: "guestgraph" }],
 });

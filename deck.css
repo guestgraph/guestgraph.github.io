@@ -1,5 +1,5 @@
 /* @robertblust/design — deck.css, assembled from the shared blocks: link v1 · lockup v1 ·
-   transport v9.
+   transport v10.
    Editing this file in a site does nothing: the next npm run design overwrites it. */
 
 :where(a){color:inherit}
@@ -151,6 +151,11 @@ a.tbtn{text-decoration:none}
   .tdiv{display:none}
   .seg button{padding:0 .16rem; min-width:22px; min-height:44px}
   .lcd{padding:.32rem .34rem .28rem; margin-right:0}
+  /* The chat's button sits bottom right on every page of the family, and here the transport
+     spans the whole bottom edge, so the button stands on top of it, at the height
+     deck.js measures, rather than over its right-hand controls. `body` outranks chat.css's
+     own rule, which a deck links after this file. */
+  body .rbchat-open{bottom:calc(var(--chromeH,0px) + .8rem)}
 }
 /* the theme control's two buttons moved this threshold up from 400px: at 40px
    buttons this tier's own floor is under 360px, so 390, 393, 414 and 430 all fit

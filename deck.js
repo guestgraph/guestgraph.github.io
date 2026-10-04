@@ -1,4 +1,4 @@
-// @robertblust/design — deck.js, assembled from the shared blocks: theme v5 · runtime v8 ·
+// @robertblust/design — deck.js, assembled from the shared blocks: theme v5 · runtime v10 ·
 // fit v1.
 // Editing this file in a site does nothing: the next npm run design overwrites it.
 
@@ -277,7 +277,31 @@ function render(){
   fitNotes();
 }
 window.addEventListener('resize', function(){ measureChrome(); fitNotes(); });
-function go(n){ i = Math.max(0, Math.min(slides.length-1, n)); render(); }
+function go(n){ i = Math.max(0, Math.min(slides.length-1, n)); render(); writeHash(); }
+
+/* Every slide can be linked to. The address says the number the slide itself shows, in
+   its kicker and in the transport's display window, so `#03` opens the slide that reads
+   03 and someone reading a number off the screen can type it. `#3` is taken too, and a
+   number past the end lands on the last slide, as go() clamps everything else.
+
+   The address follows the deck with replaceState, not pushState: turning ten pages is
+   not ten places to go back through, and Back still leaves the talk. The title slide
+   writes no fragment at all, so the talk's own address stays the plain one. Writing
+   never fires `hashchange`; only someone editing the address does, and that moves the
+   deck the way a click would. A fragment that is not a number is left to the browser. */
+function hashSlide(){
+  var m = /^#(\d{1,3})$/.exec(location.hash);
+  return m ? parseInt(m[1], 10) : null;
+}
+function writeHash(){
+  var want = i === 0 ? '' : '#' + pad(i);
+  if (location.hash === want) return;
+  try { history.replaceState(history.state, '', location.pathname + location.search + want); } catch (e) {}
+}
+window.addEventListener('hashchange', function(){
+  var n = hashSlide();
+  if (n !== null && n !== i) manual(n);
+});
 
 /* Turning the page by hand does not end the talk — the voice follows to the slide you
    landed on. JUMP_MS is why: it lets someone click through five slides and hear only the
@@ -335,8 +359,17 @@ langEn.addEventListener('click', function(){ setLang('en'); });
 
 /* The deck is driven by the buttons. These keys stay because a presenter remote sends
    them — it is a clicker pretending to be a keyboard — and are deliberately not
-   advertised anywhere on screen. */
+   advertised anywhere on screen.
+
+   A key meant for a field is not a page turn. A deck carries the chat, and its textarea sat
+   under this handler: a space typed into a question turned the page and never reached the
+   text, and Home, End and the arrows moved the deck instead of the caret. So a key whose
+   target takes text, or sits in the chat's panel, is left to that target. */
+function typing(t){
+  return !!(t && t.closest && (t.isContentEditable || t.closest('input, textarea, select, [contenteditable], .rbchat')));
+}
 document.addEventListener('keydown', function(e){
+  if (typing(e.target)) return;
   if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){ manual(i+1); e.preventDefault(); }
   else if(e.key==='ArrowLeft'||e.key==='PageUp'){ manual(i-1); e.preventDefault(); }
   else if(e.key==='Home'){ restart(); e.preventDefault(); }
@@ -358,8 +391,11 @@ deck.addEventListener('touchend', function(e){
 }, {passive:true});
 
 measureChrome();
+var arrived = hashSlide();
+if (arrived !== null) i = Math.max(0, Math.min(slides.length-1, arrived));
 setNotes(false);
 applyLang();
+writeHash();
 
 /* ---------- narration ----------
    The speaker notes mix stage directions with what is actually said: the <em class='cue'>
