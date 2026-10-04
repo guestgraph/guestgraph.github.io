@@ -1,6 +1,6 @@
 {
-  "commit": "e037b20f09454c83018980acc6aa793e9db080d6",
-  "core": "0.56.0",
+  "commit": "19b41bd91295ef10746ba6f81146187cb77a433a",
+  "core": "0.60.0",
   "root": "GuestGraph",
   "rootId": "01a0d2e2-f788-788d-ac26-56e9ef94fdd2",
   "types": [
@@ -19,6 +19,12 @@
     {
       "type": "control",
       "folder": "controls",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "data-processor",
+      "folder": "data-processors",
       "owner": null,
       "singular": false
     },
@@ -89,6 +95,12 @@
       "singular": false
     },
     {
+      "type": "processing-activity",
+      "folder": "processing-activities",
+      "owner": null,
+      "singular": false
+    },
+    {
       "type": "product",
       "folder": "products",
       "owner": null,
@@ -127,6 +139,12 @@
     {
       "type": "source",
       "folder": "sources",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "stored-item",
+      "folder": "stored-items",
       "owner": null,
       "singular": false
     },
@@ -2217,6 +2235,188 @@
       "path": "model/controls/the-engine-s-scenario-tests-run-on-every-pull-request.md"
     },
     {
+      "id": "01a108dd-f1fd-7218-96bc-e52350522fa0",
+      "address": "data-processors/anthropic",
+      "type": "data-processor",
+      "name": "Anthropic",
+      "tagline": "Writes the chat's answers with Claude, through Anthropic's API, from the visitor's messages and what the model's tools returned; it may process a request in any country it chooses, and stores what it keeps in the United States.",
+      "fields": {
+        "id": "01a108dd-f1fd-7218-96bc-e52350522fa0",
+        "source": "Local",
+        "legal-name": "Anthropic Ireland, Limited",
+        "countries": [
+          "US"
+        ],
+        "retention": "Within 30 days of receipt or generation, under its own terms",
+        "sub-processor-authorization": "general"
+      },
+      "sections": [
+        {
+          "heading": "Own purposes",
+          "text": "- Keeps the inputs and outputs of a conversation it flags under its Usage Policy for up to two years, and its trust and safety classification scores for up to seven.",
+          "tables": []
+        },
+        {
+          "heading": "Transfers",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Jurisdiction",
+                "Safeguard"
+              ],
+              "rows": [
+                [
+                  "ch",
+                  "Standard contractual clauses, module two, as the DPA's Swiss addendum amends them for Swiss law, with the FDPIC as authority and Swiss courts"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Jurisdiction",
+              "Safeguard"
+            ],
+            "rows": [
+              [
+                "ch",
+                "Standard contractual clauses, module two, as the DPA's Swiss addendum amends them for Swiss law, with the FDPIC as authority and Swiss courts"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Data processing addendum",
+                  "https://www.anthropic.com/legal/data-processing-addendum"
+                ],
+                [
+                  "Commercial terms",
+                  "https://www.anthropic.com/legal/commercial-terms"
+                ],
+                [
+                  "Sub-processor list",
+                  "https://trust.anthropic.com/subprocessors"
+                ],
+                [
+                  "Retention terms",
+                  "https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Data processing addendum",
+                "https://www.anthropic.com/legal/data-processing-addendum"
+              ],
+              [
+                "Commercial terms",
+                "https://www.anthropic.com/legal/commercial-terms"
+              ],
+              [
+                "Sub-processor list",
+                "https://trust.anthropic.com/subprocessors"
+              ],
+              [
+                "Retention terms",
+                "https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/data-processors/anthropic.md"
+    },
+    {
+      "id": "01a108de-0195-7bc3-ad53-a16299aa585b",
+      "address": "data-processors/google-cloud",
+      "type": "data-processor",
+      "name": "Google Cloud",
+      "tagline": "Runs the chat service and the MCP server in its Zürich region, and keeps the chat's log of questions there.",
+      "fields": {
+        "id": "01a108de-0195-7bc3-ad53-a16299aa585b",
+        "source": "Local",
+        "legal-name": "Google Cloud EMEA Limited",
+        "countries": [
+          "CH"
+        ],
+        "sub-processor-authorization": "general"
+      },
+      "sections": [
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Cloud data processing addendum",
+                  "https://cloud.google.com/terms/data-processing-addendum"
+                ],
+                [
+                  "Contracting entity by region",
+                  "https://cloud.google.com/terms/google-entity"
+                ],
+                [
+                  "Sub-processor list",
+                  "https://cloud.google.com/terms/subprocessors"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Cloud data processing addendum",
+                "https://cloud.google.com/terms/data-processing-addendum"
+              ],
+              [
+                "Contracting entity by region",
+                "https://cloud.google.com/terms/google-entity"
+              ],
+              [
+                "Sub-processor list",
+                "https://cloud.google.com/terms/subprocessors"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/data-processors/google-cloud.md"
+    },
+    {
       "id": "01a0dd52-d3a0-79fe-9c24-994ac9b255c9",
       "address": "decision-kinds/architecture",
       "type": "decision-kind",
@@ -2255,6 +2455,26 @@
       ],
       "owner": null,
       "path": "model/decision-kinds/business.md"
+    },
+    {
+      "id": "01a108de-a9c3-74b9-948e-906443f770ad",
+      "address": "decision-kinds/data-protection",
+      "type": "decision-kind",
+      "name": "Data protection",
+      "tagline": "A call about whose personal data the company handles, what it does with it, and who else receives it.",
+      "fields": {
+        "id": "01a108de-a9c3-74b9-948e-906443f770ad",
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "A decision whose subject is personal data: what a visitor or a customer gives up, what the company does with it and for how long, which parties receive it and on what terms, and what the privacy page says about it. It is this kind even when it shapes what gets built, because what was decided is what happens to someone's data.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/decision-kinds/data-protection.md"
     },
     {
       "id": "01a0dd52-d3a0-7e18-8870-d790234fd180",
@@ -3140,6 +3360,160 @@
       "path": "model/decisions/2026-decisions-name-their-actor.md"
     },
     {
+      "id": "01a108de-b930-78ee-a86b-ef4704ba3c95",
+      "address": "decisions/2026-github-is-not-a-data-processor",
+      "type": "decision",
+      "name": "GitHub is not one of our data processors",
+      "tagline": "GitHub serves guestgraph.io's pages and sees the request that fetches each one, and we do not write it as a data processor: no processing agreement covers our account, and what GitHub keeps of a visit it keeps for its own purposes, so it is a recipient in its own right and not a party processing data on our behalf.",
+      "fields": {
+        "id": "01a108de-b930-78ee-a86b-ef4704ba3c95",
+        "source": "Local",
+        "decided": "2026-10-04",
+        "kind": "Data protection",
+        "status": "Standing",
+        "by": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "Core 0.60.0 gave this model the data-processor type, in the narrow meaning of GDPR Art. 4(8) and the Swiss DSG Art. 5 lit. k: a party that processes personal data on the company's behalf. The privacy page names GitHub as the host that sees each request, and the question was whether it is a data processor in that meaning.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "Write GitHub as a data processor, citing its data protection agreement",
+                  "The agreement forms part of the GitHub Customer Agreement, and the organization is on the free plan, so the page would cite a contract that does not cover it and claim a relation that does not exist."
+                ],
+                [
+                  "Widen the data-processor type to every recipient",
+                  "The type was decided narrow on purpose, and a type that holds both processors and independent controllers stops answering the one question the law asks of it: who acts on our instructions."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "Write GitHub as a data processor, citing its data protection agreement",
+                "The agreement forms part of the GitHub Customer Agreement, and the organization is on the free plan, so the page would cite a contract that does not cover it and claim a relation that does not exist."
+              ],
+              [
+                "Widen the data-processor type to every recipient",
+                "The type was decided narrow on purpose, and a type that holds both processors and independent controllers stops answering the one question the law asks of it: who acts on our instructions."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "GitHub logs every Pages visitor's IP address for security purposes, whether or not the visitor is signed in. That purpose is GitHub's, not ours, so for what it keeps of a visit GitHub is a controller in its own right, which is the kind of recipient the narrow type leaves out. Without an agreement that makes it our processor, writing it as one would be the model saying more than is true.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "The model names no host for guestgraph.io's pages, and the privacy page keeps saying in its own words that GitHub serves them and sees each request. The call stays right for as long as the organization holds no GitHub agreement that makes GitHub its processor; if it takes one, GitHub gets a data-processor page and this call is revised.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "surface",
+                  "guestgraph.io website",
+                  "",
+                  "keeps naming GitHub in its own prose"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "surface",
+                "guestgraph.io website",
+                "",
+                "keeps naming GitHub in its own prose"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "GitHub Pages and the visitor data it logs",
+                  "https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages"
+                ],
+                [
+                  "GitHub data protection agreement",
+                  "https://github.com/customer-terms/github-data-protection-agreement"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "GitHub Pages and the visitor data it logs",
+                "https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages"
+              ],
+              [
+                "GitHub data protection agreement",
+                "https://github.com/customer-terms/github-data-protection-agreement"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-github-is-not-a-data-processor.md"
+    },
+    {
       "id": "01a0dd52-d3a0-7739-8c09-62c47d96f126",
       "address": "decisions/2026-matcher-off",
       "type": "decision",
@@ -3894,6 +4268,160 @@
       ],
       "owner": null,
       "path": "model/decisions/2026-per-arrival.md"
+    },
+    {
+      "id": "01a108de-d7fa-7f44-979a-431eb72120ee",
+      "address": "decisions/2026-privacy-page-built-from-the-model",
+      "type": "decision",
+      "name": "guestgraph.io's privacy page is built from the model",
+      "tagline": "The privacy page on guestgraph.io is built from this model's data processors, processing activities and stored items, at the pinned commit the site draws, so what the page names is what the model holds and a correction is made once, in the model.",
+      "fields": {
+        "id": "01a108de-d7fa-7f44-979a-431eb72120ee",
+        "source": "Local",
+        "decided": "2026-10-04",
+        "kind": "Data protection",
+        "status": "Standing",
+        "by": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "Core 0.60.0 gave the model types for what a privacy page discloses, and the page had drifted from what the site and the chat do: it named neither Google Cloud, which runs the chat and keeps its questions, nor the chat-facts key, and still said that everything stored was listed. Either the page is corrected by hand and kept in step by hand, or it is built from the model.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "Correct the page by hand now and keep it in step by hand",
+                  "That is how it drifted: the facts were written in the page and in the code, and nothing compared them. The model would be a third copy to keep in step."
+                ],
+                [
+                  "Leave the page as it is and keep the model as the record",
+                  "A visitor reads the page and not the model, so the page would go on telling them less than the company knows."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "Correct the page by hand now and keep it in step by hand",
+                "That is how it drifted: the facts were written in the page and in the code, and nothing compared them. The model would be a third copy to keep in step."
+              ],
+              [
+                "Leave the page as it is and keep the model as the record",
+                "A visitor reads the page and not the model, so the page would go on telling them less than the company knows."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "The model is the master: a page built from it cannot name less than the model holds, and a fact corrected in the model reaches the page on the next build. The site already builds its model pages from a pinned commit of this model, so the privacy page joins a build that exists rather than starting one.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "The site gains a build for the privacy page from the processors, activities and stored items at its pinned commit; the prose around them stays written by hand. Until that build exists the page stays out of step with the model, without Google Cloud and the chat-facts key. The call stays right for as long as every key a surface sets and every party that receives a visitor's data has a page in the model.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "surface",
+                  "guestgraph.io website",
+                  "",
+                  "its Privacy page is built from the model"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "surface",
+                "guestgraph.io website",
+                "",
+                "its Privacy page is built from the model"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The privacy page",
+                  "https://guestgraph.io/privacy/"
+                ],
+                [
+                  "The rule that the model is the master, R17",
+                  "https://github.com/companygraph/meta-model/blob/main/core/CONVENTIONS.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The privacy page",
+                "https://guestgraph.io/privacy/"
+              ],
+              [
+                "The rule that the model is the master, R17",
+                "https://github.com/companygraph/meta-model/blob/main/core/CONVENTIONS.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-privacy-page-built-from-the-model.md"
     },
     {
       "id": "01a0df3b-5a20-7dd3-ac73-70cf49b5f174",
@@ -4895,6 +5423,160 @@
       ],
       "owner": null,
       "path": "model/decisions/2026-tenant-scoped.md"
+    },
+    {
+      "id": "01a108de-c8c9-7a5a-aea1-f561dc33927c",
+      "address": "decisions/2026-the-chat-runs-where-anthropic-chooses",
+      "type": "decision",
+      "name": "The chat's requests run where Anthropic chooses",
+      "tagline": "The chat lets the Anthropic API run each request in any geography it chooses, at the standard rate, and says so: a visitor's message may be processed outside the United States, and what Anthropic keeps of it is stored there.",
+      "fields": {
+        "id": "01a108de-c8c9-7a5a-aea1-f561dc33927c",
+        "source": "Local",
+        "decided": "2026-10-04",
+        "kind": "Data protection",
+        "status": "Standing",
+        "by": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "Anthropic runs a request in any geography it chooses unless the request names the United States, which costs 1.1 times the standard rate. Naming it would make the country a visitor's message goes to exact; the question was whether that is worth the price.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "Name the United States on every request",
+                  "It makes the country exact for a tenth more on every answer, and the chat's answers are not worth more because of it."
+                ],
+                [
+                  "Claude on Vertex AI in a European region, beside the chat in Zürich",
+                  "The project holds no Vertex quota for it, so it could not be run."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "Name the United States on every request",
+                "It makes the country exact for a tenth more on every answer, and the chat's answers are not worth more because of it."
+              ],
+              [
+                "Claude on Vertex AI in a European region, beside the chat in Zürich",
+                "The project holds no Vertex quota for it, so it could not be run."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "The standard rate wins, and what is given up is said rather than hidden: the privacy page and the model name the United States as where Anthropic stores what it keeps, and say that the processing itself may happen elsewhere.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "The deployment's chat.json names no region, so the Anthropic workspace's default, any geography, applies. The privacy page and the model's Anthropic page must not say that processing happens in the United States. The call is weighed again if the price of naming a region changes, if Anthropic offers a region closer to Switzerland, or if a visitor's data ever needs more than the chat holds today.",
+          "tables": []
+        },
+        {
+          "heading": "Bears on",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner",
+                "How"
+              ],
+              "rows": [
+                [
+                  "data-processor",
+                  "Anthropic",
+                  "",
+                  "says its processing may happen anywhere"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner",
+              "How"
+            ],
+            "rows": [
+              [
+                "data-processor",
+                "Anthropic",
+                "",
+                "says its processing may happen anywhere"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The deployment's chat configuration",
+                  "https://github.com/guestgraph/mcp-guestgraph-io/blob/main/chat/chat.json"
+                ],
+                [
+                  "Anthropic's data residency",
+                  "https://platform.claude.com/docs/en/manage-claude/data-residency"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The deployment's chat configuration",
+                "https://github.com/guestgraph/mcp-guestgraph-io/blob/main/chat/chat.json"
+              ],
+              [
+                "Anthropic's data residency",
+                "https://platform.claude.com/docs/en/manage-claude/data-residency"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-the-chat-runs-where-anthropic-chooses.md"
     },
     {
       "id": "01a0d2e3-bec0-76e0-803f-cc780fea1507",
@@ -8793,6 +9475,138 @@
       "path": "model/processes/narrating/tracks/clip.md"
     },
     {
+      "id": "01a108de-10d0-7a3e-93cf-e7429ce5ae23",
+      "address": "processing-activities/answering-in-the-chat",
+      "type": "processing-activity",
+      "name": "Answering in the chat",
+      "tagline": "Answering the question a visitor sends in the chat, from what the model says.",
+      "fields": {
+        "id": "01a108de-10d0-7a3e-93cf-e7429ce5ae23",
+        "source": "Local",
+        "legal-basis": "legitimate-interests",
+        "retention": "The conversation is kept only in the visitor's browser tab and ends when the tab closes",
+        "surfaces": [
+          "chat.guestgraph.io chat"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Data subjects",
+          "text": "- Visitors who open the chat and send a message",
+          "tables": []
+        },
+        {
+          "heading": "Personal data",
+          "text": "- What the visitor writes in a message, and the earlier messages of the same conversation\n- The visitor's address, to refuse an address that sends too many messages in an hour",
+          "tables": []
+        },
+        {
+          "heading": "Processors",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Processor",
+                "Receives"
+              ],
+              "rows": [
+                [
+                  "Google Cloud",
+                  "The messages and the visitor's address, on the way to the answer"
+                ],
+                [
+                  "Anthropic",
+                  "The message and the earlier messages of the same conversation"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Processor",
+              "Receives"
+            ],
+            "rows": [
+              [
+                "Google Cloud",
+                "The messages and the visitor's address, on the way to the answer"
+              ],
+              [
+                "Anthropic",
+                "The message and the earlier messages of the same conversation"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/processing-activities/answering-in-the-chat.md"
+    },
+    {
+      "id": "01a108de-2032-713f-a760-900ce12daf47",
+      "address": "processing-activities/keeping-the-chat-s-questions",
+      "type": "processing-activity",
+      "name": "Keeping the chat's questions",
+      "tagline": "Keeping each question the chat was asked, and whether the model could answer it, so that the person who runs the site sees what the model cannot yet say.",
+      "fields": {
+        "id": "01a108de-2032-713f-a760-900ce12daf47",
+        "source": "Local",
+        "legal-basis": "legitimate-interests",
+        "retention": "Ninety days, and the weekly report made from the questions is gone before any question it holds",
+        "surfaces": [
+          "chat.guestgraph.io chat"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Data subjects",
+          "text": "- Visitors who open the chat and send a message",
+          "tables": []
+        },
+        {
+          "heading": "Personal data",
+          "text": "- The question a visitor sent, kept without their address and without the answer",
+          "tables": []
+        },
+        {
+          "heading": "Processors",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Processor",
+                "Receives"
+              ],
+              "rows": [
+                [
+                  "Google Cloud",
+                  "The question and whether the model could answer it, kept in its Zürich region with the weekly report made from them"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Processor",
+              "Receives"
+            ],
+            "rows": [
+              [
+                "Google Cloud",
+                "The question and whether the model could answer it, kept in its Zürich region with the weekly report made from them"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/processing-activities/keeping-the-chat-s-questions.md"
+    },
+    {
       "id": "01a0d2e3-bec0-765d-89d6-5fc9eaaac662",
       "address": "products/apaleo-connector",
       "type": "product",
@@ -12655,6 +13469,163 @@
       "path": "model/sources/local.md"
     },
     {
+      "id": "01a108de-6c48-78e8-92ea-94fd61a3d2a2",
+      "address": "stored-items/chat",
+      "type": "stored-item",
+      "name": "chat",
+      "tagline": "The conversation in this tab, so following a link does not lose it.",
+      "fields": {
+        "id": "01a108de-6c48-78e8-92ea-94fd61a3d2a2",
+        "source": "Local",
+        "mechanism": "session-storage",
+        "necessity": "strictly-necessary",
+        "surfaces": [
+          "chat.guestgraph.io chat"
+        ],
+        "activity": "Answering in the chat"
+      },
+      "sections": [],
+      "owner": null,
+      "path": "model/stored-items/chat.md"
+    },
+    {
+      "id": "01a108de-9aee-7747-92cb-eb38ab0410e2",
+      "address": "stored-items/chat-facts",
+      "type": "stored-item",
+      "name": "chat-facts",
+      "tagline": "What the chat read from the model's file to offer its questions, so the next page draws them at once.",
+      "fields": {
+        "id": "01a108de-9aee-7747-92cb-eb38ab0410e2",
+        "source": "Local",
+        "mechanism": "session-storage",
+        "necessity": "optional",
+        "surfaces": [
+          "chat.guestgraph.io chat"
+        ]
+      },
+      "sections": [],
+      "owner": null,
+      "path": "model/stored-items/chat-facts.md"
+    },
+    {
+      "id": "01a108de-8b7a-7ff6-9af0-9a7b8a38dc8c",
+      "address": "stored-items/chat-pictures",
+      "type": "stored-item",
+      "name": "chat-pictures",
+      "tagline": "The figures the chat drew in its answers in this tab.",
+      "fields": {
+        "id": "01a108de-8b7a-7ff6-9af0-9a7b8a38dc8c",
+        "source": "Local",
+        "mechanism": "session-storage",
+        "necessity": "optional",
+        "surfaces": [
+          "chat.guestgraph.io chat"
+        ]
+      },
+      "sections": [],
+      "owner": null,
+      "path": "model/stored-items/chat-pictures.md"
+    },
+    {
+      "id": "01a108de-7c37-7b65-a051-0ca54a5997b0",
+      "address": "stored-items/chat-size",
+      "type": "stored-item",
+      "name": "chat-size",
+      "tagline": "How big the visitor made the chat panel, in pixels.",
+      "fields": {
+        "id": "01a108de-7c37-7b65-a051-0ca54a5997b0",
+        "source": "Local",
+        "mechanism": "session-storage",
+        "necessity": "optional",
+        "surfaces": [
+          "chat.guestgraph.io chat"
+        ]
+      },
+      "sections": [],
+      "owner": null,
+      "path": "model/stored-items/chat-size.md"
+    },
+    {
+      "id": "01a108de-2f51-7c49-8857-96a3ade6db33",
+      "address": "stored-items/lang",
+      "type": "stored-item",
+      "name": "lang",
+      "tagline": "The language the visitor chose, `de` or `en`, so the next page opens in it.",
+      "fields": {
+        "id": "01a108de-2f51-7c49-8857-96a3ade6db33",
+        "source": "Local",
+        "mechanism": "local-storage",
+        "necessity": "optional",
+        "duration": "Until the visitor clears it",
+        "surfaces": [
+          "guestgraph.io website"
+        ]
+      },
+      "sections": [],
+      "owner": null,
+      "path": "model/stored-items/lang.md"
+    },
+    {
+      "id": "01a108de-4d0c-73ca-9439-74a87d8cf815",
+      "address": "stored-items/stage-card",
+      "type": "stored-item",
+      "name": "stage-card",
+      "tagline": "How wide the visitor left the details panel on the model pages, in pixels.",
+      "fields": {
+        "id": "01a108de-4d0c-73ca-9439-74a87d8cf815",
+        "source": "Local",
+        "mechanism": "local-storage",
+        "necessity": "optional",
+        "duration": "Until the visitor clears it",
+        "surfaces": [
+          "guestgraph.io website"
+        ]
+      },
+      "sections": [],
+      "owner": null,
+      "path": "model/stored-items/stage-card.md"
+    },
+    {
+      "id": "01a108de-5ca1-70b7-a9be-101b67f9b5b0",
+      "address": "stored-items/stage-card-modal",
+      "type": "stored-item",
+      "name": "stage-card-modal",
+      "tagline": "How wide the visitor left the details panel in the expanded view, in pixels.",
+      "fields": {
+        "id": "01a108de-5ca1-70b7-a9be-101b67f9b5b0",
+        "source": "Local",
+        "mechanism": "local-storage",
+        "necessity": "optional",
+        "duration": "Until the visitor clears it",
+        "surfaces": [
+          "guestgraph.io website"
+        ]
+      },
+      "sections": [],
+      "owner": null,
+      "path": "model/stored-items/stage-card-modal.md"
+    },
+    {
+      "id": "01a108de-3e31-7fdf-a59e-f20b60a87f99",
+      "address": "stored-items/theme",
+      "type": "stored-item",
+      "name": "theme",
+      "tagline": "The appearance the visitor chose, light or dark, so the next page opens in it.",
+      "fields": {
+        "id": "01a108de-3e31-7fdf-a59e-f20b60a87f99",
+        "source": "Local",
+        "mechanism": "local-storage",
+        "necessity": "optional",
+        "duration": "Until the visitor clears it",
+        "surfaces": [
+          "guestgraph.io website"
+        ]
+      },
+      "sections": [],
+      "owner": null,
+      "path": "model/stored-items/theme.md"
+    },
+    {
       "id": "01a0d2e3-bec0-787f-a548-b7bef4f7c7e4",
       "address": "strategic-objectives/an-agent-can-decide-a-merge-a-hotel-would-accept",
       "type": "strategic-objective",
@@ -12911,7 +13882,7 @@
       "sections": [
         {
           "heading": "What it shows",
-          "text": "- **Landing** — the problem in one line, five strangers and one guest, with the way into the introduction talk and the code.\n- **Team** — each process's phases as a board of the roles that own, execute, support and approve each, and the profiles that hold those roles, drawn from `model.json`.\n- **Principles** — the vision and the values, drawn from `model.json`.\n- **Surfaces** — every surface the model records, with how each is made and what makes it, and nothing kept beside the model, drawn from `model.json`.\n- **API** — the engine's and the connector's operations, generated from their OpenAPI documents at the commits the site pins.\n- **Model** — this model, drawn as a graph from `model.json`, with each entity's card.\n- **Talks** — the introduction talk, narrated in both languages with a PDF, and the questions it ends on.\n- **Billing** — the one meter the hosted service would bill on, what is free and stays so, and the ways to charge that were refused and why.\n- **Privacy** — what leaves a visitor's browser and what stays in it, listed in full, and how the hosted service will treat guest data.\n- **Problems** — what each refusal type a GuestGraph service answers means, and what to do about it.\n- **model.json** — this model parsed at the commit the site pins, published as a dataset.\n- **Chat** — the button at the foot of every prose page and the panel it opens, answered by the chat.guestgraph.io chat.\n- **Structured data** — the organization, the website and the dataset each page describes to a crawler.",
+          "text": "- **Landing** — the problem in one line, five strangers and one guest, with the way into the introduction talk and the code.\n- **Team** — each process's phases as a board of the roles that own, execute, support and approve each, and the profiles that hold those roles, drawn from `model.json`.\n- **Principles** — the vision and the values, drawn from `model.json`.\n- **Surfaces** — every surface the model records, with how each is made and what makes it, and nothing kept beside the model, drawn from `model.json`.\n- **API** — the engine's and the connector's operations, generated from their OpenAPI documents at the commits the site pins.\n- **Model** — this model, drawn as a graph from `model.json`, with each entity's card.\n- **Talks** — the introduction talk, narrated in both languages with a PDF, and the questions it ends on.\n- **Billing** — the one meter the hosted service would bill on, what is free and stays so, and the ways to charge that were refused and why.\n- **Privacy** — what leaves a visitor's browser and what stays in it, listed in full from the model's data processors, processing activities and stored items, and how the hosted service will treat guest data.\n- **Problems** — what each refusal type a GuestGraph service answers means, and what to do about it.\n- **model.json** — this model parsed at the commit the site pins, published as a dataset.\n- **Chat** — the button at the foot of every prose page and the panel it opens, answered by the chat.guestgraph.io chat.\n- **Structured data** — the organization, the website and the dataset each page describes to a crawler.",
           "tables": []
         },
         {
@@ -17817,6 +18788,276 @@
       "from": "01a101e9-720b-712f-8836-97a081d86c9e",
       "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
       "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108dd-f1fd-7218-96bc-e52350522fa0",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-0195-7bc3-ad53-a16299aa585b",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-10d0-7a3e-93cf-e7429ce5ae23",
+      "to": "01a108dd-f1fd-7218-96bc-e52350522fa0",
+      "via": "Processors.Processor",
+      "attrs": {
+        "Receives": "The message and the earlier messages of the same conversation"
+      }
+    },
+    {
+      "from": "01a108de-10d0-7a3e-93cf-e7429ce5ae23",
+      "to": "01a108de-0195-7bc3-ad53-a16299aa585b",
+      "via": "Processors.Processor",
+      "attrs": {
+        "Receives": "The messages and the visitor's address, on the way to the answer"
+      }
+    },
+    {
+      "from": "01a108de-10d0-7a3e-93cf-e7429ce5ae23",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-10d0-7a3e-93cf-e7429ce5ae23",
+      "to": "01a0d44e-8da8-71f1-b1c7-f56d11bb8dee",
+      "via": "surfaces",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-2032-713f-a760-900ce12daf47",
+      "to": "01a108de-0195-7bc3-ad53-a16299aa585b",
+      "via": "Processors.Processor",
+      "attrs": {
+        "Receives": "The question and whether the model could answer it, kept in its Zürich region with the weekly report made from them"
+      }
+    },
+    {
+      "from": "01a108de-2032-713f-a760-900ce12daf47",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-2032-713f-a760-900ce12daf47",
+      "to": "01a0d44e-8da8-71f1-b1c7-f56d11bb8dee",
+      "via": "surfaces",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-2f51-7c49-8857-96a3ade6db33",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-2f51-7c49-8857-96a3ade6db33",
+      "to": "01a0d4e2-c310-7fbe-8fbf-4bd6860d6cf3",
+      "via": "surfaces",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-3e31-7fdf-a59e-f20b60a87f99",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-3e31-7fdf-a59e-f20b60a87f99",
+      "to": "01a0d4e2-c310-7fbe-8fbf-4bd6860d6cf3",
+      "via": "surfaces",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-4d0c-73ca-9439-74a87d8cf815",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-4d0c-73ca-9439-74a87d8cf815",
+      "to": "01a0d4e2-c310-7fbe-8fbf-4bd6860d6cf3",
+      "via": "surfaces",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-5ca1-70b7-a9be-101b67f9b5b0",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-5ca1-70b7-a9be-101b67f9b5b0",
+      "to": "01a0d4e2-c310-7fbe-8fbf-4bd6860d6cf3",
+      "via": "surfaces",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-6c48-78e8-92ea-94fd61a3d2a2",
+      "to": "01a108de-10d0-7a3e-93cf-e7429ce5ae23",
+      "via": "activity",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-6c48-78e8-92ea-94fd61a3d2a2",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-6c48-78e8-92ea-94fd61a3d2a2",
+      "to": "01a0d44e-8da8-71f1-b1c7-f56d11bb8dee",
+      "via": "surfaces",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-7c37-7b65-a051-0ca54a5997b0",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-7c37-7b65-a051-0ca54a5997b0",
+      "to": "01a0d44e-8da8-71f1-b1c7-f56d11bb8dee",
+      "via": "surfaces",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-8b7a-7ff6-9af0-9a7b8a38dc8c",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-8b7a-7ff6-9af0-9a7b8a38dc8c",
+      "to": "01a0d44e-8da8-71f1-b1c7-f56d11bb8dee",
+      "via": "surfaces",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-9aee-7747-92cb-eb38ab0410e2",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-9aee-7747-92cb-eb38ab0410e2",
+      "to": "01a0d44e-8da8-71f1-b1c7-f56d11bb8dee",
+      "via": "surfaces",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-a9c3-74b9-948e-906443f770ad",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-b930-78ee-a86b-ef4704ba3c95",
+      "to": "01a0d4e2-c310-7fbe-8fbf-4bd6860d6cf3",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "surface",
+        "Owner": "",
+        "How": "keeps naming GitHub in its own prose"
+      }
+    },
+    {
+      "from": "01a108de-b930-78ee-a86b-ef4704ba3c95",
+      "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-b930-78ee-a86b-ef4704ba3c95",
+      "to": "01a108de-a9c3-74b9-948e-906443f770ad",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-b930-78ee-a86b-ef4704ba3c95",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-b930-78ee-a86b-ef4704ba3c95",
+      "to": "01a0dd52-d3a0-7afb-a186-0025d9fb5480",
+      "via": "status",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-c8c9-7a5a-aea1-f561dc33927c",
+      "to": "01a108dd-f1fd-7218-96bc-e52350522fa0",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "data-processor",
+        "Owner": "",
+        "How": "says its processing may happen anywhere"
+      }
+    },
+    {
+      "from": "01a108de-c8c9-7a5a-aea1-f561dc33927c",
+      "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-c8c9-7a5a-aea1-f561dc33927c",
+      "to": "01a108de-a9c3-74b9-948e-906443f770ad",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-c8c9-7a5a-aea1-f561dc33927c",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-c8c9-7a5a-aea1-f561dc33927c",
+      "to": "01a0dd52-d3a0-7afb-a186-0025d9fb5480",
+      "via": "status",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-d7fa-7f44-979a-431eb72120ee",
+      "to": "01a0d4e2-c310-7fbe-8fbf-4bd6860d6cf3",
+      "via": "Bears on.Entity",
+      "attrs": {
+        "Type": "surface",
+        "Owner": "",
+        "How": "its Privacy page is built from the model"
+      }
+    },
+    {
+      "from": "01a108de-d7fa-7f44-979a-431eb72120ee",
+      "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-d7fa-7f44-979a-431eb72120ee",
+      "to": "01a108de-a9c3-74b9-948e-906443f770ad",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-d7fa-7f44-979a-431eb72120ee",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a108de-d7fa-7f44-979a-431eb72120ee",
+      "to": "01a0dd52-d3a0-7afb-a186-0025d9fb5480",
+      "via": "status",
       "attrs": {}
     }
   ],

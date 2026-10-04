@@ -1,5 +1,5 @@
 /* @robertblust/design — deck.css, assembled from the shared blocks: link v1 · lockup v1 ·
-   transport v10.
+   transport v11 · rests v1.
    Editing this file in a site does nothing: the next npm run design overwrites it. */
 
 :where(a){color:inherit}
@@ -151,11 +151,13 @@ a.tbtn{text-decoration:none}
   .tdiv{display:none}
   .seg button{padding:0 .16rem; min-width:22px; min-height:44px}
   .lcd{padding:.32rem .34rem .28rem; margin-right:0}
-  /* The chat's button sits bottom right on every page of the family, and here the transport
-     spans the whole bottom edge, so the button stands on top of it, at the height
-     deck.js measures, rather than over its right-hand controls. `body` outranks chat.css's
-     own rule, which a deck links after this file. */
-  body .rbchat-open{bottom:calc(var(--chromeH,0px) + .8rem)}
+  /* The chat's button sits bottom right on every page of the family, beside the transport on
+     a desk. Here the transport spans the whole bottom edge and leaves the button no place:
+     over the transport it hides the controls, and above it it hides the slide. So a deck
+     shows no chat button on a phone. The chat itself stays, and `?chat=open`, the address a
+     PDF page links, still opens it. `body` outranks chat.css's own rule, which a deck
+     links after this file. */
+  body .rbchat-open{display:none}
 }
 /* the theme control's two buttons moved this threshold up from 400px: at 40px
    buttons this tier's own floor is under 360px, so 390, 393, 414 and 430 all fit
@@ -189,3 +191,12 @@ a.tbtn{text-decoration:none}
   .seg.theme button{padding:.1rem .1rem}
   .seg.theme svg{width:8px; height:8px}
 }
+
+.rests{display:flex; flex-wrap:wrap; align-items:center; gap:1cqmin; margin-top:3.4cqmin}
+.rests b{font-weight:400; font-size:clamp(.78rem,1.45cqmin,1.05rem); letter-spacing:.16em; text-transform:uppercase; color:var(--dim); margin-right:.6cqmin}
+.rests a{font-family:"Plex Mono", ui-monospace, monospace; font-size:clamp(.78rem,1.45cqmin,1.05rem);
+         border:1px solid var(--rule); background:var(--raise); border-radius:6px; padding:.3em .65em;
+         color:var(--c-mid); text-decoration:none; transition:border-color .15s ease}
+.rests a:hover{border-color:var(--c-mid)}
+.rests a:focus-visible{outline:2px solid var(--c-mid); outline-offset:2px}
+.rests a i{font-style:normal; color:var(--dim)}
