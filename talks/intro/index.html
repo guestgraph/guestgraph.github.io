@@ -477,6 +477,7 @@
     </div>
     <p class="sub" data-de="Ein erklärbares Gastprofil – aus Daten, die über alle Systeme des Hotels verstreut sind.">One explainable guest profile, from data scattered across every system in the hotel.</p>
     <p class="byline" data-de="Robert Blust · <span>Software Engineer &amp; Architect</span>">Robert Blust · <span>Software Engineer &amp; Architect</span></p>
+    <div class="rests"><b class="mono" data-de="beruht auf">rests on</b><a href="../../model/?stage=expanded#01a0d2e3-bec0-71a1-88ca-2b85827bd967"><i>product</i> GuestGraph Engine</a></div>
   </section>
 
   <!-- 01 · Das Problem -->
@@ -505,6 +506,7 @@
         <text class="nlabel dim" x="320" y="136" style="font-size:12px" data-de="– kein gemeinsamer Schlüssel –">— no shared key —</text>
       </svg>
     </div>
+    <div class="rests"><b class="mono" data-de="beruht auf">rests on</b><a href="../../model/?stage=expanded#01a0d2e2-f788-7f69-a410-27b04537b2c0"><i>vision</i> One guest, not five strangers</a></div>
   </section>
 
   <!-- 02 · Warum es nicht gelöst ist -->
@@ -527,6 +529,7 @@
       </div>
     </div>
     <p class="verdict" data-de="Das Schwierige ist nicht, Treffer zu finden, sondern <em>zu wissen, wann man einem Treffer nicht trauen darf</em>.">The hard part is not finding matches. It is <em>knowing when not to trust one</em>.</p>
+    <div class="rests"><b class="mono" data-de="beruht auf">rests on</b><a href="../../model/?stage=expanded#01a0d2e3-bec0-7ddc-9a13-d048712143de"><i>value</i> A match is not trusted until it is justified</a><a href="../../model/?stage=expanded#01a0d2e3-bec0-723c-831a-fda8080daf6e"><i>strategy</i> Safety-First Strategy</a></div>
   </section>
 
   <!-- 03 · Die Idee -->
@@ -537,11 +540,14 @@
     <div class="kicker mono" data-n="03" data-de="Die Idee">The idea</div>
     <h1 data-de="Speichern, was passiert ist. <em>Herleiten</em>, wer es war.">Store what happened. <em>Derive</em> who it was.</h1>
     <div class="split">
-      <ul class="blist">
-        <li><b data-de="Datensätze sind unveränderlich">Records are immutable</b><span data-de="Korrekturen kommen als neue Datensätze, nie als Änderung. Das Original ist immer das, was die Quelle wirklich geschickt hat.">Corrections arrive as new records, never as edits. The original is always what the source actually sent.</span></li>
-        <li><b data-de="Das Profil ist abgeleitet">The profile is derived</b><span data-de="Aus den Datensätzen berechnet, keine Zeile, die jemand bearbeitet. Es lässt sich jederzeit neu berechnen.">A computation over the records, not a row someone edits. It can always be recomputed.</span></li>
-        <li><b data-de="Von Anfang an mandantengetrennt">Tenant-scoped from day one</b><span data-de="Eine Instanz bedient viele Marken oder Häuser, und zwischen ihnen führt kein Weg.">One instance serves many brands or properties, with no path between them.</span></li>
-      </ul>
+      <div>
+        <ul class="blist">
+          <li><b data-de="Datensätze sind unveränderlich">Records are immutable</b><span data-de="Korrekturen kommen als neue Datensätze, nie als Änderung. Das Original ist immer das, was die Quelle wirklich geschickt hat.">Corrections arrive as new records, never as edits. The original is always what the source actually sent.</span></li>
+          <li><b data-de="Das Profil ist abgeleitet">The profile is derived</b><span data-de="Aus den Datensätzen berechnet, keine Zeile, die jemand bearbeitet. Es lässt sich jederzeit neu berechnen.">A computation over the records, not a row someone edits. It can always be recomputed.</span></li>
+          <li><b data-de="Von Anfang an mandantengetrennt">Tenant-scoped from day one</b><span data-de="Eine Instanz bedient viele Marken oder Häuser, und zwischen ihnen führt kein Weg.">One instance serves many brands or properties, with no path between them.</span></li>
+        </ul>
+        <div class="rests"><b class="mono" data-de="beruht auf">rests on</b><a href="../../model/?stage=expanded#01a0d2e3-bec0-7e38-be08-a70317c07664"><i>value</i> Store what happened, derive who it was</a><a href="../../model/?stage=expanded#01a0dd52-d3a0-7191-8f78-95f589ddf160"><i>decision</i> A source record is never edited, and the guest is derived from it</a><a href="../../model/?stage=expanded#01a0d2e3-bec0-796c-9811-dea357496598"><i>value</i> Tenants never meet</a></div>
+      </div>
       <div class="diagram">
         <svg viewBox="0 0 420 210" role="img" aria-label="Records resolve into one derived guest profile">
           <g class="nlabel dim" style="font-size:11.5px">
@@ -587,6 +593,7 @@
       </div>
     </div>
     <p class="stamp" data-de="Ab Werk ist das automatische Zusammenführen nach Wahrscheinlichkeit <b>ausgeschaltet</b>. Das System schlägt vor; ein Mensch entscheidet.">Out of the box, automatic probabilistic merging is <b>off</b>. It suggests; a human decides.</p>
+    <div class="rests"><b class="mono" data-de="beruht auf">rests on</b><a href="../../model/?stage=expanded#01a0d2e3-bec0-7907-8e24-574c79e4cbeb"><i>concept</i> Matcher</a><a href="../../model/?stage=expanded#01a0d2e3-bec0-757e-8a16-41b9bda6fd28"><i>concept</i> Match review</a><a href="../../model/?stage=expanded#01a0dd52-d3a0-7739-8c09-62c47d96f126"><i>decision</i> The probabilistic matcher ships switched off</a></div>
   </section>
 
   <!-- 05 · Die zwei Garantien -->
@@ -609,6 +616,7 @@
       </div>
     </div>
     <p class="verdict" data-de="Das war ausgeliefert, <em>bevor</em> überhaupt ein unsicherer Entscheid möglich war. Auf diese Reihenfolge kam es an.">This shipped <em>before</em> any uncertain decision was possible. That order was the point.</p>
+    <div class="rests"><b class="mono" data-de="beruht auf">rests on</b><a href="../../model/?stage=expanded#01a0d2e3-bec0-7175-901f-6be202730bb1"><i>value</i> Every merge can be explained and undone</a><a href="../../model/?stage=expanded#01a0d2e3-bec0-7587-b7c5-8ce16eb753af"><i>feature</i> Ask why records are one guest</a><a href="../../model/?stage=expanded#01a0d2e3-bec0-7aba-b601-2b2075f75615"><i>feature</i> Undo a merge</a></div>
   </section>
 
   <!-- 06 · Wo KI hingehört -->
@@ -619,11 +627,14 @@
     <div class="kicker mono" data-n="06" data-de="Wo KI hingehört">Where AI fits</div>
     <h1 data-de="Ein Agent ist nur <em>ein weiterer unsicherer Matcher</em>.">An agent is just <em>another uncertain matcher</em>.</h1>
     <div class="split">
-      <ul class="blist">
-        <li><b data-de="Identität kommt zuerst">Identity comes first</b><span data-de="Ein Agent, der mit Gastdaten arbeitet, muss wissen, welcher Gast gemeint ist. Sonst beantwortet er Fragen über fünf Fremde.">An agent acting on guest data has to know which guest. Without that it answers questions about five strangers.</span></li>
-        <li><b data-de="Abgesichert durch die vorhandenen Mechanismen">Gated by machinery that exists</b><span data-de="Schwellen, Prüfwarteschlange, Umkehrbarkeit – der Agent bekommt keine Ausnahme, die ein Fuzzy-Score nicht auch bekäme.">Thresholds, review queue, reversibility — the agent gets no exemption a fuzzy score would not get.</span></li>
-        <li><b data-de="Der Audit-Trail nennt ihn beim Namen">The audit trail names it</b><span data-de="Zu jedem Entscheid ist festgehalten, ob das System, ein Mensch oder ein benannter Agent ihn getroffen hat.">Every decision records whether the system, a person or a named agent made it.</span></li>
-      </ul>
+      <div>
+        <ul class="blist">
+          <li><b data-de="Identität kommt zuerst">Identity comes first</b><span data-de="Ein Agent, der mit Gastdaten arbeitet, muss wissen, welcher Gast gemeint ist. Sonst beantwortet er Fragen über fünf Fremde.">An agent acting on guest data has to know which guest. Without that it answers questions about five strangers.</span></li>
+          <li><b data-de="Abgesichert durch die vorhandenen Mechanismen">Gated by machinery that exists</b><span data-de="Schwellen, Prüfwarteschlange, Umkehrbarkeit – der Agent bekommt keine Ausnahme, die ein Fuzzy-Score nicht auch bekäme.">Thresholds, review queue, reversibility — the agent gets no exemption a fuzzy score would not get.</span></li>
+          <li><b data-de="Der Audit-Trail nennt ihn beim Namen">The audit trail names it</b><span data-de="Zu jedem Entscheid ist festgehalten, ob das System, ein Mensch oder ein benannter Agent ihn getroffen hat.">Every decision records whether the system, a person or a named agent made it.</span></li>
+        </ul>
+        <div class="rests"><b class="mono" data-de="beruht auf">rests on</b><a href="../../model/?stage=expanded#01a0d2e3-bec0-787f-a548-b7bef4f7c7e4"><i>strategic objective</i> An agent can decide a merge a hotel would accept</a><a href="../../model/?stage=expanded#01a0df31-b560-72bb-ab0d-439fa161267e"><i>decision</i> Every decision on the graph names who made it, and the credential says what kind</a></div>
+      </div>
       <div class="diagram">
         <svg viewBox="0 0 420 220" role="img" aria-label="Three-tier stewardship: rules, agent, human">
           <rect class="flowbox" x="10" y="14" width="400" height="52" rx="9"/>
@@ -663,6 +674,7 @@
       </div>
     </div>
     <p class="verdict" data-de="Noch kein Modell, keine Pipeline. Aber die Daten fallen <em>in der richtigen Form</em> an.">No model yet, and no pipeline. But the data is accruing <em>in the right shape</em>.</p>
+    <div class="rests"><b class="mono" data-de="beruht auf">rests on</b><a href="../../model/?stage=expanded#01a0d2e3-bec0-76ca-bb51-740ef6f8a585"><i>feature</i> Review an uncertain match</a></div>
   </section>
 
   <!-- 08 · Stand -->
@@ -682,6 +694,7 @@
       <span class="todo">○</span><span class="lbl"><b data-de="ML-basiertes Matching">ML-based matching</b> <span data-de="– kein Modell, keine Trainings-Pipeline. Heute besteht der Matcher aus handgeschriebenen Regeln, und sein Name sagt das auch.">— no model, no training pipeline. Today the matcher is hand-written rules, and says so in its name.</span></span>
       <span class="todo">○</span><span class="lbl"><b data-de="Produktivbetrieb">Production use</b> <span data-de="– noch keiner. Keine Kunden. Das ist eine Grundlage, kein Produkt.">— none yet. No customers. This is a foundation, not a product.</span></span>
     </div>
+    <div class="rests"><b class="mono" data-de="beruht auf">rests on</b><a href="../../model/?stage=expanded#01a0d2e3-bec0-765d-89d6-5fc9eaaac662"><i>product</i> Apaleo Connector</a><a href="../../model/?stage=expanded#01a0dd52-d3a0-7147-b738-b875b32f2450"><i>decision</i> Apaleo is the first connector</a><a href="../../model/?stage=expanded#01a0d2e3-bec0-7f09-a7c1-ab9aa30b0fb4"><i>strategic objective</i> Every system a guest passes through feeds the graph</a></div>
   </section>
 
   <!-- 09 · Das Modell -->
@@ -704,6 +717,7 @@
       </div>
     </div>
     <p class="verdict" data-de="Eine Blackbox, die Gäste zusammenführt, würde <em>ich</em> nicht einsetzen.">A black box that merges guests is not something <em>I</em> would deploy.</p>
+    <div class="rests"><b class="mono" data-de="beruht auf">rests on</b><a href="../../model/?stage=expanded#01a0d2e3-bec0-79a0-a13b-13dc385cdcaa"><i>strategy</i> Open Core Strategy</a><a href="../../model/?stage=expanded#01a0dd52-d3a0-70c0-a164-98515fa658ba"><i>decision</i> Open core under Apache 2.0, with paid hosting later</a></div>
   </section>
 
   <!-- 10 · Die Bitte -->
@@ -721,6 +735,7 @@
     </ul>
     <p class="stamp" data-de="
       <b>github.com/guestgraph</b> · ein Nein ist mir mehr wert als ein höfliches Ja"><b>github.com/guestgraph</b> · a no is worth more to me than a polite yes</p>
+    <div class="rests"><b class="mono" data-de="beruht auf">rests on</b><a href="../../model/?stage=expanded#01a0d2e3-bec0-7c1c-8e7e-869091d04d6d"><i>strategic objective</i> Whether a hotel would pay to know its guests is answered</a></div>
   </section>
 
 </div>
