@@ -14,6 +14,7 @@ import { writePrinciples } from "@robertblust/design/render/principles";
 import { writeTeam } from "@robertblust/design/render/team";
 import { processDiagram } from "companygraph-mcp-server/diagram";
 import { writeSurfaces } from "@robertblust/design/render/surfaces";
+import { writePrivacy } from "@robertblust/design/render/privacy";
 import { writeHome } from "@robertblust/design/render/home";
 import { loadGerman } from "@robertblust/design/render/german";
 import { writeQuestionsDe } from "@robertblust/design/render/questions";
@@ -40,6 +41,10 @@ const german = loadGerman(path.join(ROOT, "build", "principles.de.json"));
 // German pipeline in build/questions.de.json, held to the exact English as the principles are,
 // and written to the questions.de.json the chat's tag names.
 const questionsGerman = loadGerman(path.join(ROOT, "build", "questions.de.json"));
+// The German of the privacy page's lineage, held to the model's exact English: the stored items'
+// taglines, the activities' names and what each processor receives. Made by the roles from
+// `npx design german privacy model.json`.
+const privacyGerman = loadGerman(path.join(ROOT, "build", "privacy.de.json"));
 // The order the boards argue in: the work first, then how an outsider joins it, then how a
 // visitor is answered. Core gives a process no rank, so the site names the order, and the
 // renderer refuses the build if a name leaves the model.
@@ -50,6 +55,7 @@ const RENDERERS = [
   // at the commit source.json pins, so the picture moves only when the pin does.
   (d, o) => writeTeam(d, { ...o, order: ["Deciding", "Delivery", "Contribution", "Feature request", "Answering", "Narrating"], diagram: (data, p) => processDiagram(data, p.id) }),
   writeSurfaces,
+  (d, o) => writePrivacy(d, { ...o, site: "guestgraph.io", de: privacyGerman.de }),
   (d, o) => writeHome(d, { ...o, root: ROOT, de: german.de, heading: { en: "{n} values, each with the thing <em>we never do</em>.", de: "{n} Werte – jeder mit dem, <em>was wir nie tun</em>." } }),
   writeJsonLd,
   // One redirect page per entity with a stable id, at the address build/jsonld.mjs gives the
@@ -62,6 +68,11 @@ const stale = RENDERERS.flatMap((write) => write(data, { check, root: ROOT }));
 const unused = german.unused();
 if (unused.length) {
   console.error(`  ✗ build/principles.de.json holds German for English the model no longer says:\n${unused.map((en) => `    "${en}"`).join("\n")}`);
+  process.exit(1);
+}
+const unusedPrivacy = privacyGerman.unused();
+if (unusedPrivacy.length) {
+  console.error(`  ✗ build/privacy.de.json holds German for English the model no longer says:\n${unusedPrivacy.map((en) => `    "${en}"`).join("\n")}`);
   process.exit(1);
 }
 const unusedQuestions = questionsGerman.unused();

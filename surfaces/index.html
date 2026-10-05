@@ -338,7 +338,7 @@
       <!-- surfaces:start -->
       <div class="lineage" id="lineage">
         <svg class="wires" id="wires" aria-hidden="true"></svg>
-        <div class="ln-model" id="lnmodel"><div class="lbl" data-de="Das Modell">The model</div><div class="nm">mental-model</div><div class="at mono">@66e7248</div></div>
+        <div class="ln-model" id="lnmodel"><div class="lbl" data-de="Das Modell">The model</div><div class="nm">mental-model</div><div class="at mono">@faacb74</div></div>
         <ul class="ln-groups">
           <li class="ln-group">
             <div class="ln-maker" data-maker="https://github.com/guestgraph/guestgraph.github.io"><svg class="mk build" aria-hidden="true"><use href="#m-build"/></svg><span class="who">guestgraph.github.io<span class="how" data-de="Build">build</span></span></div>
@@ -501,7 +501,7 @@
 <script src="../card.js"></script>
 <script>
   var STAGE_PAGE = "../model/";   // the page that draws this model on the stage
-  /* ─── surfaces lineage · v2 · shared ───────────────────────────────
+  /* ─── surfaces lineage · v3 · shared ───────────────────────────────
      Generated from @robertblust/design — edit it there and run `npm run design`.
 
      The lineage's behavior on /surfaces/: the wires drawn from where the nodes landed, a
@@ -545,7 +545,8 @@
       if (getComputedStyle(svg).display === "none") return;
       var on = current && current.getAttribute("data-maker"), out = [], m = at(model);
       [].forEach.call(document.querySelectorAll(".ln-maker"), function(mk){
-        var key = mk.getAttribute("data-maker"), a = at(mk), cls = key === "hand" ? "hand" : "";
+        var key = mk.getAttribute("data-maker"), a = at(mk),
+            cls = mk.closest(".ln-group").classList.contains("hand") ? "hand" : "";
         out.push('<path class="' + cls + (on === key ? " on" : "") + '" d="' + curve(m.r, m.y, a.l - 8, a.y) + '"/>');
         var right = at(mk.querySelector(".who")).r + 10;
         btns.forEach(function(b){

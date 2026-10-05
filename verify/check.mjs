@@ -118,7 +118,7 @@ const PAGES = [
     // contract, title contract, prose reset and prose footer, so fences is empty;
     // tokenVersion reads tokens.css's own opening comment instead of a page marker.
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: [],
-    card: true, cardBase: SITE, internalLinks: true },
+    card: true, cardBase: SITE, internalLinks: true, privacyPath: true },
 
   // The problems page. A refusal's `type` URI is this page's address with the slug as its
   // fragment, so every slug the two services answer must land on a heading here; the list is

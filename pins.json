@@ -20,6 +20,6 @@
     "npm run api:check",
     "GITHUB_TOKEN=${GITHUB_TOKEN:-$(gh auth token)} npm run pin:check",
     "npx playwright install --with-deps chromium",
-    "PORT=$(python3 -c 'import socket; s = socket.socket(); s.bind((\"\", 0)); print(s.getsockname()[1])'); python3 -m http.server $PORT >/dev/null 2>&1 & SERVER_PID=$!; sleep 1; BASE=http://localhost:$PORT npm run verify && npx design links --base http://127.0.0.1:$PORT; STATUS=$?; kill $SERVER_PID; exit $STATUS"
+    "PORT=$(python3 -c 'import socket; s = socket.socket(); s.bind((\"\", 0)); print(s.getsockname()[1])'); ./node_modules/.bin/design serve --port $PORT & SERVER_PID=$!; sleep 1; BASE=http://localhost:$PORT npm run verify && npx design links --base http://127.0.0.1:$PORT; STATUS=$?; kill $SERVER_PID; exit $STATUS"
   ]
 }
