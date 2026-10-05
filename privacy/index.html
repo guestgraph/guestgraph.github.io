@@ -214,18 +214,26 @@
 
   .cols{margin-top:2rem; display:grid; gap:1.1rem; align-items:start;
         grid-template-columns:repeat(auto-fit, minmax(280px, 1fr))}
-  .card{background:var(--raise); border:1.5px solid var(--rule); border-radius:12px;
+  .box{background:var(--raise); border:1.5px solid var(--rule); border-radius:12px;
         padding:1.5rem 1.6rem}
-  .card h3{font-size:.76rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  .box h3{font-size:.76rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
            color:var(--dim)}
-  .card ul{margin-top:1.1rem; list-style:none; display:grid; gap:.95rem}
-  .card li{font-size:.98rem; line-height:1.45}
-  .card li b{font-weight:600}
-  .card li i{font-style:normal; display:block; color:var(--dim); font-size:.88rem; margin-top:.2rem}
-  .card li i .mono{font-size:.95em; color:var(--ink)}
+  .box ul{margin-top:1.1rem; list-style:none; display:grid; gap:.95rem}
+  .box li{font-size:.98rem; line-height:1.45}
+  .box li b{font-weight:600}
+  .box li i{font-style:normal; display:block; color:var(--dim); font-size:.88rem; margin-top:.2rem}
+  .box li i .mono{font-size:.95em; color:var(--ink)}
   /* five short items across a full-width card read as a list, not a column of stubs */
   .wide ul{grid-template-columns:repeat(auto-fit, minmax(255px, 1fr)); gap:1.3rem 1.8rem}
-  /* the .never card (declined options): terms use plain --ink like any other card, no separate treatment needed */
+  /* the .never box (declined options): terms use plain --ink like any other card, no separate treatment needed */
+
+  /* The lineage under "Where your data goes": what /surfaces/ keeps in its own page beside the
+     lineage block — the panel its cards open in, the hint and the caption. */
+  .ln-hint{margin-top:1.6rem; font-size:.82rem; color:var(--dim)}
+  .ln-panel{margin-top:1.6rem}
+  .ln-panel .card{width:100%}
+  .figcap{margin-top:1.1rem; color:var(--dim); font-size:clamp(1rem,1.3vw,1.14rem); line-height:1.5; max-width:68ch}
+  .derived{margin-top:2.6rem; font-family:"Plex Mono",monospace; font-size:.78rem; letter-spacing:.06em; color:var(--dim)}
 
   .rules{margin-top:2rem; display:grid; gap:1.6rem; max-width:68ch}
   .rules p{color:var(--dim); font-size:1rem}
@@ -236,8 +244,22 @@
 </style>
 <script>/* Start the fonts before the first layout needs them, so the first frame has them. */try{document.fonts.forEach(function(f){f.load()})}catch(e){}</script>
 <script type="module" blocking="render">/* Hold the first paint until the fonts have loaded, for at most 300ms: a page painted before them shows its text in another face and then moves it. */try{await Promise.race([Promise.all([...document.fonts].map(function(f){return f.load()})),new Promise(function(r){setTimeout(r,300)})])}catch(e){}</script>
+<link rel="stylesheet" href="../stage.css">
+<!-- The model, which the lineage under "Where your data goes" and its cards read. -->
+<link rel="preload" as="fetch" href="../model.json" data-stage data-images="../images/" crossorigin>
 </head>
 <body>
+<script src="../card.js"></script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="m-hand" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M8 .8l5.4 6.3-2.9 8.1H5.5L2.6 7.1zM8 7.2a1.35 1.35 0 1 0 0 2.7 1.35 1.35 0 0 0 0-2.7z"/>
+  </symbol>
+  <symbol id="m-build" viewBox="0 0 16 16">
+    <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="1.8" y="1.8" width="12.4" height="12.4" rx="2.8"/><path d="M6.4 5.6L4.2 8l2.2 2.4M9.6 5.6L11.8 8 9.6 10.4"/>
+    </g>
+  </symbol>
+</defs></svg>
 
 <div class="shell">
   <header>
@@ -278,7 +300,7 @@
 <main>
   <div class="shell">
     <div class="title">
-      <h1 data-de="<span class='r70'>Diese Website sammelt</span><span class='rcl'><em>nichts</em>.</span>"><span class="r70">This site collects</span><span class="rcl"><em>nothing</em>.</span></h1>
+      <h1 data-de="<span class='r70'>Diese Website sammelt</span><span class='rcl'><em>nichts</em>,</span><span class='r70'>bis Sie den Chat fragen.</span>"><span class="r70">This site collects</span><span class="rcl"><em>nothing</em></span><span class="r70">until you ask the chat.</span></h1>
       <p class="tagline" data-de="Keine Cookies, keine Webanalyse, keine Anfragen an Dritte. Die Liste dessen, was Ihren Browser verlässt, ist kurz genug, um sie hier abzudrucken.">No cookies, no analytics, no third-party requests. The list of what leaves your browser is short enough to print here.</p>
       <p class="note" data-de="Eine Ausnahme, und es steht uns nicht zu, sie zu entfernen: GitHub liefert diese Seiten aus und sieht dabei – wie jeder Hoster – die Anfrage, mit der sie abgerufen werden.">One exception, and it is not ours to remove: GitHub serves these pages and, like any host, sees the request that fetches them.</p>
     </div>
@@ -286,18 +308,13 @@
     <section>
       <h2 data-de="Was diese Website tut">What this site does</h2>
       <p class="lede" data-de="Alles, was diese Seite braucht, kommt von guestgraph.io – auch die Schriften. Nichts wird anderswo geholt, also erfährt kein Dritter, dass Sie hier waren.">Everything this page needs comes from guestgraph.io, fonts included. Nothing is fetched from anywhere else, so no third party learns that you were here.</p>
-      <!-- no data-de: this is the value itself, and it says the same thing in either language.
-           Both cases are shown because pinning one would be wrong the moment you switch. -->
-      <p class="unit mono"><b>localStorage</b><br>lang = "de" | "en"<br>theme = "light" | "dark"<br>stage-card, stage-card-modal = a width in pixels</p>
-      <p class="unit mono"><b>sessionStorage</b><br>chat = the conversation in this tab<br>chat-size = the panel's size in pixels<br>chat-pictures = the figures the chat drew in this tab</p>
-      <p class="lede" data-de="Das ist alles, was gespeichert wird: Ihre Sprachwahl, zwei Buchstaben, und Ihre Darstellungswahl, ein Wort, damit die nächste Seite sie kennt, sowie die Breite, die Sie für den Detailbereich auf der Modell-Seite eingestellt haben. Diese Breite wird erst gespeichert, wenn Sie den Trenner verschoben haben, einmal für die Seite und einmal für die vergrösserte Ansicht. Nichts davon erreicht einen Server oder identifiziert jemanden. Der Chat speichert drei weitere Angaben, nur solange dieser Tab offen ist: den Verlauf aus Ihren Fragen und seinen Antworten, damit das Gespräch nicht verloren geht, wenn Sie einem Link folgen, die Grösse des Chatfensters und die Diagramme, die er in seinen Antworten gezeichnet hat. Alle drei verschwinden, wenn der Tab geschlossen wird.">That is everything that gets stored: your choice of language, two letters, your choice of appearance, one word, so the next page knows them, and how wide you set the details panel on the model page, stored only once you have moved its divider, once for the page and once for the expanded view. None of it reaches a server or identifies anybody. The chat adds three more, and only while this tab is open: what you asked and what you were told, so that following a link does not lose the conversation, how big you made the panel and the figures it drew in its answers. All three go when the tab closes.</p>
       <div class="cols">
-        <div class="card never wide">
+        <div class="box never wide">
           <h3 data-de="Gar nicht erst verwendet">Not used at all</h3>
           <ul>
             <li><b data-de="Cookies">Cookies</b><i data-de="Keine, gleich welcher Art. Es gibt kein Banner, weil es nichts gibt, dem Sie zustimmen müssten.">None, of any kind. There is no banner because there is nothing to consent to.</i></li>
             <li><b data-de="Webanalyse">Analytics</b><i data-de="Nichts zählt Ihre Besuche, und niemandem wird mitgeteilt, dass Sie hier waren.">Nothing counts you, and nobody is told that you were here.</i></li>
-            <li><b data-de="Anfragen an Dritte">Third-party requests</b><i data-de="Schriften, Bilder und Stylesheets kommen alle von dieser Domain. Kein CDN sieht Ihre Adresse. Die einzige Ausnahme ist der Chat, und auch das erst, wenn Sie ihn geöffnet und auf Senden gedrückt haben: Ihre Nachricht geht an chat.guestgraph.io und von dort an Anthropic. Wo der Chat seine Antworten prüft, gehen zudem die Sätze der Antwort an TypeSafe, nie aber die Nachricht.">Fonts, images and styles all come from this origin. No CDN sees your address. The one exception is the chat, and only once you have opened it and pressed send: that message goes to chat.guestgraph.io and from there to Anthropic. Where the chat checks its answers, the answer's sentences also go to TypeSafe, never the message.</i></li>
+            <li><b data-de="Anfragen an Dritte">Third-party requests</b><i data-de="Schriften, Bilder und Stylesheets kommen alle von dieser Domain. Kein CDN sieht Ihre IP-Adresse. Die einzige Ausnahme ist der Chat, sobald Sie auf Senden drücken. Wohin Ihre Nachricht geht, zeigt das Diagramm <a href='#lineage'>Wohin Ihre Daten gehen</a>.">Fonts, images and styles all come from this origin. No CDN sees your address. The one exception is the chat, once you press send; where your message goes is drawn under <a href="#lineage">Where your data goes</a>.</i></li>
             <li><b data-de="Formulare und Konten">Forms and accounts</b><i data-de="Nichts auszufüllen, keine Anmeldung, nichts zu speichern.">Nothing to fill in, nothing to sign up for, nothing to store.</i></li>
             <li><b data-de="Fingerprinting">Fingerprinting</b><i data-de="Es wird nicht versucht, Sie über Besuche hinweg wiederzuerkennen. Die gespeicherte Sprach- und Darstellungswahl ist kein Erkennungsmerkmal.">No attempt is made to recognize you across visits. The language and theme keys are not identifiers.</i></li>
           </ul>
@@ -306,11 +323,52 @@
     </section>
 
     <section>
-      <h2 data-de="Der Chat">The chat</h2>
-      <div class="rules">
-        <p data-de="Die Schaltfläche am Fuss jeder Seite öffnet einen Chat mit unserem Modell. Bis Sie ihn öffnen und auf Senden drücken, geschieht nichts. Dann gehen Ihre Nachricht und die vorherigen Nachrichten dieses Gesprächs an chat.guestgraph.io, einen Dienst dieser Website. Er befragt das Modell bei <a href='https://mcp.guestgraph.io/'>mcp.guestgraph.io</a> mit dessen Werkzeugen. Aus dem, was die Werkzeuge liefern, schreibt Claude die Antwort. Claude ist das Sprachmodell von Anthropic und wird über die API von Anthropic aufgerufen. Anthropic kann Ihre Nachricht in jedem Land seiner Wahl bearbeiten. Was Anthropic davon behält, speichert es in den USA, gemäss seinen eigenen Bedingungen bis zu dreissig Tage lang. Wo der Chat seine Antworten prüft, sendet der Dienst zudem die Sätze der Antwort und die Teile der öffentlichen Seiten des Modells, auf die sie sich stützen, an TypeSafe in den USA. Das Modell von TypeSafe beurteilt, ob diese Seiten jeden einzelnen Satz belegen; Ihre Frage und Ihre Adresse gelangen nicht dorthin. TypeSafe trainiert seine Modelle nicht mit dem, was es erhält, und bewahrt es gemäss seinen eigenen Bedingungen so lange auf, wie es dies für seinen Dienst braucht. Der Dienst zählt, was eine Antwort gekostet hat. Die Frage, die Sie gesendet haben, und ob das Modell sie beantworten konnte, behält der Dienst neunzig Tage lang, damit die Person, die diese Website betreibt, sieht, was das Modell noch nicht sagen kann. Dazu speichert er keine Adresse und nichts von der Antwort. Aus diesen Fragen entsteht wöchentlich eine Zusammenfassung, die diese Person liest und die nicht länger aufbewahrt wird als die Fragen selbst. Ihr Browser behält das Gespräch und die Grösse des Chatfensters nur in diesem Tab: Beides bleibt erhalten, wenn Sie einem Link folgen, und endet, wenn Sie den Tab schliessen.">The button at the foot of each page opens a chat with our model. Nothing happens until you open it and press send. Then your message, and the messages before it in that conversation, go to chat.guestgraph.io, a service of this site, which asks the model at <a href="https://mcp.guestgraph.io/">mcp.guestgraph.io</a> through its tools and asks Claude, Anthropic's language model, through Anthropic's API, to write the answer from what the tools said. Anthropic may process your message in any country it chooses, stores what it keeps in the United States, and keeps it for up to thirty days under its own terms. Where the chat checks its answers, the service also sends the answer's sentences, and the parts of the model's public pages they rest on, to TypeSafe in the United States, whose model judges whether those pages carry each sentence; your question and your address do not go there. TypeSafe does not train its models on what it receives, and keeps it for as long as it needs to provide its service, under its own terms. The service counts what an answer cost, and it keeps the question you sent, and whether the model could answer it, for ninety days, so that the person who runs this site sees what the model cannot yet say; it keeps no address with it and nothing of the answer. A weekly summary made from those questions is read by that person and outlives none of them. Your browser keeps the conversation, and how big you have made the panel, in this tab alone, so both survive following a link, and closing the tab ends them.</p>
-        <p data-de="Die Antworten des Chats stammen aus dem Modell und nennen die Einträge, auf die sie sich stützen; sie werden von einem Sprachmodell geschrieben und können falsch sein. Das Modell beschreibt GuestGraph und enthält keine Daten von Gästen. Der Chat kann deshalb keine Auskunft über die Gäste eines Hotels geben, und Personendaten eines Gastes gehören nicht in eine Frage. Der Dienst weist eine Nachricht ab, bevor er das Modell fragt: wenn das Tageskontingent an Antworten aufgebraucht ist, wenn von einer Adresse innert einer Stunde zu viele kommen oder wenn der Chat abgeschaltet ist. Eine abgewiesene Nachricht kostet nichts und wird nie an das Modell geschickt.">What the chat answers comes from the model and names the entries it rests on; it is written by a language model and can be wrong. The model describes GuestGraph and holds no guest's data, so the chat cannot answer about a hotel's guests, and a guest's personal data does not belong in a question. The service refuses a message before asking the model when the day's share of answers is spent, when an address sends too many in an hour, or when the chat is switched off, and a refused message costs nothing and is never sent to the model.</p>
+      <h2 data-de="Wohin Ihre Daten gehen">Where your data goes</h2>
+      <p class="lede" data-de="Der Chat am Fuss jeder Seite sendet nichts, bis Sie auf Senden drücken. Weist er eine Nachricht ab, bevor er das Modell fragt, wird sie nie weitergeschickt. Das geschieht, wenn das Tageskontingent aufgebraucht ist, wenn von einer IP-Adresse innert einer Stunde zu viele Nachrichten gekommen sind oder wenn der Chat abgeschaltet ist. Seine Antworten stammen aus dem Modell und nennen die Einträge, auf die sie sich stützen. Weil ein Sprachmodell sie schreibt, können sie falsch sein. Das Modell beschreibt GuestGraph und enthält keine Daten von Gästen. Der Chat kann deshalb keine Auskunft über die Gäste eines Hotels geben, und Personendaten eines Gastes gehören nicht in eine Frage. Alles Weitere – was aufbewahrt wird, wer es erhält und wie lange – ist unten dargestellt, direkt aus dem Modell.">The chat at the foot of each page sends nothing until you press send, and a message it refuses before asking the model, because the day's share is spent, an address has sent too many in an hour or the chat is switched off, is never sent on. What it answers comes from the model and names the entries it rests on, and since a language model writes it, it can be wrong. The model describes GuestGraph and holds no guest's data, so the chat cannot answer about a hotel's guests, and a guest's personal data does not belong in a question. Everything else, what is kept, who receives it and for how long, is drawn below from the model.</p>
+      <!-- privacy:start -->
+      <div class="lineage" id="lineage">
+        <svg class="wires" id="wires" aria-hidden="true"></svg>
+        <div class="ln-model" id="lnmodel"><div class="lbl" data-de="Auf guestgraph.io">On guestgraph.io</div><div class="nm" data-de="Ihr Besuch">Your visit</div><div class="at mono">@faacb74</div></div>
+        <ul class="ln-groups">
+          <li class="ln-group hand">
+            <div class="ln-maker" data-maker="local-storage"><svg class="mk hand" aria-hidden="true"><use href="#m-hand"/></svg><span class="who"><span data-de="In Ihrem Browser gespeichert">Kept in your browser</span><span class="how" data-de="bis Sie die Daten löschen · nie automatisch übermittelt">until you clear it · never sent on its own</span></span></div>
+            <ul class="ln-surfaces">
+              <li><button class="ln-s" type="button" id="key-lang" data-id="01a108de-2f51-7c49-8857-96a3ade6db33" data-maker="local-storage" aria-pressed="false" aria-controls="lnpanel"><span class="nm">lang</span><span class="host" data-de="Die Sprache, die Sie gewählt haben, `de` oder `en`, damit sich die nächste Seite in dieser Sprache öffnet">The language the visitor chose, `de` or `en`, so the next page opens in it</span></button></li>
+              <li><button class="ln-s" type="button" id="key-stage-card" data-id="01a108de-4d0c-73ca-9439-74a87d8cf815" data-maker="local-storage" aria-pressed="false" aria-controls="lnpanel"><span class="nm">stage-card</span><span class="host" data-de="Wie breit Sie den Detailbereich auf den Modellseiten eingestellt haben, in Pixeln">How wide the visitor left the details panel on the model pages, in pixels</span></button></li>
+              <li><button class="ln-s" type="button" id="key-stage-card-modal" data-id="01a108de-5ca1-70b7-a9be-101b67f9b5b0" data-maker="local-storage" aria-pressed="false" aria-controls="lnpanel"><span class="nm">stage-card-modal</span><span class="host" data-de="Wie breit Sie den Detailbereich in der vergrösserten Ansicht eingestellt haben, in Pixeln">How wide the visitor left the details panel in the expanded view, in pixels</span></button></li>
+              <li><button class="ln-s" type="button" id="key-theme" data-id="01a108de-3e31-7fdf-a59e-f20b60a87f99" data-maker="local-storage" aria-pressed="false" aria-controls="lnpanel"><span class="nm">theme</span><span class="host" data-de="Das Erscheinungsbild, das Sie gewählt haben, hell oder dunkel, damit die nächste Seite gleich so erscheint">The appearance the visitor chose, light or dark, so the next page opens in it</span></button></li>
+            </ul>
+          </li>
+          <li class="ln-group hand">
+            <div class="ln-maker" data-maker="session-storage"><svg class="mk hand" aria-hidden="true"><use href="#m-hand"/></svg><span class="who"><span data-de="In diesem Tab gespeichert">Kept in this tab</span><span class="how" data-de="bis der Tab geschlossen wird · nie automatisch übermittelt">until the tab closes · never sent on its own</span></span></div>
+            <ul class="ln-surfaces">
+              <li><button class="ln-s" type="button" id="key-chat" data-id="01a108de-6c48-78e8-92ea-94fd61a3d2a2" data-maker="session-storage" aria-pressed="false" aria-controls="lnpanel"><span class="nm">chat</span><span class="host" data-de="Das Gespräch in diesem Tab, damit es nicht verloren geht, wenn Sie einem Link folgen">The conversation in this tab, so following a link does not lose it</span></button></li>
+              <li><button class="ln-s" type="button" id="key-chat-facts" data-id="01a108de-9aee-7747-92cb-eb38ab0410e2" data-maker="session-storage" aria-pressed="false" aria-controls="lnpanel"><span class="nm">chat-facts</span><span class="host" data-de="Was der Chat aus der Datei des Modells gelesen hat, um Fragen vorzuschlagen. So zeigt die nächste Seite diese Fragen sofort an">What the chat read from the model's file to offer its questions, so the next page draws them at once</span></button></li>
+              <li><button class="ln-s" type="button" id="key-chat-pictures" data-id="01a108de-8b7a-7ff6-9af0-9a7b8a38dc8c" data-maker="session-storage" aria-pressed="false" aria-controls="lnpanel"><span class="nm">chat-pictures</span><span class="host" data-de="Die Diagramme, die der Chat in diesem Tab in seinen Antworten gezeichnet hat">The figures the chat drew in its answers in this tab</span></button></li>
+              <li><button class="ln-s" type="button" id="key-chat-size" data-id="01a108de-7c37-7b65-a051-0ca54a5997b0" data-maker="session-storage" aria-pressed="false" aria-controls="lnpanel"><span class="nm">chat-size</span><span class="host" data-de="Wie gross Sie das Chatfenster eingestellt haben, in Pixeln">How big the visitor made the chat panel, in pixels</span></button></li>
+            </ul>
+          </li>
+          <li class="ln-group">
+            <div class="ln-maker" data-maker="activity:01a108de-10d0-7a3e-93cf-e7429ce5ae23"><svg class="mk build" aria-hidden="true"><use href="#m-build"/></svg><span class="who"><span data-de="Antworten im Chat">Answering in the chat</span><span class="how" data-de="berechtigte Interessen · bis der Tab geschlossen wird">legitimate interests · in your tab only</span></span></div>
+            <ul class="ln-surfaces">
+              <li><button class="ln-s" type="button" id="answering-in-the-chat-google-cloud" data-id="01a108de-0195-7bc3-ad53-a16299aa585b" data-maker="activity:01a108de-10d0-7a3e-93cf-e7429ce5ae23" aria-pressed="false" aria-controls="lnpanel"><span class="nm">Google Cloud</span><span class="host" data-de="CH · Die Nachrichten und Ihre IP-Adresse, während die Antwort entsteht">CH · The messages and the visitor's address, on the way to the answer</span></button></li>
+              <li><button class="ln-s" type="button" id="answering-in-the-chat-anthropic" data-id="01a108dd-f1fd-7218-96bc-e52350522fa0" data-maker="activity:01a108de-10d0-7a3e-93cf-e7429ce5ae23" aria-pressed="false" aria-controls="lnpanel"><span class="nm">Anthropic</span><span class="host" data-de="weltweit · gespeichert in US · Die Nachricht und die vorherigen Nachrichten desselben Gesprächs">any country · stored US · The message and the earlier messages of the same conversation</span></button></li>
+              <li><button class="ln-s" type="button" id="answering-in-the-chat-typesafe" data-id="01a109b7-ea95-7ef7-b81c-f1a8a51a1b0a" data-maker="activity:01a108de-10d0-7a3e-93cf-e7429ce5ae23" aria-pressed="false" aria-controls="lnpanel"><span class="nm">TypeSafe</span><span class="host" data-de="US · Die Sätze der Antwort und die Stellen der Modellseiten, auf die sie sich stützen">US · The answer's sentences and the parts of the model's pages they rest on</span></button></li>
+            </ul>
+          </li>
+          <li class="ln-group">
+            <div class="ln-maker" data-maker="activity:01a108de-2032-713f-a760-900ce12daf47"><svg class="mk build" aria-hidden="true"><use href="#m-build"/></svg><span class="who"><span data-de="Aufbewahrung der Fragen an den Chat">Keeping the chat's questions</span><span class="how" data-de="berechtigte Interessen · 90 Tage">legitimate interests · 90 days</span></span></div>
+            <ul class="ln-surfaces">
+              <li><button class="ln-s" type="button" id="keeping-the-chat-s-questions-google-cloud" data-id="01a108de-0195-7bc3-ad53-a16299aa585b" data-maker="activity:01a108de-2032-713f-a760-900ce12daf47" aria-pressed="false" aria-controls="lnpanel"><span class="nm">Google Cloud</span><span class="host" data-de="CH · Die Frage und ob das Modell sie beantworten konnte, aufbewahrt in der Region Zürich, zusammen mit dem wöchentlichen Bericht, der aus den Fragen entsteht">CH · The question and whether the model could answer it, kept in its Zürich region with the weekly report made from them</span></button></li>
+            </ul>
+          </li>
+        </ul>
       </div>
+      <!-- privacy:end -->
+      <div class="ln-panel" id="lnpanel" aria-live="polite" hidden><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
+      <p class="ln-hint" id="lnhint" data-de="Wählen Sie einen Eintrag, um seiner Linie zu folgen und seine Karte zu lesen.">Choose an entry to follow its line and read its card.</p>
+      <p class="figcap" data-de="Links Ihr Besuch; in der Mitte, was Ihre Daten aufbewahrt oder bearbeitet und auf welcher Rechtsgrundlage; rechts die Schlüssel in Ihrem Browser und die Empfänger, jeweils mit dem, was sie erhalten. Jeder Eintrag stammt aus dem Modell im genannten Commit und öffnet seine Karte.">Left, your visit; in the middle, what keeps or handles your data and on what grounds; right, the keys in your browser and the parties that receive something, with what they receive. Every entry comes from the model at the commit named, and opens its card.</p>
+      <p class="derived"><span data-de="Erzeugt aus">Generated from</span> <a id="srclink" data-src="model" href="https://github.com/guestgraph/mental-model/tree/HEAD/model">guestgraph/mental-model</a>@<span id="srccommit">HEAD</span> — <code class="mono">model/stored-items/</code>, <code class="mono">model/processing-activities/</code> <span data-de="und">and</span> <code class="mono">model/data-processors/</code>.</p>
     </section>
     <section>
       <h2 data-de="Gastdaten, sobald es welche gibt">Guest data, when there is any</h2>
@@ -451,6 +509,120 @@
   // object — set here, inside this closure, because that is the only place both are in scope.
   window.rbPage = { lang: lang, applyLang: applyLang };
 })();
+</script>
+<script>
+  var STAGE_PAGE = "../model/";   // the page that draws this model on the stage
+  /* ─── surfaces lineage · v3 · shared ───────────────────────────────
+     Generated from @robertblust/design — edit it there and run `npm run design`.
+
+     The lineage's behavior on /surfaces/: the wires drawn from where the nodes landed, a
+     surface chosen by click or by address, and its card in the panel under the drawing. It
+     holds the page's card glue as well as its drawing, rather than leaving that to the
+     `model card` block, because the two share state: the card shown is the surface chosen,
+     and choosing one redraws the wires and fills the panel in one step. It moved here from
+     /surfaces/ with one thing generalized and nothing else: where a card's links go.
+
+     This block has a contract with the page around it that `design:check` cannot see, because
+     the check only compares bytes between the markers. The page must load card.js before it
+     and declare, above this fence in the same script:
+
+       var STAGE_PAGE = "../model/";   // the page that draws this model on the stage
+
+     and carry what lib/render/surfaces.mjs writes, the panel (`#lnpanel`, holding a card with
+     `.cbody` and `.cfoot span`), the hint (`#lnhint`), and the provenance line (`#srclink`
+     with its `data-src`, and `#srccommit`).
+  */
+  // The nodes are in the markup; the lines and the cards are not. A line is drawn from where two
+  // nodes landed, which only the browser knows, and says nothing the nesting of the lists does not.
+  // A card is rendered when its surface is chosen and again when the language changes, as a seat's
+  // card is on /team/.
+  (function(){
+    var box = document.getElementById("lineage"), svg = document.getElementById("wires"),
+        model = document.getElementById("lnmodel"), panel = document.getElementById("lnpanel"),
+        hint = document.getElementById("lnhint"),
+        btns = [].slice.call(document.querySelectorAll(".ln-s")), current = null, card = null;
+
+    function at(el){
+      var a = el.getBoundingClientRect(), b = box.getBoundingClientRect();
+      return { l: a.left - b.left, r: a.right - b.left, y: a.top - b.top + a.height / 2 };
+    }
+    function curve(x1, y1, x2, y2){
+      var m = (x1 + x2) / 2;
+      return "M" + x1 + " " + y1 + "C" + m + " " + y1 + " " + m + " " + y2 + " " + x2 + " " + y2;
+    }
+    // Model to each maker, maker to each of its surfaces. The chosen surface's two segments take
+    // --c-path, which is what that token names: the way back to the root.
+    function draw(){
+      if (getComputedStyle(svg).display === "none") return;
+      var on = current && current.getAttribute("data-maker"), out = [], m = at(model);
+      [].forEach.call(document.querySelectorAll(".ln-maker"), function(mk){
+        var key = mk.getAttribute("data-maker"), a = at(mk),
+            cls = mk.closest(".ln-group").classList.contains("hand") ? "hand" : "";
+        out.push('<path class="' + cls + (on === key ? " on" : "") + '" d="' + curve(m.r, m.y, a.l - 8, a.y) + '"/>');
+        var right = at(mk.querySelector(".who")).r + 10;
+        btns.forEach(function(b){
+          if (b.getAttribute("data-maker") !== key) return;
+          var s = at(b);
+          out.push('<path class="' + cls + (b === current ? " on" : "") + '" d="' + curve(right, a.y, s.l, s.y) + '"/>');
+        });
+      });
+      svg.innerHTML = out.join("");
+    }
+    function lang(){ return document.documentElement.lang === "de" ? "de" : "en"; }
+    function show(){
+      if (!current || !card) return;
+      card(current.getAttribute("data-id"));
+    }
+    function select(b, address){
+      current = b;
+      btns.forEach(function(x){ x.setAttribute("aria-pressed", String(x === b)); });
+      panel.hidden = !b; hint.hidden = !!b;
+      show();
+      if (address) history.replaceState(null, "", b ? "#" + b.id : location.pathname + location.search);
+      draw();
+    }
+    btns.forEach(function(b){
+      b.addEventListener("click", function(){ select(current === b ? null : b, true); });
+    });
+    // A link must land: arriving on /surfaces/#linkedin-profile chooses that surface.
+    function fromHash(){
+      var b = document.getElementById(location.hash.slice(1));
+      if (b && b.classList.contains("ln-s")) select(b, false);
+    }
+    window.addEventListener("hashchange", fromHash);
+    window.addEventListener("resize", draw);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+    new MutationObserver(function(){ show(); draw(); })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+    fromHash();
+    draw();
+
+    rbCard.data("surfaces", function (data) {
+      // The provenance line names the commit this was read from, as the timeline's does; the
+      // markup carries HEAD only until the data arrives.
+      var src = document.getElementById("srclink");
+      src.href = "https://github.com/" + data.repo + "/tree/" + data.commit + "/" + src.getAttribute("data-src");
+      document.getElementById("srccommit").textContent = data.commit.slice(0, 7);
+      var byId = {};
+      data.entities.forEach(function (e) { byId[e.id] = e; });
+      function goLink(id){
+        var a = document.createElement("a");
+        a.className = "go"; a.textContent = byId[id].name;
+        // Where a card links: the page that draws this model on the stage, which a site declares
+        // for the reason the `model card` block gives. The hash is where the entity sits, the
+        // address the stage writes itself; a model written before entities carried one has its
+        // path as its id.
+        a.href = STAGE_PAGE + "?stage=expanded#" + (byId[id].address ?? id);
+        return a;
+      }
+      card = function (id) {
+        rbCard.render(byId[id], panel.querySelector(".cbody"), panel.querySelector(".cfoot span"),
+          { data: data, lang: lang(), link: goLink });
+      };
+      show();
+    });
+  })();
+  /* ─── end surfaces lineage ────────────────────────────────────────────── */
 </script>
 <script src="../page.js" defer></script>
 

@@ -1,0 +1,58 @@
+[
+  {
+    "en": "The language the visitor chose, `de` or `en`, so the next page opens in it",
+    "de": "Die Sprache, die Sie gewählt haben, `de` oder `en`, damit sich die nächste Seite in dieser Sprache öffnet"
+  },
+  {
+    "en": "How wide the visitor left the details panel on the model pages, in pixels",
+    "de": "Wie breit Sie den Detailbereich auf den Modellseiten eingestellt haben, in Pixeln"
+  },
+  {
+    "en": "How wide the visitor left the details panel in the expanded view, in pixels",
+    "de": "Wie breit Sie den Detailbereich in der vergrösserten Ansicht eingestellt haben, in Pixeln"
+  },
+  {
+    "en": "The appearance the visitor chose, light or dark, so the next page opens in it",
+    "de": "Das Erscheinungsbild, das Sie gewählt haben, hell oder dunkel, damit die nächste Seite gleich so erscheint"
+  },
+  {
+    "en": "The conversation in this tab, so following a link does not lose it",
+    "de": "Das Gespräch in diesem Tab, damit es nicht verloren geht, wenn Sie einem Link folgen"
+  },
+  {
+    "en": "What the chat read from the model's file to offer its questions, so the next page draws them at once",
+    "de": "Was der Chat aus der Datei des Modells gelesen hat, um Fragen vorzuschlagen. So zeigt die nächste Seite diese Fragen sofort an"
+  },
+  {
+    "en": "The figures the chat drew in its answers in this tab",
+    "de": "Die Diagramme, die der Chat in diesem Tab in seinen Antworten gezeichnet hat"
+  },
+  {
+    "en": "How big the visitor made the chat panel, in pixels",
+    "de": "Wie gross Sie das Chatfenster eingestellt haben, in Pixeln"
+  },
+  {
+    "en": "Answering in the chat",
+    "de": "Antworten im Chat"
+  },
+  {
+    "en": "The messages and the visitor's address, on the way to the answer",
+    "de": "Die Nachrichten und Ihre IP-Adresse, während die Antwort entsteht"
+  },
+  {
+    "en": "The message and the earlier messages of the same conversation",
+    "de": "Die Nachricht und die vorherigen Nachrichten desselben Gesprächs"
+  },
+  {
+    "en": "The answer's sentences and the parts of the model's pages they rest on",
+    "de": "Die Sätze der Antwort und die Stellen der Modellseiten, auf die sie sich stützen"
+  },
+  {
+    "en": "Keeping the chat's questions",
+    "de": "Aufbewahrung der Fragen an den Chat"
+  },
+  {
+    "en": "The question and whether the model could answer it, kept in its Zürich region with the weekly report made from them",
+    "de": "Die Frage und ob das Modell sie beantworten konnte, aufbewahrt in der Region Zürich, zusammen mit dem wöchentlichen Bericht, der aus den Fragen entsteht"
+  }
+]
