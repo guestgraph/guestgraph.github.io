@@ -16,6 +16,11 @@ updates:
   # the root on 2026-08-26, so there is one manifest and CI exercises it.
   - package-ecosystem: "npm"
     directory: "/"
+    # Family pins move with the resync, never with Dependabot: conventions/PINS.md, Dependabot.
+    ignore:
+      - dependency-name: "@robertblust/design"
+      - dependency-name: "companygraph-mcp-server"
+      - dependency-name: "companygraph-meta-model"
     schedule:
       interval: "weekly"
     # Zero, stated, because Dependabot applies three days when the key is absent. The cooldown
@@ -48,6 +53,9 @@ updates:
 
   - package-ecosystem: "github-actions"
     directory: "/"
+    # Family pins move with the resync, never with Dependabot: conventions/PINS.md, Dependabot.
+    ignore:
+      - dependency-name: "*robertblust/conventions*"
     schedule:
       interval: "weekly"
     groups:
