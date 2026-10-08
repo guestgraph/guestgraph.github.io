@@ -1,5 +1,5 @@
 /* @robertblust/design — page.css, assembled from the shared blocks: reset v3 · link v1 ·
-   header v17 · title v2 · lines v3 · footer v3 · principles v1 · team v2 · surfaces v1 ·
+   header v18 · title v2 · lines v3 · footer v3 · principles v1 · processes v1 · surfaces v1 ·
    index v2 · home v1.
    Editing this file in a site does nothing: the next npm run design overwrites it. */
 
@@ -332,7 +332,7 @@ footer a[aria-current="page"]{color:var(--c-firm)}
 .grid details[open] .sname::before{transform:rotate(90deg); border-left-color:var(--c-mid)}
 .grid details[open] .sname .tw{color:var(--c-firm)}
 .grid details.human summary{background:var(--press); --halo:var(--press)}
-/* Full width, not an indent: the References table under a role wrapped its URLs at anything
+/* Full width, not an indent: the References table under a seat wrapped its URLs at anything
    narrower. The card's own prose keeps a measure inside it. */
 .grid .drawer{padding:.3rem 0 1.5rem}
 .grid .drawer .card{width:100%}
@@ -386,7 +386,7 @@ footer a[aria-current="page"]{color:var(--c-firm)}
           color:var(--ink)}
 .proctag{margin-top:.4rem; color:var(--dim); max-width:62ch}
 
-/* blocks/team.css declares this same base rule for its own .mk. */
+/* blocks/processes.css declares this same base rule for its own .mk. */
 .mk{width:1.05em; height:1.05em; flex:none; vertical-align:-.16em}
 .mk.hand{color:var(--c-firm)}
 .mk.build{color:var(--c-mid)}

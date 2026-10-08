@@ -1,4 +1,4 @@
-<!-- conventions · v1.44.0 -->
+<!-- conventions · v1.45.0 -->
 Shared conventions of the robertblust, guestgraph and companygraph organizations live in `conventions/`, vendored from robertblust/conventions at the release `conventions.json` names. Read them before writing or committing anything here.
 
 - `conventions/WRITING.md` — how we write: one voice, three registers, English and German.
@@ -165,7 +165,7 @@ The row across the top — wordmark, links, language control — is one design o
 
 What the contract says:
 
-- **Order.** Ideas, Principles, Model, Example, Talks, Billing, Privacy, then the language
+- **Order.** Principles, Processes, Surfaces, API, Model, Talks, Billing, then the language
   control. A site skips what it does not have and reorders nothing. Read right to left, the
   switcher is at the edge and each step left is more the site's own subject.
 - **One baseline.** A single line runs through the middle of every text in the row. The
@@ -307,7 +307,7 @@ To change one of them:
 3. Here: take the Dependabot pull request, run `npm run design && npm run og`, commit what changed.
    The design package has its own Dependabot group so a design bump never arrives beside a
    Playwright one — it is the pull request that has to be read rather than merged on sight.
-   When the release moves `chat.js` or Mermaid, run `npm run pages && npm run pictures && npm run pages` too and commit `team/pictures/`: the team page's process pictures are drawn when the site builds, by `build/pictures.mjs`, and `npm run pages:check` fails until they are drawn from what the page shows now.
+   When the release moves `chat.js` or Mermaid, run `npm run pages && npm run pictures && npm run pages` too and commit `processes/pictures/`: the Processes page's process pictures are drawn when the site builds, by `build/pictures.mjs`, and `npm run pages:check` fails until they are drawn from what the page shows now.
 
 `design:check` runs in CI, so a page that drifts from the pinned release goes red without anyone remembering to look. That is the guarantee the old habit-with-a-tripwire never was.
 

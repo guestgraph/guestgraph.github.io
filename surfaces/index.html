@@ -226,7 +226,7 @@
   .legend svg.ln{width:28px; height:6px; flex:none}
   .legend svg.ln path{stroke:var(--dim); stroke-width:1.5}
   .ln-hint{margin-top:1.6rem; font-size:.82rem; color:var(--dim)}
-  /* Full width, like a seat's card on /team/: a References table needs the width. */
+  /* Full width, like a seat's card on /processes/: a References table needs the width. */
   .ln-panel{margin-top:1.6rem}
   .ln-panel .card{width:100%}
   .cbody p, .cbody ul.prose{max-width:72ch}
@@ -272,7 +272,7 @@
 </head>
 <body>
 
-<!-- The two ways a surface is made, as form rather than as colour, the way /team/ tells a human
+<!-- The two ways a surface is made, as form rather than as colour, the way /processes/ tells a human
      from an agent: a filled pen for the hand, an outlined build for the machine. tokens.css
      allows one hue at four brightnesses and refuses a second in writing. -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -303,8 +303,8 @@
       </a>
       <nav>
         <div class="navlinks" id="navlinks">
-          <a href="../team/">Team</a>
           <a href="../principles/" data-de="Prinzipien">Principles</a>
+          <a href="../processes/" data-de="Prozesse">Processes</a>
           <a href="./" aria-current="page">Surfaces</a>
           <a href="../api/">API</a>
           <a href="../model/" data-de="Modell">Model</a>
@@ -338,7 +338,7 @@
       <!-- surfaces:start -->
       <div class="lineage" id="lineage">
         <svg class="wires" id="wires" aria-hidden="true"></svg>
-        <div class="ln-model" id="lnmodel"><div class="lbl" data-de="Das Modell">The model</div><div class="nm">mental-model</div><div class="at mono">@9a7d107</div></div>
+        <div class="ln-model" id="lnmodel"><div class="lbl" data-de="Das Modell">The model</div><div class="nm">mental-model</div><div class="at mono">@6f8a395</div></div>
         <ul class="ln-groups">
           <li class="ln-group">
             <div class="ln-maker" data-maker="https://github.com/guestgraph/guestgraph.github.io"><svg class="mk build" aria-hidden="true"><use href="#m-build"/></svg><span class="who">guestgraph.github.io<span class="how" data-de="Build">build</span></span></div>
@@ -524,7 +524,7 @@
   // The nodes are in the markup; the lines and the cards are not. A line is drawn from where two
   // nodes landed, which only the browser knows, and says nothing the nesting of the lists does not.
   // A card is rendered when its surface is chosen and again when the language changes, as a seat's
-  // card is on /team/.
+  // card is on /processes/.
   (function(){
     var box = document.getElementById("lineage"), svg = document.getElementById("wires"),
         model = document.getElementById("lnmodel"), panel = document.getElementById("lnpanel"),

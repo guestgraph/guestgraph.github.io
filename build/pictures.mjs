@@ -1,6 +1,6 @@
-// The team page's process pictures, drawn when the site builds rather than in the visitor's
+// The Processes page's process pictures, drawn when the site builds rather than in the visitor's
 // browser. `@robertblust/design/pictures` lets this site's own chat.js draw each one in Chromium
-// and writes it beside the page as team/pictures/<process>.svg, with a stamp of what went into it
+// and writes it beside the page as processes/pictures/<process>.svg, with a stamp of what went into it
 // that `npm run pages:check` reads without a browser.
 //
 // Usage: npm run pages && npm run pictures && npm run pages

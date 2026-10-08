@@ -1,6 +1,6 @@
 {
-  "commit": "9a7d10757f4bab5b38e0513827ae4f74cdad6120",
-  "core": "0.61.0",
+  "commit": "6f8a3952345aa19e21208f749a05ff0ef04c9f10",
+  "core": "0.63.0",
   "root": "GuestGraph",
   "rootId": "01a0d2e2-f788-788d-ac26-56e9ef94fdd2",
   "types": [
@@ -125,14 +125,14 @@
       "singular": false
     },
     {
-      "type": "role",
-      "folder": "roles",
+      "type": "rule",
+      "folder": "rules",
       "owner": null,
       "singular": false
     },
     {
-      "type": "rule",
-      "folder": "rules",
+      "type": "seat",
+      "folder": "seats",
       "owner": null,
       "singular": false
     },
@@ -1479,7 +1479,7 @@
               ],
               "rows": [
                 [
-                  "role",
+                  "seat",
                   "Reviewer",
                   ""
                 ],
@@ -1505,7 +1505,7 @@
             ],
             "rows": [
               [
-                "role",
+                "seat",
                 "Reviewer",
                 ""
               ],
@@ -1727,17 +1727,17 @@
               ],
               "rows": [
                 [
-                  "role",
+                  "seat",
                   "Controller",
                   ""
                 ],
                 [
-                  "role",
+                  "seat",
                   "Implementer",
                   ""
                 ],
                 [
-                  "role",
+                  "seat",
                   "Surveyor",
                   ""
                 ],
@@ -1758,17 +1758,17 @@
             ],
             "rows": [
               [
-                "role",
+                "seat",
                 "Controller",
                 ""
               ],
               [
-                "role",
+                "seat",
                 "Implementer",
                 ""
               ],
               [
-                "role",
+                "seat",
                 "Surveyor",
                 ""
               ],
@@ -3018,37 +3018,37 @@
               ],
               "rows": [
                 [
-                  "role",
+                  "seat",
                   "Specifier",
                   "",
                   "changed it"
                 ],
                 [
-                  "role",
+                  "seat",
                   "Planner",
                   "",
                   "changed it"
                 ],
                 [
-                  "role",
+                  "seat",
                   "Implementer",
                   "",
                   "changed it"
                 ],
                 [
-                  "role",
+                  "seat",
                   "Writer",
                   "",
                   "changed it"
                 ],
                 [
-                  "role",
+                  "seat",
                   "Translator",
                   "",
                   "changed it"
                 ],
                 [
-                  "role",
+                  "seat",
                   "Narrator",
                   "",
                   "changed it"
@@ -3066,37 +3066,37 @@
             ],
             "rows": [
               [
-                "role",
+                "seat",
                 "Specifier",
                 "",
                 "changed it"
               ],
               [
-                "role",
+                "seat",
                 "Planner",
                 "",
                 "changed it"
               ],
               [
-                "role",
+                "seat",
                 "Implementer",
                 "",
                 "changed it"
               ],
               [
-                "role",
+                "seat",
                 "Writer",
                 "",
                 "changed it"
               ],
               [
-                "role",
+                "seat",
                 "Translator",
                 "",
                 "changed it"
               ],
               [
-                "role",
+                "seat",
                 "Narrator",
                 "",
                 "changed it"
@@ -3756,6 +3756,128 @@
       ],
       "owner": null,
       "path": "model/decisions/2026-matcher-off.md"
+    },
+    {
+      "id": "01a1128e-e26e-7286-afbe-3de101a5f56e",
+      "address": "decisions/2026-model-training-off",
+      "type": "decision",
+      "name": "The Claude account we build GuestGraph on keeps model training off",
+      "tagline": "The Claude account on which the Owner and the agents specify, build and review GuestGraph has “Help improve our AI models” switched off, so Anthropic does not use those chats and coding sessions to train or improve its models, the ones that work on guest identity data or a connector among them; Anthropic still processes every request under its own terms.",
+      "fields": {
+        "id": "01a1128e-e26e-7286-afbe-3de101a5f56e",
+        "source": "Local",
+        "decided": "2026-10-06",
+        "kind": "Data protection",
+        "status": "Standing",
+        "by": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "The question",
+          "text": "Anthropic's consumer terms let the holder of a Claude account choose whether its chats and coding sessions, Claude Code's among them, may be used to train and improve Anthropic's models, and Anthropic keeps a session longer when they may. GuestGraph is specified, built and reviewed in sessions on one such account, and some of those sessions read the engine's handling of guest identity data and the connectors' code. Which way the setting stands on that account is a call about who receives what our work contains, and the model did not record it.",
+          "tables": []
+        },
+        {
+          "heading": "Alternatives",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Option",
+                "Why not"
+              ],
+              "rows": [
+                [
+                  "Leave the setting on",
+                  "Every chat and coding session on the account could be used to train Anthropic's models, the ones that touch guest identity data or a connector among them, and Anthropic would keep them longer than it otherwise does."
+                ],
+                [
+                  "Separate accounts, with the setting off only on the one used for guest identity data and connectors",
+                  "Which account a session runs in would decide what Anthropic may train on, and a session that starts in a specification and ends in a connector's code would have to change accounts at a line nobody watches for."
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Option",
+              "Why not"
+            ],
+            "rows": [
+              [
+                "Leave the setting on",
+                "Every chat and coding session on the account could be used to train Anthropic's models, the ones that touch guest identity data or a connector among them, and Anthropic would keep them longer than it otherwise does."
+              ],
+              [
+                "Separate accounts, with the setting off only on the one used for guest identity data and connectors",
+                "Which account a session runs in would decide what Anthropic may train on, and a session that starts in a specification and ends in a connector's code would have to change accounts at a line nobody watches for."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Why",
+          "text": "One setting on the one account draws the line for every session, so what Anthropic may train on does not depend on anyone sorting a session before it starts. Leaving it on would give Anthropic training data and give GuestGraph nothing it builds with.",
+          "tables": []
+        },
+        {
+          "heading": "Consequences",
+          "text": "Every session that specifies, builds or reviews GuestGraph runs on an account with the setting off, and what is given up is those sessions as a contribution to Anthropic's models. What the call does not change is that Anthropic still receives and processes every request under its own terms, keeps what it keeps for as long as those terms say, and under them may still use a conversation its safety review flags, and feedback sent with the thumbs buttons, to improve its models. The call is about the account the work is built on, not the chat, whose requests reach Anthropic through its API under the commercial terms the model's Anthropic page cites. The call stays right for as long as the setting stays off on every account GuestGraph is built on and Anthropic's terms keep a session out of training while it is off; it is weighed again if those terms change.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Anthropic on when consumer chats and coding sessions are used for training",
+                  "https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training"
+                ],
+                [
+                  "Anthropic's update to its consumer terms that introduced the setting",
+                  "https://www.anthropic.com/news/updates-to-our-consumer-terms"
+                ],
+                [
+                  "Anthropic's consumer terms",
+                  "https://www.anthropic.com/legal/consumer-terms"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Anthropic on when consumer chats and coding sessions are used for training",
+                "https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training"
+              ],
+              [
+                "Anthropic's update to its consumer terms that introduced the setting",
+                "https://www.anthropic.com/news/updates-to-our-consumer-terms"
+              ],
+              [
+                "Anthropic's consumer terms",
+                "https://www.anthropic.com/legal/consumer-terms"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/decisions/2026-model-training-off.md"
     },
     {
       "id": "01a0df33-e3f8-7d6a-9019-0c333da5404b",
@@ -9756,7 +9878,7 @@
         "id": "01a0d2e3-bec0-77d7-806c-b590119da768",
         "source": "Local",
         "nature": "agent",
-        "roles": [
+        "seats": [
           "Specifier",
           "Planner",
           "Controller",
@@ -9788,7 +9910,7 @@
         "id": "01a0d526-a5f8-7afe-8c5f-c84953eeae39",
         "source": "Local",
         "nature": "agent",
-        "roles": [
+        "seats": [
           "Narrator"
         ]
       },
@@ -9876,7 +9998,7 @@
         "id": "01a0d526-a5f8-77e3-8296-a7ba4f851655",
         "source": "Local",
         "nature": "agent",
-        "roles": [
+        "seats": [
           "Narrator"
         ]
       },
@@ -9965,7 +10087,7 @@
         "source": "Local",
         "nature": "human",
         "email": "robert@blust.ch",
-        "roles": [
+        "seats": [
           "Owner"
         ]
       },
@@ -11322,7 +11444,7 @@
               ],
               "rows": [
                 [
-                  "role",
+                  "seat",
                   "Answerer",
                   "",
                   "who answers, and what it may never do"
@@ -11352,7 +11474,7 @@
             ],
             "rows": [
               [
-                "role",
+                "seat",
                 "Answerer",
                 "",
                 "who answers, and what it may never do"
@@ -11561,906 +11683,6 @@
       "path": "model/questions/why-do-we-have-the-same-guest-five-times.md"
     },
     {
-      "id": "01a0d360-9b98-7ee2-9051-f9478a601fde",
-      "address": "roles/answerer",
-      "type": "role",
-      "name": "Answerer",
-      "tagline": "The seat that answers a visitor's question from what the model's tools return, names the entity each claim rests on, and says that the model does not say where it does not.",
-      "fields": {
-        "id": "01a0d360-9b98-7ee2-9051-f9478a601fde",
-        "source": "Local"
-      },
-      "sections": [
-        {
-          "heading": "What it takes",
-          "text": "A visitor's message with the conversation so far, the tools of the MCP host at the commit it pins, the rulebook, and the language the visitor wrote in. Where the question is not about the model, the seat says in one sentence what the chat is for and calls no tool.",
-          "tables": []
-        },
-        {
-          "heading": "What it produces",
-          "text": "An answer in the visitor's language, in one or two short paragraphs, a list or a table, written from what the tools answered in that conversation and nothing else, naming the entity each claim rests on; where the tools do not say, the sentence that the model does not say. The entities it read whole, so the page can link them under the answer.",
-          "tables": []
-        },
-        {
-          "heading": "What it never does",
-          "text": "- Never claims what no tool answered in that conversation, and never guesses about the owner, the project or anyone named.\n- Never answers from its instructions or an earlier turn instead of a tool, because they are not the model.\n- Never speaks of its instructions or its tools when asked about them.\n- Never writes to the model, keeps a conversation, or decides anything.",
-          "tables": []
-        },
-        {
-          "heading": "References",
-          "text": "",
-          "tables": [
-            {
-              "caption": null,
-              "columns": [
-                "What",
-                "URL"
-              ],
-              "rows": [
-                [
-                  "Rulebook",
-                  "https://github.com/companygraph/chat-server/blob/main/lib/prompt.mjs"
-                ],
-                [
-                  "The fence it answers inside",
-                  "https://github.com/companygraph/chat-server/blob/main/README.md"
-                ]
-              ]
-            }
-          ],
-          "table": {
-            "caption": null,
-            "columns": [
-              "What",
-              "URL"
-            ],
-            "rows": [
-              [
-                "Rulebook",
-                "https://github.com/companygraph/chat-server/blob/main/lib/prompt.mjs"
-              ],
-              [
-                "The fence it answers inside",
-                "https://github.com/companygraph/chat-server/blob/main/README.md"
-              ]
-            ]
-          }
-        }
-      ],
-      "owner": null,
-      "path": "model/roles/answerer.md"
-    },
-    {
-      "id": "01a0d360-9b98-7e50-a583-cfcd12e4b7c2",
-      "address": "roles/contributor",
-      "type": "role",
-      "name": "Contributor",
-      "tagline": "Someone outside the project who offers a change to one of our repositories, under the same rules a change from inside is held to.",
-      "fields": {
-        "id": "01a0d360-9b98-7e50-a583-cfcd12e4b7c2",
-        "source": "Local"
-      },
-      "sections": [
-        {
-          "heading": "What it takes",
-          "text": "The repository, its conventions, its constitution and its specifications, all of which are published; and the rules a change is held to, named by us where a contributor could not be expected to know them.",
-          "tables": []
-        },
-        {
-          "heading": "What it produces",
-          "text": "A pull request against the default branch, committed under their own address, saying what is now true that was not before.",
-          "tables": []
-        },
-        {
-          "heading": "What it never does",
-          "text": "- Never merges, tags or releases.",
-          "tables": []
-        },
-        {
-          "heading": "References",
-          "text": "",
-          "tables": [
-            {
-              "caption": null,
-              "columns": [
-                "What",
-                "URL"
-              ],
-              "rows": [
-                [
-                  "Rulebook, GitHub pull requests",
-                  "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests"
-                ]
-              ]
-            }
-          ],
-          "table": {
-            "caption": null,
-            "columns": [
-              "What",
-              "URL"
-            ],
-            "rows": [
-              [
-                "Rulebook, GitHub pull requests",
-                "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests"
-              ]
-            ]
-          }
-        }
-      ],
-      "owner": null,
-      "path": "model/roles/contributor.md"
-    },
-    {
-      "id": "01a0d4bd-a710-765f-b25a-5227025665ff",
-      "address": "roles/controller",
-      "type": "role",
-      "name": "Controller",
-      "tagline": "The seat that runs a plan one brief at a time, reads every report as a claim, and writes nothing itself.",
-      "fields": {
-        "id": "01a0d4bd-a710-765f-b25a-5227025665ff",
-        "source": "Local"
-      },
-      "sections": [
-        {
-          "heading": "What it takes",
-          "text": "An approved plan, the repository's own agent file, and a place to keep each task's brief, report and findings.",
-          "tables": []
-        },
-        {
-          "heading": "What it produces",
-          "text": "One dispatched brief at a time; a decision after each report — fix, accept or park for the Owner; review ordered on the diff rather than on the report; and a branch whose tasks are done in the plan's order, each committed as it lands. The pull request at the end, opened and reported and no further.",
-          "tables": []
-        },
-        {
-          "heading": "What it never does",
-          "text": "- Never writes the change or the test itself.\n- Never rewrites what a commit contains; a finding against a committed task is a new brief.\n- Never dispatches the next task while the last one's findings are open.\n- Never commits a change to a model before the validation pass has read it.\n- Never edits a pull request it did not open.",
-          "tables": []
-        },
-        {
-          "heading": "References",
-          "text": "",
-          "tables": [
-            {
-              "caption": null,
-              "columns": [
-                "What",
-                "URL"
-              ],
-              "rows": [
-                [
-                  "Working rules",
-                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
-                ]
-              ]
-            }
-          ],
-          "table": {
-            "caption": null,
-            "columns": [
-              "What",
-              "URL"
-            ],
-            "rows": [
-              [
-                "Working rules",
-                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
-              ]
-            ]
-          }
-        }
-      ],
-      "owner": null,
-      "path": "model/roles/controller.md"
-    },
-    {
-      "id": "01a0d2e3-bec0-7a2e-94b4-0e27ad0f7568",
-      "address": "roles/implementer",
-      "type": "role",
-      "name": "Implementer",
-      "tagline": "The seat that turns one task brief into a tested commit and a report, and nothing beyond the brief.",
-      "fields": {
-        "id": "01a0d2e3-bec0-7a2e-94b4-0e27ad0f7568",
-        "source": "Local"
-      },
-      "sections": [
-        {
-          "heading": "What it takes",
-          "text": "A task brief that is the whole of its requirements, the interfaces earlier tasks produced, the repository's own agent file and a path for the report. Where the brief is unclear the seat asks before starting.",
-          "tables": []
-        },
-        {
-          "heading": "What it produces",
-          "text": "The change the brief specifies, test first where the brief says so; the commit in the git register; a report naming what was built, what was run and what it doubts; and a short status the Controller acts on.",
-          "tables": []
-        },
-        {
-          "heading": "What it never does",
-          "text": "- Never spawns a subagent or a reviewer; review comes from the Controller after the report.\n- Never changes a test's expectation to make it pass.\n- Never edits a pull request it did not open.",
-          "tables": []
-        },
-        {
-          "heading": "References",
-          "text": "",
-          "tables": [
-            {
-              "caption": null,
-              "columns": [
-                "What",
-                "URL"
-              ],
-              "rows": [
-                [
-                  "Working rules",
-                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
-                ]
-              ]
-            }
-          ],
-          "table": {
-            "caption": null,
-            "columns": [
-              "What",
-              "URL"
-            ],
-            "rows": [
-              [
-                "Working rules",
-                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
-              ]
-            ]
-          }
-        }
-      ],
-      "owner": null,
-      "path": "model/roles/implementer.md"
-    },
-    {
-      "id": "01a0d526-a5f8-7390-ade8-50e428745f1c",
-      "address": "roles/narrator",
-      "type": "role",
-      "name": "Narrator",
-      "tagline": "The seat that speaks a talk's reviewed speaker notes, one clip per slide in each language, so the talk can be heard without its presenter.",
-      "fields": {
-        "id": "01a0d526-a5f8-7390-ade8-50e428745f1c",
-        "source": "Local"
-      },
-      "sections": [
-        {
-          "heading": "What it takes",
-          "text": "A deck whose speaker notes are reviewed in the language the clip is in, the cues the author wrote into them, and the voice and settings the rulebook names for that language. Where a note is not reviewed, the seat speaks nothing for that slide.",
-          "tables": []
-        },
-        {
-          "heading": "What it produces",
-          "text": "One audio clip per slide and language, beside the deck it belongs to, stamped with what it was spoken from: the voice, the model, the settings and the text. A clip whose stamp still matches is left as it is.",
-          "tables": []
-        },
-        {
-          "heading": "What it never does",
-          "text": "- Never changes a word of the note it speaks, and never speaks text that is not on the slide.\n- Never chooses its own voice, model or settings; the rulebook names them per language.\n- Never speaks one language's note in the other language's voice.\n- Never publishes a clip; the Owner listens to it first.",
-          "tables": []
-        },
-        {
-          "heading": "References",
-          "text": "",
-          "tables": [
-            {
-              "caption": null,
-              "columns": [
-                "What",
-                "URL"
-              ],
-              "rows": [
-                [
-                  "Rulebook, with the ElevenLabs voices and settings",
-                  "https://github.com/guestgraph/guestgraph.github.io/blob/main/talks/intro/tts/generate.py"
-                ],
-                [
-                  "Working rules for the talks",
-                  "https://github.com/guestgraph/guestgraph.github.io/blob/main/AGENTS.md"
-                ]
-              ]
-            }
-          ],
-          "table": {
-            "caption": null,
-            "columns": [
-              "What",
-              "URL"
-            ],
-            "rows": [
-              [
-                "Rulebook, with the ElevenLabs voices and settings",
-                "https://github.com/guestgraph/guestgraph.github.io/blob/main/talks/intro/tts/generate.py"
-              ],
-              [
-                "Working rules for the talks",
-                "https://github.com/guestgraph/guestgraph.github.io/blob/main/AGENTS.md"
-              ]
-            ]
-          }
-        }
-      ],
-      "owner": null,
-      "path": "model/roles/narrator.md"
-    },
-    {
-      "id": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
-      "address": "roles/owner",
-      "type": "role",
-      "name": "Owner",
-      "tagline": "The seat that decides what the project is for, says the last word on every page, and gives the word every merge, tag and release waits on.",
-      "fields": {
-        "id": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
-        "source": "Local"
-      },
-      "sections": [
-        {
-          "heading": "What it takes",
-          "text": "The model, read before deciding: the vision, the objectives and the strategies under them, and the values a decision is weighed against. A draft or a pull request to review, on the branch and on the rendered page. The signals a strategy names as showing whether it is working.",
-          "tables": []
-        },
-        {
-          "heading": "What it produces",
-          "text": "Decisions, recorded where they bind: a merge, a tag, a release and its notes, a pin moved in a commit that says why, a corrected model. The reviewed English every translation is made from. The word that ends a question an agent has parked, and the word that closes a question the model has left open.",
-          "tables": []
-        },
-        {
-          "heading": "What it never does",
-          "text": "- Never approves an amendment to a principle the constitution marks non-negotiable in passing inside a change.",
-          "tables": []
-        },
-        {
-          "heading": "References",
-          "text": "",
-          "tables": [
-            {
-              "caption": null,
-              "columns": [
-                "What",
-                "URL"
-              ],
-              "rows": [
-                [
-                  "Working rules",
-                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
-                ],
-                [
-                  "Writing rules",
-                  "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
-                ]
-              ]
-            }
-          ],
-          "table": {
-            "caption": null,
-            "columns": [
-              "What",
-              "URL"
-            ],
-            "rows": [
-              [
-                "Working rules",
-                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
-              ],
-              [
-                "Writing rules",
-                "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
-              ]
-            ]
-          }
-        }
-      ],
-      "owner": null,
-      "path": "model/roles/owner.md"
-    },
-    {
-      "id": "01a0d2e3-bec0-725e-86da-b629ccd2a699",
-      "address": "roles/planner",
-      "type": "role",
-      "name": "Planner",
-      "tagline": "The seat that cuts an approved specification into task briefs, each whole on its own, and writes none of them.",
-      "fields": {
-        "id": "01a0d2e3-bec0-725e-86da-b629ccd2a699",
-        "source": "Local"
-      },
-      "sections": [
-        {
-          "heading": "What it takes",
-          "text": "A specification the Owner has approved, and the repository the work lands in, including the rules that bind it.",
-          "tables": []
-        },
-        {
-          "heading": "What it produces",
-          "text": "An ordered set of task briefs. Each is the whole of its own requirements, names the interfaces the briefs around it produce and consume, and states how its holder can tell it is done. An entry of a model gets a brief of its own, because the Owner decides one entry at a time. The order is the order they can be worked in, not the order they were thought of.",
-          "tables": []
-        },
-        {
-          "heading": "What it never does",
-          "text": "- Never re-opens a decision the specification took.\n- Never writes a brief that depends on a conversation its holder did not have.\n- Never writes the change.\n- Never plans a task whose completion cannot be checked.\n- Never puts two entries of a model in one brief.",
-          "tables": []
-        },
-        {
-          "heading": "References",
-          "text": "",
-          "tables": [
-            {
-              "caption": null,
-              "columns": [
-                "What",
-                "URL"
-              ],
-              "rows": [
-                [
-                  "Working rules",
-                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
-                ]
-              ]
-            }
-          ],
-          "table": {
-            "caption": null,
-            "columns": [
-              "What",
-              "URL"
-            ],
-            "rows": [
-              [
-                "Working rules",
-                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
-              ]
-            ]
-          }
-        }
-      ],
-      "owner": null,
-      "path": "model/roles/planner.md"
-    },
-    {
-      "id": "01a0d360-9b98-7519-92ba-676eb4ef0d5e",
-      "address": "roles/requestor",
-      "type": "role",
-      "name": "Requestor",
-      "tagline": "Someone outside the project who needed GuestGraph to do something it does not, and says so where it can be answered.",
-      "fields": {
-        "id": "01a0d360-9b98-7519-92ba-676eb4ef0d5e",
-        "source": "Local"
-      },
-      "sections": [
-        {
-          "heading": "What it takes",
-          "text": "Whatever they were trying to do and could not: the system that could not be connected, the operation the API lacked, the decision the engine could not explain. Nothing else: the seat is filled by whoever turns up, and a request is not a form to be completed before it is heard.",
-          "tables": []
-        },
-        {
-          "heading": "What it produces",
-          "text": "A GitHub issue on the repository the request concerns, in their own words, and a correction where we restate it wrongly.",
-          "tables": []
-        },
-        {
-          "heading": "What it never does",
-          "text": "- Never has to know our terms to be understood; restating the request in them is our work.\n- Never decides whether the gap is filled.",
-          "tables": []
-        },
-        {
-          "heading": "References",
-          "text": "",
-          "tables": [
-            {
-              "caption": null,
-              "columns": [
-                "What",
-                "URL"
-              ],
-              "rows": [
-                [
-                  "Rulebook, GitHub issues",
-                  "https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues"
-                ]
-              ]
-            }
-          ],
-          "table": {
-            "caption": null,
-            "columns": [
-              "What",
-              "URL"
-            ],
-            "rows": [
-              [
-                "Rulebook, GitHub issues",
-                "https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues"
-              ]
-            ]
-          }
-        }
-      ],
-      "owner": null,
-      "path": "model/roles/requestor.md"
-    },
-    {
-      "id": "01a0d2e3-bec0-7e84-8613-65039131e51c",
-      "address": "roles/reviewer",
-      "type": "role",
-      "name": "Reviewer",
-      "tagline": "The seat that reads one diff against its brief, returns findings with a severity and changes nothing.",
-      "fields": {
-        "id": "01a0d2e3-bec0-7e84-8613-65039131e51c",
-        "source": "Local"
-      },
-      "sections": [
-        {
-          "heading": "What it takes",
-          "text": "The brief the work was done from, the implementer's report read as unverified claims, the diff as one file with its commits and context, and the constraints that bind the task.",
-          "tables": []
-        },
-        {
-          "heading": "What it produces",
-          "text": "Two verdicts, spec compliance and quality, and findings each with a file and a line, what is wrong, why it matters and how to fix it, ranked by severity, with the strengths named first. Where the diff touched a model, a third verdict: every entity it touched read against its schema's writing rules, which no mechanical check reaches. A finding is an input to whoever merges and never a verdict: it does not decide, and it is not passed on a person.",
-          "tables": []
-        },
-        {
-          "heading": "What it never does",
-          "text": "- Never mutates the working tree, the index, a branch or the pull request.\n- Never re-runs a suite to confirm a report; it runs one focused test on a doubt the report does not answer.\n- Never reads a schema's writing rules as satisfied because the mechanical checks are green.\n- Never spawns another reviewer.\n- Never marks polish as critical.",
-          "tables": []
-        },
-        {
-          "heading": "References",
-          "text": "",
-          "tables": [
-            {
-              "caption": null,
-              "columns": [
-                "What",
-                "URL"
-              ],
-              "rows": [
-                [
-                  "Working rules",
-                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
-                ],
-                [
-                  "Modeling rules",
-                  "https://github.com/companygraph/meta-model/blob/main/core/CONVENTIONS.md"
-                ]
-              ]
-            }
-          ],
-          "table": {
-            "caption": null,
-            "columns": [
-              "What",
-              "URL"
-            ],
-            "rows": [
-              [
-                "Working rules",
-                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
-              ],
-              [
-                "Modeling rules",
-                "https://github.com/companygraph/meta-model/blob/main/core/CONVENTIONS.md"
-              ]
-            ]
-          }
-        }
-      ],
-      "owner": null,
-      "path": "model/roles/reviewer.md"
-    },
-    {
-      "id": "01a0d2e3-bec0-7379-8ae0-87fd05aba8ad",
-      "address": "roles/specifier",
-      "type": "role",
-      "name": "Specifier",
-      "tagline": "The seat that turns a shaped request into a specification nobody has to guess at, and builds nothing.",
-      "fields": {
-        "id": "01a0d2e3-bec0-7379-8ae0-87fd05aba8ad",
-        "source": "Local"
-      },
-      "sections": [
-        {
-          "heading": "What it takes",
-          "text": "A request already classified, the model and the constitution it must not contradict, and the code or the pages it will touch, read rather than remembered. Where the request is ambiguous the seat asks before writing.",
-          "tables": []
-        },
-        {
-          "heading": "What it produces",
-          "text": "A specification that is the whole of the requirements: the gap it closes, the approaches considered with the one chosen and why, the decisions taken, and what is explicitly not being done. Where it reaches another repository, what its release will ask of a consumer. Where a decision is the Owner's, the seat names the options and parks the question.",
-          "tables": []
-        },
-        {
-          "heading": "What it never does",
-          "text": "- Never writes the change it specifies.\n- Never decides scope; it names the options and the Owner chooses.\n- Never specifies a capability of the engine that is reachable other than through its API.\n- Never leaves a question unasked because an assumption would be convenient.",
-          "tables": []
-        },
-        {
-          "heading": "References",
-          "text": "",
-          "tables": [
-            {
-              "caption": null,
-              "columns": [
-                "What",
-                "URL"
-              ],
-              "rows": [
-                [
-                  "Working rules",
-                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
-                ],
-                [
-                  "Modeling rules",
-                  "https://github.com/companygraph/meta-model/blob/main/core/CONVENTIONS.md"
-                ],
-                [
-                  "Constitution",
-                  "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
-                ]
-              ]
-            }
-          ],
-          "table": {
-            "caption": null,
-            "columns": [
-              "What",
-              "URL"
-            ],
-            "rows": [
-              [
-                "Working rules",
-                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
-              ],
-              [
-                "Modeling rules",
-                "https://github.com/companygraph/meta-model/blob/main/core/CONVENTIONS.md"
-              ],
-              [
-                "Constitution",
-                "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
-              ]
-            ]
-          }
-        }
-      ],
-      "owner": null,
-      "path": "model/roles/specifier.md"
-    },
-    {
-      "id": "01a0fadf-c0cd-780a-a53a-a59709231e8f",
-      "address": "roles/surveyor",
-      "type": "role",
-      "name": "Surveyor",
-      "tagline": "The seat that finds out where all the open work stands at the moment the Owner asks, sets it out with one proposal for what comes next, and carries out only what the Owner then decides.",
-      "fields": {
-        "id": "01a0fadf-c0cd-780a-a53a-a59709231e8f",
-        "source": "Local"
-      },
-      "sections": [
-        {
-          "heading": "What it takes",
-          "text": "The Owner's question, read access to every repository, pull request, branch and worktree of the company, the list of the other sessions at work and what each is doing, and the memory of what was settled before. Where it cannot read something, the seat says what it could not see instead of filling the gap.",
-          "tables": []
-        },
-        {
-          "heading": "What it produces",
-          "text": "An overview checked at the moment of asking: what is open, in what state, and who is working on it, with each claim linked to where it was read. One proposal for what comes next and one decision put to the Owner at a time. On the Owner's word, that decision carried out, the other sessions told what changed, and a report of what happened, mistakes included.",
-          "tables": []
-        },
-        {
-          "heading": "What it never does",
-          "text": "- Never deletes or writes to the model without the Owner's word in that conversation.\n- Never commits in its own name; a commit it makes on the Owner's word is made in the seat whose work it carries, under that seat's author and trailers.\n- Never decides; where a choice is open, it proposes and the Owner decides.",
-          "tables": []
-        }
-      ],
-      "owner": null,
-      "path": "model/roles/surveyor.md"
-    },
-    {
-      "id": "01a0d4bd-a710-7f00-a679-07ee34f542ef",
-      "address": "roles/translator",
-      "type": "role",
-      "name": "Translator",
-      "tagline": "The seat that makes the Swiss Standard German of an element whose English the Owner has reviewed, and hands back a back-translation beside it.",
-      "fields": {
-        "id": "01a0d4bd-a710-7f00-a679-07ee34f542ef",
-        "source": "Local"
-      },
-      "sections": [
-        {
-          "heading": "What it takes",
-          "text": "The reviewed English of the elements the task names, and the glossary. Reviewed means the Owner has said the English is done; a draft is not reviewed, and the seat says so. Where the task names no elements, the seat names the gap and writes nothing.",
-          "tables": []
-        },
-        {
-          "heading": "What it produces",
-          "text": "The German in the element's own place, de-CH in the forms Switzerland uses, and beside each element a back-translation in English, so a reviewer with a minute can read what the German says.",
-          "tables": []
-        },
-        {
-          "heading": "What it never does",
-          "text": "- Never edits the English.\n- Never writes German into a model; a model is English, and the German a surface carries lives in the surface's own attributes.\n- Never writes a family term in any form but the glossary's.\n- Never commits.",
-          "tables": []
-        },
-        {
-          "heading": "References",
-          "text": "",
-          "tables": [
-            {
-              "caption": null,
-              "columns": [
-                "What",
-                "URL"
-              ],
-              "rows": [
-                [
-                  "Working rules",
-                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
-                ],
-                [
-                  "Writing rules",
-                  "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
-                ],
-                [
-                  "Glossary",
-                  "https://github.com/robertblust/conventions/blob/main/conventions/GLOSSARY.md"
-                ],
-                [
-                  "Rulebook",
-                  "https://github.com/robertblust/conventions/blob/main/conventions/TRANSLATOR.md"
-                ]
-              ]
-            }
-          ],
-          "table": {
-            "caption": null,
-            "columns": [
-              "What",
-              "URL"
-            ],
-            "rows": [
-              [
-                "Working rules",
-                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
-              ],
-              [
-                "Writing rules",
-                "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
-              ],
-              [
-                "Glossary",
-                "https://github.com/robertblust/conventions/blob/main/conventions/GLOSSARY.md"
-              ],
-              [
-                "Rulebook",
-                "https://github.com/robertblust/conventions/blob/main/conventions/TRANSLATOR.md"
-              ]
-            ]
-          }
-        }
-      ],
-      "owner": null,
-      "path": "model/roles/translator.md"
-    },
-    {
-      "id": "01a0d360-9b98-78dd-ae68-046773b0c8c8",
-      "address": "roles/visitor",
-      "type": "role",
-      "name": "Visitor",
-      "tagline": "Someone who asks about GuestGraph in their own words, on its site or through an agent of their own, and is owed what the model says and nothing else.",
-      "fields": {
-        "id": "01a0d360-9b98-78dd-ae68-046773b0c8c8",
-        "source": "Local"
-      },
-      "sections": [
-        {
-          "heading": "What it takes",
-          "text": "A question, in whatever words and language they have. Nothing else: the seat is filled by whoever turns up, and nobody is asked who they are.",
-          "tables": []
-        },
-        {
-          "heading": "What it produces",
-          "text": "A question, and where the answer sends them, a click on the entity it rests on: on the model page, or on the file at the commit it was read from.",
-          "tables": []
-        },
-        {
-          "heading": "What it never does",
-          "text": "- Never has to know the model's vocabulary to be answered; meeting their words is our work.\n- Never leaves anything behind: the conversation lives in their tab and ends with it.",
-          "tables": []
-        }
-      ],
-      "owner": null,
-      "path": "model/roles/visitor.md"
-    },
-    {
-      "id": "01a0d4bd-a710-745a-a1b7-f3c508a47ab1",
-      "address": "roles/writer",
-      "type": "role",
-      "name": "Writer",
-      "tagline": "The seat that drafts English in the family voice from a brief, so the Owner reviews a draft instead of writing one.",
-      "fields": {
-        "id": "01a0d4bd-a710-745a-a1b7-f3c508a47ab1",
-        "source": "Local"
-      },
-      "sections": [
-        {
-          "heading": "What it takes",
-          "text": "A brief naming the audience, the one point, the facts the text may claim and where each is shown, and the file and the place the text lands. The rulebook and the glossary. Where the brief lacks the audience, the point or a fact's source, the seat names the gap and writes nothing.",
-          "tables": []
-        },
-        {
-          "heading": "What it produces",
-          "text": "The text in its file on the current branch, in the register the place calls for, and a reply naming what was written, what changed and which claims could not be traced to the brief or the repository.",
-          "tables": []
-        },
-        {
-          "heading": "What it never does",
-          "text": "- Never writes a fact the brief or the repository does not show.\n- Never writes a count or a version of something that is still changing; it says where the number is read instead.\n- Never writes German; the translation is the Translator's.\n- Never commits and never runs the build.\n- Never uses an adjective that sells.",
-          "tables": []
-        },
-        {
-          "heading": "References",
-          "text": "",
-          "tables": [
-            {
-              "caption": null,
-              "columns": [
-                "What",
-                "URL"
-              ],
-              "rows": [
-                [
-                  "Working rules",
-                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
-                ],
-                [
-                  "Writing rules",
-                  "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
-                ],
-                [
-                  "Glossary",
-                  "https://github.com/robertblust/conventions/blob/main/conventions/GLOSSARY.md"
-                ],
-                [
-                  "Rulebook",
-                  "https://github.com/robertblust/conventions/blob/main/conventions/WRITER.md"
-                ]
-              ]
-            }
-          ],
-          "table": {
-            "caption": null,
-            "columns": [
-              "What",
-              "URL"
-            ],
-            "rows": [
-              [
-                "Working rules",
-                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
-              ],
-              [
-                "Writing rules",
-                "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
-              ],
-              [
-                "Glossary",
-                "https://github.com/robertblust/conventions/blob/main/conventions/GLOSSARY.md"
-              ],
-              [
-                "Rulebook",
-                "https://github.com/robertblust/conventions/blob/main/conventions/WRITER.md"
-              ]
-            ]
-          }
-        }
-      ],
-      "owner": null,
-      "path": "model/roles/writer.md"
-    },
-    {
       "id": "01a0fd97-1e47-72a0-af1f-2ea9d0e0afad",
       "address": "rules/a-branch-is-deleted-only-after-its-merge-is-confirmed",
       "type": "rule",
@@ -12624,7 +11846,7 @@
               ],
               "rows": [
                 [
-                  "role",
+                  "seat",
                   "Owner",
                   ""
                 ],
@@ -12655,7 +11877,7 @@
             ],
             "rows": [
               [
-                "role",
+                "seat",
                 "Owner",
                 ""
               ],
@@ -12711,17 +11933,17 @@
               ],
               "rows": [
                 [
-                  "role",
+                  "seat",
                   "Controller",
                   ""
                 ],
                 [
-                  "role",
+                  "seat",
                   "Implementer",
                   ""
                 ],
                 [
-                  "role",
+                  "seat",
                   "Reviewer",
                   ""
                 ],
@@ -12747,17 +11969,17 @@
             ],
             "rows": [
               [
-                "role",
+                "seat",
                 "Controller",
                 ""
               ],
               [
-                "role",
+                "seat",
                 "Implementer",
                 ""
               ],
               [
-                "role",
+                "seat",
                 "Reviewer",
                 ""
               ],
@@ -12808,7 +12030,7 @@
               ],
               "rows": [
                 [
-                  "role",
+                  "seat",
                   "Contributor",
                   ""
                 ],
@@ -12834,7 +12056,7 @@
             ],
             "rows": [
               [
-                "role",
+                "seat",
                 "Contributor",
                 ""
               ],
@@ -12885,7 +12107,7 @@
               ],
               "rows": [
                 [
-                  "role",
+                  "seat",
                   "Requestor",
                   ""
                 ],
@@ -12906,7 +12128,7 @@
             ],
             "rows": [
               [
-                "role",
+                "seat",
                 "Requestor",
                 ""
               ],
@@ -12973,7 +12195,7 @@
               ],
               "rows": [
                 [
-                  "role",
+                  "seat",
                   "Surveyor",
                   ""
                 ],
@@ -13004,7 +12226,7 @@
             ],
             "rows": [
               [
-                "role",
+                "seat",
                 "Surveyor",
                 ""
               ],
@@ -13060,12 +12282,12 @@
               ],
               "rows": [
                 [
-                  "role",
+                  "seat",
                   "Translator",
                   ""
                 ],
                 [
-                  "role",
+                  "seat",
                   "Writer",
                   ""
                 ],
@@ -13091,12 +12313,12 @@
             ],
             "rows": [
               [
-                "role",
+                "seat",
                 "Translator",
                 ""
               ],
               [
-                "role",
+                "seat",
                 "Writer",
                 ""
               ],
@@ -13147,7 +12369,7 @@
               ],
               "rows": [
                 [
-                  "role",
+                  "seat",
                   "Requestor",
                   ""
                 ],
@@ -13168,7 +12390,7 @@
             ],
             "rows": [
               [
-                "role",
+                "seat",
                 "Requestor",
                 ""
               ],
@@ -13214,17 +12436,17 @@
               ],
               "rows": [
                 [
-                  "role",
+                  "seat",
                   "Owner",
                   ""
                 ],
                 [
-                  "role",
+                  "seat",
                   "Specifier",
                   ""
                 ],
                 [
-                  "role",
+                  "seat",
                   "Writer",
                   ""
                 ],
@@ -13245,17 +12467,17 @@
             ],
             "rows": [
               [
-                "role",
+                "seat",
                 "Owner",
                 ""
               ],
               [
-                "role",
+                "seat",
                 "Specifier",
                 ""
               ],
               [
-                "role",
+                "seat",
                 "Writer",
                 ""
               ],
@@ -13301,7 +12523,7 @@
               ],
               "rows": [
                 [
-                  "role",
+                  "seat",
                   "Surveyor",
                   ""
                 ],
@@ -13327,7 +12549,7 @@
             ],
             "rows": [
               [
-                "role",
+                "seat",
                 "Surveyor",
                 ""
               ],
@@ -13378,7 +12600,7 @@
               ],
               "rows": [
                 [
-                  "role",
+                  "seat",
                   "Owner",
                   ""
                 ],
@@ -13404,7 +12626,7 @@
             ],
             "rows": [
               [
-                "role",
+                "seat",
                 "Owner",
                 ""
               ],
@@ -13455,17 +12677,17 @@
               ],
               "rows": [
                 [
-                  "role",
+                  "seat",
                   "Controller",
                   ""
                 ],
                 [
-                  "role",
+                  "seat",
                   "Implementer",
                   ""
                 ],
                 [
-                  "role",
+                  "seat",
                   "Surveyor",
                   ""
                 ],
@@ -13496,17 +12718,17 @@
             ],
             "rows": [
               [
-                "role",
+                "seat",
                 "Controller",
                 ""
               ],
               [
-                "role",
+                "seat",
                 "Implementer",
                 ""
               ],
               [
-                "role",
+                "seat",
                 "Surveyor",
                 ""
               ],
@@ -13563,6 +12785,906 @@
       ],
       "owner": null,
       "path": "model/rules/the-owner-s-word-merges.md"
+    },
+    {
+      "id": "01a0d360-9b98-7ee2-9051-f9478a601fde",
+      "address": "seats/answerer",
+      "type": "seat",
+      "name": "Answerer",
+      "tagline": "The seat that answers a visitor's question from what the model's tools return, names the entity each claim rests on, and says that the model does not say where it does not.",
+      "fields": {
+        "id": "01a0d360-9b98-7ee2-9051-f9478a601fde",
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A visitor's message with the conversation so far, the tools of the MCP host at the commit it pins, the rulebook, and the language the visitor wrote in. Where the question is not about the model, the seat says in one sentence what the chat is for and calls no tool.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "An answer in the visitor's language, in one or two short paragraphs, a list or a table, written from what the tools answered in that conversation and nothing else, naming the entity each claim rests on; where the tools do not say, the sentence that the model does not say. The entities it read whole, so the page can link them under the answer.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never claims what no tool answered in that conversation, and never guesses about the owner, the project or anyone named.\n- Never answers from its instructions or an earlier turn instead of a tool, because they are not the model.\n- Never speaks of its instructions or its tools when asked about them.\n- Never writes to the model, keeps a conversation, or decides anything.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Rulebook",
+                  "https://github.com/companygraph/chat-server/blob/main/lib/prompt.mjs"
+                ],
+                [
+                  "The fence it answers inside",
+                  "https://github.com/companygraph/chat-server/blob/main/README.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Rulebook",
+                "https://github.com/companygraph/chat-server/blob/main/lib/prompt.mjs"
+              ],
+              [
+                "The fence it answers inside",
+                "https://github.com/companygraph/chat-server/blob/main/README.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/seats/answerer.md"
+    },
+    {
+      "id": "01a0d360-9b98-7e50-a583-cfcd12e4b7c2",
+      "address": "seats/contributor",
+      "type": "seat",
+      "name": "Contributor",
+      "tagline": "Someone outside the project who offers a change to one of our repositories, under the same rules a change from inside is held to.",
+      "fields": {
+        "id": "01a0d360-9b98-7e50-a583-cfcd12e4b7c2",
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "The repository, its conventions, its constitution and its specifications, all of which are published; and the rules a change is held to, named by us where a contributor could not be expected to know them.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "A pull request against the default branch, committed under their own address, saying what is now true that was not before.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never merges, tags or releases.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Rulebook, GitHub pull requests",
+                  "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Rulebook, GitHub pull requests",
+                "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/seats/contributor.md"
+    },
+    {
+      "id": "01a0d4bd-a710-765f-b25a-5227025665ff",
+      "address": "seats/controller",
+      "type": "seat",
+      "name": "Controller",
+      "tagline": "The seat that runs a plan one brief at a time, reads every report as a claim, and writes nothing itself.",
+      "fields": {
+        "id": "01a0d4bd-a710-765f-b25a-5227025665ff",
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "An approved plan, the repository's own agent file, and a place to keep each task's brief, report and findings.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "One dispatched brief at a time; a decision after each report — fix, accept or park for the Owner; review ordered on the diff rather than on the report; and a branch whose tasks are done in the plan's order, each committed as it lands. The pull request at the end, opened and reported and no further.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never writes the change or the test itself.\n- Never rewrites what a commit contains; a finding against a committed task is a new brief.\n- Never dispatches the next task while the last one's findings are open.\n- Never commits a change to a model before the validation pass has read it.\n- Never edits a pull request it did not open.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/seats/controller.md"
+    },
+    {
+      "id": "01a0d2e3-bec0-7a2e-94b4-0e27ad0f7568",
+      "address": "seats/implementer",
+      "type": "seat",
+      "name": "Implementer",
+      "tagline": "The seat that turns one task brief into a tested commit and a report, and nothing beyond the brief.",
+      "fields": {
+        "id": "01a0d2e3-bec0-7a2e-94b4-0e27ad0f7568",
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A task brief that is the whole of its requirements, the interfaces earlier tasks produced, the repository's own agent file and a path for the report. Where the brief is unclear the seat asks before starting.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "The change the brief specifies, test first where the brief says so; the commit in the git register; a report naming what was built, what was run and what it doubts; and a short status the Controller acts on.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never spawns a subagent or a reviewer; review comes from the Controller after the report.\n- Never changes a test's expectation to make it pass.\n- Never edits a pull request it did not open.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/seats/implementer.md"
+    },
+    {
+      "id": "01a0d526-a5f8-7390-ade8-50e428745f1c",
+      "address": "seats/narrator",
+      "type": "seat",
+      "name": "Narrator",
+      "tagline": "The seat that speaks a talk's reviewed speaker notes, one clip per slide in each language, so the talk can be heard without its presenter.",
+      "fields": {
+        "id": "01a0d526-a5f8-7390-ade8-50e428745f1c",
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A deck whose speaker notes are reviewed in the language the clip is in, the cues the author wrote into them, and the voice and settings the rulebook names for that language. Where a note is not reviewed, the seat speaks nothing for that slide.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "One audio clip per slide and language, beside the deck it belongs to, stamped with what it was spoken from: the voice, the model, the settings and the text. A clip whose stamp still matches is left as it is.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never changes a word of the note it speaks, and never speaks text that is not on the slide.\n- Never chooses its own voice, model or settings; the rulebook names them per language.\n- Never speaks one language's note in the other language's voice.\n- Never publishes a clip; the Owner listens to it first.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Rulebook, with the ElevenLabs voices and settings",
+                  "https://github.com/guestgraph/guestgraph.github.io/blob/main/talks/intro/tts/generate.py"
+                ],
+                [
+                  "Working rules for the talks",
+                  "https://github.com/guestgraph/guestgraph.github.io/blob/main/AGENTS.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Rulebook, with the ElevenLabs voices and settings",
+                "https://github.com/guestgraph/guestgraph.github.io/blob/main/talks/intro/tts/generate.py"
+              ],
+              [
+                "Working rules for the talks",
+                "https://github.com/guestgraph/guestgraph.github.io/blob/main/AGENTS.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/seats/narrator.md"
+    },
+    {
+      "id": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+      "address": "seats/owner",
+      "type": "seat",
+      "name": "Owner",
+      "tagline": "The seat that decides what the project is for, says the last word on every page, and gives the word every merge, tag and release waits on.",
+      "fields": {
+        "id": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "The model, read before deciding: the vision, the objectives and the strategies under them, and the values a decision is weighed against. A draft or a pull request to review, on the branch and on the rendered page. The signals a strategy names as showing whether it is working.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "Decisions, recorded where they bind: a merge, a tag, a release and its notes, a pin moved in a commit that says why, a corrected model. The reviewed English every translation is made from. The word that ends a question an agent has parked, and the word that closes a question the model has left open.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never approves an amendment to a principle the constitution marks non-negotiable in passing inside a change.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ],
+                [
+                  "Writing rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ],
+              [
+                "Writing rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/seats/owner.md"
+    },
+    {
+      "id": "01a0d2e3-bec0-725e-86da-b629ccd2a699",
+      "address": "seats/planner",
+      "type": "seat",
+      "name": "Planner",
+      "tagline": "The seat that cuts an approved specification into task briefs, each whole on its own, and writes none of them.",
+      "fields": {
+        "id": "01a0d2e3-bec0-725e-86da-b629ccd2a699",
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A specification the Owner has approved, and the repository the work lands in, including the rules that bind it.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "An ordered set of task briefs. Each is the whole of its own requirements, names the interfaces the briefs around it produce and consume, and states how its holder can tell it is done. An entry of a model gets a brief of its own, because the Owner decides one entry at a time. The order is the order they can be worked in, not the order they were thought of.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never re-opens a decision the specification took.\n- Never writes a brief that depends on a conversation its holder did not have.\n- Never writes the change.\n- Never plans a task whose completion cannot be checked.\n- Never puts two entries of a model in one brief.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/seats/planner.md"
+    },
+    {
+      "id": "01a0d360-9b98-7519-92ba-676eb4ef0d5e",
+      "address": "seats/requestor",
+      "type": "seat",
+      "name": "Requestor",
+      "tagline": "Someone outside the project who needed GuestGraph to do something it does not, and says so where it can be answered.",
+      "fields": {
+        "id": "01a0d360-9b98-7519-92ba-676eb4ef0d5e",
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "Whatever they were trying to do and could not: the system that could not be connected, the operation the API lacked, the decision the engine could not explain. Nothing else: the seat is filled by whoever turns up, and a request is not a form to be completed before it is heard.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "A GitHub issue on the repository the request concerns, in their own words, and a correction where we restate it wrongly.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never has to know our terms to be understood; restating the request in them is our work.\n- Never decides whether the gap is filled.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Rulebook, GitHub issues",
+                  "https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Rulebook, GitHub issues",
+                "https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/seats/requestor.md"
+    },
+    {
+      "id": "01a0d2e3-bec0-7e84-8613-65039131e51c",
+      "address": "seats/reviewer",
+      "type": "seat",
+      "name": "Reviewer",
+      "tagline": "The seat that reads one diff against its brief, returns findings with a severity and changes nothing.",
+      "fields": {
+        "id": "01a0d2e3-bec0-7e84-8613-65039131e51c",
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "The brief the work was done from, the implementer's report read as unverified claims, the diff as one file with its commits and context, and the constraints that bind the task.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "Two verdicts, spec compliance and quality, and findings each with a file and a line, what is wrong, why it matters and how to fix it, ranked by severity, with the strengths named first. Where the diff touched a model, a third verdict: every entity it touched read against its schema's writing rules, which no mechanical check reaches. A finding is an input to whoever merges and never a verdict: it does not decide, and it is not passed on a person.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never mutates the working tree, the index, a branch or the pull request.\n- Never re-runs a suite to confirm a report; it runs one focused test on a doubt the report does not answer.\n- Never reads a schema's writing rules as satisfied because the mechanical checks are green.\n- Never spawns another reviewer.\n- Never marks polish as critical.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ],
+                [
+                  "Modeling rules",
+                  "https://github.com/companygraph/meta-model/blob/main/core/CONVENTIONS.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ],
+              [
+                "Modeling rules",
+                "https://github.com/companygraph/meta-model/blob/main/core/CONVENTIONS.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/seats/reviewer.md"
+    },
+    {
+      "id": "01a0d2e3-bec0-7379-8ae0-87fd05aba8ad",
+      "address": "seats/specifier",
+      "type": "seat",
+      "name": "Specifier",
+      "tagline": "The seat that turns a shaped request into a specification nobody has to guess at, and builds nothing.",
+      "fields": {
+        "id": "01a0d2e3-bec0-7379-8ae0-87fd05aba8ad",
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A request already classified, the model and the constitution it must not contradict, and the code or the pages it will touch, read rather than remembered. Where the request is ambiguous the seat asks before writing.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "A specification that is the whole of the requirements: the gap it closes, the approaches considered with the one chosen and why, the decisions taken, and what is explicitly not being done. Where it reaches another repository, what its release will ask of a consumer. Where a decision is the Owner's, the seat names the options and parks the question.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never writes the change it specifies.\n- Never decides scope; it names the options and the Owner chooses.\n- Never specifies a capability of the engine that is reachable other than through its API.\n- Never leaves a question unasked because an assumption would be convenient.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ],
+                [
+                  "Modeling rules",
+                  "https://github.com/companygraph/meta-model/blob/main/core/CONVENTIONS.md"
+                ],
+                [
+                  "Constitution",
+                  "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ],
+              [
+                "Modeling rules",
+                "https://github.com/companygraph/meta-model/blob/main/core/CONVENTIONS.md"
+              ],
+              [
+                "Constitution",
+                "https://github.com/guestgraph/engine/blob/main/.specify/memory/constitution.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/seats/specifier.md"
+    },
+    {
+      "id": "01a0fadf-c0cd-780a-a53a-a59709231e8f",
+      "address": "seats/surveyor",
+      "type": "seat",
+      "name": "Surveyor",
+      "tagline": "The seat that finds out where all the open work stands at the moment the Owner asks, sets it out with one proposal for what comes next, and carries out only what the Owner then decides.",
+      "fields": {
+        "id": "01a0fadf-c0cd-780a-a53a-a59709231e8f",
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "The Owner's question, read access to every repository, pull request, branch and worktree of the company, the list of the other sessions at work and what each is doing, and the memory of what was settled before. Where it cannot read something, the seat says what it could not see instead of filling the gap.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "An overview checked at the moment of asking: what is open, in what state, and who is working on it, with each claim linked to where it was read. One proposal for what comes next and one decision put to the Owner at a time. On the Owner's word, that decision carried out, the other sessions told what changed, and a report of what happened, mistakes included.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never deletes or writes to the model without the Owner's word in that conversation.\n- Never commits in its own name; a commit it makes on the Owner's word is made in the seat whose work it carries, under that seat's author and trailers.\n- Never decides; where a choice is open, it proposes and the Owner decides.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/seats/surveyor.md"
+    },
+    {
+      "id": "01a0d4bd-a710-7f00-a679-07ee34f542ef",
+      "address": "seats/translator",
+      "type": "seat",
+      "name": "Translator",
+      "tagline": "The seat that makes the Swiss Standard German of an element whose English the Owner has reviewed, and hands back a back-translation beside it.",
+      "fields": {
+        "id": "01a0d4bd-a710-7f00-a679-07ee34f542ef",
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "The reviewed English of the elements the task names, and the glossary. Reviewed means the Owner has said the English is done; a draft is not reviewed, and the seat says so. Where the task names no elements, the seat names the gap and writes nothing.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "The German in the element's own place, de-CH in the forms Switzerland uses, and beside each element a back-translation in English, so a reviewer with a minute can read what the German says.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never edits the English.\n- Never writes German into a model; a model is English, and the German a surface carries lives in the surface's own attributes.\n- Never writes a family term in any form but the glossary's.\n- Never commits.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ],
+                [
+                  "Writing rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+                ],
+                [
+                  "Glossary",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/GLOSSARY.md"
+                ],
+                [
+                  "Rulebook",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/TRANSLATOR.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ],
+              [
+                "Writing rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+              ],
+              [
+                "Glossary",
+                "https://github.com/robertblust/conventions/blob/main/conventions/GLOSSARY.md"
+              ],
+              [
+                "Rulebook",
+                "https://github.com/robertblust/conventions/blob/main/conventions/TRANSLATOR.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/seats/translator.md"
+    },
+    {
+      "id": "01a0d360-9b98-78dd-ae68-046773b0c8c8",
+      "address": "seats/visitor",
+      "type": "seat",
+      "name": "Visitor",
+      "tagline": "Someone who asks about GuestGraph in their own words, on its site or through an agent of their own, and is owed what the model says and nothing else.",
+      "fields": {
+        "id": "01a0d360-9b98-78dd-ae68-046773b0c8c8",
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A question, in whatever words and language they have. Nothing else: the seat is filled by whoever turns up, and nobody is asked who they are.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "A question, and where the answer sends them, a click on the entity it rests on: on the model page, or on the file at the commit it was read from.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never has to know the model's vocabulary to be answered; meeting their words is our work.\n- Never leaves anything behind: the conversation lives in their tab and ends with it.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/seats/visitor.md"
+    },
+    {
+      "id": "01a0d4bd-a710-745a-a1b7-f3c508a47ab1",
+      "address": "seats/writer",
+      "type": "seat",
+      "name": "Writer",
+      "tagline": "The seat that drafts English in the family voice from a brief, so the Owner reviews a draft instead of writing one.",
+      "fields": {
+        "id": "01a0d4bd-a710-745a-a1b7-f3c508a47ab1",
+        "source": "Local"
+      },
+      "sections": [
+        {
+          "heading": "What it takes",
+          "text": "A brief naming the audience, the one point, the facts the text may claim and where each is shown, and the file and the place the text lands. The rulebook and the glossary. Where the brief lacks the audience, the point or a fact's source, the seat names the gap and writes nothing.",
+          "tables": []
+        },
+        {
+          "heading": "What it produces",
+          "text": "The text in its file on the current branch, in the register the place calls for, and a reply naming what was written, what changed and which claims could not be traced to the brief or the repository.",
+          "tables": []
+        },
+        {
+          "heading": "What it never does",
+          "text": "- Never writes a fact the brief or the repository does not show.\n- Never writes a count or a version of something that is still changing; it says where the number is read instead.\n- Never writes German; the translation is the Translator's.\n- Never commits and never runs the build.\n- Never uses an adjective that sells.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ],
+                [
+                  "Writing rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+                ],
+                [
+                  "Glossary",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/GLOSSARY.md"
+                ],
+                [
+                  "Rulebook",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WRITER.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ],
+              [
+                "Writing rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WRITING.md"
+              ],
+              [
+                "Glossary",
+                "https://github.com/robertblust/conventions/blob/main/conventions/GLOSSARY.md"
+              ],
+              [
+                "Rulebook",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WRITER.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/seats/writer.md"
     },
     {
       "id": "01a0d2e2-f788-7d70-903e-402e3f765e65",
@@ -14892,55 +15014,55 @@
     {
       "from": "01a0d2e3-bec0-77d7-806c-b590119da768",
       "to": "01a0d2e3-bec0-725e-86da-b629ccd2a699",
-      "via": "roles",
+      "via": "seats",
       "attrs": {}
     },
     {
       "from": "01a0d2e3-bec0-77d7-806c-b590119da768",
       "to": "01a0d2e3-bec0-7379-8ae0-87fd05aba8ad",
-      "via": "roles",
+      "via": "seats",
       "attrs": {}
     },
     {
       "from": "01a0d2e3-bec0-77d7-806c-b590119da768",
       "to": "01a0d2e3-bec0-7a2e-94b4-0e27ad0f7568",
-      "via": "roles",
+      "via": "seats",
       "attrs": {}
     },
     {
       "from": "01a0d2e3-bec0-77d7-806c-b590119da768",
       "to": "01a0d2e3-bec0-7e84-8613-65039131e51c",
-      "via": "roles",
+      "via": "seats",
       "attrs": {}
     },
     {
       "from": "01a0d2e3-bec0-77d7-806c-b590119da768",
       "to": "01a0d360-9b98-7ee2-9051-f9478a601fde",
-      "via": "roles",
+      "via": "seats",
       "attrs": {}
     },
     {
       "from": "01a0d2e3-bec0-77d7-806c-b590119da768",
       "to": "01a0d4bd-a710-745a-a1b7-f3c508a47ab1",
-      "via": "roles",
+      "via": "seats",
       "attrs": {}
     },
     {
       "from": "01a0d2e3-bec0-77d7-806c-b590119da768",
       "to": "01a0d4bd-a710-765f-b25a-5227025665ff",
-      "via": "roles",
+      "via": "seats",
       "attrs": {}
     },
     {
       "from": "01a0d2e3-bec0-77d7-806c-b590119da768",
       "to": "01a0d4bd-a710-7f00-a679-07ee34f542ef",
-      "via": "roles",
+      "via": "seats",
       "attrs": {}
     },
     {
       "from": "01a0d2e3-bec0-77d7-806c-b590119da768",
       "to": "01a0fadf-c0cd-780a-a53a-a59709231e8f",
-      "via": "roles",
+      "via": "seats",
       "attrs": {}
     },
     {
@@ -16180,7 +16302,7 @@
     {
       "from": "01a0d526-a5f8-77e3-8296-a7ba4f851655",
       "to": "01a0d526-a5f8-7390-ade8-50e428745f1c",
-      "via": "roles",
+      "via": "seats",
       "attrs": {}
     },
     {
@@ -16192,7 +16314,7 @@
     {
       "from": "01a0d526-a5f8-7afe-8c5f-c84953eeae39",
       "to": "01a0d526-a5f8-7390-ade8-50e428745f1c",
-      "via": "roles",
+      "via": "seats",
       "attrs": {}
     },
     {
@@ -16212,7 +16334,7 @@
       "to": "01a0d360-9b98-7ee2-9051-f9478a601fde",
       "via": "Rests on.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": "",
         "For": "who answers, and what it may never do"
       }
@@ -17846,7 +17968,7 @@
       "to": "01a0d2e3-bec0-725e-86da-b629ccd2a699",
       "via": "Bears on.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": "",
         "How": "changed it"
       }
@@ -17856,7 +17978,7 @@
       "to": "01a0d2e3-bec0-7379-8ae0-87fd05aba8ad",
       "via": "Bears on.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": "",
         "How": "changed it"
       }
@@ -17866,7 +17988,7 @@
       "to": "01a0d2e3-bec0-7a2e-94b4-0e27ad0f7568",
       "via": "Bears on.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": "",
         "How": "changed it"
       }
@@ -17876,7 +17998,7 @@
       "to": "01a0d4bd-a710-745a-a1b7-f3c508a47ab1",
       "via": "Bears on.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": "",
         "How": "changed it"
       }
@@ -17886,7 +18008,7 @@
       "to": "01a0d4bd-a710-7f00-a679-07ee34f542ef",
       "via": "Bears on.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": "",
         "How": "changed it"
       }
@@ -17896,7 +18018,7 @@
       "to": "01a0d526-a5f8-7390-ade8-50e428745f1c",
       "via": "Bears on.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": "",
         "How": "changed it"
       }
@@ -17928,7 +18050,7 @@
     {
       "from": "01a0ea1c-1c90-7a8f-95cd-499f6efc91da",
       "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
-      "via": "roles",
+      "via": "seats",
       "attrs": {}
     },
     {
@@ -18173,7 +18295,7 @@
       "to": "01a0d2e3-bec0-7a2e-94b4-0e27ad0f7568",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18182,7 +18304,7 @@
       "to": "01a0d2e3-bec0-7e84-8613-65039131e51c",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18200,7 +18322,7 @@
       "to": "01a0d4bd-a710-765f-b25a-5227025665ff",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18239,7 +18361,7 @@
       "to": "01a0fadf-c0cd-780a-a53a-a59709231e8f",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18281,7 +18403,7 @@
       "to": "01a0d4bd-a710-745a-a1b7-f3c508a47ab1",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18290,7 +18412,7 @@
       "to": "01a0d4bd-a710-7f00-a679-07ee34f542ef",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18305,7 +18427,7 @@
       "to": "01a0d2e3-bec0-7379-8ae0-87fd05aba8ad",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18314,7 +18436,7 @@
       "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18323,7 +18445,7 @@
       "to": "01a0d4bd-a710-745a-a1b7-f3c508a47ab1",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18356,7 +18478,7 @@
       "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18389,7 +18511,7 @@
       "to": "01a0fadf-c0cd-780a-a53a-a59709231e8f",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18413,7 +18535,7 @@
       "to": "01a0d2e3-bec0-7a2e-94b4-0e27ad0f7568",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18431,7 +18553,7 @@
       "to": "01a0d4bd-a710-765f-b25a-5227025665ff",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18449,7 +18571,7 @@
       "to": "01a0fadf-c0cd-780a-a53a-a59709231e8f",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18482,7 +18604,7 @@
       "to": "01a0d360-9b98-7e50-a583-cfcd12e4b7c2",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18515,7 +18637,7 @@
       "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18572,7 +18694,7 @@
       "to": "01a0d360-9b98-7519-92ba-676eb4ef0d5e",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18620,7 +18742,7 @@
       "to": "01a0d360-9b98-7519-92ba-676eb4ef0d5e",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18653,7 +18775,7 @@
       "to": "01a0d2e3-bec0-7e84-8613-65039131e51c",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18719,7 +18841,7 @@
       "to": "01a0d2e3-bec0-7a2e-94b4-0e27ad0f7568",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18728,7 +18850,7 @@
       "to": "01a0d4bd-a710-765f-b25a-5227025665ff",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -18746,7 +18868,7 @@
       "to": "01a0fadf-c0cd-780a-a53a-a59709231e8f",
       "via": "Applies to.Entity",
       "attrs": {
-        "Type": "role",
+        "Type": "seat",
         "Owner": ""
       }
     },
@@ -19182,6 +19304,30 @@
       "from": "01a109b7-ea95-7ef7-b81c-f1a8a51a1b0a",
       "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
       "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a1128e-e26e-7286-afbe-3de101a5f56e",
+      "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+      "via": "by",
+      "attrs": {}
+    },
+    {
+      "from": "01a1128e-e26e-7286-afbe-3de101a5f56e",
+      "to": "01a108de-a9c3-74b9-948e-906443f770ad",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "01a1128e-e26e-7286-afbe-3de101a5f56e",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a1128e-e26e-7286-afbe-3de101a5f56e",
+      "to": "01a0dd52-d3a0-7afb-a186-0025d9fb5480",
+      "via": "status",
       "attrs": {}
     }
   ],
