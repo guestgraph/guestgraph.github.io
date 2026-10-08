@@ -1,5 +1,5 @@
 // @robertblust/design — page.js, assembled from the shared blocks: lang v5 · theme v5 ·
-// navFit v2.
+// navFit v3.
 // Editing this file in a site does nothing: the next npm run design overwrites it.
 
 (function () {
@@ -149,15 +149,37 @@ function setTheme(v){ theme = v; themeRemember(v); applyTheme(); }
       "the body, after the theme fence, not in the head beside theme boot.");
   }
   var pending = false;
+  // A length as layout holds it: computed style says 9.6px, layout keeps 9.59375.
+  var UNIT = 1 / 64;
+  function laid(value){ return Math.floor((parseFloat(value) || 0) / UNIT) * UNIT; }
+  // The right edge of what the bar holds, fractional. `display:contents` draws no box, so its
+  // children stand for it; an element with no box at all (`display:none`) holds nothing. An
+  // item's trailing margin is part of what it needs.
+  function edge(el){
+    var right = -Infinity;
+    for (var i = 0; i < el.children.length; i++) {
+      var child = el.children[i], style = getComputedStyle(child);
+      if (style.display === "contents") right = Math.max(right, edge(child));
+      else if (child.getClientRects().length) {
+        right = Math.max(right, child.getBoundingClientRect().right + laid(style.marginRight));
+      }
+    }
+    return right;
+  }
+  function overflows(){
+    var box = bar.getBoundingClientRect(), style = getComputedStyle(bar);
+    var room = box.right - laid(style.paddingRight) - laid(style.borderRightWidth);
+    return edge(bar) - room >= UNIT || bar.scrollWidth > bar.clientWidth;
+  }
   function fit(){
     pending = false;
     root.removeAttribute("data-nav");
     var wrap = bar.style.flexWrap;
     bar.style.flexWrap = "nowrap";
-    var over = bar.scrollWidth > bar.clientWidth;
+    var over = overflows();
     if (over) {
       root.setAttribute("data-nav", "tight");
-      over = bar.scrollWidth > bar.clientWidth;
+      over = overflows();
     }
     bar.style.flexWrap = wrap;
     if (over) root.setAttribute("data-nav", "compact");
