@@ -59,10 +59,10 @@ const PAGES = [
     fontsLoaded: ["Bricolage Grotesque", "Instrument Sans"], fontsAvailable: true, tokens: true, sky: true, header: true, monoScope: true, monoDefined: true, contrast: true, noFlash: "theme", tokenVersion: true, fences: [],
     card: true, cardBase: SITE, internalLinks: true },
 
-  // The team page. Its boards and note are rendered from model.json by build/pages.mjs, and
+  // The Processes page. Its boards and note are rendered from model.json by build/pages.mjs, and
   // `board` holds each board to the phases, seats and marks the model declares. A seat's card
   // opens from the model on this page, and its links go to /model/.
-  { path: "/team/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /Team/, lang: "en", sourceLang: "en",
+  { path: "/processes/", typography: true, footer: FOOTER, storageKeys: true, mobileNav: true, carriesLang: true, headerBaseline: true, navOrder: true, headerFits: true, seo: true, noNewTab: true, title: /Processes/, lang: "en", sourceLang: "en",
     contains: ["An agent does the work,", "every", "gate", "How to read it", "Generated from"],
     translates: { lang: "de", shows: ["Wie man es liest", "DAS TEAM", "Ein Sitz ist eine Rolle"], hides: ["How to read it", "THE TEAM", "A seat is a role"] },
     links: ["https://github.com/guestgraph"],

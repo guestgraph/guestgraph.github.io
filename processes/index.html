@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Team — GuestGraph</title>
+<title>Processes — GuestGraph</title>
 <meta id="metadesc" name="description" content="Who does the work at GuestGraph: an AI agent holds most of the seats, and every gate is approved by a seat a person holds.">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<link rel="canonical" href="https://guestgraph.io/team/">
+<link rel="canonical" href="https://guestgraph.io/processes/">
 
-<meta property="og:title" content="Team — GuestGraph">
+<meta property="og:title" content="Processes — GuestGraph">
 <meta property="og:description" content="Who does the work at GuestGraph: an AI agent holds most of the seats, and every gate is approved by a seat a person holds.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="GuestGraph">
-<meta property="og:url" content="https://guestgraph.io/team/">
-<meta property="og:image" content="https://guestgraph.io/team/og.png">
+<meta property="og:url" content="https://guestgraph.io/processes/">
+<meta property="og:image" content="https://guestgraph.io/processes/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="GuestGraph's team boards: seats by phase">
+<meta property="og:image:alt" content="GuestGraph's process boards: seats by phase">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="de_CH">
 <meta name="twitter:card" content="summary_large_image">
@@ -50,9 +50,9 @@
     },
     {
       "@type": "WebPage",
-      "@id": "https://guestgraph.io/team/#webpage",
-      "name": "Team",
-      "url": "https://guestgraph.io/team/",
+      "@id": "https://guestgraph.io/processes/#webpage",
+      "name": "Processes",
+      "url": "https://guestgraph.io/processes/",
       "inLanguage": "en",
       "isPartOf": {
         "@id": "https://guestgraph.io/#website"
@@ -61,12 +61,12 @@
         "@id": "https://guestgraph.io/id/01a0d2e2-f788-788d-ac26-56e9ef94fdd2"
       },
       "breadcrumb": {
-        "@id": "https://guestgraph.io/team/#breadcrumb"
+        "@id": "https://guestgraph.io/processes/#breadcrumb"
       }
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://guestgraph.io/team/#breadcrumb",
+      "@id": "https://guestgraph.io/processes/#breadcrumb",
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -77,8 +77,8 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Team",
-          "item": "https://guestgraph.io/team/"
+          "name": "Processes",
+          "item": "https://guestgraph.io/processes/"
         }
       ]
     },
@@ -215,7 +215,7 @@
   .lbl{font-family:"Plex Mono", ui-monospace, Menlo, monospace; font-size:.66rem;
        letter-spacing:.14em; text-transform:uppercase; color:var(--dim)}
   /* The card's own prose keeps a measure inside the full-width drawer. card.js draws it, so
-     the team rules leave it to the page. */
+     the processes rules leave it to the page. */
   .cbody p, .cbody ul.prose{max-width:72ch}
 
   /* ─── stage contract · v2 · shared ───────────────────────────────────
@@ -295,8 +295,8 @@
       </a>
       <nav>
         <div class="navlinks" id="navlinks">
-          <a href="./" aria-current="page">Team</a>
           <a href="../principles/" data-de="Prinzipien">Principles</a>
+          <a href="./" aria-current="page">Processes</a>
           <a href="../surfaces/">Surfaces</a>
           <a href="../api/">API</a>
           <a href="../model/" data-de="Modell">Model</a>
@@ -320,14 +320,14 @@
     <div class="title">
       <h1 data-de="<span class='r70'>Ein Agent macht die Arbeit,</span><span class='rcl'>ein Mensch wacht über jedes <em>Gate</em>.</span>"><span class="r70">An agent does the work,</span><span class="rcl">a person holds every <em>gate</em>.</span></h1>
       <p class="tagline" data-de="Ein KI-Agent besetzt die Sitze, die spezifizieren, planen, umsetzen, prüfen und antworten. Jedes Gate wird von einem Sitz freigegeben, den ein Mensch besetzt.">An AI agent holds the seats that specify, plan, implement, review and answer. Every gate is approved by a seat a person holds.</p>
-      <!-- team-note:start -->
+      <!-- processes-note:start -->
       <p class="note" data-de="Aus dem Modell erzeugt: Die Worte unten sind seine eigenen – und in der einen Sprache, in der es geschrieben ist. Der Rest dieser Website ist zweisprachig; eine übersetzte Kopie wäre eine zweite Fassung, die ebenfalls stimmen müsste – und genau dagegen argumentiert diese Seite.">Generated from the model, so the words below are its own — and in the one language it is written in. The rest of this site is bilingual; a translated copy would be a second thing to keep true, which is what this page argues against.</p>
-    <!-- team-note:end -->
+    <!-- processes-note:end -->
     </div>
 
     <section class="figure-section">
-      <div class="lbl" data-de="Das Team">The team</div>
-      <!-- team:start -->
+      <div class="lbl" data-de="Das Team">The processes</div>
+      <!-- processes:start -->
       <section class="proc" id="deciding">
         <h3 class="procname">Deciding</h3>
         <p class="proctag">How the Owner decides what comes next, from an overview of all open work checked at the moment of asking, because building fast is solved and deciding well is not.</p>
@@ -342,11 +342,11 @@
       </div><button class="openall" id="deciding-openall" type="button" data-de="Alle öffnen">Open all</button></div>
       <div class="grid" id="deciding-board">
         <div class="ghead"><span class="lbl">Seat</span><span><span class="phnum">01</span><span class="phname">Survey</span></span><span><span class="phnum">02</span><span class="phname">Propose</span></span><span><span class="phnum">03</span><span class="phname">Carry</span></span></div>
-        <details class="human" id="deciding-owner" data-role="01a0d2e3-bec0-7fd9-81f6-bcd405d5b168">
+        <details class="human" id="deciding-owner" data-seat="01a0d2e3-bec0-7fd9-81f6-bcd405d5b168">
           <summary aria-label="Owner, human. supports Propose. approves the gate of Survey, Propose, Carry."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Owner</span></span><span><i class="g ga"></i></span><span><i class="g su"></i><i class="g ga"></i></span><span><i class="g ga"></i></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
-        <details id="deciding-surveyor" data-role="01a0fadf-c0cd-780a-a53a-a59709231e8f">
+        <details id="deciding-surveyor" data-seat="01a0fadf-c0cd-780a-a53a-a59709231e8f">
           <summary aria-label="Surveyor, agent. executes Survey, Propose, Carry. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Surveyor</span></span><span><i class="g ex"></i></span><span><i class="g ex"></i></span><span><i class="g ex"></i></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
@@ -375,35 +375,35 @@
       </div><button class="openall" id="delivery-openall" type="button" data-de="Alle öffnen">Open all</button></div>
       <div class="grid" id="delivery-board">
         <div class="ghead"><span class="lbl">Seat</span><span><span class="phnum">01</span><span class="phname">Shape</span></span><span><span class="phnum">02</span><span class="phname">Spec</span></span><span><span class="phnum">03</span><span class="phname">Plan</span></span><span><span class="phnum">04</span><span class="phname">Implement</span></span><span><span class="phnum">05</span><span class="phname">Integrate</span></span></div>
-        <details class="human" id="delivery-owner" data-role="01a0d2e3-bec0-7fd9-81f6-bcd405d5b168">
+        <details class="human" id="delivery-owner" data-seat="01a0d2e3-bec0-7fd9-81f6-bcd405d5b168">
           <summary aria-label="Owner, human. executes Shape, Implement, Integrate. approves the gate of Shape, Spec, Plan, Implement, Integrate."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Owner</span></span><span><i class="g ex"></i><i class="g ga"></i></span><span><i class="g ga"></i></span><span><i class="g ga"></i></span><span><i class="g ex"></i><i class="g ga"></i></span><span><i class="g ex"></i><i class="g ga"></i></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
-        <details id="delivery-specifier" data-role="01a0d2e3-bec0-7379-8ae0-87fd05aba8ad">
+        <details id="delivery-specifier" data-seat="01a0d2e3-bec0-7379-8ae0-87fd05aba8ad">
           <summary aria-label="Specifier, agent. executes Spec. supports Plan. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Specifier</span></span><span></span><span><i class="g ex"></i></span><span><i class="g su"></i></span><span></span><span></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
-        <details id="delivery-planner" data-role="01a0d2e3-bec0-725e-86da-b629ccd2a699">
+        <details id="delivery-planner" data-seat="01a0d2e3-bec0-725e-86da-b629ccd2a699">
           <summary aria-label="Planner, agent. executes Plan. supports Implement. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Planner</span></span><span></span><span></span><span><i class="g ex"></i></span><span><i class="g su"></i></span><span></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
-        <details id="delivery-controller" data-role="01a0d4bd-a710-765f-b25a-5227025665ff">
+        <details id="delivery-controller" data-seat="01a0d4bd-a710-765f-b25a-5227025665ff">
           <summary aria-label="Controller, agent. executes Implement, Integrate. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Controller</span></span><span></span><span></span><span></span><span><i class="g ex"></i></span><span><i class="g ex"></i></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
-        <details id="delivery-implementer" data-role="01a0d2e3-bec0-7a2e-94b4-0e27ad0f7568">
+        <details id="delivery-implementer" data-seat="01a0d2e3-bec0-7a2e-94b4-0e27ad0f7568">
           <summary aria-label="Implementer, agent. executes Implement. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Implementer</span></span><span></span><span></span><span></span><span><i class="g ex"></i></span><span></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
-        <details id="delivery-reviewer" data-role="01a0d2e3-bec0-7e84-8613-65039131e51c">
+        <details id="delivery-reviewer" data-seat="01a0d2e3-bec0-7e84-8613-65039131e51c">
           <summary aria-label="Reviewer, agent. executes Implement, Integrate. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Reviewer</span></span><span></span><span></span><span></span><span><i class="g ex"></i></span><span><i class="g ex"></i></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
-        <details id="delivery-writer" data-role="01a0d4bd-a710-745a-a1b7-f3c508a47ab1">
+        <details id="delivery-writer" data-seat="01a0d4bd-a710-745a-a1b7-f3c508a47ab1">
           <summary aria-label="Writer, agent. executes Implement. supports Spec. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Writer</span></span><span></span><span><i class="g su"></i></span><span></span><span><i class="g ex"></i></span><span></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
-        <details id="delivery-translator" data-role="01a0d4bd-a710-7f00-a679-07ee34f542ef">
+        <details id="delivery-translator" data-seat="01a0d4bd-a710-7f00-a679-07ee34f542ef">
           <summary aria-label="Translator, agent. executes Implement. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Translator</span></span><span></span><span></span><span></span><span><i class="g ex"></i></span><span></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
@@ -437,19 +437,19 @@
       </div><button class="openall" id="contribution-openall" type="button" data-de="Alle öffnen">Open all</button></div>
       <div class="grid" id="contribution-board">
         <div class="ghead"><span class="lbl">Seat</span><span><span class="phnum">01</span><span class="phname">Propose</span></span><span><span class="phnum">02</span><span class="phname">Consider</span></span><span><span class="phnum">03</span><span class="phname">Review</span></span><span><span class="phnum">04</span><span class="phname">Integrate</span></span></div>
-        <details class="human" id="contribution-owner" data-role="01a0d2e3-bec0-7fd9-81f6-bcd405d5b168">
+        <details class="human" id="contribution-owner" data-seat="01a0d2e3-bec0-7fd9-81f6-bcd405d5b168">
           <summary aria-label="Owner, human. executes Consider, Integrate. supports Review. approves the gate of Consider, Review, Integrate."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Owner</span></span><span></span><span><i class="g ex"></i><i class="g ga"></i></span><span><i class="g su"></i><i class="g ga"></i></span><span><i class="g ex"></i><i class="g ga"></i></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
-        <details class="human" id="contribution-contributor" data-role="01a0d360-9b98-7e50-a583-cfcd12e4b7c2">
+        <details class="human" id="contribution-contributor" data-seat="01a0d360-9b98-7e50-a583-cfcd12e4b7c2">
           <summary aria-label="Contributor, human. executes Propose. supports Consider, Review. approves the gate of Propose."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Contributor</span></span><span><i class="g ex"></i><i class="g ga"></i></span><span><i class="g su"></i></span><span><i class="g su"></i></span><span></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
-        <details id="contribution-reviewer" data-role="01a0d2e3-bec0-7e84-8613-65039131e51c">
+        <details id="contribution-reviewer" data-seat="01a0d2e3-bec0-7e84-8613-65039131e51c">
           <summary aria-label="Reviewer, agent. executes Review. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Reviewer</span></span><span></span><span></span><span><i class="g ex"></i></span><span></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
-        <details id="contribution-surveyor" data-role="01a0fadf-c0cd-780a-a53a-a59709231e8f">
+        <details id="contribution-surveyor" data-seat="01a0fadf-c0cd-780a-a53a-a59709231e8f">
           <summary aria-label="Surveyor, agent. executes Integrate. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Surveyor</span></span><span></span><span></span><span></span><span><i class="g ex"></i></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
@@ -480,11 +480,11 @@
       </div><button class="openall" id="feature-request-openall" type="button" data-de="Alle öffnen">Open all</button></div>
       <div class="grid" id="feature-request-board">
         <div class="ghead"><span class="lbl">Seat</span><span><span class="phnum">01</span><span class="phname">Raise</span></span><span><span class="phnum">02</span><span class="phname">Understand</span></span><span><span class="phnum">03</span><span class="phname">Triage</span></span><span><span class="phnum">04</span><span class="phname">Answer</span></span></div>
-        <details class="human" id="feature-request-owner" data-role="01a0d2e3-bec0-7fd9-81f6-bcd405d5b168">
+        <details class="human" id="feature-request-owner" data-seat="01a0d2e3-bec0-7fd9-81f6-bcd405d5b168">
           <summary aria-label="Owner, human. executes Understand, Triage, Answer. approves the gate of Understand, Triage, Answer."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Owner</span></span><span></span><span><i class="g ex"></i><i class="g ga"></i></span><span><i class="g ex"></i><i class="g ga"></i></span><span><i class="g ex"></i><i class="g ga"></i></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
-        <details class="human" id="feature-request-requestor" data-role="01a0d360-9b98-7519-92ba-676eb4ef0d5e">
+        <details class="human" id="feature-request-requestor" data-seat="01a0d360-9b98-7519-92ba-676eb4ef0d5e">
           <summary aria-label="Requestor, human. executes Raise. supports Understand, Answer. approves the gate of Raise."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Requestor</span></span><span><i class="g ex"></i><i class="g ga"></i></span><span><i class="g su"></i></span><span></span><span><i class="g su"></i></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
@@ -516,15 +516,15 @@
       </div><button class="openall" id="answering-openall" type="button" data-de="Alle öffnen">Open all</button></div>
       <div class="grid" id="answering-board">
         <div class="ghead"><span class="lbl">Seat</span><span><span class="phnum">01</span><span class="phname">Answer</span></span></div>
-        <details class="human" id="answering-owner" data-role="01a0d2e3-bec0-7fd9-81f6-bcd405d5b168">
+        <details class="human" id="answering-owner" data-seat="01a0d2e3-bec0-7fd9-81f6-bcd405d5b168">
           <summary aria-label="Owner, human. approves the gate of Answer."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Owner</span></span><span><i class="g ga"></i></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
-        <details class="human" id="answering-visitor" data-role="01a0d360-9b98-78dd-ae68-046773b0c8c8">
+        <details class="human" id="answering-visitor" data-seat="01a0d360-9b98-78dd-ae68-046773b0c8c8">
           <summary aria-label="Visitor, human. supports Answer. approves no gate."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Visitor</span></span><span><i class="g su"></i></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
-        <details id="answering-answerer" data-role="01a0d360-9b98-7ee2-9051-f9478a601fde">
+        <details id="answering-answerer" data-seat="01a0d360-9b98-7ee2-9051-f9478a601fde">
           <summary aria-label="Answerer, agent. executes Answer. approves no gate."><span class="sname"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><span class="tw">Answerer</span></span><span><i class="g ex"></i></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
@@ -549,11 +549,11 @@
       </div><button class="openall" id="narrating-openall" type="button" data-de="Alle öffnen">Open all</button></div>
       <div class="grid" id="narrating-board">
         <div class="ghead"><span class="lbl">Seat</span><span><span class="phnum">01</span><span class="phname">Narrate</span></span></div>
-        <details class="human" id="narrating-owner" data-role="01a0d2e3-bec0-7fd9-81f6-bcd405d5b168">
+        <details class="human" id="narrating-owner" data-seat="01a0d2e3-bec0-7fd9-81f6-bcd405d5b168">
           <summary aria-label="Owner, human. approves the gate of Narrate."><span class="sname"><svg class="mk human" aria-hidden="true"><use href="#m-human"/></svg><span class="tw">Owner</span></span><span><i class="g ga"></i></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
-        <details id="narrating-narrator" data-role="01a0d526-a5f8-7390-ade8-50e428745f1c">
+        <details id="narrating-narrator" data-seat="01a0d526-a5f8-7390-ade8-50e428745f1c">
           <summary aria-label="Narrator, agent, held by English Voice and German Voice. executes Narrate. approves no gate."><span class="sname"><span class="stack"><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg><svg class="mk agent" aria-hidden="true"><use href="#m-agent"/></svg></span><span class="tw">Narrator</span></span><span><i class="g ex"></i></span></summary>
           <div class="drawer"><div class="card"><div class="cbody"></div><div class="cfoot"><span></span></div></div></div>
         </details>
@@ -564,7 +564,7 @@
         <dd>Turn each changed note into a clip in its language, and let none of them out unheard.</dd>
       </dl>
       </section>
-      <!-- team:end -->
+      <!-- processes:end -->
       <p class="figcap" data-de="Jeder Prozess hat seine eigene Übersicht: die Lieferung, Etappe für Etappe; Beiträge, die als Pull-Requests vorgeschlagen werden; Feature-Requests, die als GitHub-Issues eröffnet werden; und das Beantworten von Fragen, bei dem der Chat einem Besucher antwortet. Eine Zeile zeigt, was ein Sitz über die ganze Arbeit hinweg tut, eine Spalte, wer an einer Phase beteiligt ist. Worauf es ankommt, zeigen die Gate-Zeichen: Jedes Gate wird von einem Sitz freigegeben, den ein Mensch besetzt, und keine Agentenzeile trägt eines. Ein Name neben einem Sitz ist das Profil, das ihn besetzt; einen Sitz ohne Namen besetzt ein Mensch, den das Modell nicht nennt. Ein Klick auf einen Sitz öffnet seine Karte auf der Modell-Seite.">Each process draws its own board: delivery, slice by slice; contributions, proposed as pull requests; feature requests, raised as GitHub issues; and answering, where the chat replies to a visitor. Read a row for what a seat does across the work, and a column for who touches a phase. The gate marks are the argument: every gate is approved by a seat a person holds, and no agent row carries one. A name beside a seat is the profile that holds it; a seat with no name is held by a person the model does not name. A seat opens onto its card on the model page.</p>
     </section>
 
@@ -647,7 +647,7 @@
   var UI = {
     de:{ title:"Team – GuestGraph",
          desc:"Wer bei GuestGraph die Arbeit macht: Ein KI-Agent besetzt die meisten Sitze, und jedes Gate wird von einem Sitz freigegeben, den ein Mensch besetzt." },
-    en:{ title:"Team — GuestGraph",
+    en:{ title:"Processes — GuestGraph",
          desc:"Who does the work at GuestGraph: an AI agent holds most of the seats, and every gate is approved by a seat a person holds." }
   };
 
@@ -706,24 +706,24 @@
 <script src="../card.js"></script>
 <script>
   var STAGE_PAGE = "../model/";   // the page that draws this model on the stage
-  var MODEL_CARD = "team";        // the name card.js reports a failed read under
-  /* ─── model card · v3 · shared ─────────────────────────────────────
+  var MODEL_CARD = "processes";   // the name card.js reports a failed read under
+  /* ─── model card · v4 · shared ─────────────────────────────────────
      Generated from @robertblust/design — edit it there and run `npm run design`.
 
      The card glue for a board of seats: a seat's card is rendered by card.js the first time
      its row opens, again when the language has changed since, and on arrival at a seat's
-     address. It moved here from /team/ with four things generalized and nothing else: where a
-     card's links go, the rows it wires (every board's, not one board's), the Open-all button
-     (one per board), and the name it gives card.js.
+     address. It moved here from a page's own script with four things generalized and nothing
+     else: where a card's links go, the rows it wires (every board's, not one board's), the
+     Open-all button (one per board), and the name it gives card.js.
 
      This block has a contract with the page around it that `design:check` cannot see, because
      the check only compares bytes between the markers. The page must load card.js before it
      and declare, above this fence in the same script:
 
        var STAGE_PAGE = "../model/";   // the page that draws this model on the stage
-       var MODEL_CARD = "team";        // the name card.js reports a failed read under
+       var MODEL_CARD = "processes";     // the name card.js reports a failed read under
 
-     and carry what lib/render/team.mjs writes, plus the provenance line
+     and carry what lib/render/processes.mjs writes, plus the provenance line
      (`#srclink` with its `data-src`, and `#srccommit`) that every model page has.
   */
   // The seats are in the markup; the cards are not. A card per seat at rest would be a copy of
@@ -758,7 +758,7 @@
       // card is its own element, so remembering the seat left the second row's card empty.
       var seen = {};
       function ensure(d){
-        var id = d.getAttribute("data-role"), L = lang();
+        var id = d.getAttribute("data-seat"), L = lang();
         if (seen[d.id] === L) return;
         rbCard.render(byId[id], d.querySelector(".cbody"), d.querySelector(".cfoot span"),
           { data: data, lang: L, link: goLink });
@@ -770,7 +770,7 @@
       rows.forEach(function (d) {
         d.addEventListener("toggle", function(){ if (d.open) ensure(d); });
       });
-      // A link must land: arriving on /team/#reviewer opens that seat rather than scrolling to a
+      // A link must land: arriving on /processes/#reviewer opens that seat rather than scrolling to a
       // shut row whose name is all the visitor sees.
       function fromHash(){
         var id = location.hash.slice(1); if (!id) return;
