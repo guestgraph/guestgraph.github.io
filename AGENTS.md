@@ -165,7 +165,7 @@ The row across the top — wordmark, links, language control — is one design o
 
 What the contract says:
 
-- **Order.** Ideas, Principles, Model, Example, Talks, Billing, Privacy, then the language
+- **Order.** Principles, Processes, Surfaces, API, Model, Talks, Billing, then the language
   control. A site skips what it does not have and reorders nothing. Read right to left, the
   switcher is at the edge and each step left is more the site's own subject.
 - **One baseline.** A single line runs through the middle of every text in the row. The

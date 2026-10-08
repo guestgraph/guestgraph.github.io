@@ -31,8 +31,8 @@ export function organizationId(data) {
 const PAGE_HEAD = ["Organization", "WebSite", "WebPage", "BreadcrumbList"];
 export const PAGES = [
   { file: "index.html", head: ["Person", "Organization", "WebSite", "SoftwareSourceCode", "WebPage"] },
-  { file: "processes/index.html", head: PAGE_HEAD },
   { file: "principles/index.html", head: PAGE_HEAD },
+  { file: "processes/index.html", head: PAGE_HEAD },
   { file: "surfaces/index.html", head: PAGE_HEAD },
   { file: "api/index.html", head: PAGE_HEAD },
   { file: "model/index.html", head: PAGE_HEAD },
