@@ -296,7 +296,7 @@
       <nav>
         <div class="navlinks" id="navlinks">
           <a href="../principles/" data-de="Prinzipien">Principles</a>
-          <a href="./" aria-current="page">Processes</a>
+          <a href="./" aria-current="page" data-de="Prozesse">Processes</a>
           <a href="../surfaces/">Surfaces</a>
           <a href="../api/">API</a>
           <a href="../model/" data-de="Modell">Model</a>
@@ -326,7 +326,7 @@
     </div>
 
     <section class="figure-section">
-      <div class="lbl" data-de="Das Team">The processes</div>
+      <div class="lbl" data-de="Die Prozesse">The processes</div>
       <!-- processes:start -->
       <section class="proc" id="deciding">
         <h3 class="procname">Deciding</h3>
@@ -571,7 +571,7 @@
     <section>
       <h2 data-de="Wie man es liest">How to read it</h2>
       <div class="rules">
-        <p data-de="<b>Ein Sitz ist eine Rolle, kein Mensch.</b> Ein Profil besetzt einige Sitze, und sein Name steht daneben. Einen Sitz ohne Namen besetzt ein Mensch; so viel sagt das Modell, nicht aber, wer."><b>A seat is not a person.</b> A profile holds some seats, and its name stands beside them. A seat with no name is held by a person; the model says that much and not who.</p>
+        <p data-de="<b>Ein Sitz ist kein Mensch.</b> Ein Profil besetzt einige Sitze, und sein Name steht daneben. Einen Sitz ohne Namen besetzt ein Mensch; so viel sagt das Modell, nicht aber, wer."><b>A seat is not a person.</b> A profile holds some seats, and its name stands beside them. A seat with no name is held by a person; the model says that much and not who.</p>
         <p data-de="<b>Ein Gate ist das, ohne das eine Phase nicht abgeschlossen werden kann.</b> Die meisten gibt der Owner frei. Der Requestor gibt die erste Phase eines Feature-Requests frei, der Contributor die erste Phase eines Beitrags."><b>A gate is what a phase cannot be left without.</b> The Owner approves most of them. The Requestor approves the first phase of a feature request, and the Contributor the first phase of a contribution.</p>
         <p data-de="<b>Kein Zeichen ist von Hand gesetzt.</b> Jede Zelle wird aus der eigenen Datei der Phase gelesen, darum kann die Übersicht dem Prozess, den sie zeichnet, nicht widersprechen."><b>No mark is typed.</b> Every cell is read off the phase's own file, so the board cannot disagree with the process it draws.</p>
       </div>
@@ -645,7 +645,7 @@
   i18n.forEach(function(el){ el.setAttribute("data-en", el.innerHTML); });
 
   var UI = {
-    de:{ title:"Team – GuestGraph",
+    de:{ title:"Prozesse – GuestGraph",
          desc:"Wer bei GuestGraph die Arbeit macht: Ein KI-Agent besetzt die meisten Sitze, und jedes Gate wird von einem Sitz freigegeben, den ein Mensch besetzt." },
     en:{ title:"Processes — GuestGraph",
          desc:"Who does the work at GuestGraph: an AI agent holds most of the seats, and every gate is approved by a seat a person holds." }
