@@ -1,6 +1,6 @@
 {
-  "commit": "99eb28b555937140e101cdfb79687a67fef5d06b",
-  "core": "0.64.0",
+  "commit": "57707b03bc351f0b5a038ba1167f56b6f8478379",
+  "core": "0.69.0",
   "root": "GuestGraph",
   "rootId": "01a0d2e2-f788-788d-ac26-56e9ef94fdd2",
   "types": [
@@ -103,6 +103,12 @@
     {
       "type": "product",
       "folder": "products",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "product-kind",
+      "folder": "product-kinds",
       "owner": null,
       "singular": false
     },
@@ -9839,6 +9845,48 @@
       "path": "model/processing-activities/keeping-the-chat-s-questions.md"
     },
     {
+      "id": "01a12458-610b-72ec-8eae-ee792bac7337",
+      "address": "product-kinds/connector",
+      "type": "product-kind",
+      "name": "Connector",
+      "tagline": "Software that brings one source system's data into the guest graph, run beside the engine.",
+      "fields": {
+        "id": "01a12458-610b-72ec-8eae-ee792bac7337",
+        "source": "Local",
+        "rank": "20"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "A product of this kind is opened by whoever operates the engine for a hotel that keeps its stays in that source system; it holds no data of its own and serves nothing but the engine. The Apaleo Connector is this kind. The service it feeds is Service.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/product-kinds/connector.md"
+    },
+    {
+      "id": "01a12458-5154-7010-ba0e-9aa105b2bffa",
+      "address": "product-kinds/service",
+      "type": "product-kind",
+      "name": "Service",
+      "tagline": "Software a hotel, a group or an integrator runs itself and every other system calls.",
+      "fields": {
+        "id": "01a12458-5154-7010-ba0e-9aa105b2bffa",
+        "source": "Local",
+        "rank": "10"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "A product of this kind is opened by whoever operates it for a hotel and called by every system that needs its answer; it holds data of its own. The GuestGraph Engine is this kind. Software that only brings data from one source system into it is Connector.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/product-kinds/service.md"
+    },
+    {
       "id": "01a0d2e3-bec0-765d-89d6-5fc9eaaac662",
       "address": "products/apaleo-connector",
       "type": "product",
@@ -9847,7 +9895,8 @@
       "fields": {
         "id": "01a0d2e3-bec0-765d-89d6-5fc9eaaac662",
         "source": "Local",
-        "domain": "Integration"
+        "domain": "Integration",
+        "kind": "Connector"
       },
       "sections": [],
       "owner": null,
@@ -9862,7 +9911,8 @@
       "fields": {
         "id": "01a0d2e3-bec0-71a1-88ca-2b85827bd967",
         "source": "Local",
-        "domain": "Guest identity"
+        "domain": "Guest identity",
+        "kind": "Service"
       },
       "sections": [],
       "owner": null,
@@ -14467,6 +14517,12 @@
     },
     {
       "from": "01a0d2e3-bec0-71a1-88ca-2b85827bd967",
+      "to": "01a12458-5154-7010-ba0e-9aa105b2bffa",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "01a0d2e3-bec0-71a1-88ca-2b85827bd967",
       "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
       "via": "source",
       "attrs": {}
@@ -14815,6 +14871,12 @@
       "from": "01a0d2e3-bec0-765d-89d6-5fc9eaaac662",
       "to": "01a0d2e3-bec0-7b67-978a-5b9f18becb07",
       "via": "domain",
+      "attrs": {}
+    },
+    {
+      "from": "01a0d2e3-bec0-765d-89d6-5fc9eaaac662",
+      "to": "01a12458-610b-72ec-8eae-ee792bac7337",
+      "via": "kind",
       "attrs": {}
     },
     {
@@ -19328,6 +19390,18 @@
       "from": "01a1128e-e26e-7286-afbe-3de101a5f56e",
       "to": "01a0dd52-d3a0-7afb-a186-0025d9fb5480",
       "via": "status",
+      "attrs": {}
+    },
+    {
+      "from": "01a12458-5154-7010-ba0e-9aa105b2bffa",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a12458-610b-72ec-8eae-ee792bac7337",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
       "attrs": {}
     }
   ],
