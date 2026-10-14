@@ -1,5 +1,5 @@
 {
-  "commit": "57707b03bc351f0b5a038ba1167f56b6f8478379",
+  "commit": "d2efc960525abb769ca51041ad29d32bf51c0bc3",
   "core": "0.69.0",
   "root": "GuestGraph",
   "rootId": "01a0d2e2-f788-788d-ac26-56e9ef94fdd2",
@@ -13817,8 +13817,9 @@
       "fields": {
         "id": "01a108de-7c37-7b65-a051-0ca54a5997b0",
         "source": "Local",
-        "mechanism": "session-storage",
+        "mechanism": "local-storage",
         "necessity": "optional",
+        "duration": "Until the visitor clears it",
         "surfaces": [
           "chat.guestgraph.io chat"
         ]

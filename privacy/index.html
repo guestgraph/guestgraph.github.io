@@ -106,7 +106,7 @@
 </script>
 
 <script>
-  /* ─── theme boot · v5 · page ────────────────────────────────────
+  /* ─── theme boot · v6 · page ────────────────────────────────────
      Set the theme before anything paints. Generated from @robertblust/design —
      editing it here does nothing, because the next `npm run design` overwrites it.
 
@@ -149,13 +149,14 @@
     try {
       if (window.top !== window && /[?&]embed(&|$)/.test(location.search)) document.documentElement.setAttribute("data-embed", "");
     } catch (e) {}
-    // A conversation the tab keeps open: the keys are chat.js's, `chat` and `chat-size`, read
-    // the way it reads them. Never in a frame, which takes no chat of its own.
+    // A conversation the tab keeps open: the keys are chat.js's, `chat` in the tab's storage and
+    // `chat-size` in the browser's, read the way it reads them. Never in a frame, which takes no
+    // chat of its own.
     try {
       var r = document.documentElement, c = JSON.parse(sessionStorage.getItem("chat") || "null");
       if (c && c.open && window.top === window) {
         r.setAttribute("data-chat-waiting", location.host);
-        var z = JSON.parse(sessionStorage.getItem("chat-size") || "null");
+        var z = JSON.parse(localStorage.getItem("chat-size") || "null");
         if (z && z.w && z.h) { r.style.setProperty("--rbchat-kept-w", z.w + "px"); r.style.setProperty("--rbchat-kept-h", z.h + "px"); }
       }
     } catch (e) {}
@@ -328,11 +329,12 @@
       <!-- privacy:start -->
       <div class="lineage" id="lineage">
         <svg class="wires" id="wires" aria-hidden="true"></svg>
-        <div class="ln-model" id="lnmodel"><div class="lbl" data-de="Auf guestgraph.io">On guestgraph.io</div><div class="nm" data-de="Ihr Besuch">Your visit</div><div class="at mono">@57707b0</div></div>
+        <div class="ln-model" id="lnmodel"><div class="lbl" data-de="Auf guestgraph.io">On guestgraph.io</div><div class="nm" data-de="Ihr Besuch">Your visit</div><div class="at mono">@d2efc96</div></div>
         <ul class="ln-groups">
           <li class="ln-group hand">
             <div class="ln-maker" data-maker="local-storage"><svg class="mk hand" aria-hidden="true"><use href="#m-hand"/></svg><span class="who"><span data-de="In Ihrem Browser gespeichert">Kept in your browser</span><span class="how" data-de="bis Sie die Daten löschen · nie automatisch übermittelt">until you clear it · never sent on its own</span></span></div>
             <ul class="ln-surfaces">
+              <li><button class="ln-s" type="button" id="key-chat-size" data-id="01a108de-7c37-7b65-a051-0ca54a5997b0" data-maker="local-storage" aria-pressed="false" aria-controls="lnpanel"><span class="nm">chat-size</span><span class="host" data-de="Wie gross Sie das Chatfenster eingestellt haben, in Pixeln">How big the visitor made the chat panel, in pixels</span></button></li>
               <li><button class="ln-s" type="button" id="key-lang" data-id="01a108de-2f51-7c49-8857-96a3ade6db33" data-maker="local-storage" aria-pressed="false" aria-controls="lnpanel"><span class="nm">lang</span><span class="host" data-de="Die Sprache, die Sie gewählt haben, `de` oder `en`, damit sich die nächste Seite in dieser Sprache öffnet">The language the visitor chose, `de` or `en`, so the next page opens in it</span></button></li>
               <li><button class="ln-s" type="button" id="key-stage-card" data-id="01a108de-4d0c-73ca-9439-74a87d8cf815" data-maker="local-storage" aria-pressed="false" aria-controls="lnpanel"><span class="nm">stage-card</span><span class="host" data-de="Wie breit Sie den Detailbereich auf den Modellseiten eingestellt haben, in Pixeln">How wide the visitor left the details panel on the model pages, in pixels</span></button></li>
               <li><button class="ln-s" type="button" id="key-stage-card-modal" data-id="01a108de-5ca1-70b7-a9be-101b67f9b5b0" data-maker="local-storage" aria-pressed="false" aria-controls="lnpanel"><span class="nm">stage-card-modal</span><span class="host" data-de="Wie breit Sie den Detailbereich in der vergrösserten Ansicht eingestellt haben, in Pixeln">How wide the visitor left the details panel in the expanded view, in pixels</span></button></li>
@@ -345,7 +347,6 @@
               <li><button class="ln-s" type="button" id="key-chat" data-id="01a108de-6c48-78e8-92ea-94fd61a3d2a2" data-maker="session-storage" aria-pressed="false" aria-controls="lnpanel"><span class="nm">chat</span><span class="host" data-de="Das Gespräch in diesem Tab, damit es nicht verloren geht, wenn Sie einem Link folgen">The conversation in this tab, so following a link does not lose it</span></button></li>
               <li><button class="ln-s" type="button" id="key-chat-facts" data-id="01a108de-9aee-7747-92cb-eb38ab0410e2" data-maker="session-storage" aria-pressed="false" aria-controls="lnpanel"><span class="nm">chat-facts</span><span class="host" data-de="Was der Chat aus der Datei des Modells gelesen hat, um Fragen vorzuschlagen. So zeigt die nächste Seite diese Fragen sofort an">What the chat read from the model's file to offer its questions, so the next page draws them at once</span></button></li>
               <li><button class="ln-s" type="button" id="key-chat-pictures" data-id="01a108de-8b7a-7ff6-9af0-9a7b8a38dc8c" data-maker="session-storage" aria-pressed="false" aria-controls="lnpanel"><span class="nm">chat-pictures</span><span class="host" data-de="Die Diagramme, die der Chat in diesem Tab in seinen Antworten gezeichnet hat">The figures the chat drew in its answers in this tab</span></button></li>
-              <li><button class="ln-s" type="button" id="key-chat-size" data-id="01a108de-7c37-7b65-a051-0ca54a5997b0" data-maker="session-storage" aria-pressed="false" aria-controls="lnpanel"><span class="nm">chat-size</span><span class="host" data-de="Wie gross Sie das Chatfenster eingestellt haben, in Pixeln">How big the visitor made the chat panel, in pixels</span></button></li>
             </ul>
           </li>
           <li class="ln-group">
