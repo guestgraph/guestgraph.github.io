@@ -1,4 +1,4 @@
-// @robertblust/design — deck.js, assembled from the shared blocks: theme v5 · runtime v10 ·
+// @robertblust/design — deck.js, assembled from the shared blocks: theme v6 · runtime v10 ·
 // fit v1.
 // Editing this file in a site does nothing: the next npm run design overwrites it.
 
@@ -57,6 +57,26 @@ function applyTheme(){
   if (d) d.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
 }
 function setTheme(v){ theme = v; themeRemember(v); applyTheme(); }
+
+/* A page opened from a phone's home screen has Android paint its system bars from the page's
+   `theme-color`. A page declares that meta with dark's ground, the default, and this keeps it
+   on the ground of the theme the visitor actually sees. It watches `data-theme` rather than
+   hooking `applyTheme`, because a page may switch the theme with a copy of its own — blust.ch's
+   pages do — and the attribute is the one thing every switch sets. The color is read from the
+   tokens rather than restated here, so a re-picked ground moves the bars with it. A page
+   without the meta is left as it is. */
+function themeColor(){
+  try {
+    var tc = document.querySelector('meta[name="theme-color"]');
+    if (!tc) return;
+    var g = getComputedStyle(document.documentElement).getPropertyValue("--ground").trim();
+    if (g) tc.setAttribute("content", g);
+  } catch (e) {}
+}
+themeColor();
+try {
+  new MutationObserver(themeColor).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+} catch (e) {}
 
 var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
 // slide numbering is zero-based everywhere the viewer can see it: the kicker on each

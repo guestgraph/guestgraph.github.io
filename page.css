@@ -1,5 +1,5 @@
 /* @robertblust/design — page.css, assembled from the shared blocks: reset v3 · link v1 ·
-   header v18 · title v2 · lines v3 · footer v3 · principles v1 · processes v1 · surfaces v2 ·
+   header v18 · title v2 · lines v3 · footer v4 · principles v1 · processes v1 · surfaces v2 ·
    index v2 · home v1.
    Editing this file in a site does nothing: the next npm run design overwrites it. */
 
@@ -241,7 +241,7 @@ nav a[aria-current="page"]{color:var(--c-firm)}
 .keyline{margin:.6rem 0 1.4rem; max-width:54ch; font-size:1.2rem; font-weight:500;
          line-height:1.45; color:var(--c-firm); text-wrap:balance}
 
-footer{padding:0 0 2rem; display:flex; flex-wrap:wrap; gap:.9rem 2.6rem; align-items:center;
+footer{padding:0 0 calc(2rem + env(safe-area-inset-bottom)); display:flex; flex-wrap:wrap; gap:.9rem 2.6rem; align-items:center;
        font-family:"Plex Mono",monospace; font-size:.76rem; letter-spacing:.08em; color:var(--dim)}
 footer .credit{display:inline-flex; align-items:center; gap:.5em; vertical-align:-.25em;
                font-family:"Instrument Sans", ui-sans-serif, system-ui, sans-serif;
