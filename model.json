@@ -1,5 +1,5 @@
 {
-  "commit": "d2efc960525abb769ca51041ad29d32bf51c0bc3",
+  "commit": "bd1aa8cfb1bb651c57e74f45862f9b42abd28e0d",
   "core": "0.69.0",
   "root": "GuestGraph",
   "rootId": "01a0d2e2-f788-788d-ac26-56e9ef94fdd2",
@@ -1451,6 +1451,774 @@
       "path": "model/concepts/timeline.md"
     },
     {
+      "id": "01a13d68-db37-7f46-b1e4-64a481a608d3",
+      "address": "controls/a-chat-answer-s-claims-are-read-back-against-the-model",
+      "type": "control",
+      "name": "A chat answer's claims are read back against the model",
+      "tagline": "Each claim of an answer the chat gives on guestgraph.io is read back against the tool answers it rests on, and the chat marks one they do not carry before the visitor takes it for what the model says.",
+      "fields": {
+        "id": "01a13d68-db37-7f46-b1e4-64a481a608d3",
+        "source": "Local",
+        "kind": "detective",
+        "mode": "automated",
+        "enforces": [
+          "Nothing claims what the model does not hold"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "The chat server behind guestgraph.io, on every answer once it is written: it sends each claim, with the tool answers the chat's model was given, to TypeSafe's Jev, which returns a verdict and its probability and writes no text, and the widget marks a claim whose verdict is that the evidence does not carry it, above the threshold this deployment's configuration sets. Only an answer written in English is marked; a German one is checked and its verdicts kept until German has a threshold of its own. The check changes no word of the answer, and a check that cannot run, or does not finish within its budget, marks nothing. It holds the chat's answers and nothing else: a specification or a page someone writes is held to the rule by whoever writes it.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Answer",
+                  "Answering"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Answer",
+                "Answering"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The claim check",
+                  "https://github.com/companygraph/chat-server/blob/main/lib/verdict.mjs"
+                ],
+                [
+                  "This deployment's configuration",
+                  "https://github.com/guestgraph/mcp-guestgraph-io/blob/main/chat/chat.json"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The claim check",
+                "https://github.com/companygraph/chat-server/blob/main/lib/verdict.mjs"
+              ],
+              [
+                "This deployment's configuration",
+                "https://github.com/guestgraph/mcp-guestgraph-io/blob/main/chat/chat.json"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/a-chat-answer-s-claims-are-read-back-against-the-model.md"
+    },
+    {
+      "id": "01a13c3b-bcac-7c67-972c-d2b6671fd3ac",
+      "address": "controls/a-deployed-server-is-asked-which-commit-it-serves",
+      "type": "control",
+      "name": "A deployed server is asked which commit it serves",
+      "tagline": "After every deploy of mcp.guestgraph.io the run asks the live server which commit of the model it answers at, and fails unless it is the commit the repository pins.",
+      "fields": {
+        "id": "01a13c3b-bcac-7c67-972c-d2b6671fd3ac",
+        "source": "Local",
+        "kind": "detective",
+        "mode": "automated",
+        "enforces": [
+          "A state is read again before it is relied on"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "The deploy job that mcp.guestgraph.io's workflow calls from the MCP server, on every push to main, once Terraform has applied: it calls the live server's own `list_types` tool, reads the commit every answer names under `model`, and fails unless it is the commit `source.json` pins. A deploy that applied cleanly but left an earlier revision serving, or one built from another commit, then turns the run red instead of reading as done.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The deploy job and its check",
+                  "https://github.com/companygraph/mcp-server/blob/main/.github/workflows/deploy-google.yml"
+                ],
+                [
+                  "The workflow that calls it",
+                  "https://github.com/guestgraph/mcp-guestgraph-io/blob/main/.github/workflows/deploy.yml"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The deploy job and its check",
+                "https://github.com/companygraph/mcp-server/blob/main/.github/workflows/deploy-google.yml"
+              ],
+              [
+                "The workflow that calls it",
+                "https://github.com/guestgraph/mcp-guestgraph-io/blob/main/.github/workflows/deploy.yml"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/a-deployed-server-is-asked-which-commit-it-serves.md"
+    },
+    {
+      "id": "01a13d68-db37-75d3-94ab-1955459a0828",
+      "address": "controls/a-family-resync-refuses-to-start-beside-another",
+      "type": "control",
+      "name": "A family resync refuses to start beside another",
+      "tagline": "A resync takes a lock before it moves anything, and refuses to start while another run holds it or while a resync pull request it did not open is still open.",
+      "fields": {
+        "id": "01a13d68-db37-75d3-94ab-1955459a0828",
+        "source": "Local",
+        "kind": "preventive",
+        "mode": "automated",
+        "enforces": [
+          "One session holds a piece of shared work"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "The family resync in robertblust/conventions, each time a session starts it: it takes a lock in the clone's own git directory, which every worktree of that clone shares, and refuses while the run that holds it is alive; it then asks GitHub for the open pull requests of every member whose branch begins with `resync-`, and refuses where one is open that no run in this checkout opened or took on that day, unless it is started with `--force`. It holds a resync and nothing else: a release, a re-pin by hand or a change across repositories is claimed by the session itself, which reads the open pull requests, branches and tags and asks the running sessions before it starts, and nothing refuses a session that skips that.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The family resync",
+                  "https://github.com/robertblust/conventions/blob/main/family/resync.mjs"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The family resync",
+                "https://github.com/robertblust/conventions/blob/main/family/resync.mjs"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/a-family-resync-refuses-to-start-beside-another.md"
+    },
+    {
+      "id": "01a13d68-db37-70a7-a505-5713fdca4f22",
+      "address": "controls/a-guest-s-data-in-a-request-is-taken-out-of-it",
+      "type": "control",
+      "name": "A guest's data in a request is taken out of it",
+      "tagline": "The Owner reads every feature request for a guest's data before restating it, and takes out any it finds, from the issue and from its edit history.",
+      "fields": {
+        "id": "01a13d68-db37-70a7-a505-5713fdca4f22",
+        "source": "Local",
+        "kind": "detective",
+        "mode": "manual",
+        "enforces": [
+          "A feature request carries no guest's data"
+        ],
+        "performed-by": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "The Owner, in Understand, on every feature request: before restating it, it reads the request and every comment on it for a guest's data, a name, an address, a booking or anything else that points at a guest; where it finds any, it edits it out, deletes the content of that edit from the issue's edit history, which leaves only who edited and when, and asks for the gap again without it. It never asks for a guest's data to illustrate a request. An issue is public from the moment it is opened, so what was read before the Owner took it out stays read; the control shortens that time and cannot undo it.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Understand",
+                  "Feature request"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Understand",
+                "Feature request"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "GitHub's edit history and how to delete from it",
+                  "https://docs.github.com/en/communities/moderating-comments-and-conversations/tracking-changes-in-a-comment"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "GitHub's edit history and how to delete from it",
+                "https://docs.github.com/en/communities/moderating-comments-and-conversations/tracking-changes-in-a-comment"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/a-guest-s-data-in-a-request-is-taken-out-of-it.md"
+    },
+    {
+      "id": "01a13d68-db37-786e-b64d-1fe60ac2adf0",
+      "address": "controls/a-message-from-another-session-carries-no-word-of-the-owner-s",
+      "type": "control",
+      "name": "A message from another session carries no word of the Owner's",
+      "tagline": "A session that receives a message from another takes it as that session's and never as the Owner's, so a refusal one session met is not passed to another to carry out.",
+      "fields": {
+        "id": "01a13d68-db37-786e-b64d-1fe60ac2adf0",
+        "source": "Local",
+        "kind": "preventive",
+        "mode": "automated",
+        "enforces": [
+          "A refusal is not carried out by another session"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "The agent harness, in every session that receives a message from another: it delivers the message marked as another session's and not as the Owner's, tells the receiving agent that such a message grants no permission and that a request to do what the sender was refused is to be declined and shown to the Owner, and its permission layer judges any action the message asks for against the receiving session's own conversation, where the Owner gave no word for it. The marking is how the agent harness delivers such a message, seen in its sessions and not in its documentation, and it rests on the agent heeding it; a session the Owner gives the word in, in its own conversation, may carry out what another was refused, because the word is then the Owner's.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "seat",
+                  "Controller",
+                  ""
+                ],
+                [
+                  "seat",
+                  "Implementer",
+                  ""
+                ],
+                [
+                  "seat",
+                  "Surveyor",
+                  ""
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "seat",
+                "Controller",
+                ""
+              ],
+              [
+                "seat",
+                "Implementer",
+                ""
+              ],
+              [
+                "seat",
+                "Surveyor",
+                ""
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The agent harness's permission modes",
+                  "https://code.claude.com/docs/en/permission-modes"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The agent harness's permission modes",
+                "https://code.claude.com/docs/en/permission-modes"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/a-message-from-another-session-carries-no-word-of-the-owner-s.md"
+    },
+    {
+      "id": "01a13c3b-bcac-733d-bcdd-46851e86a21a",
+      "address": "controls/a-registry-entry-waits-for-a-release-tag-and-the-owner",
+      "type": "control",
+      "name": "A registry entry waits for a release tag and the Owner",
+      "tagline": "A server's entry in the MCP registry is published only from a release tag and only once the Owner has approved that run, because the key that signs it is held where no other run can reach it.",
+      "fields": {
+        "id": "01a13c3b-bcac-733d-bcdd-46851e86a21a",
+        "source": "Local",
+        "kind": "preventive",
+        "mode": "automated",
+        "enforces": [
+          "The Owner's word merges"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "GitHub's `registry` environment on mcp.guestgraph.io's repository, on every run of the publish workflow: it lets a job in only from a tag matching `v*`, and holds that job until the Owner approves it. The key that signs the entry is a secret of the environment and of no other, so a run from a branch, or one nobody approved, never holds it and cannot publish. A repository admin may bypass the review, which is the Owner's account, so an agent working under it is held by An agent's permissions refuse a merge it was not given.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "GitHub's deployment environments",
+                  "https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments"
+                ],
+                [
+                  "The publish workflow and its registry job",
+                  "https://github.com/guestgraph/mcp-guestgraph-io/blob/main/.github/workflows/publish.yml"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "GitHub's deployment environments",
+                "https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments"
+              ],
+              [
+                "The publish workflow and its registry job",
+                "https://github.com/guestgraph/mcp-guestgraph-io/blob/main/.github/workflows/publish.yml"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/a-registry-entry-waits-for-a-release-tag-and-the-owner.md"
+    },
+    {
+      "id": "01a13c3b-bcac-773e-b292-07d708e86454",
+      "address": "controls/a-release-tag-stays-where-the-owner-put-it",
+      "type": "control",
+      "name": "A release tag stays where the Owner put it",
+      "tagline": "Each of our repositories refuses a tag beginning with `v` that any account but the Owner's creates, moves or deletes, so a release exists only where the Owner tagged it and stays on the commit it was made on.",
+      "fields": {
+        "id": "01a13c3b-bcac-773e-b292-07d708e86454",
+        "source": "Local",
+        "kind": "preventive",
+        "mode": "automated",
+        "enforces": [
+          "The Owner's word merges"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "GitHub's ruleset `protect-release-tags` on each repository, on every push of a tag matching `v*`: it refuses its creation, its update and its deletion, and lets only the repository's admin role past, which is the Owner's account. A release is its tag and a consumer takes it by naming the tag, so a tag moved after it was taken would change what every consumer already holds; a release tagged wrongly is followed by a patch release and never moved. An agent working under the Owner's account passes it, so what holds an agent's tag to the Owner's word is An agent's permissions refuse a merge it was not given.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Contribution"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Contribution"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "GitHub's rulesets for branches and tags",
+                  "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets#branch-and-tag-rulesets"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "GitHub's rulesets for branches and tags",
+                "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets#branch-and-tag-rulesets"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/a-release-tag-stays-where-the-owner-put-it.md"
+    },
+    {
+      "id": "01a13d68-db37-797f-86b0-67aecc352fe4",
+      "address": "controls/a-request-is-asked-for-its-gap-and-never-its-hotel",
+      "type": "control",
+      "name": "A request is asked for its gap and never its hotel",
+      "tagline": "Whoever reads a request asks only for what the asker could not do, never which hotel it comes from, and a hotel's name the asker offers stays out of the restatement.",
+      "fields": {
+        "id": "01a13d68-db37-797f-86b0-67aecc352fe4",
+        "source": "Local",
+        "kind": "preventive",
+        "mode": "manual",
+        "enforces": [
+          "Nobody is asked which hotel a request comes from"
+        ],
+        "performed-by": "Owner"
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "The Owner, in Understand, on every feature request: it reads the request as written, asks only for the gap where the request leaves it out, and restates it in the issue without the name of any hotel the asker offered.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Understand",
+                  "Feature request"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Understand",
+                "Feature request"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/a-request-is-asked-for-its-gap-and-never-its-hotel.md"
+    },
+    {
       "id": "01a0ffcb-e733-7ee1-9d61-2ad0074dbe14",
       "address": "controls/a-reviewer-reads-the-output-not-the-report",
       "type": "control",
@@ -1563,6 +2331,119 @@
       ],
       "owner": null,
       "path": "model/controls/a-reviewer-reads-the-output-not-the-report.md"
+    },
+    {
+      "id": "01a13c3b-bcac-71ee-ac2f-b1a009c4621b",
+      "address": "controls/a-secret-is-refused-at-the-push",
+      "type": "control",
+      "name": "A secret is refused at the push",
+      "tagline": "GitHub refuses a push to any of our repositories that carries a secret it recognizes, before the secret is published, and scans what is already there for any that got in.",
+      "fields": {
+        "id": "01a13c3b-bcac-71ee-ac2f-b1a009c4621b",
+        "source": "Local",
+        "kind": "preventive",
+        "mode": "automated",
+        "enforces": [
+          "A secret is never written into a repository"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "GitHub's secret scanning with push protection, turned on in each of our repositories and for every repository the organization creates: on every push it looks for the shapes of keys and tokens its providers register, refuses the push that carries one and names the file and line, and it keeps scanning the history for any that reached a repository before. Whoever pushes may push past a refusal by giving a reason, that the secret is used in tests, is a false positive or will be fixed later, and GitHub then records an alert, writes the bypass to the audit log and emails the owners. It knows only those shapes, so a password someone made up, or a key in a form no provider registered, passes it; for those the rule rests on whoever writes the change.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Implement",
+                  "Delivery"
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Contribution"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Implement",
+                "Delivery"
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Contribution"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "GitHub's push protection",
+                  "https://docs.github.com/en/code-security/concepts/secret-security/push-protection"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "GitHub's push protection",
+                "https://docs.github.com/en/code-security/concepts/secret-security/push-protection"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/a-secret-is-refused-at-the-push.md"
     },
     {
       "id": "01a0ffcb-f64d-7b19-a126-b386e59263cc",
@@ -1700,6 +2581,109 @@
       "path": "model/controls/a-vendored-copy-is-held-to-the-release-it-names.md"
     },
     {
+      "id": "01a13c3b-bcac-78ef-92ca-b6eef73f2769",
+      "address": "controls/an-agent-s-hook-refuses-removing-a-worktree-that-holds-a-plan",
+      "type": "control",
+      "name": "An agent's hook refuses removing a worktree that holds a plan",
+      "tagline": "Before an agent on the Owner's machine runs a shell command, a hook refuses it where it would remove a worktree that still holds a plan's ledger.",
+      "fields": {
+        "id": "01a13c3b-bcac-78ef-92ca-b6eef73f2769",
+        "source": "Local",
+        "kind": "preventive",
+        "mode": "automated",
+        "enforces": [
+          "A worktree is removed only once its plan is done"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "A hook the agent harness runs on the Owner's machine before every shell command an agent issues: it reads each `git worktree remove` in the command, resolves the worktree's path through any `cd` or `-C` before it, and refuses the command where that worktree holds a plan's ledger under `.superpowers/sdd/`, saying why, so the agent stops before anything is deleted. It holds an agent and not the Owner's own terminal, and a worktree deleted some other way, such as by `rm -rf`, passes it; the hook lives in the Owner's own settings and in no repository.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Implement",
+                  "Delivery"
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Implement",
+                "Delivery"
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The agent harness's hooks",
+                  "https://code.claude.com/docs/en/hooks"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The agent harness's hooks",
+                "https://code.claude.com/docs/en/hooks"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/an-agent-s-hook-refuses-removing-a-worktree-that-holds-a-plan.md"
+    },
+    {
       "id": "01a0ffcc-0534-753c-aca7-166b1b2dfd38",
       "address": "controls/an-agent-s-permissions-refuse-a-merge-it-was-not-given",
       "type": "control",
@@ -1717,7 +2701,7 @@
       "sections": [
         {
           "heading": "How it is carried out",
-          "text": "Claude Code's permission layer, before the agent's command runs: it judges the action against the conversation, and a merge without a review it can see is refused, so the agent stops and the merge waits for the Owner.",
+          "text": "The agent harness's permission layer, before the agent's command runs: it judges the action against the conversation, and a merge without a review it can see is refused, so the agent stops and the merge waits for the Owner.",
           "tables": []
         },
         {
@@ -1798,7 +2782,7 @@
               ],
               "rows": [
                 [
-                  "Claude Code permission modes",
+                  "The agent harness's permission modes",
                   "https://code.claude.com/docs/en/permission-modes"
                 ]
               ]
@@ -1812,7 +2796,7 @@
             ],
             "rows": [
               [
-                "Claude Code permission modes",
+                "The agent harness's permission modes",
                 "https://code.claude.com/docs/en/permission-modes"
               ]
             ]
@@ -1821,6 +2805,117 @@
       ],
       "owner": null,
       "path": "model/controls/an-agent-s-permissions-refuse-a-merge-it-was-not-given.md"
+    },
+    {
+      "id": "01a13c3b-bcac-759f-a36d-6c5debdd029d",
+      "address": "controls/an-id-a-decision-and-a-label-are-held-as-they-were",
+      "type": "control",
+      "name": "An id, a decision and a label are held as they were",
+      "tagline": "A pull request to the model fails where it changes an id already on the default branch, rewrites a decision beyond closing it, or moves, swaps or reuses a label.",
+      "fields": {
+        "id": "01a13c3b-bcac-759f-a36d-6c5debdd029d",
+        "source": "Local",
+        "kind": "preventive",
+        "mode": "automated",
+        "enforces": [
+          "What is cited from outside the model is not rewritten"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "The instance check, required on the default branch, on every pull request: its step `companygraph ids --range` compares each page of the branch with its base after both are put in the one form, and refuses a changed id, a decision whose text changed beyond its status and one dated closing sentence, and a label of a scenario, a step or an invariant that moved to another item, swapped with one or came back after it was removed. A reference name may follow the rename of what it names, and a URL under `## References` may change on its own. Where a release of core changed the schema that governs a type, the decision and label checks stand aside for that type and say so in a note.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Contribution"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Contribution"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The instance check",
+                  "https://github.com/companygraph/meta-model/blob/main/.github/workflows/instance-check.yml"
+                ],
+                [
+                  "The change checks",
+                  "https://github.com/companygraph/meta-model/blob/main/lib/checks.mjs"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The instance check",
+                "https://github.com/companygraph/meta-model/blob/main/.github/workflows/instance-check.yml"
+              ],
+              [
+                "The change checks",
+                "https://github.com/companygraph/meta-model/blob/main/lib/checks.mjs"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/an-id-a-decision-and-a-label-are-held-as-they-were.md"
     },
     {
       "id": "01a0ffcc-14c5-7ff9-bce5-b3d4bd5998af",
@@ -2037,6 +3132,109 @@
       "path": "model/controls/main-takes-a-change-only-through-a-green-current-pull-request.md"
     },
     {
+      "id": "01a13c3b-bcac-7df7-9a12-e973d8625df1",
+      "address": "controls/only-the-owner-s-account-changes-main",
+      "type": "control",
+      "name": "Only the Owner's account changes main",
+      "tagline": "The default branch of each of our repositories takes a push or a merge from the Owner's account alone, so anyone else with write access can open a branch and a pull request but cannot merge it.",
+      "fields": {
+        "id": "01a13c3b-bcac-7df7-9a12-e973d8625df1",
+        "source": "Local",
+        "kind": "preventive",
+        "mode": "automated",
+        "enforces": [
+          "The Owner's word merges"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "GitHub's branch protection on each repository's default branch, on every push and every merge into it: it restricts who may push to the Owner's account, so anyone else the organization gives write access can push a branch and open a pull request and is refused the merge. The protection holds nothing else; the pull request and the checks are what Main takes a change only through a green, current pull request holds. It is set as branch protection and not as a rule of the ruleset, because a ruleset lets only its bypass actors past such a rule, which would turn every merge the Owner makes into a bypass that Merges Past Their Checks counts. An agent working under the Owner's account passes it, so what holds an agent to the Owner's word is An agent's permissions refuse a merge it was not given.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Contribution"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Contribution"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "GitHub's restriction of who can push",
+                  "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches#restrict-who-can-push-to-matching-branches"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "GitHub's restriction of who can push",
+                "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches#restrict-who-can-push-to-matching-branches"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/only-the-owner-s-account-changes-main.md"
+    },
+    {
       "id": "01a0ffcc-327f-7562-ac09-5df548965b62",
       "address": "controls/pages-drawn-from-the-model-are-held-to-it",
       "type": "control",
@@ -2239,6 +3437,110 @@
       ],
       "owner": null,
       "path": "model/controls/the-engine-s-scenario-tests-run-on-every-pull-request.md"
+    },
+    {
+      "id": "01a13d68-db37-7841-a30e-fa297747437e",
+      "address": "controls/the-implementer-reads-the-merge-before-deleting-the-branch",
+      "type": "control",
+      "name": "The Implementer reads the merge before deleting the branch",
+      "tagline": "A branch is deleted only after the Implementer has read its pull request as merged, in a step of its own.",
+      "fields": {
+        "id": "01a13d68-db37-7841-a30e-fa297747437e",
+        "source": "Local",
+        "kind": "preventive",
+        "mode": "manual",
+        "enforces": [
+          "A branch is deleted only after its merge is confirmed"
+        ],
+        "performed-by": "Implementer"
+      },
+      "sections": [
+        {
+          "heading": "How it is carried out",
+          "text": "The Implementer, at the end of Integrate, once a pull request it carried has been merged: it reads the pull request's state and its merge commit from GitHub in a command of its own, and only when the state reads merged removes the worktree, the local branch and the remote branch, each by name and each as a step of its own, never chained after the merge. A branch whose merge it cannot read stays. GitHub's own deletion of a merged branch is turned off in each of our repositories, so a branch goes only when this step takes it.",
+          "tables": []
+        },
+        {
+          "heading": "Applies to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Type",
+                "Entity",
+                "Owner"
+              ],
+              "rows": [
+                [
+                  "phase",
+                  "Integrate",
+                  "Delivery"
+                ],
+                [
+                  "phase",
+                  "Integrate",
+                  "Contribution"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Type",
+              "Entity",
+              "Owner"
+            ],
+            "rows": [
+              [
+                "phase",
+                "Integrate",
+                "Delivery"
+              ],
+              [
+                "phase",
+                "Integrate",
+                "Contribution"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/controls/the-implementer-reads-the-merge-before-deleting-the-branch.md"
     },
     {
       "id": "01a108dd-f1fd-7218-96bc-e52350522fa0",
@@ -12216,6 +13518,59 @@
       "path": "model/rules/a-refusal-is-not-carried-out-by-another-session.md"
     },
     {
+      "id": "01a13c3b-bcac-73b9-a9e0-3bc936d5d27c",
+      "address": "rules/a-secret-is-never-written-into-a-repository",
+      "type": "rule",
+      "name": "A secret is never written into a repository",
+      "tagline": "No key, token or password is committed to any of our repositories, in a file, a commit message or a test fixture; a secret lives in the store of the workflow or the service that reads it.",
+      "fields": {
+        "id": "01a13c3b-bcac-73b9-a9e0-3bc936d5d27c",
+        "source": "Local",
+        "modality": "must not"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "Our repositories are public, so whatever is pushed is published the moment it reaches GitHub, and it stays in the history after a later commit removes it. A secret that reached a repository can only be rotated, never taken back, and everything it opened stays open until it is. For the same reason a secret is never printed, not even to check it: a value that reaches a transcript has to be rotated as well.",
+          "tables": []
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Working rules",
+                  "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Working rules",
+                "https://github.com/robertblust/conventions/blob/main/conventions/WORKING.md"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/a-secret-is-never-written-into-a-repository.md"
+    },
+    {
       "id": "01a0fd96-a828-7ab7-a402-d88705435bb5",
       "address": "rules/a-state-is-read-again-before-it-is-relied-on",
       "type": "rule",
@@ -12301,6 +13656,27 @@
       ],
       "owner": null,
       "path": "model/rules/a-state-is-read-again-before-it-is-relied-on.md"
+    },
+    {
+      "id": "01a13c3b-bcac-7c87-887e-58290cbffaef",
+      "address": "rules/a-worktree-is-removed-only-once-its-plan-is-done",
+      "type": "rule",
+      "name": "A worktree is removed only once its plan is done",
+      "tagline": "A worktree that holds a plan's ledger is not removed before every task of that plan is done, even when its pull request has merged.",
+      "fields": {
+        "id": "01a13c3b-bcac-7c87-887e-58290cbffaef",
+        "source": "Local",
+        "modality": "must not"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "A plan's ledger, its briefs and its task reports live in the worktree under `.superpowers/`, which git ignores, and `git worktree remove` deletes ignored files without asking, with or without `--force`, so nothing brings them back. A merged pull request does not finish a plan: a plan can carry tasks in other repositories that are still owed. Three ledgers were lost this way in September 2026, twice in one day.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/a-worktree-is-removed-only-once-its-plan-is-done.md"
     },
     {
       "id": "01a0fd96-b75c-7309-89d3-e68e3dcde4eb",
@@ -12835,6 +14211,27 @@
       ],
       "owner": null,
       "path": "model/rules/the-owner-s-word-merges.md"
+    },
+    {
+      "id": "01a13c3b-bcac-77ab-9a88-db0b9df63874",
+      "address": "rules/what-is-cited-from-outside-the-model-is-not-rewritten",
+      "type": "rule",
+      "name": "What is cited from outside the model is not rewritten",
+      "tagline": "Once on the default branch, an entity's id, a decision's text and a label on a page are not changed, because a link, a commit or a test outside the model may already cite them.",
+      "fields": {
+        "id": "01a13c3b-bcac-77ab-9a88-db0b9df63874",
+        "source": "Local",
+        "modality": "must not"
+      },
+      "sections": [
+        {
+          "heading": "Why",
+          "text": "An outside system holds on to what it cites: a graph node to an entity's id, a commit or a later decision to a decision as it was decided, a test or a line of code to the label of a scenario, a step or an invariant. Each is the only handle that citation has, and a rewrite leaves it pointing at something that now says another thing, with nothing to tell whoever cited it. So an id stays with its entity, a decision that no longer stands is closed by its status and one dated sentence instead of being edited, and a label stays with the item it was given to and is never given to another.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/rules/what-is-cited-from-outside-the-model-is-not-rewritten.md"
     },
     {
       "id": "01a0d360-9b98-7ee2-9051-f9478a601fde",
@@ -19401,6 +20798,396 @@
     },
     {
       "from": "01a12458-610b-72ec-8eae-ee792bac7337",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-71ee-ac2f-b1a009c4621b",
+      "to": "01a0d2e3-bec0-779b-a0dc-cfd014dbef72",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a13c3b-bcac-71ee-ac2f-b1a009c4621b",
+      "to": "01a0d360-9b98-7270-9bc1-054b5bc8c4cf",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Contribution"
+      }
+    },
+    {
+      "from": "01a13c3b-bcac-71ee-ac2f-b1a009c4621b",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a13c3b-bcac-71ee-ac2f-b1a009c4621b",
+      "to": "01a13c3b-bcac-73b9-a9e0-3bc936d5d27c",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-71ee-ac2f-b1a009c4621b",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-733d-bcdd-46851e86a21a",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a13c3b-bcac-733d-bcdd-46851e86a21a",
+      "to": "01a0fd96-f18b-731b-932f-1b021109ff23",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-733d-bcdd-46851e86a21a",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-73b9-a9e0-3bc936d5d27c",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-759f-a36d-6c5debdd029d",
+      "to": "01a0d360-9b98-7270-9bc1-054b5bc8c4cf",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Contribution"
+      }
+    },
+    {
+      "from": "01a13c3b-bcac-759f-a36d-6c5debdd029d",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a13c3b-bcac-759f-a36d-6c5debdd029d",
+      "to": "01a13c3b-bcac-77ab-9a88-db0b9df63874",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-759f-a36d-6c5debdd029d",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-773e-b292-07d708e86454",
+      "to": "01a0d360-9b98-7270-9bc1-054b5bc8c4cf",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Contribution"
+      }
+    },
+    {
+      "from": "01a13c3b-bcac-773e-b292-07d708e86454",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a13c3b-bcac-773e-b292-07d708e86454",
+      "to": "01a0fd96-f18b-731b-932f-1b021109ff23",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-773e-b292-07d708e86454",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-77ab-9a88-db0b9df63874",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-78ef-92ca-b6eef73f2769",
+      "to": "01a0d2e3-bec0-779b-a0dc-cfd014dbef72",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a13c3b-bcac-78ef-92ca-b6eef73f2769",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a13c3b-bcac-78ef-92ca-b6eef73f2769",
+      "to": "01a13c3b-bcac-7c87-887e-58290cbffaef",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-78ef-92ca-b6eef73f2769",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-7c67-972c-d2b6671fd3ac",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a13c3b-bcac-7c67-972c-d2b6671fd3ac",
+      "to": "01a0fd96-a828-7ab7-a402-d88705435bb5",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-7c67-972c-d2b6671fd3ac",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-7c87-887e-58290cbffaef",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-7df7-9a12-e973d8625df1",
+      "to": "01a0d360-9b98-7270-9bc1-054b5bc8c4cf",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Contribution"
+      }
+    },
+    {
+      "from": "01a13c3b-bcac-7df7-9a12-e973d8625df1",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a13c3b-bcac-7df7-9a12-e973d8625df1",
+      "to": "01a0fd96-f18b-731b-932f-1b021109ff23",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a13c3b-bcac-7df7-9a12-e973d8625df1",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a13d68-db37-70a7-a505-5713fdca4f22",
+      "to": "01a0d360-9b98-7141-a5c8-8110f7de23bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Feature request"
+      }
+    },
+    {
+      "from": "01a13d68-db37-70a7-a505-5713fdca4f22",
+      "to": "01a0fd97-4c04-7bfe-bd43-bbe2dabe460a",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a13d68-db37-70a7-a505-5713fdca4f22",
+      "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+      "via": "performed-by",
+      "attrs": {}
+    },
+    {
+      "from": "01a13d68-db37-70a7-a505-5713fdca4f22",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a13d68-db37-75d3-94ab-1955459a0828",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a13d68-db37-75d3-94ab-1955459a0828",
+      "to": "01a0fd96-e33f-759b-ac5d-359f28f4d0a1",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a13d68-db37-75d3-94ab-1955459a0828",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a13d68-db37-7841-a30e-fa297747437e",
+      "to": "01a0d360-9b98-7270-9bc1-054b5bc8c4cf",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Contribution"
+      }
+    },
+    {
+      "from": "01a13d68-db37-7841-a30e-fa297747437e",
+      "to": "01a0d4bd-a710-76d5-a1ee-a4d90d3f95bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Delivery"
+      }
+    },
+    {
+      "from": "01a13d68-db37-7841-a30e-fa297747437e",
+      "to": "01a0fd97-1e47-72a0-af1f-2ea9d0e0afad",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a13d68-db37-7841-a30e-fa297747437e",
+      "to": "01a0d2e3-bec0-7a2e-94b4-0e27ad0f7568",
+      "via": "performed-by",
+      "attrs": {}
+    },
+    {
+      "from": "01a13d68-db37-7841-a30e-fa297747437e",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a13d68-db37-786e-b64d-1fe60ac2adf0",
+      "to": "01a0d2e3-bec0-7a2e-94b4-0e27ad0f7568",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "seat",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a13d68-db37-786e-b64d-1fe60ac2adf0",
+      "to": "01a0d4bd-a710-765f-b25a-5227025665ff",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "seat",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a13d68-db37-786e-b64d-1fe60ac2adf0",
+      "to": "01a0fadf-c0cd-780a-a53a-a59709231e8f",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "seat",
+        "Owner": ""
+      }
+    },
+    {
+      "from": "01a13d68-db37-786e-b64d-1fe60ac2adf0",
+      "to": "01a0fd96-9996-7069-845d-acaa311d5008",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a13d68-db37-786e-b64d-1fe60ac2adf0",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a13d68-db37-797f-86b0-67aecc352fe4",
+      "to": "01a0d360-9b98-7141-a5c8-8110f7de23bc",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Feature request"
+      }
+    },
+    {
+      "from": "01a13d68-db37-797f-86b0-67aecc352fe4",
+      "to": "01a0fd97-2d0f-7789-b3d0-65b1e24eecf7",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a13d68-db37-797f-86b0-67aecc352fe4",
+      "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+      "via": "performed-by",
+      "attrs": {}
+    },
+    {
+      "from": "01a13d68-db37-797f-86b0-67aecc352fe4",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a13d68-db37-7f46-b1e4-64a481a608d3",
+      "to": "01a0d360-9b98-7219-9e77-7a5f5d14fb7a",
+      "via": "Applies to.Entity",
+      "attrs": {
+        "Type": "phase",
+        "Owner": "Answering"
+      }
+    },
+    {
+      "from": "01a13d68-db37-7f46-b1e4-64a481a608d3",
+      "to": "01a0fd96-c621-7f66-89a5-2cb3c213384a",
+      "via": "enforces",
+      "attrs": {}
+    },
+    {
+      "from": "01a13d68-db37-7f46-b1e4-64a481a608d3",
       "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
       "via": "source",
       "attrs": {}
