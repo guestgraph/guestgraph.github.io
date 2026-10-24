@@ -318,7 +318,7 @@
             <li><b data-de="Cookies">Cookies</b><i data-de="Keine, gleich welcher Art. Es gibt kein Banner, weil es nichts gibt, dem Sie zustimmen müssten.">None, of any kind. There is no banner because there is nothing to consent to.</i></li>
             <li><b data-de="Webanalyse">Analytics</b><i data-de="Nichts zählt Ihre Besuche, und niemandem wird mitgeteilt, dass Sie hier waren.">Nothing counts you, and nobody is told that you were here.</i></li>
             <li><b data-de="Anfragen an Dritte">Third-party requests</b><i data-de="Schriften, Bilder und Stylesheets kommen alle von dieser Domain. Kein CDN sieht Ihre IP-Adresse. Die einzige Ausnahme ist der Chat, sobald Sie auf Senden drücken. Wohin Ihre Nachricht geht, zeigt das Diagramm <a href='#lineage'>Wohin Ihre Daten gehen</a>.">Fonts, images and styles all come from this origin. No CDN sees your address. The one exception is the chat, once you press send; where your message goes is drawn under <a href="#lineage">Where your data goes</a>.</i></li>
-            <li><b data-de="Formulare und Konten">Forms and accounts</b><i data-de="Nichts auszufüllen, keine Anmeldung, nichts zu speichern.">Nothing to fill in, nothing to sign up for, nothing to store.</i></li>
+            <li><b data-de="Formulare und Registrierung">Forms and sign-ups</b><i data-de="Nichts auszufüllen und nichts, wofür Sie sich registrieren müssten. Ein Konto für den Chat gibt es nur auf Einladung, wie unten beschrieben.">Nothing to fill in and nothing to sign up for. An account for the chat comes only by invitation, as described below.</i></li>
             <li><b data-de="Fingerprinting">Fingerprinting</b><i data-de="Es wird nicht versucht, Sie über Besuche hinweg wiederzuerkennen. Die gespeicherte Sprach- und Darstellungswahl ist kein Erkennungsmerkmal.">No attempt is made to recognize you across visits. The language and theme keys are not identifiers.</i></li>
           </ul>
         </div>
@@ -372,6 +372,9 @@
       <p class="ln-hint" id="lnhint" data-de="Wählen Sie einen Eintrag, um seiner Linie zu folgen und seine Karte zu lesen.">Choose an entry to follow its line and read its card.</p>
       <p class="figcap" data-de="Links Ihr Besuch; in der Mitte, was Ihre Daten aufbewahrt oder bearbeitet und auf welcher Rechtsgrundlage; rechts die Schlüssel in Ihrem Browser und die Empfänger, jeweils mit dem, was sie erhalten. Jeder Eintrag stammt aus dem Modell im genannten Commit und öffnet seine Karte.">Left, your visit; in the middle, what keeps or handles your data and on what grounds; right, the keys in your browser and the parties that receive something, with what they receive. Every entry comes from the model at the commit named, and opens its card.</p>
       <p class="derived"><span data-de="Erzeugt aus">Generated from</span> <a id="srclink" data-src="model" href="https://github.com/guestgraph/mental-model/tree/HEAD/model">guestgraph/mental-model</a>@<span id="srccommit">HEAD</span> — <code class="mono">model/stored-items/</code>, <code class="mono">model/processing-activities/</code> <span data-de="und">and</span> <code class="mono">model/data-processors/</code>.</p>
+      <div class="rules">
+        <p data-de="<b>Ein Konto gibt es nur auf Einladung.</b> Wer eingeladen wird, kann sich im Chat anmelden und das Modell wählen, das antwortet. Das Konto liegt bei id.blust.ch, in Zürich, mit Name und E-Mail-Adresse. Von einer angemeldeten Person bewahrt der Chat nur den Zähler des laufenden Monats auf, unter einem Schlüssel, aus dem er nicht auf das Konto zurückschliessen kann. Die Zeile, die er zu jeder Frage aufbewahrt, ist für alle gleich, ob angemeldet oder nicht."><b>An account is by invitation only.</b> A reader the owner invites may sign in to the chat to choose the model that answers. The account is held at id.blust.ch, in Zürich, with the reader's name and email address. Of a signed-in reader the chat keeps only a count for the month, under a key it cannot turn back into the account. The line it keeps of each question is the same for every reader, signed in or not.</p>
+      </div>
     </section>
     <section>
       <h2 data-de="Gastdaten, sobald es welche gibt">Guest data, when there is any</h2>
@@ -630,6 +633,6 @@
 <script src="../page.js" defer></script>
 
 <!-- The chat: one tag, the design package's widget. It loads nothing and sends nothing until a visitor opens it; the privacy page says what leaves the browser then. -->
-<script src="../chat.js" data-chat="https://chat.guestgraph.io/chat" data-model="/model/" data-questions="/model.json" data-questions-de="/questions.de.json"></script>
+<script src="../chat.js" data-chat="https://chat.guestgraph.io/chat" data-issuer="https://id.blust.ch" data-client="396565550639098224" data-org="396565550320331120" data-project="396565550420994416" data-model="/model/" data-questions="/model.json" data-questions-de="/questions.de.json"></script>
 </body>
 </html>
