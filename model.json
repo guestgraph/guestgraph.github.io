@@ -1,5 +1,5 @@
 {
-  "commit": "7829bf4e37e3ccb15cd2c18f796d46842168f7a1",
+  "commit": "cc90e85ff2499fa236b8684d8dae37aee5177788",
   "core": "0.69.0",
   "root": "GuestGraph",
   "rootId": "01a0d2e2-f788-788d-ac26-56e9ef94fdd2",
@@ -3668,6 +3668,135 @@
       ],
       "owner": null,
       "path": "model/data-processors/anthropic.md"
+    },
+    {
+      "id": "01a17189-3e8c-77fb-bbe7-15a87533adf7",
+      "address": "data-processors/google",
+      "type": "data-processor",
+      "name": "Google",
+      "tagline": "Signs a reader the owner has invited in to id.blust.ch with their Google account, when the reader chooses Sign in with Google, and tells id.blust.ch the account's id, its verified email address and its profile; it may process the sign-in in any country it chooses.",
+      "fields": {
+        "id": "01a17189-3e8c-77fb-bbe7-15a87533adf7",
+        "source": "Local",
+        "legal-name": "Google LLC",
+        "countries": [
+          "US"
+        ],
+        "processing": "any"
+      },
+      "sections": [
+        {
+          "heading": "Own purposes",
+          "text": "- Keeps in the reader's Google account that they signed in to id.blust.ch with it, as a linked app the reader can review and stop at any time, under Google's privacy policy, for which Google Ireland Limited is the controller for readers in Switzerland and the EEA.",
+          "tables": []
+        },
+        {
+          "heading": "Transfers",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Jurisdiction",
+                "Safeguard"
+              ],
+              "rows": [
+                [
+                  "ch",
+                  "The Swiss-U.S. Data Privacy Framework, under which Google LLC is certified"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Jurisdiction",
+              "Safeguard"
+            ],
+            "rows": [
+              [
+                "ch",
+                "The Swiss-U.S. Data Privacy Framework, under which Google LLC is certified"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Google APIs Terms of Service",
+                  "https://developers.google.com/terms"
+                ],
+                [
+                  "Controller-controller data protection terms",
+                  "https://business.safety.google/controllerterms/"
+                ],
+                [
+                  "API Services User Data Policy",
+                  "https://developers.google.com/terms/api-services-user-data-policy"
+                ],
+                [
+                  "Privacy policy",
+                  "https://policies.google.com/privacy"
+                ],
+                [
+                  "Data transfer frameworks",
+                  "https://policies.google.com/privacy/frameworks"
+                ],
+                [
+                  "Linked apps in a Google account",
+                  "https://support.google.com/accounts/answer/13533235"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Google APIs Terms of Service",
+                "https://developers.google.com/terms"
+              ],
+              [
+                "Controller-controller data protection terms",
+                "https://business.safety.google/controllerterms/"
+              ],
+              [
+                "API Services User Data Policy",
+                "https://developers.google.com/terms/api-services-user-data-policy"
+              ],
+              [
+                "Privacy policy",
+                "https://policies.google.com/privacy"
+              ],
+              [
+                "Data transfer frameworks",
+                "https://policies.google.com/privacy/frameworks"
+              ],
+              [
+                "Linked apps in a Google account",
+                "https://support.google.com/accounts/answer/13533235"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/data-processors/google.md"
     },
     {
       "id": "01a108de-0195-7bc3-ad53-a16299aa585b",
@@ -11243,7 +11372,7 @@
         },
         {
           "heading": "Personal data",
-          "text": "- The reader's name and email address, which their account at id.blust.ch holds\n- The roles granted to the reader, which name the models they may choose\n- The tokens the sign-in issues, kept in the reader's browser, and the access token each message carries to the chat, which checks it",
+          "text": "- The reader's name and email address, which their account at id.blust.ch holds\n- The roles granted to the reader, which name the models they may choose\n- For a reader who signs in with Google, the link to their Google account, its id and email address, which their account at id.blust.ch keeps until the link or the account is removed\n- The tokens the sign-in issues, kept in the reader's browser, and the access token each message carries to the chat, which checks it",
           "tables": []
         },
         {
@@ -11259,7 +11388,11 @@
               "rows": [
                 [
                   "Google Cloud",
-                  "The reader's name, email address and roles, held by id.blust.ch in its Zurich region, and the access token each message carries"
+                  "The reader's name, email address and roles, and the link to their Google account where they made one, held by id.blust.ch in its Zurich region, and the access token each message carries"
+                ],
+                [
+                  "Google",
+                  "That the reader signs in to id.blust.ch, only when they choose to sign in with Google"
                 ]
               ]
             }
@@ -11273,7 +11406,11 @@
             "rows": [
               [
                 "Google Cloud",
-                "The reader's name, email address and roles, held by id.blust.ch in its Zurich region, and the access token each message carries"
+                "The reader's name, email address and roles, and the link to their Google account where they made one, held by id.blust.ch in its Zurich region, and the access token each message carries"
+              ],
+              [
+                "Google",
+                "That the reader signs in to id.blust.ch, only when they choose to sign in with Google"
               ]
             ]
           }
@@ -15861,6 +15998,50 @@
       },
       "sections": [
         {
+          "heading": "Connects to",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "System",
+                "As",
+                "Service",
+                "Carries",
+                "Via"
+              ],
+              "rows": [
+                [
+                  "Sign in with Google",
+                  "OpenID Connect",
+                  "",
+                  "",
+                  "HTTPS"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "System",
+              "As",
+              "Service",
+              "Carries",
+              "Via"
+            ],
+            "rows": [
+              [
+                "Sign in with Google",
+                "OpenID Connect",
+                "",
+                "",
+                "HTTPS"
+              ]
+            ]
+          }
+        },
+        {
           "heading": "References",
           "text": "",
           "tables": [
@@ -15895,6 +16076,67 @@
       ],
       "owner": null,
       "path": "model/systems/id-blust-ch.md"
+    },
+    {
+      "id": "01a17189-4d81-7645-a972-ad4dd70a6e6e",
+      "address": "systems/sign-in-with-google",
+      "type": "system",
+      "name": "Sign in with Google",
+      "tagline": "Signs a reader in with their Google account when the reader chooses it on the login of id.blust.ch, and returns to id.blust.ch the account's id, its verified email address and its profile, from which id.blust.ch finds the account the owner made for that address; it opens no account of its own.",
+      "fields": {
+        "id": "01a17189-4d81-7645-a972-ad4dd70a6e6e",
+        "source": "Local",
+        "kind": "SaaS",
+        "owner": "Owner",
+        "processor": "Google",
+        "serves": [
+          "Answering"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The vendor's documentation",
+                  "https://developers.google.com/identity/openid-connect/openid-connect"
+                ],
+                [
+                  "How id.blust.ch is set up for it",
+                  "https://github.com/robertblust/id-blust-ch/blob/main/zitadel/google.tf"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The vendor's documentation",
+                "https://developers.google.com/identity/openid-connect/openid-connect"
+              ],
+              [
+                "How id.blust.ch is set up for it",
+                "https://github.com/robertblust/id-blust-ch/blob/main/zitadel/google.tf"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/systems/sign-in-with-google.md"
     },
     {
       "id": "01a0d2e3-bec0-7ddc-9a13-d048712143de",
@@ -21510,7 +21752,15 @@
       "to": "01a108de-0195-7bc3-ad53-a16299aa585b",
       "via": "Processors.Processor",
       "attrs": {
-        "Receives": "The reader's name, email address and roles, held by id.blust.ch in its Zurich region, and the access token each message carries"
+        "Receives": "The reader's name, email address and roles, and the link to their Google account where they made one, held by id.blust.ch in its Zurich region, and the access token each message carries"
+      }
+    },
+    {
+      "from": "01a170fc-05fc-7dee-81ba-33cf59487676",
+      "to": "01a17189-3e8c-77fb-bbe7-15a87533adf7",
+      "via": "Processors.Processor",
+      "attrs": {
+        "Receives": "That the reader signs in to id.blust.ch, only when they choose to sign in with Google"
       }
     },
     {
@@ -21553,6 +21803,17 @@
     },
     {
       "from": "01a17143-31aa-7ef8-813f-4a1f19056896",
+      "to": "01a17189-4d81-7645-a972-ad4dd70a6e6e",
+      "via": "Connects to.System",
+      "attrs": {
+        "As": "OpenID Connect",
+        "Service": "",
+        "Carries": "",
+        "Via": "HTTPS"
+      }
+    },
+    {
+      "from": "01a17143-31aa-7ef8-813f-4a1f19056896",
       "to": "01a17143-220a-79fa-95e3-ab2939ad0a97",
       "via": "kind",
       "attrs": {}
@@ -21577,6 +21838,42 @@
     },
     {
       "from": "01a17143-31aa-7ef8-813f-4a1f19056896",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a17189-3e8c-77fb-bbe7-15a87533adf7",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a17189-4d81-7645-a972-ad4dd70a6e6e",
+      "to": "01a17143-220a-79fa-95e3-ab2939ad0a97",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "01a17189-4d81-7645-a972-ad4dd70a6e6e",
+      "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "01a17189-4d81-7645-a972-ad4dd70a6e6e",
+      "to": "01a17189-3e8c-77fb-bbe7-15a87533adf7",
+      "via": "processor",
+      "attrs": {}
+    },
+    {
+      "from": "01a17189-4d81-7645-a972-ad4dd70a6e6e",
+      "to": "01a0d360-9b98-7ff9-bc00-0f521ad28bdb",
+      "via": "serves",
+      "attrs": {}
+    },
+    {
+      "from": "01a17189-4d81-7645-a972-ad4dd70a6e6e",
       "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
       "via": "source",
       "attrs": {}

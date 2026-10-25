@@ -92,7 +92,11 @@
     "de": "Solange Ihr Konto bei id.blust.ch besteht"
   },
   {
-    "en": "The reader's name, email address and roles, held by id.blust.ch in its Zurich region, and the access token each message carries",
-    "de": "Ihr Name, Ihre E-Mail-Adresse und Ihre Rollen, die id.blust.ch in der Region Zürich aufbewahrt, und das Zugriffstoken, das mit jeder Nachricht mitgeschickt wird"
+    "en": "The reader's name, email address and roles, and the link to their Google account where they made one, held by id.blust.ch in its Zurich region, and the access token each message carries",
+    "de": "Ihr Name, Ihre E-Mail-Adresse, Ihre Rollen und, falls Sie sich mit Google angemeldet haben, die Verknüpfung mit Ihrem Google-Konto, aufbewahrt von id.blust.ch in der Region Zürich, und das Zugriffstoken, das mit jeder Nachricht mitgeschickt wird"
+  },
+  {
+    "en": "That the reader signs in to id.blust.ch, only when they choose to sign in with Google",
+    "de": "Dass Sie sich bei id.blust.ch anmelden, nur wenn Sie die Anmeldung mit Google wählen"
   }
 ]
