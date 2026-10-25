@@ -54,5 +54,45 @@
   {
     "en": "The question and whether the model could answer it, kept in its Zürich region with the weekly report made from them",
     "de": "Die Frage und ob das Modell sie beantworten konnte, aufbewahrt in der Region Zürich, zusammen mit dem wöchentlichen Bericht, der aus den Fragen entsteht"
+  },
+  {
+    "en": "The model and the effort the signed-in reader chose for the chat's answers",
+    "de": "Das Modell und der Aufwand, die Sie nach der Anmeldung für die Antworten des Chats gewählt haben"
+  },
+  {
+    "en": "The access token and the ID token from the reader's sign-in at id.blust.ch, so that each message to the chat carries the access token",
+    "de": "Das Zugriffstoken und das ID-Token aus Ihrer Anmeldung bei id.blust.ch, damit das Zugriffstoken mit jeder Nachricht an den Chat mitgeschickt wird"
+  },
+  {
+    "en": "Until the reader signs out, the chat refuses the token or the visitor clears it",
+    "de": "Bis Sie sich abmelden, der Chat das Token ablehnt oder Sie es löschen"
+  },
+  {
+    "en": "The secret that proves a sign-in was started in this tab, its state and the page it started from, kept only for the trip to the login at id.blust.ch and back",
+    "de": "Das Geheimnis, das belegt, dass eine Anmeldung in diesem Tab begonnen wurde, dazu ihr Zustand und die Seite, auf der sie begann. Aufbewahrt nur für den Weg zur Anmeldeseite von id.blust.ch und zurück"
+  },
+  {
+    "en": "Counting a reader's month",
+    "de": "Der Monatszähler einer angemeldeten Person"
+  },
+  {
+    "en": "Only the month last counted, which the reader's first message of a new month replaces",
+    "de": "Nur der zuletzt gezählte Monat, den Ihre erste Nachricht in einem neuen Monat ersetzt"
+  },
+  {
+    "en": "What the reader's answers cost this month, in its Zurich region, under a key the chat cannot turn back into the account",
+    "de": "Was die Antworten an Sie in diesem Monat kosten, aufbewahrt in der Region Zürich unter einem Schlüssel, aus dem der Chat nicht auf das Konto zurückschliessen kann"
+  },
+  {
+    "en": "Signing a reader in",
+    "de": "Anmeldung im Chat"
+  },
+  {
+    "en": "As long as the reader's account at id.blust.ch exists",
+    "de": "Solange Ihr Konto bei id.blust.ch besteht"
+  },
+  {
+    "en": "The reader's name, email address and roles, held by id.blust.ch in its Zurich region, and the access token each message carries",
+    "de": "Ihr Name, Ihre E-Mail-Adresse und Ihre Rollen, die id.blust.ch in der Region Zürich aufbewahrt, und das Zugriffstoken, das mit jeder Nachricht mitgeschickt wird"
   }
 ]
