@@ -21,6 +21,7 @@ import { fileURLToPath } from "node:url";
 import { parseInstance, imagesOf } from "companygraph-meta-model/instance";
 import { syncImages } from "@robertblust/design/images";
 import { readInstance } from "./read.mjs";
+import { readSchemas } from "./schemas.mjs";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const { repo, commit } = JSON.parse(fs.readFileSync(path.join(ROOT, "source.json"), "utf8"));
@@ -32,13 +33,14 @@ const SUB = "model/";
 
 // The vendored core sits beside the container, and the parser reads the model against it:
 // R16 makes the declared type the only thing that decides which fields are edges, so the
-// schemas travel with the pages they declare.
-const CORE = "meta/core/";
-
-const [files, schemas] = await Promise.all([
-  readInstance({ repo, commit, sub: SUB }),
-  readInstance({ repo, commit, sub: CORE }),
-]);
+// schemas travel with the pages they declare. The packs the model's `.companygraph/manifest.json`
+// lists are vendored beside core and read with it (`build/schemas.mjs`), or a pack's folders
+// fail R13 as declared by no schema. A file read is the one file at that path, or undefined.
+const read = async (sub, o) => {
+  const got = await readInstance({ repo, commit, sub });
+  return o?.file ? got.get("") : got;
+};
+const [files, schemas] = await Promise.all([readInstance({ repo, commit, sub: SUB }), readSchemas(read)]);
 // `repo` travels with the data because the stage draws more than one repository's model and the
 // file link has to point at the right one. `sub` is where these files sit in the model's own
 // repository, and the parser needs it: an entity's `path` is what a page turns into a link to
