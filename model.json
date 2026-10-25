@@ -1,5 +1,5 @@
 {
-  "commit": "2a1852a7e17633fd75bde60aaa23b8ca756d8bf9",
+  "commit": "7829bf4e37e3ccb15cd2c18f796d46842168f7a1",
   "core": "0.69.0",
   "root": "GuestGraph",
   "rootId": "01a0d2e2-f788-788d-ac26-56e9ef94fdd2",
@@ -169,6 +169,18 @@
     {
       "type": "surface",
       "folder": "surfaces",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "system",
+      "folder": "systems",
+      "owner": null,
+      "singular": false
+    },
+    {
+      "type": "system-kind",
+      "folder": "system-kinds",
       "owner": null,
       "singular": false
     },
@@ -15810,6 +15822,81 @@
       "path": "model/surfaces/mcp-registry-listing.md"
     },
     {
+      "id": "01a17143-220a-79fa-95e3-ab2939ad0a97",
+      "address": "system-kinds/saas",
+      "type": "system-kind",
+      "name": "SaaS",
+      "tagline": "Software another party runs and keeps, which GuestGraph's own software connects to.",
+      "fields": {
+        "id": "01a17143-220a-79fa-95e3-ab2939ad0a97",
+        "source": "Local",
+        "rank": "10",
+        "element": "application-component"
+      },
+      "sections": [
+        {
+          "heading": "What it means",
+          "text": "SaaS is software that another party deploys, runs and keeps, which GuestGraph reaches over that party's own interface and holds no configuration, secret or account of. Where it handles personal data, the party it runs with is a data processor, and the system's page names it. It is not software GuestGraph deploys itself, and not the platform such software runs on.",
+          "tables": []
+        }
+      ],
+      "owner": null,
+      "path": "model/system-kinds/saas.md"
+    },
+    {
+      "id": "01a17143-31aa-7ef8-813f-4a1f19056896",
+      "address": "systems/id-blust-ch",
+      "type": "system",
+      "name": "id.blust.ch",
+      "tagline": "Signs readers in to the chat on guestgraph.io with ZITADEL, the identity service blust.ch runs at https://id.blust.ch in its Google Cloud project blust-ch-mcp in the Zurich region for the chats on blust.ch, companygraph.io and guestgraph.io, where accounts are by invitation only, and issues the token from which the chat reads the models a reader may choose.",
+      "fields": {
+        "id": "01a17143-31aa-7ef8-813f-4a1f19056896",
+        "source": "Local",
+        "kind": "SaaS",
+        "owner": "Owner",
+        "processor": "Google Cloud",
+        "serves": [
+          "Answering"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The service's source, infrastructure and the owner's steps",
+                  "https://github.com/robertblust/id-blust-ch"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The service's source, infrastructure and the owner's steps",
+                "https://github.com/robertblust/id-blust-ch"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/systems/id-blust-ch.md"
+    },
+    {
       "id": "01a0d2e3-bec0-7ddc-9a13-d048712143de",
       "address": "values/a-match-is-not-trusted-until-it-is-justified",
       "type": "value",
@@ -21456,6 +21543,42 @@
       "from": "01a170fc-159f-7263-a127-ee365ba94dbd",
       "to": "01a0d44e-8da8-71f1-b1c7-f56d11bb8dee",
       "via": "surfaces",
+      "attrs": {}
+    },
+    {
+      "from": "01a17143-220a-79fa-95e3-ab2939ad0a97",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a17143-31aa-7ef8-813f-4a1f19056896",
+      "to": "01a17143-220a-79fa-95e3-ab2939ad0a97",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "01a17143-31aa-7ef8-813f-4a1f19056896",
+      "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "01a17143-31aa-7ef8-813f-4a1f19056896",
+      "to": "01a108de-0195-7bc3-ad53-a16299aa585b",
+      "via": "processor",
+      "attrs": {}
+    },
+    {
+      "from": "01a17143-31aa-7ef8-813f-4a1f19056896",
+      "to": "01a0d360-9b98-7ff9-bc00-0f521ad28bdb",
+      "via": "serves",
+      "attrs": {}
+    },
+    {
+      "from": "01a17143-31aa-7ef8-813f-4a1f19056896",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
       "attrs": {}
     }
   ],
