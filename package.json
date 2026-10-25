@@ -25,7 +25,7 @@
     "pin:check": "node pin-check.mjs"
   },
   "devDependencies": {
-    "@robertblust/design": "github:robertblust/design#v0.158.1",
+    "@robertblust/design": "github:robertblust/design#v0.158.2",
     "companygraph-mcp-server": "github:companygraph/mcp-server#v0.69.0",
     "pdf-lib": "^1.17.1",
     "playwright": "^1.64.1",
