@@ -18,6 +18,10 @@ function readLocal(dir, commit, sub) {
   }
   const root = path.join(dir, sub);
   const files = new Map();
+  // An absent folder is no files, as it is on GitHub, and a path to one file is that file
+  // under the empty key, as the remote listing gives it.
+  if (!fs.existsSync(root)) return files;
+  if (fs.statSync(root).isFile()) return files.set("", fs.readFileSync(root, "utf8"));
   const walk = (d) => {
     for (const ent of fs.readdirSync(d, { withFileTypes: true })) {
       const p = path.join(d, ent.name);
