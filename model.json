@@ -1,5 +1,5 @@
 {
-  "commit": "8f733dfdb517713e122a813e9d78c0c2d4b6b90b",
+  "commit": "c27045a0fb0e41352ef03687cdf8d913a59297cd",
   "core": "0.71.0",
   "root": "GuestGraph",
   "rootId": "01a0d2e2-f788-788d-ac26-56e9ef94fdd2",
@@ -3868,6 +3868,119 @@
       ],
       "owner": null,
       "path": "model/data-processors/google-cloud.md"
+    },
+    {
+      "id": "01a1b756-2cf0-7d08-b071-f2787186cd0d",
+      "address": "data-processors/microsoft",
+      "type": "data-processor",
+      "name": "Microsoft",
+      "tagline": "Signs a reader the owner has invited in to id.blust.ch with their Microsoft account, a personal one or one their organization gives them, when the reader chooses Sign in with Microsoft, and tells id.blust.ch the account's id, its name and the email address the account names; it may process the sign-in in any country it chooses.",
+      "fields": {
+        "id": "01a1b756-2cf0-7d08-b071-f2787186cd0d",
+        "source": "Local",
+        "legal-name": "Microsoft Corporation",
+        "countries": [
+          "US"
+        ],
+        "processing": "any"
+      },
+      "sections": [
+        {
+          "heading": "Own purposes",
+          "text": "- Keeps, for a personal Microsoft account, that the reader let id.blust.ch read their profile, as an app the reader can review and remove in their Microsoft account's privacy settings, under Microsoft's privacy statement, for which Microsoft Corporation is the controller, and Microsoft Ireland Operations Limited too for readers in the European Economic Area.\n- Records, for an account the reader's organization gives them, the sign-in in that organization's directory, which the organization controls; Microsoft's privacy statement says of such an account that \"your organization controls your account and can access and process your data\".",
+          "tables": []
+        },
+        {
+          "heading": "Transfers",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Jurisdiction",
+                "Safeguard"
+              ],
+              "rows": [
+                [
+                  "ch",
+                  "The Swiss-U.S. Data Privacy Framework, under which Microsoft Corporation is certified"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Jurisdiction",
+              "Safeguard"
+            ],
+            "rows": [
+              [
+                "ch",
+                "The Swiss-U.S. Data Privacy Framework, under which Microsoft Corporation is certified"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "Microsoft identity platform terms of use",
+                  "https://learn.microsoft.com/legal/microsoft-identity-platform/terms-of-use"
+                ],
+                [
+                  "Microsoft APIs terms of use",
+                  "https://learn.microsoft.com/legal/microsoft-apis/terms-of-use"
+                ],
+                [
+                  "Privacy statement",
+                  "https://www.microsoft.com/privacy/privacystatement"
+                ],
+                [
+                  "Data Privacy Framework list",
+                  "https://www.dataprivacyframework.gov/list"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "Microsoft identity platform terms of use",
+                "https://learn.microsoft.com/legal/microsoft-identity-platform/terms-of-use"
+              ],
+              [
+                "Microsoft APIs terms of use",
+                "https://learn.microsoft.com/legal/microsoft-apis/terms-of-use"
+              ],
+              [
+                "Privacy statement",
+                "https://www.microsoft.com/privacy/privacystatement"
+              ],
+              [
+                "Data Privacy Framework list",
+                "https://www.dataprivacyframework.gov/list"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/data-processors/microsoft.md"
     },
     {
       "id": "01a109b7-ea95-7ef7-b81c-f1a8a51a1b0a",
@@ -11375,7 +11488,7 @@
         },
         {
           "heading": "Personal data",
-          "text": "- The reader's name and email address, which their account at id.blust.ch holds\n- The roles granted to the reader, which name the models they may choose\n- For a reader who signs in with Google, the link to their Google account, its id and email address, which their account at id.blust.ch keeps until the link or the account is removed\n- The tokens the sign-in issues, kept in the reader's browser, and the access token each message carries to the chat, which checks it",
+          "text": "- The reader's name and email address, which their account at id.blust.ch holds\n- The roles granted to the reader, which name the models they may choose\n- For a reader who signs in with Google, the link to their Google account, its id and email address, which their account at id.blust.ch keeps until the link or the account is removed\n- For a reader who signs in with Microsoft, the link to their Microsoft account, its id and the email address it names, which their account at id.blust.ch keeps until the link or the account is removed\n- The tokens the sign-in issues, kept in the reader's browser, and the access token each message carries to the chat, which checks it",
           "tables": []
         },
         {
@@ -11391,11 +11504,15 @@
               "rows": [
                 [
                   "Google Cloud",
-                  "The reader's name, email address and roles, and the link to their Google account where they made one, held by id.blust.ch in its Zurich region, and the access token each message carries"
+                  "The reader's name, email address and roles, and the link to their Google or Microsoft account where they made one, held by id.blust.ch in its Zurich region, and the access token each message carries"
                 ],
                 [
                   "Google",
                   "That the reader signs in to id.blust.ch, only when they choose to sign in with Google"
+                ],
+                [
+                  "Microsoft",
+                  "That the reader signs in to id.blust.ch, only when they choose to sign in with Microsoft"
                 ]
               ]
             }
@@ -11409,11 +11526,15 @@
             "rows": [
               [
                 "Google Cloud",
-                "The reader's name, email address and roles, and the link to their Google account where they made one, held by id.blust.ch in its Zurich region, and the access token each message carries"
+                "The reader's name, email address and roles, and the link to their Google or Microsoft account where they made one, held by id.blust.ch in its Zurich region, and the access token each message carries"
               ],
               [
                 "Google",
                 "That the reader signs in to id.blust.ch, only when they choose to sign in with Google"
+              ],
+              [
+                "Microsoft",
+                "That the reader signs in to id.blust.ch, only when they choose to sign in with Microsoft"
               ]
             ]
           }
@@ -16020,6 +16141,13 @@
                   "",
                   "",
                   "HTTPS"
+                ],
+                [
+                  "Sign in with Microsoft",
+                  "OpenID Connect",
+                  "",
+                  "",
+                  "HTTPS"
                 ]
               ]
             }
@@ -16036,6 +16164,13 @@
             "rows": [
               [
                 "Sign in with Google",
+                "OpenID Connect",
+                "",
+                "",
+                "HTTPS"
+              ],
+              [
+                "Sign in with Microsoft",
                 "OpenID Connect",
                 "",
                 "",
@@ -16140,6 +16275,67 @@
       ],
       "owner": null,
       "path": "model/systems/sign-in-with-google.md"
+    },
+    {
+      "id": "01a1b756-2d29-7e56-a3cd-cffa8106a00d",
+      "address": "systems/sign-in-with-microsoft",
+      "type": "system",
+      "name": "Sign in with Microsoft",
+      "tagline": "Signs a reader in with their Microsoft account, a personal one or one their organization gives them, when the reader chooses it on the login of id.blust.ch, and returns to id.blust.ch the account's id, its name and the email address the account names; id.blust.ch signs the reader in only where that account is already linked to the account the owner made for them, a link the reader makes when they accept their invitation or the owner makes at their request, and never by the address; it opens no account of its own.",
+      "fields": {
+        "id": "01a1b756-2d29-7e56-a3cd-cffa8106a00d",
+        "source": "Local",
+        "kind": "SaaS",
+        "owner": "Owner",
+        "processor": "Microsoft",
+        "serves": [
+          "Answering"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The vendor's documentation",
+                  "https://learn.microsoft.com/entra/identity-platform/v2-protocols-oidc"
+                ],
+                [
+                  "How id.blust.ch is set up for it",
+                  "https://github.com/robertblust/id-blust-ch/blob/main/zitadel/microsoft.tf"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The vendor's documentation",
+                "https://learn.microsoft.com/entra/identity-platform/v2-protocols-oidc"
+              ],
+              [
+                "How id.blust.ch is set up for it",
+                "https://github.com/robertblust/id-blust-ch/blob/main/zitadel/microsoft.tf"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/systems/sign-in-with-microsoft.md"
     },
     {
       "id": "01a0d2e3-bec0-7ddc-9a13-d048712143de",
@@ -21761,7 +21957,7 @@
       "to": "01a108de-0195-7bc3-ad53-a16299aa585b",
       "via": "Processors.Processor",
       "attrs": {
-        "Receives": "The reader's name, email address and roles, and the link to their Google account where they made one, held by id.blust.ch in its Zurich region, and the access token each message carries"
+        "Receives": "The reader's name, email address and roles, and the link to their Google or Microsoft account where they made one, held by id.blust.ch in its Zurich region, and the access token each message carries"
       }
     },
     {
@@ -21770,6 +21966,14 @@
       "via": "Processors.Processor",
       "attrs": {
         "Receives": "That the reader signs in to id.blust.ch, only when they choose to sign in with Google"
+      }
+    },
+    {
+      "from": "01a170fc-05fc-7dee-81ba-33cf59487676",
+      "to": "01a1b756-2cf0-7d08-b071-f2787186cd0d",
+      "via": "Processors.Processor",
+      "attrs": {
+        "Receives": "That the reader signs in to id.blust.ch, only when they choose to sign in with Microsoft"
       }
     },
     {
@@ -21813,6 +22017,17 @@
     {
       "from": "01a17143-31aa-7ef8-813f-4a1f19056896",
       "to": "01a17189-4d81-7645-a972-ad4dd70a6e6e",
+      "via": "Connects to.System",
+      "attrs": {
+        "As": "OpenID Connect",
+        "Service": "",
+        "Carries": "",
+        "Via": "HTTPS"
+      }
+    },
+    {
+      "from": "01a17143-31aa-7ef8-813f-4a1f19056896",
+      "to": "01a1b756-2d29-7e56-a3cd-cffa8106a00d",
       "via": "Connects to.System",
       "attrs": {
         "As": "OpenID Connect",
@@ -21883,6 +22098,42 @@
     },
     {
       "from": "01a17189-4d81-7645-a972-ad4dd70a6e6e",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a1b756-2cf0-7d08-b071-f2787186cd0d",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a1b756-2d29-7e56-a3cd-cffa8106a00d",
+      "to": "01a17143-220a-79fa-95e3-ab2939ad0a97",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "01a1b756-2d29-7e56-a3cd-cffa8106a00d",
+      "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "01a1b756-2d29-7e56-a3cd-cffa8106a00d",
+      "to": "01a1b756-2cf0-7d08-b071-f2787186cd0d",
+      "via": "processor",
+      "attrs": {}
+    },
+    {
+      "from": "01a1b756-2d29-7e56-a3cd-cffa8106a00d",
+      "to": "01a0d360-9b98-7ff9-bc00-0f521ad28bdb",
+      "via": "serves",
+      "attrs": {}
+    },
+    {
+      "from": "01a1b756-2d29-7e56-a3cd-cffa8106a00d",
       "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
       "via": "source",
       "attrs": {}
