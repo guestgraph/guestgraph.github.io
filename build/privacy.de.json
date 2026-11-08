@@ -88,16 +88,20 @@
     "de": "Anmeldung im Chat"
   },
   {
-    "en": "As long as the reader's account at id.blust.ch exists",
-    "de": "Solange Ihr Konto bei id.blust.ch besteht"
+    "en": "As long as the reader's account at id.blust.ch exists, used or not, which is until it is deleted, by the owner unasked or at the reader's request",
+    "de": "Solange Ihr Konto bei id.blust.ch besteht, ob Sie es nutzen oder nicht, also bis es gelöscht wird, vom Owner unaufgefordert oder auf Ihren Wunsch"
   },
   {
-    "en": "The reader's name, email address and roles, and the link to their Google or Microsoft account where they made one, held by id.blust.ch in its Zurich region, and the access token each message carries; also what the link check reads of each sign-in with Google or Microsoft, in the same region and kept nowhere",
-    "de": "Ihr Name, Ihre E-Mail-Adresse, Ihre Rollen und, falls Sie sich mit Google oder Microsoft angemeldet haben, die Verknüpfung mit Ihrem Google- oder Microsoft-Konto, aufbewahrt von id.blust.ch in der Region Zürich, und das Zugriffstoken, das mit jeder Nachricht mitgeschickt wird; ausserdem, was die Verknüpfungsprüfung in derselben Region bei jeder Anmeldung mit Google oder Microsoft liest und nirgends aufbewahrt"
+    "en": "The reader's name, email address and roles, the link to their Google or Microsoft account where they made one, what their account keeps of a password, passkey, security key or authenticator app they set up and the code that verifies an address until it is entered, held by id.blust.ch in its Zurich region, and the access token each message carries; also what the link check reads of each sign-in with Google or Microsoft, in the same region and kept nowhere",
+    "de": "Ihr Name, Ihre E-Mail-Adresse und Ihre Rollen, die Verknüpfung mit Ihrem Google- oder Microsoft-Konto, falls Sie sich damit angemeldet haben, was Ihr Konto von einem Passwort, Passkey, Sicherheitsschlüssel oder einer Authenticator-App enthält, soweit Sie diese eingerichtet haben, und der Code, der eine Adresse bestätigt, bis er eingegeben ist, aufbewahrt von id.blust.ch in der Region Zürich, und das Zugriffstoken, das mit jeder Nachricht mitgeschickt wird; ausserdem, was die Verknüpfungsprüfung in derselben Region bei jeder Anmeldung mit Google oder Microsoft liest und nirgends aufbewahrt"
   },
   {
     "en": "That the reader signs in to id.blust.ch, only when they choose to sign in with Google",
     "de": "Dass Sie sich bei id.blust.ch anmelden, nur wenn Sie die Anmeldung mit Google wählen"
+  },
+  {
+    "en": "The reader's address, their name as the mail greets them and the mail itself, the code that verifies their address or the owner's invitation, sent through Gmail from no-reply@blust.ch and kept as a sent mail until the owner deletes it",
+    "de": "Ihre E-Mail-Adresse, Ihr Name, mit dem die E-Mail Sie begrüsst, und die E-Mail selbst, also der Code, der Ihre Adresse bestätigt, oder die Einladung des Owners, verschickt über Gmail von no-reply@blust.ch und als gesendete E-Mail aufbewahrt, bis der Owner sie löscht"
   },
   {
     "en": "That the reader signs in to id.blust.ch, only when they choose to sign in with Microsoft, and, while that account is not yet linked, the access token of that sign-in, with which the link check asks Microsoft about the account and its organization",
