@@ -92,8 +92,8 @@
     "de": "Solange Ihr Konto bei id.blust.ch besteht, ob Sie es nutzen oder nicht, also bis es gelöscht wird, vom Owner unaufgefordert oder auf Ihren Wunsch"
   },
   {
-    "en": "The reader's name, email address and roles, the link to their Google or Microsoft account where they made one, what their account keeps of a password, passkey, security key or authenticator app they set up and the code that verifies an address until it is entered, held by id.blust.ch in its Zurich region, and the access token each message carries; also what the link check reads of each sign-in with Google or Microsoft, in the same region and kept nowhere",
-    "de": "Ihr Name, Ihre E-Mail-Adresse und Ihre Rollen, die Verknüpfung mit Ihrem Google- oder Microsoft-Konto, falls Sie sich damit angemeldet haben, was Ihr Konto von einem Passwort, Passkey, Sicherheitsschlüssel oder einer Authenticator-App enthält, soweit Sie diese eingerichtet haben, und der Code, der eine Adresse bestätigt, bis er eingegeben ist, aufbewahrt von id.blust.ch in der Region Zürich, und das Zugriffstoken, das mit jeder Nachricht mitgeschickt wird; ausserdem, was die Verknüpfungsprüfung in derselben Region bei jeder Anmeldung mit Google oder Microsoft liest und nirgends aufbewahrt"
+    "en": "The reader's name, email address and roles, the link to their Google, Microsoft or GitHub account where they made one, what their account keeps of a password, passkey, security key or authenticator app they set up and the code that verifies an address until it is entered, held by id.blust.ch in its Zurich region, and the access token each message carries; also what the link check reads of each sign-in with Google, Microsoft or GitHub, in the same region and kept nowhere",
+    "de": "Ihr Name, Ihre E-Mail-Adresse, Ihre Rollen, die Verknüpfung mit Ihrem Google-, Microsoft- oder GitHub-Konto, falls Sie sich damit angemeldet haben, was Ihr Konto von einem Passwort, Passkey, Sicherheitsschlüssel oder einer Authenticator-App enthält, soweit Sie diese eingerichtet haben, und der Code, der eine Adresse bestätigt, bis er eingegeben ist, aufbewahrt von id.blust.ch in der Region Zürich, und das Zugriffstoken, das mit jeder Nachricht mitgeschickt wird; ausserdem, was die Verknüpfungsprüfung in derselben Region bei jeder Anmeldung mit Google, Microsoft oder GitHub liest und nirgends aufbewahrt"
   },
   {
     "en": "That the reader signs in to id.blust.ch, only when they choose to sign in with Google",
@@ -106,5 +106,9 @@
   {
     "en": "That the reader signs in to id.blust.ch, only when they choose to sign in with Microsoft, and, while that account is not yet linked, the access token of that sign-in, with which the link check asks Microsoft about the account and its organization",
     "de": "Dass Sie sich bei id.blust.ch anmelden, nur wenn Sie die Anmeldung mit Microsoft wählen, und, solange Ihr Microsoft-Konto noch nicht verknüpft ist, das Zugriffstoken dieser Anmeldung, mit dem die Verknüpfungsprüfung bei Microsoft nach dem Konto und seiner Organisation fragt"
+  },
+  {
+    "en": "That the reader signs in to id.blust.ch, only when they choose to sign in with GitHub, and, while that account is not yet linked, the access token of that sign-in, with which the link check asks GitHub for the account's email addresses",
+    "de": "Dass Sie sich bei id.blust.ch anmelden, nur wenn Sie die Anmeldung mit GitHub wählen, und, solange Ihr GitHub-Konto noch nicht verknüpft ist, das Zugriffstoken dieser Anmeldung, mit dem die Verknüpfungsprüfung bei GitHub nach den E-Mail-Adressen des Kontos fragt"
   }
 ]

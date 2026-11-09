@@ -1,5 +1,5 @@
 {
-  "commit": "5c6cbc6788526eb57b0d25c2c35819a240938b9f",
+  "commit": "e8741d1661ba956ca92da7f4eff95bc0d2158976",
   "core": "0.71.0",
   "root": "GuestGraph",
   "rootId": "01a0d2e2-f788-788d-ac26-56e9ef94fdd2",
@@ -3671,6 +3671,119 @@
       ],
       "owner": null,
       "path": "model/data-processors/anthropic.md"
+    },
+    {
+      "id": "01a1bfd6-a446-7c0d-b1cf-c63ba2409d52",
+      "address": "data-processors/github",
+      "type": "data-processor",
+      "name": "GitHub",
+      "tagline": "Signs a reader in to id.blust.ch with their GitHub account, when the reader chooses Sign in with GitHub, and tells id.blust.ch the account's id, its login, its name and one email address of the account, the public one on its profile or else its primary verified one, and, for a sign-in not yet linked to an account there, the account's email addresses with whether GitHub verified each, an answer id.blust.ch's link check asks for with that sign-in's access token, uses only to decide whether to link the account or to take a new account's address as verified, and keeps nowhere; it may process the sign-in in any country it chooses.",
+      "fields": {
+        "id": "01a1bfd6-a446-7c0d-b1cf-c63ba2409d52",
+        "source": "Local",
+        "legal-name": "GitHub, Inc.",
+        "countries": [
+          "US"
+        ],
+        "processing": "any"
+      },
+      "sections": [
+        {
+          "heading": "Own purposes",
+          "text": "- Keeps in the reader's GitHub account that they authorized id.blust.ch to read their email addresses, as an authorized OAuth app the reader can review and revoke under Settings, Applications, Authorized OAuth Apps, under GitHub's privacy statement, for which GitHub, Inc. or GitHub B.V. is the controller.\n- Records, for an account an organization supplies, the sign-in for that organization, which GitHub's privacy statement says then \"becomes the Data Controller\", with GitHub as its processor.",
+          "tables": []
+        },
+        {
+          "heading": "Transfers",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "Jurisdiction",
+                "Safeguard"
+              ],
+              "rows": [
+                [
+                  "ch",
+                  "The Swiss-U.S. Data Privacy Framework, under which GitHub's privacy statement says GitHub is certified"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "Jurisdiction",
+              "Safeguard"
+            ],
+            "rows": [
+              [
+                "ch",
+                "The Swiss-U.S. Data Privacy Framework, under which GitHub's privacy statement says GitHub is certified"
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "GitHub Terms of Service",
+                  "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service"
+                ],
+                [
+                  "Privacy statement",
+                  "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+                ],
+                [
+                  "Subprocessors",
+                  "https://docs.github.com/en/site-policy/privacy-policies/github-subprocessors"
+                ],
+                [
+                  "Data Privacy Framework list",
+                  "https://www.dataprivacyframework.gov/list"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "GitHub Terms of Service",
+                "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service"
+              ],
+              [
+                "Privacy statement",
+                "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+              ],
+              [
+                "Subprocessors",
+                "https://docs.github.com/en/site-policy/privacy-policies/github-subprocessors"
+              ],
+              [
+                "Data Privacy Framework list",
+                "https://www.dataprivacyframework.gov/list"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/data-processors/github.md"
     },
     {
       "id": "01a17189-3e8c-77fb-bbe7-15a87533adf7",
@@ -11621,12 +11734,12 @@
       "sections": [
         {
           "heading": "Data subjects",
-          "text": "- People who open an account at id.blust.ch themselves, at its login or by signing in with Google or Microsoft\n- People the owner makes an account for and invites",
+          "text": "- People who open an account at id.blust.ch themselves, at its login or by signing in with Google, Microsoft or GitHub\n- People the owner makes an account for and invites",
           "tables": []
         },
         {
           "heading": "Personal data",
-          "text": "- The reader's name and email address, which their account at id.blust.ch holds\n- Where the reader's address is not verified, the code the login mails there, which the reader enters before the account is used; an address Google or Microsoft proved needs none\n- The mail id.blust.ch sends to the reader's address, the code that verifies it or the owner's invitation, which greets the reader by name and is kept as a sent mail until the owner deletes it\n- The roles the owner grants the reader, which name the models they may choose; an account holds none until the owner grants one\n- For a reader who signs in with Google, the link to their Google account, its id and email address, which their account at id.blust.ch keeps until the link or the account is removed\n- For a reader who signs in with Microsoft, the link to their Microsoft account, its id and the email address it names, which their account at id.blust.ch keeps until the link or the account is removed\n- Where the reader set one, their password as ZITADEL keeps it, which their account at id.blust.ch keeps\n- Where the reader set them up, the public key of their passkey or security key and the secret their authenticator app shares with id.blust.ch, which their account there keeps until they are removed or the account is\n- For a reader who signs in with Microsoft while that account is not yet linked, whether it is a personal account or which domains their organization has verified with Microsoft, an answer id.blust.ch's link check asks Microsoft for with that sign-in's access token, uses only to decide whether to link the account or to take a new account's address as verified, and keeps nowhere\n- The tokens the sign-in issues, kept in the reader's browser, and the access token each message carries to the chat, which checks it",
+          "text": "- The reader's name and email address, which their account at id.blust.ch holds\n- Where the reader's address is not verified, the code the login mails there, which the reader enters before the account is used; an address Google, Microsoft or GitHub proved needs none\n- The mail id.blust.ch sends to the reader's address, the code that verifies it or the owner's invitation, which greets the reader by name and is kept as a sent mail until the owner deletes it\n- The roles the owner grants the reader, which name the models they may choose; an account holds none until the owner grants one\n- For a reader who signs in with Google, the link to their Google account, its id and email address, which their account at id.blust.ch keeps until the link or the account is removed\n- For a reader who signs in with Microsoft, the link to their Microsoft account, its id and the email address it names, which their account at id.blust.ch keeps until the link or the account is removed\n- For a reader who signs in with GitHub, the link to their GitHub account, its id, its login and the email address id.blust.ch took from it, which their account at id.blust.ch keeps until the link or the account is removed\n- Where the reader set one, their password as ZITADEL keeps it, which their account at id.blust.ch keeps\n- Where the reader set them up, the public key of their passkey or security key and the secret their authenticator app shares with id.blust.ch, which their account there keeps until they are removed or the account is\n- For a reader who signs in with Microsoft while that account is not yet linked, whether it is a personal account or which domains their organization has verified with Microsoft, an answer id.blust.ch's link check asks Microsoft for with that sign-in's access token, uses only to decide whether to link the account or to take a new account's address as verified, and keeps nowhere\n- For a reader who signs in with GitHub while that account is not yet linked, the email addresses of their GitHub account and whether GitHub verified each, an answer id.blust.ch's link check asks GitHub for with that sign-in's access token, uses only to decide whether to link the account or to take a new account's address as verified, and keeps nowhere\n- The tokens the sign-in issues, kept in the reader's browser, and the access token each message carries to the chat, which checks it",
           "tables": []
         },
         {
@@ -11642,7 +11755,7 @@
               "rows": [
                 [
                   "Google Cloud",
-                  "The reader's name, email address and roles, the link to their Google or Microsoft account where they made one, what their account keeps of a password, passkey, security key or authenticator app they set up and the code that verifies an address until it is entered, held by id.blust.ch in its Zurich region, and the access token each message carries; also what the link check reads of each sign-in with Google or Microsoft, in the same region and kept nowhere"
+                  "The reader's name, email address and roles, the link to their Google, Microsoft or GitHub account where they made one, what their account keeps of a password, passkey, security key or authenticator app they set up and the code that verifies an address until it is entered, held by id.blust.ch in its Zurich region, and the access token each message carries; also what the link check reads of each sign-in with Google, Microsoft or GitHub, in the same region and kept nowhere"
                 ],
                 [
                   "Google",
@@ -11655,6 +11768,10 @@
                 [
                   "Microsoft",
                   "That the reader signs in to id.blust.ch, only when they choose to sign in with Microsoft, and, while that account is not yet linked, the access token of that sign-in, with which the link check asks Microsoft about the account and its organization"
+                ],
+                [
+                  "GitHub",
+                  "That the reader signs in to id.blust.ch, only when they choose to sign in with GitHub, and, while that account is not yet linked, the access token of that sign-in, with which the link check asks GitHub for the account's email addresses"
                 ]
               ]
             }
@@ -11668,7 +11785,7 @@
             "rows": [
               [
                 "Google Cloud",
-                "The reader's name, email address and roles, the link to their Google or Microsoft account where they made one, what their account keeps of a password, passkey, security key or authenticator app they set up and the code that verifies an address until it is entered, held by id.blust.ch in its Zurich region, and the access token each message carries; also what the link check reads of each sign-in with Google or Microsoft, in the same region and kept nowhere"
+                "The reader's name, email address and roles, the link to their Google, Microsoft or GitHub account where they made one, what their account keeps of a password, passkey, security key or authenticator app they set up and the code that verifies an address until it is entered, held by id.blust.ch in its Zurich region, and the access token each message carries; also what the link check reads of each sign-in with Google, Microsoft or GitHub, in the same region and kept nowhere"
               ],
               [
                 "Google",
@@ -11681,6 +11798,10 @@
               [
                 "Microsoft",
                 "That the reader signs in to id.blust.ch, only when they choose to sign in with Microsoft, and, while that account is not yet linked, the access token of that sign-in, with which the link check asks Microsoft about the account and its organization"
+              ],
+              [
+                "GitHub",
+                "That the reader signs in to id.blust.ch, only when they choose to sign in with GitHub, and, while that account is not yet linked, the access token of that sign-in, with which the link check asks GitHub for the account's email addresses"
               ]
             ]
           }
@@ -16255,7 +16376,7 @@
       "address": "systems/id-blust-ch",
       "type": "system",
       "name": "id.blust.ch",
-      "tagline": "Signs readers in to the chat on guestgraph.io with ZITADEL, the identity service blust.ch runs at https://id.blust.ch in its Google Cloud project blust-ch-mcp in the Zurich region for the chats on blust.ch, companygraph.io and guestgraph.io, and issues the token from which the chat reads the models a reader may choose. Anyone may open an account there, at the login with their email address or by signing in with Google or Microsoft, and the owner may also make one and send an invitation; what an account may use is a role, which only the owner grants, and a reader with no role on a site is answered there as a visitor is, by the default model and against the visitors' day share. Before an account is used, its address is verified: the login mails a code there where it is not verified yet, and an address Google or Microsoft proved needs none. That code and the owner's invitation are id.blust.ch's mail, which goes out from no-reply@blust.ch through Gmail, signed in as a user of the owner's Google Workspace. A person who signs up with their address chooses a passkey or a password; a password sign-in also needs an authenticator app or a security key, and a password is reset through the verified address, while a sign-in with Google, Microsoft or a passkey is never required to have a second factor. Beside ZITADEL, in the same project and region, blust.ch runs the link check, a small service of its own that ZITADEL calls after every sign-in with Google or Microsoft: it links that account to an existing one by its address only where the provider proved the address and exactly one account holds it with its address verified, and it keeps nothing and logs no address and no token.",
+      "tagline": "Signs readers in to the chat on guestgraph.io with ZITADEL, the identity service blust.ch runs at https://id.blust.ch in its Google Cloud project blust-ch-mcp in the Zurich region for the chats on blust.ch, companygraph.io and guestgraph.io, and issues the token from which the chat reads the models a reader may choose. Anyone may open an account there, at the login with their email address or by signing in with Google, Microsoft or GitHub, and the owner may also make one and send an invitation; what an account may use is a role, which only the owner grants, and a reader with no role on a site is answered there as a visitor is, by the default model and against the visitors' day share. Before an account is used, its address is verified: the login mails a code there where it is not verified yet, and an address Google, Microsoft or GitHub proved needs none. That code and the owner's invitation are id.blust.ch's mail, which goes out from no-reply@blust.ch through Gmail, signed in as a user of the owner's Google Workspace. A person who signs up with their address chooses a passkey or a password; a password sign-in also needs an authenticator app or a security key, and a password is reset through the verified address, while a sign-in with Google, Microsoft, GitHub or a passkey is never required to have a second factor. Beside ZITADEL, in the same project and region, blust.ch runs the link check, a small service of its own that ZITADEL calls after every sign-in with Google, Microsoft or GitHub: it links that account to an existing one by its address only where the provider proved the address and exactly one account holds it with its address verified, and it keeps nothing and logs no address and no token.",
       "fields": {
         "id": "01a17143-31aa-7ef8-813f-4a1f19056896",
         "source": "Local",
@@ -16294,6 +16415,13 @@
                   "",
                   "",
                   "HTTPS"
+                ],
+                [
+                  "Sign in with GitHub",
+                  "OAuth 2.0",
+                  "",
+                  "",
+                  "HTTPS"
                 ]
               ]
             }
@@ -16318,6 +16446,13 @@
               [
                 "Sign in with Microsoft",
                 "OpenID Connect",
+                "",
+                "",
+                "HTTPS"
+              ],
+              [
+                "Sign in with GitHub",
+                "OAuth 2.0",
                 "",
                 "",
                 "HTTPS"
@@ -16360,6 +16495,75 @@
       ],
       "owner": null,
       "path": "model/systems/id-blust-ch.md"
+    },
+    {
+      "id": "01a1bfd6-a446-76d1-8319-2f301a73a81f",
+      "address": "systems/sign-in-with-github",
+      "type": "system",
+      "name": "Sign in with GitHub",
+      "tagline": "Signs a reader in with their GitHub account when the reader chooses it on the login of id.blust.ch, and returns to id.blust.ch the account's id, its login, its name and one email address of the account, the public one on its profile or else its primary verified one; it opens no account at id.blust.ch by itself. id.blust.ch signs the reader in where that GitHub account is linked to an account there. Because id.blust.ch's identity service counts every address GitHub returns as verified without GitHub saying so, id.blust.ch's link check makes that link by the address only where the account's own list of addresses at GitHub holds it as verified, and exactly one account at id.blust.ch holds that address and has it verified. Where the link check makes none, the login offers the reader the form that opens an account of their own, whose address counts as verified where GitHub proved it and is otherwise verified by the code the login mails there before the account is used; while the link check cannot answer, a new account's address counts as verified as the identity service took it, and nothing is linked.",
+      "fields": {
+        "id": "01a1bfd6-a446-76d1-8319-2f301a73a81f",
+        "source": "Local",
+        "kind": "SaaS",
+        "owner": "Owner",
+        "processor": "GitHub",
+        "serves": [
+          "Answering"
+        ]
+      },
+      "sections": [
+        {
+          "heading": "References",
+          "text": "",
+          "tables": [
+            {
+              "caption": null,
+              "columns": [
+                "What",
+                "URL"
+              ],
+              "rows": [
+                [
+                  "The vendor's documentation",
+                  "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps"
+                ],
+                [
+                  "How id.blust.ch is set up for it",
+                  "https://github.com/robertblust/id-blust-ch/blob/main/zitadel/github.tf"
+                ],
+                [
+                  "How id.blust.ch links it to an account by the address",
+                  "https://github.com/robertblust/id-blust-ch/blob/main/zitadel/link-check.tf"
+                ]
+              ]
+            }
+          ],
+          "table": {
+            "caption": null,
+            "columns": [
+              "What",
+              "URL"
+            ],
+            "rows": [
+              [
+                "The vendor's documentation",
+                "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps"
+              ],
+              [
+                "How id.blust.ch is set up for it",
+                "https://github.com/robertblust/id-blust-ch/blob/main/zitadel/github.tf"
+              ],
+              [
+                "How id.blust.ch links it to an account by the address",
+                "https://github.com/robertblust/id-blust-ch/blob/main/zitadel/link-check.tf"
+              ]
+            ]
+          }
+        }
+      ],
+      "owner": null,
+      "path": "model/systems/sign-in-with-github.md"
     },
     {
       "id": "01a17189-4d81-7645-a972-ad4dd70a6e6e",
@@ -22119,7 +22323,7 @@
       "to": "01a108de-0195-7bc3-ad53-a16299aa585b",
       "via": "Processors.Processor",
       "attrs": {
-        "Receives": "The reader's name, email address and roles, the link to their Google or Microsoft account where they made one, what their account keeps of a password, passkey, security key or authenticator app they set up and the code that verifies an address until it is entered, held by id.blust.ch in its Zurich region, and the access token each message carries; also what the link check reads of each sign-in with Google or Microsoft, in the same region and kept nowhere"
+        "Receives": "The reader's name, email address and roles, the link to their Google, Microsoft or GitHub account where they made one, what their account keeps of a password, passkey, security key or authenticator app they set up and the code that verifies an address until it is entered, held by id.blust.ch in its Zurich region, and the access token each message carries; also what the link check reads of each sign-in with Google, Microsoft or GitHub, in the same region and kept nowhere"
       }
     },
     {
@@ -22144,6 +22348,14 @@
       "via": "Processors.Processor",
       "attrs": {
         "Receives": "The reader's address, their name as the mail greets them and the mail itself, the code that verifies their address or the owner's invitation, sent through Gmail from no-reply@blust.ch and kept as a sent mail until the owner deletes it"
+      }
+    },
+    {
+      "from": "01a170fc-05fc-7dee-81ba-33cf59487676",
+      "to": "01a1bfd6-a446-7c0d-b1cf-c63ba2409d52",
+      "via": "Processors.Processor",
+      "attrs": {
+        "Receives": "That the reader signs in to id.blust.ch, only when they choose to sign in with GitHub, and, while that account is not yet linked, the access token of that sign-in, with which the link check asks GitHub for the account's email addresses"
       }
     },
     {
@@ -22201,6 +22413,17 @@
       "via": "Connects to.System",
       "attrs": {
         "As": "OpenID Connect",
+        "Service": "",
+        "Carries": "",
+        "Via": "HTTPS"
+      }
+    },
+    {
+      "from": "01a17143-31aa-7ef8-813f-4a1f19056896",
+      "to": "01a1bfd6-a446-76d1-8319-2f301a73a81f",
+      "via": "Connects to.System",
+      "attrs": {
+        "As": "OAuth 2.0",
         "Service": "",
         "Carries": "",
         "Via": "HTTPS"
@@ -22310,6 +22533,42 @@
     },
     {
       "from": "01a1bba8-b572-71d0-a7ae-fe254c1e436c",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a1bfd6-a446-76d1-8319-2f301a73a81f",
+      "to": "01a17143-220a-79fa-95e3-ab2939ad0a97",
+      "via": "kind",
+      "attrs": {}
+    },
+    {
+      "from": "01a1bfd6-a446-76d1-8319-2f301a73a81f",
+      "to": "01a0d2e3-bec0-7fd9-81f6-bcd405d5b168",
+      "via": "owner",
+      "attrs": {}
+    },
+    {
+      "from": "01a1bfd6-a446-76d1-8319-2f301a73a81f",
+      "to": "01a1bfd6-a446-7c0d-b1cf-c63ba2409d52",
+      "via": "processor",
+      "attrs": {}
+    },
+    {
+      "from": "01a1bfd6-a446-76d1-8319-2f301a73a81f",
+      "to": "01a0d360-9b98-7ff9-bc00-0f521ad28bdb",
+      "via": "serves",
+      "attrs": {}
+    },
+    {
+      "from": "01a1bfd6-a446-76d1-8319-2f301a73a81f",
+      "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
+      "via": "source",
+      "attrs": {}
+    },
+    {
+      "from": "01a1bfd6-a446-7c0d-b1cf-c63ba2409d52",
       "to": "01a0d2e2-f788-7d70-903e-402e3f765e65",
       "via": "source",
       "attrs": {}
