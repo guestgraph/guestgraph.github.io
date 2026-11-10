@@ -8,3 +8,5 @@ node_modules
 # package-lock.json is committed, deliberately: CI runs `npm ci`, which fails outright
 # without a lockfile in the tree. It was ignored while nothing ran the suite automatically.
 __pycache__/
+# A tool's local settings can hold a secret; conventions-sync keeps the lines below.
+**/.claude/settings.local.json
