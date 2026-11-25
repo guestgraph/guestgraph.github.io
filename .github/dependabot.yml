@@ -19,8 +19,8 @@ updates:
     # Family pins move with the resync, never with Dependabot: conventions/PINS.md, Dependabot.
     ignore:
       - dependency-name: "@robertblust/design"
-      - dependency-name: "companygraph-mcp-server"
-      - dependency-name: "companygraph-meta-model"
+      - dependency-name: "@companygraph/mcp-server"
+      - dependency-name: "@companygraph/meta-model"
     schedule:
       interval: "weekly"
     # Zero, stated, because Dependabot applies three days when the key is absent. The cooldown

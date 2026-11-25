@@ -12,7 +12,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { writePrinciples } from "@robertblust/design/render/principles";
 import { writeProcesses } from "@robertblust/design/render/processes";
-import { processDiagram } from "companygraph-mcp-server/diagram";
+import { processDiagram } from "@companygraph/mcp-server/diagram";
 import { writeSurfaces } from "@robertblust/design/render/surfaces";
 import { writePrivacy } from "@robertblust/design/render/privacy";
 import { writeHome } from "@robertblust/design/render/home";
