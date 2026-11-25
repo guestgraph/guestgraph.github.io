@@ -9,7 +9,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
-import { IMAGE_FILE } from "companygraph-meta-model/instance";
+import { IMAGE_FILE } from "@companygraph/meta-model/instance";
 
 function readLocal(dir, commit, sub) {
   const head = execFileSync("git", ["-C", dir, "rev-parse", "HEAD"], { encoding: "utf8" }).trim();

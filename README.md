@@ -42,7 +42,7 @@ A repository named `talks` in this organization would claim `guestgraph.io/talks
 - `verify/check.mjs` — the suite, covering every page in one run, and
   `verify/og-recipe.test.mjs`, the share-card check's own tests.
 - `build/model.mjs`, `build/read.mjs` and `source.json` — `model.json`, written from the commit of
-  `guestgraph/mental-model` that `source.json` pins, with the parser `companygraph-meta-model`
+  `guestgraph/mental-model` that `source.json` pins, with the parser `@companygraph/meta-model`
   ships. `npm run model` rewrites it, `npm run model:check` fails when it is not what the pin
   parses to, and CI runs the check. The pin is editorial, and `npm run pin:check` reports how far
   it has fallen behind, beside the API pins. `stage.js`, `stage.css`, `card.js` and the vendored

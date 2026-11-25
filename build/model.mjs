@@ -11,14 +11,14 @@
 // re-pin then shows which experience gained a field and which tagline was reworded, rather than
 // one changed line of 300KB. The pages inline it minified, so their bytes do not move.
 //
-// The parser comes from `companygraph-meta-model`, pinned by tag. It implements the
+// The parser comes from `@companygraph/meta-model`, pinned at a version. It implements the
 // CompanyGraph conventions and lives in the repository that defines them, so a rule and its
 // implementation cannot drift apart unseen. If the model gains a type or a section shape, the
 // fix belongs there and arrives here as a version bump.
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { parseInstance, imagesOf } from "companygraph-meta-model/instance";
+import { parseInstance, imagesOf } from "@companygraph/meta-model/instance";
 import { syncImages } from "@robertblust/design/images";
 import { readInstance } from "./read.mjs";
 import { readSchemas } from "./schemas.mjs";
